@@ -1,7 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import Button from '@/components/button'
-  import { useState } from 'react'
+import Modal from '@/components/modal'
 
 function SignalCard({ signal }) {
   const [editing, setEditing] = useState(false)
@@ -11,7 +12,11 @@ function SignalCard({ signal }) {
     setEditing(true)
   }
 
+  const handleCancelModal = () => {
+  }
+
   return (
+    <>
     <div className="max-w-sm border rounded">
       <h1>Editing: {String(editing)}</h1>
       <div>
@@ -25,6 +30,10 @@ function SignalCard({ signal }) {
         </div>
       </div>
     </div>
+      {editing && <Modal>
+        <h1>Modal Open</h1>
+      </Modal>}
+    </>
   )
 }
 

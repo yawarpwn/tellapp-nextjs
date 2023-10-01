@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3001/signals'
+const URL ='https://node-rest-dev.fl0.io/signals'
 
 function signalMapper(signal) {
   return {
@@ -17,6 +17,9 @@ function signalMapper(signal) {
 
 export async function getSignals() {
   const response = await fetch(URL)
+
+  if(!response.ok) throw new Error('Failed to fetch signals')
+
   const data = await response.json()
 
   return data.map(signalMapper)
