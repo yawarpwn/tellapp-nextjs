@@ -11,8 +11,8 @@ function LoginForm({ session }) {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${location.origin}/auth/callback`
-      }
+        redirectTo: `${location.origin}/auth/callback`,
+      },
     })
     router.refresh()
   }
@@ -23,12 +23,25 @@ function LoginForm({ session }) {
   }
 
   if (session) {
-    return(
+    return (
       <>
-        <p>Logged in as {session.user.email}</p>
-        <button onClick={handleSignOut}>Sign out</button>
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full">
+              <img src={session.user.user_metadata.picture} />
+            </div>
+          </label>
+          <ul
+            tabindex="0"
+            class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+          >
+            <li>
+              <button onClick={handleSignOut}>Salir</button>
+            </li>
+          </ul>
+        </div>
       </>
-    ) 
+    )
   }
 
   return (
