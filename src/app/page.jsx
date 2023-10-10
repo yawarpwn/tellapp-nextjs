@@ -5,7 +5,7 @@ import NewQuotation from "@/components/new-quotation"
 export default async function Home() {
   const cookiesStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookiesStore})
-  const {data } = await supabase.from('quotations').select()
+  const {data } = await supabase.from('quotations').select().order('number', { ascending: false })
   return (
     <div>
       <h1 className="text-3xl font-extrabold text-yellow-500">Cotizaciones</h1>
