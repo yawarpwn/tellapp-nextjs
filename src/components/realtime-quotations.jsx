@@ -5,32 +5,38 @@ import { useState, useEffect } from 'react'
 
 function RealtimeQuotations({ serverQuotations }) {
   const [quotations, setQuotations] = useState(serverQuotations)
-  console.log({ serverQuotations })
   return (
     <div className="overflow-x-auto">
       <table className="table">
+        {/* head */}
         <thead>
-          <td>No</td>
-          <td>Cliente</td>
-          <td>Total</td>
-          <td>Acciones</td>
+          <tr>
+            <th>No</th>
+            <th>Cliente</th>
+            <th>Total</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
-          {quotations.map((quotation, index) => {
-            const { company, number, items } = quotation
+          {quotations.map((quotation) => {
             return (
-              <tr key={index}>
-                <td>{number}</td>
-                <td>{company}</td>
-                <td>{items.length}</td>
+              <tr key={quotation.id}>
+                <th>{quotation.number}</th>
                 <td>
-                  <div className='flex gap-x-2'>
-                    <button className='btn btn-outline btn-primary'>Edit</button>
-                    <button className='btn btn-outline btn-error'>Delete</button>
-                    <Link className='btn btn-outline btn-success' href={`/quotations/${number}`}>
-                       View
-                    </Link>
+                  <div>
+                    <p>
+                      {quotation.company}
+                    </p>
+
+                    <p>
+                      {quotation.ruc}
+                    </p>
                   </div>
+                </td>
+                <td>{quotation.items.length}</td>
+                <td className='flex gap-x-2'>
+                  <button className='btn'>Edit</button>
+                  <Link href={`/quotations/${quotation.number}`} className='btn'>View</Link>
                 </td>
               </tr>
             )
