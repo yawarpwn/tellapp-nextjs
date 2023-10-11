@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import PDF from '@/components/pdf/document'
+import DownloadPDF from '@/components/pdf/download-pdf'
 
 function RealtimeQuotation({ serverQuotation }) {
   const [quotation, setQuotation] = useState(serverQuotation)
@@ -9,10 +9,10 @@ function RealtimeQuotation({ serverQuotation }) {
   const formatedDate = new Intl.DateTimeFormat('es').format(create_at)
   return (
     <>
-      <header>
+      <header className='flex gap-x-2'>
         <button className="btn btn-primary">Update</button>
+        <DownloadPDF quotation={quotation} />
       </header>
-      <PDF />
       <div className="container mx-auto px-4 py-8">
         <div className="rounded-lg shadow overflow-hidden">
           <div className="px-6 py-4">
@@ -24,8 +24,9 @@ function RealtimeQuotation({ serverQuotation }) {
               <thead>
                 <tr>
                   <th>Descripción</th>
+                  <th>U/M</th>
                   <th>Cant</th>
-                  <th>Precio</th>
+                  <th>P.Unit</th>
                   <th>Total</th>
                 </tr>
               </thead>
@@ -33,44 +34,45 @@ function RealtimeQuotation({ serverQuotation }) {
                 {items.map(item => {
                   return (
                     <tr key={item.id}>
-                      <td>{item.name}</td>
+                      <td>{item.description}</td>
+                      <td>{item.unit_size}</td>
                       <td>{item.qty}</td>
-                      <td>$100.00</td>
-                      <td>$100.00</td>
+                      <td>{item.price.toFixed(2)}</td>
+                      <td>100.00</td>
                     </tr>
                   )
                 })}
                 <tr>
                   <td
-                    colSpan={3}
+                    colSpan={4}
                     className="text-right py-3 px-4 uppercase font-semibold text-sm"
                   >
                     Subtotal:
                   </td>
                   <td colSpan="" className="text-right py-3 px-4">
-                    $200.00
+                    200.00
                   </td>
                 </tr>
                 <tr>
                   <td
-                    colSpan={3}
+                    colSpan={4}
                     className="text-right py-3 px-4 uppercase font-semibold text-sm"
                   >
                     IGV:
                   </td>
                   <td colSpan="" className="text-right py-3 px-4">
-                    $20.00
+                    20.00
                   </td>
                 </tr>
                 <tr>
                   <td
-                    colSpan={3}
+                    colSpan={4}
                     className="text-right py-3 px-4 uppercase font-semibold text-sm"
                   >
-                    Total:
+                    Total{' '}:
                   </td>
                   <td colSpan="" className="text-right py-3 px-4">
-                    $220.00
+                    220.00
                   </td>
                 </tr>
               </tbody>
