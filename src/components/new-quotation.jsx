@@ -5,12 +5,13 @@ import { useState, useRef, useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { DeleteIcon } from '@/icons'
 import clsx from 'clsx'
+import { getRuc, getDni } from '@/services/sunat'
 
 const initialState = {
   ruc: '',
-  company: '',
+  company: 'Sin Ruc proporcionado',
   address: '',
-  deadline: 0,
+  deadline: 1,
   items: [],
 }
 
@@ -47,22 +48,55 @@ function NewQuotation() {
   }
 
   const handleChangeItem = (event, index) => {
-    let{ name, value } = event.target
+    let { name, value } = event.target
 
-    if(name === 'qty' ||  name === 'price') {
+    if (name === 'qty' || name === 'price') {
       value = Number(value)
     }
 
     const list = [...quotation.items]
     list[index][name] = value
-    setQuotation(prev => ({ ...prev, items: list}))
+    setQuotation(prev => ({ ...prev, items: list }))
   }
 
-  const handleChange = (event) => {
-    const { value, name} = event.target
-    setQuotation(prev => ({...prev, [name]: value}))
+  const handleChange = event => {
+    const { value, name } = event.target
+    setQuotation(prev => ({ ...prev, [name]: value }))
   }
 
+  const handleBlur = async event => {
+    const { value } = event.target
+    const isRuc = value.length === 11
+    const isDni = value.length === 8
+
+    try {
+      setLoading(true)
+      if (isDni) {
+        const { company, ruc, address } = await getDni(value)
+        setQuotation(prev => ({
+          ...prev,
+          company,
+          ruc,
+          address,
+        }))
+      }
+
+      if (isRuc) {
+        const { ruc, company, address } = await getRuc(value)
+        setQuotation(prev => ({
+          ...prev,
+          ruc,
+          company,
+          address,
+        }))
+      }
+    } catch (error) {
+      // TODO:Toast
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleSubmit = async event => {
     try {
@@ -120,33 +154,49 @@ function NewQuotation() {
             ✕
           </button>
           <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-            <Input
-              labelText="Ruc"
-              name="ruc"
-              type="number"
-              placeholder="20610555536"
-              value={quotation.ruc}
-              onChange={handleChange}
-            />
+            <div className="flex justify-between gap-2">
+              <Input
+                labelText="Ruc"
+                name="ruc"
+                type="number"
+                placeholder="20610555536"
+                value={quotation.ruc}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-            <Input
-              labelText="Cliente"
-              name="company"
-              type="text"
-              placeholder="tell senales s.a.c."
-              value={quotation.company}
-              onChange={handleChange}
-            />
+              <Input
+                labelText="Tiempo de entrega"
+                name="deadline"
+                type="number"
+                placeholder="10"
+                value={quotation.deadline}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <p className="text-xl text-green-300">{quotation.company}</p>
+              <p className="text-md">{quotation.address}</p>
+            </div>
 
-            <Input
-              labelText="Dirección"
-              name="address"
-              type="text"
-              placeholder="Av. Maquinaria 325 - Cercado de Lima"
-              value={quotation.address}
-              onChange={handleChange}
-            />
-            <div>Productos</div>
+            {/* <Input */}
+            {/*   labelText="Cliente" */}
+            {/*   name="company" */}
+            {/*   type="text" */}
+            {/*   placeholder="tell senales s.a.c." */}
+            {/*   value={quotation.company} */}
+            {/*   onChange={handleChange} */}
+            {/* /> */}
+
+            {/* <Input */}
+            {/*   labelText="Dirección" */}
+            {/*   name="address" */}
+            {/*   type="text" */}
+            {/*   placeholder="Av. Maquinaria 325 - Cercado de Lima" */}
+            {/*   value={quotation.address} */}
+            {/*   onChange={handleChange} */}
+            {/* /> */}
+            <h3>Productos</h3>
             {quotation.items?.map((item, index) => {
               // const even = index % 2 === 0
               return (
