@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { DeleteIcon, EyeIcon } from '@/icons'
 
 function RealtimeQuotations({ serverQuotations }) {
   const [quotations, setQuotations] = useState(serverQuotations)
@@ -39,7 +40,7 @@ function RealtimeQuotations({ serverQuotations }) {
       if (payload.eventType === TYPE.DELETE) {
         setQuotations(prevQuos => {
           const quosToUpdate = prevQuos.filter(q => q.id !== payload.old.id)
-          console.log({quosToUpdate})
+          console.log({ quosToUpdate })
           return quosToUpdate
         })
       }
@@ -63,7 +64,6 @@ function RealtimeQuotations({ serverQuotations }) {
       .subscribe()
 
     return () => {
-      console.log('unsubscribe channel')
       supabase.removeChannel(channel)
     }
   }, [supabase, setQuotations, quotations])
@@ -98,13 +98,13 @@ function RealtimeQuotations({ serverQuotations }) {
                     className="btn"
                     onClick={() => handleDeleteQuotation(quotation.id)}
                   >
-                    Borrar
+                    <DeleteIcon />
                   </button>
                   <Link
                     href={`/quotations/${quotation.number}`}
                     className="btn"
                   >
-                    View
+                    <EyeIcon />
                   </Link>
                 </td>
               </tr>

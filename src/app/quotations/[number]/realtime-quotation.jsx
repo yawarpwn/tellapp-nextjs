@@ -9,15 +9,21 @@ function RealtimeQuotation({ serverQuotation }) {
   const formatedDate = new Intl.DateTimeFormat('es').format(create_at)
   return (
     <>
-      <header className='flex gap-x-2'>
-        <button className="btn btn-primary">Update</button>
+      <header className="flex gap-x-2">
+        <button className="btn btn-primary">Editar</button>
         <DownloadPDF quotation={quotation} />
       </header>
       <div className="container mx-auto px-4 py-8">
         <div className="rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4">
-            <h2 className="text-2xl font-bold mb-2">Invoice #{number}</h2>
-            <p className="text-sm">Creado: {formatedDate}</p>
+          <div className="px-6 py-4 flex justify-between">
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Cotización #{number}</h2>
+              <h3>{quotation.company}</h3>
+              <p className="text-xs">{quotation?.address ?? 'Sin dirección'}</p>
+            </div>
+            <div>
+              <p className="text-sm">Fecha: {formatedDate}</p>
+            </div>
           </div>
           <div className="overflow-x-auto">
             <table className="table">
@@ -69,7 +75,7 @@ function RealtimeQuotation({ serverQuotation }) {
                     colSpan={4}
                     className="text-right py-3 px-4 uppercase font-semibold text-sm"
                   >
-                    Total{' '}:
+                    Total :
                   </td>
                   <td colSpan="" className="text-right py-3 px-4">
                     220.00

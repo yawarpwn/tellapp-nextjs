@@ -3,9 +3,21 @@
 import Input from './input'
 import { useState, useRef, useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { DeleteIcon } from '@/icons'
+import clsx from 'clsx'
+
+const initialState = {
+  ruc: '',
+  company: '',
+  address: '',
+  deadline: 0,
+  items: [],
+}
+
 function NewQuotation() {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [quotation, setQuotation] = useState(initialState)
   const modalRef = useRef()
 
   const handleOpenModal = () => {
@@ -16,62 +28,51 @@ function NewQuotation() {
     setIsOpenModal(false)
   }
 
-  const handleSubmit = async e => {
+  const handleAddItem = () => {
+    const id = crypto.randomUUID()
+    setQuotation(prev => ({
+      ...prev,
+      items: [
+        ...quotation.items,
+        { id, description: '', qty: 0, unit_size: 0, price: 0 },
+      ],
+    }))
+  }
+
+  const handleDeleteItem = id => {
+    setQuotation(prev => ({
+      ...prev,
+      items: prev.items.filter(item => item.id !== id),
+    }))
+  }
+
+  const handleChangeItem = (event, index) => {
+    let{ name, value } = event.target
+
+    if(name === 'qty' ||  name === 'price') {
+      value = Number(value)
+    }
+
+    const list = [...quotation.items]
+    list[index][name] = value
+    setQuotation(prev => ({ ...prev, items: list}))
+  }
+
+  const handleChange = (event) => {
+    const { value, name} = event.target
+    setQuotation(prev => ({...prev, [name]: value}))
+  }
+
+
+  const handleSubmit = async event => {
     try {
-      e.preventDefault()
+      event.preventDefault()
       setLoading(true)
       const supabase = createClientComponentClient()
-      const quotationToCreate = {
-        ruc: '20100170681',
-        company: 'PRODUCTOS QUIMICOS INDUSTRIALES S A',
-        address: 'AV. EL SANTUARIO NRO. 1239 Z.I. ZARATE LIMA LIMA SAN JUAN DE LURIGANCHO',
-        deadline: 1,
-        items: [
-          {
-            id: '76ed35bd-5844-437d-a6f2-b985aa8afbf0',
-            qty: 4,
-            price: 45,
-            unit_size: '69x30cm',
-            description:
-              'Vinil arclad laminado aplicado sobre lamina imantada de 0.8 mm',
-          },
-          {
-            id: 'f7f907ed-aaf0-485a-a2d8-58793e98abf0',
-            qty: 1,
-            price: 75,
-            unit_size: '40x50cm',
-            description:
-              'Señal vinil arclad laminado c/ soporte compuesto de aluminio ( sustrato de aluminio ) de 4 mm espesor',
-          },
-          {
-            id: '2fd72019-9c29-42c0-88fe-7279f68d0eb5',
-            qty: 50,
-            price: 4.5,
-            unit_size: '20x30cm',
-            description:
-              'Señal vinil arclad laminado brillo (proteccion UV) c/ soporte pvc celtex espesor = 3 mm',
-          },
-          {
-            id: '883e65c4-66e6-499e-8649-2716a292d750',
-            qty: 1,
-            price: 5,
-            unit_size: '20x30cm',
-            description:
-              'Señal vinil arclad laminado brillo (proteccion UV) c/ soporte pvc celtex espesor = 3 mm',
-          },
-          {
-            id: 'a1974045-9278-4304-a1ac-a7a6c8e6ddd4',
-            qty: 7,
-            price: 9,
-            unit_size: '40X30',
-            description: 'Pvc',
-          },
-        ],
-      }
 
       const { data, error } = await supabase
         .from('quotations')
-        .insert(quotationToCreate)
+        .insert(quotation)
         .select()
         .single()
 
@@ -111,18 +112,21 @@ function NewQuotation() {
           }
         }}
       >
-        <div className="modal-box">
-          <header className="flex ">
-            <button onClick={handleCloseModal} className="btn">
-              Cancel
-            </button>
-          </header>
+        <div className="modal-box w-11/12 max-w-5xl">
+          <button
+            onClick={handleCloseModal}
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-red-500"
+          >
+            ✕
+          </button>
           <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
             <Input
               labelText="Ruc"
               name="ruc"
               type="number"
               placeholder="20610555536"
+              value={quotation.ruc}
+              onChange={handleChange}
             />
 
             <Input
@@ -130,6 +134,8 @@ function NewQuotation() {
               name="company"
               type="text"
               placeholder="tell senales s.a.c."
+              value={quotation.company}
+              onChange={handleChange}
             />
 
             <Input
@@ -137,9 +143,66 @@ function NewQuotation() {
               name="address"
               type="text"
               placeholder="Av. Maquinaria 325 - Cercado de Lima"
+              value={quotation.address}
+              onChange={handleChange}
             />
+            <div>Productos</div>
+            {quotation.items?.map((item, index) => {
+              // const even = index % 2 === 0
+              return (
+                <div key={item.id} className={''}>
+                  <div className="flex gap-x-2 items-center">
+                    <Input
+                      onChange={event => handleChangeItem(event, index)}
+                      type="search"
+                      labelText={'Descripción'}
+                      name={'description'}
+                      classContainer={'flex-1'}
+                      required
+                    />
 
-            <button disabled={loading} className="btn btn-primary">
+                    <Input
+                      onChange={event => handleChangeItem(event, index)}
+                      type="text"
+                      className="w-20"
+                      labelText="U/M"
+                      name="unit_size"
+                      required
+                    />
+                    <Input
+                      onChange={event => handleChangeItem(event, index)}
+                      type="number"
+                      className="w-20"
+                      labelText="Cantidad"
+                      name="qty"
+                      required
+                    />
+                    <Input
+                      onChange={event => handleChangeItem(event, index)}
+                      type="number"
+                      className="w-20"
+                      labelText="Precio"
+                      name="price"
+                      required
+                    />
+                    <button
+                      onClick={() => handleDeleteItem(item.id)}
+                      type="button"
+                    >
+                      <DeleteIcon />
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+            <button type="button" onClick={handleAddItem} className="btn">
+              add item
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary"
+            >
               {loading ? 'Loading...' : 'Create'}
             </button>
           </form>
