@@ -1,13 +1,10 @@
-function Input({ labelText, className, classContainer, ...props}) {
+function Input({ labelText, className, classContainer, inputRef, ...props }) {
   return (
     <div className={`form-control ${classContainer}`}>
       <label className="label">
         <span className="label-text">{labelText}</span>
       </label>
-      <input
-        className={`input ${className}`}
-        {...props}
-      />
+      <input ref={inputRef} className={`input ${className}`} {...props} />
     </div>
   )
 }

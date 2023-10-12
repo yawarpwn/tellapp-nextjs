@@ -3,9 +3,11 @@
 import Input from './input'
 import { useState, useRef, useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { DeleteIcon } from '@/icons'
+import { quotationToCreate } from '@/utils'
+import { DeleteIcon, EditIcon } from '@/icons'
 import clsx from 'clsx'
 import { getRuc, getDni } from '@/services/sunat'
+import Modal from './modal'
 
 const initialState = {
   ruc: '',
@@ -18,7 +20,7 @@ const initialState = {
 function NewQuotation() {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [quotation, setQuotation] = useState(initialState)
+  const [quotation, setQuotation] = useState(quotationToCreate)
   const modalRef = useRef()
 
   const handleOpenModal = () => {
@@ -41,22 +43,11 @@ function NewQuotation() {
   }
 
   const handleDeleteItem = id => {
+    console.log('handle Delete')
     setQuotation(prev => ({
       ...prev,
       items: prev.items.filter(item => item.id !== id),
     }))
-  }
-
-  const handleChangeItem = (event, index) => {
-    let { name, value } = event.target
-
-    if (name === 'qty' || name === 'price') {
-      value = Number(value)
-    }
-
-    const list = [...quotation.items]
-    list[index][name] = value
-    setQuotation(prev => ({ ...prev, items: list }))
   }
 
   const handleChange = event => {
@@ -98,6 +89,12 @@ function NewQuotation() {
     }
   }
 
+  const products = []
+
+  const handleSearchProduct = (event, index) => {
+    console.log('search', { index, event })
+  }
+
   const handleSubmit = async event => {
     try {
       event.preventDefault()
@@ -137,127 +134,93 @@ function NewQuotation() {
       <button onClick={handleOpenModal} className="btn btn-primary">
         Crear
       </button>
-      <dialog
-        ref={modalRef}
-        className="modal"
-        onMouseDown={e => {
-          if (e.target === e.currentTarget) {
-            handleCloseModal()
-          }
-        }}
-      >
-        <div className="modal-box w-11/12 max-w-5xl">
-          <button
-            onClick={handleCloseModal}
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-red-500"
-          >
-            ✕
+      {/* Form  */}
+      <Modal modalRef={modalRef} onClose={handleCloseModal}>
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+          <div className="flex justify-between gap-2">
+            <Input
+              labelText="Ruc"
+              name="ruc"
+              type="number"
+              placeholder="20610555536"
+              value={quotation.ruc}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            <Input
+              labelText="Tiempo de entrega"
+              name="deadline"
+              type="number"
+              placeholder="10"
+              value={quotation.deadline}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <p className="text-xl text-green-300">{quotation.company}</p>
+            <p className="text-md">{quotation.address}</p>
+          </div>
+          <h3>Productos</h3>
+
+          <div>
+            <table className="table">
+              <thead>
+                <th>Descripción</th>
+                <th>U/M</th>
+                <th>Cant</th>
+                <th>P. Unit</th>
+                <th>Acciones</th>
+              </thead>
+              <tbody>
+                {quotation.items?.map((item, index) => {
+                  const even = index % 2 === 0
+                  return (
+                    <tr key={item.id} className={`${even ? 'bg-black/10' : ''  }`}>
+                      <td>{item.description}</td>
+                      <td>{item.unit_size}</td>
+                      <td>{item.qty}</td>
+                      <td>{item.price.toFixed(2)}</td>
+                      <td>
+                        <div className="flex gap-x-1">
+                          <button type="button" className="btn">
+                            <EditIcon />
+                          </button>
+
+                          <button
+                            onClick={() => handleDeleteItem(item.id)}
+                            type="button"
+                            className="btn"
+                          >
+                            <DeleteIcon />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
+                <tr className="bg-black/20">
+                  <td
+                    colSpan={3}
+                    className="text-right py-3 px-4 uppercase font-semibold text-sm"
+                  >
+                    Total :
+                  </td>
+                  <td colSpan={3} className="text-left py-3 px-4">
+                    220.00
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="button" onClick={handleAddItem} className="btn">
+            add item
           </button>
-          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-            <div className="flex justify-between gap-2">
-              <Input
-                labelText="Ruc"
-                name="ruc"
-                type="number"
-                placeholder="20610555536"
-                value={quotation.ruc}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-
-              <Input
-                labelText="Tiempo de entrega"
-                name="deadline"
-                type="number"
-                placeholder="10"
-                value={quotation.deadline}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <p className="text-xl text-green-300">{quotation.company}</p>
-              <p className="text-md">{quotation.address}</p>
-            </div>
-
-            {/* <Input */}
-            {/*   labelText="Cliente" */}
-            {/*   name="company" */}
-            {/*   type="text" */}
-            {/*   placeholder="tell senales s.a.c." */}
-            {/*   value={quotation.company} */}
-            {/*   onChange={handleChange} */}
-            {/* /> */}
-
-            {/* <Input */}
-            {/*   labelText="Dirección" */}
-            {/*   name="address" */}
-            {/*   type="text" */}
-            {/*   placeholder="Av. Maquinaria 325 - Cercado de Lima" */}
-            {/*   value={quotation.address} */}
-            {/*   onChange={handleChange} */}
-            {/* /> */}
-            <h3>Productos</h3>
-            {quotation.items?.map((item, index) => {
-              // const even = index % 2 === 0
-              return (
-                <div key={item.id} className={''}>
-                  <div className="flex gap-x-2 items-center">
-                    <Input
-                      onChange={event => handleChangeItem(event, index)}
-                      type="search"
-                      labelText={'Descripción'}
-                      name={'description'}
-                      classContainer={'flex-1'}
-                      required
-                    />
-
-                    <Input
-                      onChange={event => handleChangeItem(event, index)}
-                      type="text"
-                      className="w-20"
-                      labelText="U/M"
-                      name="unit_size"
-                      required
-                    />
-                    <Input
-                      onChange={event => handleChangeItem(event, index)}
-                      type="number"
-                      className="w-20"
-                      labelText="Cantidad"
-                      name="qty"
-                      required
-                    />
-                    <Input
-                      onChange={event => handleChangeItem(event, index)}
-                      type="number"
-                      className="w-20"
-                      labelText="Precio"
-                      name="price"
-                      required
-                    />
-                    <button
-                      onClick={() => handleDeleteItem(item.id)}
-                      type="button"
-                    >
-                      <DeleteIcon />
-                    </button>
-                  </div>
-                </div>
-              )
-            })}
-            <button type="button" onClick={handleAddItem} className="btn">
-              add item
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn btn-primary"
-            >
-              {loading ? 'Loading...' : 'Create'}
-            </button>
-          </form>
-        </div>
-      </dialog>
+          <button type="submit" disabled={loading} className="btn btn-primary">
+            {loading ? 'Loading...' : 'Create'}
+          </button>
+        </form>
+      </Modal>
     </div>
   )
 }
