@@ -9,7 +9,7 @@ function Modal({ children, modalRef, onClose }) {
         }
       }}
     >
-      <div className="modal-box w-11/12 max-w-3xl">
+      <div className="modal-box">
         <button
           onClick={onClose}
           className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-red-500"
