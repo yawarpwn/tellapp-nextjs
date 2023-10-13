@@ -1,6 +1,12 @@
 import { DeleteIcon, EditIcon} from '@/icons'
+import { Play } from 'next/font/google'
 
-function TableItems({ items, onDeleteItem, onEditItem }) {
+function TableItems({ items, onDeleteItem, onOpenModal }) {
+
+  const handleEditItem = (item) => {
+    onOpenModal(item)
+  }
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -18,13 +24,17 @@ function TableItems({ items, onDeleteItem, onEditItem }) {
             const even = index % 2 === 0
             return (
               <tr key={item.id} className={`${even ? 'bg-black/10' : ''}`}>
-                <td>{item.description}</td>
+                <td>
+                  <p className='w-[300px]'>
+                    {item.description}
+                  </p>
+                </td>
                 <td>{item.unit_size}</td>
                 <td>{item.qty}</td>
                 <td>{item.price.toFixed(2)}</td>
                 <td>
                   <div className="flex gap-x-1">
-                    <button onClick={() => onEditItem(item)} type="button" className="btn">
+                    <button onClick={() => handleEditItem(item)} type="button" className="btn">
                       <EditIcon />
                     </button>
 

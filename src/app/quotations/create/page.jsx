@@ -7,7 +7,7 @@ import { quotationToCreate } from '@/utils'
 import { DeleteIcon, EditIcon, PlusIcon } from '@/icons'
 import clsx from 'clsx'
 import { getRuc, getDni } from '@/services/sunat'
-import NewItem from '@/components/new-item'
+import ItemModal from '@/components/item-modal'
 import TableItems from '@/components/table-items'
 
 const initialState = {
@@ -25,8 +25,9 @@ function NewQuotation() {
   const [editingItem, setEditingItem] = useState(null)
   const modalRef = useRef()
 
-  const handleOpenModal = () => {
+  const handleOpenModal = item => {
     setIsOpenModal(true)
+    setEditingItem(item)
   }
 
   const handleCloseModal = () => {
@@ -34,13 +35,10 @@ function NewQuotation() {
     setEditingItem(null)
   }
 
-  const handleAddItem = (item) => {
+  const handleAddItem = item => {
     setQuotation(prev => ({
       ...prev,
-      items: [
-        ...quotation.items,
-        item
-      ],
+      items: [...quotation.items, item],
     }))
   }
 
@@ -51,12 +49,13 @@ function NewQuotation() {
     }))
   }
 
-  const onEditItem = () => {
-  }
- 
-  const handleEditItem = item => {
-    setIsOpenModal(true)
-    setEditingItem(item)
+  const handleEditItem = itemToEdit => {
+    setQuotation(prev => ({
+      ...prev,
+      items: prev.items.map(item =>
+        item.id === itemToEdit.id ? itemToEdit : item,
+      ),
+    }))
   }
 
   const handleChange = event => {
@@ -135,12 +134,12 @@ function NewQuotation() {
   return (
     <div>
       {/* Form  */}
-      <NewItem
-        addItem={handleAddItem}
+      <ItemModal
+        onAddItem={handleAddItem}
         onCloseModal={handleCloseModal}
         modalRef={modalRef}
         editingItem={editingItem}
-        editItem={onEditItem}
+        onEditItem={handleEditItem}
       />
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <div className="flex justify-between gap-2">
@@ -171,14 +170,19 @@ function NewQuotation() {
         {/* List Items  */}
         <h3>Productos</h3>
         {quotation?.items && (
-          <TableItems items={quotation.items} onDeleteItem={handleDeleteItem} onEditItem={handleEditItem} />
+          <TableItems
+            items={quotation.items}
+            onDeleteItem={handleDeleteItem}
+            onOpenModal={handleOpenModal}
+            onEditItem={handleEditItem}
+          />
         )}
 
-        <button type="button" onClick={handleOpenModal} className="btn">
+        <button type="button" onClick={() => handleOpenModal()} className="btn btn-outline btn-primary">
           <PlusIcon /> Agregar Producto
         </button>
         <button type="submit" disabled={loading} className="btn btn-primary">
-          {loading ? 'Loading...' : 'Create'}
+          {loading ? 'Loading...' : 'Crear Cotización'}
         </button>
       </form>
     </div>

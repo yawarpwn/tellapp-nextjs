@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect } from 'react'
 import Input from '@/components/input'
 import Modal from '@/components/modal'
-import { PlusIcon } from '@/icons'
+import { PlusIcon, UpdateIcon } from '@/icons'
 
 const initialState = {
   qty: 0,
@@ -11,9 +11,22 @@ const initialState = {
   description: '',
 }
 
-function NewItem({ modalRef, onCloseModal, addItem, editItem, editingItem }) {
-  const [item, setItem] = useState(editingItem || initialState)
-  console.log({ editingItem, item })
+function ItemModal({
+  modalRef,
+  onCloseModal,
+  onAddItem,
+  onEditItem,
+  editingItem,
+}) {
+  const [item, setItem] = useState(initialState)
+
+  useEffect(() => {
+    if (editingItem) {
+      setItem(editingItem)
+    } else {
+      setItem(initialState)
+    }
+  }, [editingItem])
 
   const handleSearchProduct = (event, index) => {
     console.log('search', { index, event })
@@ -37,11 +50,10 @@ function NewItem({ modalRef, onCloseModal, addItem, editItem, editingItem }) {
     // Si Es edicion
     if (editingItem) {
       console.log('editing item')
-      editItem(item)
+      onEditItem(item)
       setItem(() => initialState)
       onCloseModal()
     } else {
-
       //Si es nuevo
       const id = crypto.randomUUID()
       const newItem = {
@@ -49,7 +61,7 @@ function NewItem({ modalRef, onCloseModal, addItem, editItem, editingItem }) {
         id,
       }
 
-      addItem(newItem)
+      onAddItem(newItem)
       setItem(() => initialState)
       onCloseModal()
     }
@@ -101,7 +113,16 @@ function NewItem({ modalRef, onCloseModal, addItem, editItem, editingItem }) {
               />
             </div>
             <button type="submit" className="btn btn-primary w-full">
-              <PlusIcon /> Agregar
+              {editingItem ? (
+                <>
+                  <UpdateIcon />
+                  Actualizar
+                </>
+              ) : (
+                <>
+                  <PlusIcon /> Agregar
+                </>
+              )}
             </button>
           </div>
         </form>
@@ -110,4 +131,4 @@ function NewItem({ modalRef, onCloseModal, addItem, editItem, editingItem }) {
   )
 }
 
-export default NewItem
+export default ItemModal

@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <div>
       <h1 className="text-3xl font-extrabold text-yellow-500">Cotizaciones</h1>
-      <Link href='/create' className='btn btn-primary'>Create</Link>
+      <Link href='/quotations/create' className='btn btn-primary'>Create</Link>
       {/* <NewQuotation /> */}
       <RealtimeQuotations serverQuotations={data ?? []} />
     </div>
