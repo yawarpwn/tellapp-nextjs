@@ -1,16 +1,21 @@
 'use client'
 import { useState, useEffect } from 'react'
 import DownloadPDF from '@/components/pdf/download-pdf'
+import Link from 'next/link'
 
 function RealtimeQuotation({ serverQuotation }) {
   const [quotation, setQuotation] = useState(serverQuotation)
-  const { number, create_at, items } = quotation
+  const { number, create_at, items, id } = quotation
+
+
+
+
 
   const formatedDate = new Intl.DateTimeFormat('es').format(create_at)
   return (
     <>
       <header className="flex gap-x-2">
-        <button className="btn btn-primary">Editar</button>
+        <Link href={`/quotations/update?id=${id}`} className="btn btn-primary">Editar</Link>
         <DownloadPDF quotation={quotation} />
       </header>
       <div className="container mx-auto px-4 py-8">

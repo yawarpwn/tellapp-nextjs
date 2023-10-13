@@ -16,7 +16,7 @@ export function getRuc(ruc) {
       return {
         ruc: data.ruc,
         company: data.razonSocial,
-        address: data.direccion,
+        address: data.direccion ?? '',
       }
     })
 }
