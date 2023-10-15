@@ -132,27 +132,25 @@ function ItemModal({
                 ? results.map(item => (
                     <li
                       onClick={() => handleProductClick(item)}
-                      className="hover:text-primary cursor-pointer"
+                      className="flex gap-x-1 "
                       key={item.id}
                     >
-                    <span className=''>
-
-                      {item.description}
-                    </span>
+                    <div className='p-0 flex items-center gap-x-2'>
+                      <span className='btn btn-primary btn-xs h-full '>
+                        <p style={{writingMode: 'vertical-lr'}}>
+                          {item.code}
+                        </p>
+                      </span>
+                      <span className='p-0'>{item.description}</span>
+                    </div>
                     </li>
                   ))
                 : Array.from({ length: 6 })
                     .fill(0)
                     .map((_, index) => (
-                      <li
-                        key={index}
-                      >
-                    <span
-                        className=" h-[30px] bg-base-100 rounded"
-                    >
-                    </span>
-
-                  </li>
+                      <li key={index}>
+                        <span className=" h-[30px] bg-base-100 rounded"></span>
+                      </li>
                     ))}
             </ul>
             <div className="flex gap-2">

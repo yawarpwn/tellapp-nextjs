@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { DeleteIcon, EyeIcon } from '@/icons'
 import { getIgv } from '@/utils'
@@ -23,21 +23,31 @@ function RealtimeQuotations({ serverQuotations }) {
     setSearchValue(value)
   }
 
-  const totalPages = Math.ceil(quotations.length / ROW_PER_PAGE)
+
+
+  const quotationsFiltered = useMemo(() => {
+    if (!searchValue) {
+      return quotations
+    }
+    return quotations.filter(quotation =>
+      String(quotation.number).includes(searchValue),
+    )
+  }, [quotations, searchValue])
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(quotationsFiltered.length / ROW_PER_PAGE)
+  }, [quotationsFiltered])
 
   const nextPage = () => {
-    if(page === totalPages) return
+    if (page === totalPages) return
     setPage(page + 1)
   }
 
-
-  console.log({ searchValue, totalPages })
-
-  const items = useMemo(() => {
+  const quotationsToRender = useMemo(() => {
     const start = (page - 1) * ROW_PER_PAGE
     const end = start + ROW_PER_PAGE
-    return quotations.slice(start, end)
-  }, [page, quotations])
+    return quotationsFiltered.slice(start, end)
+  }, [page, quotationsFiltered])
 
   // useEffect(() => {
   //   setQuotations(serverQuotations)
@@ -49,9 +59,10 @@ function RealtimeQuotations({ serverQuotations }) {
         <InputSearch
           onSearchChange={handleSearchChange}
           searchValue={searchValue}
+          placeholder="4023"
         />
         <Link href="/quotations/create" className="btn btn-primary">
-          Create
+          Crear
         </Link>
       </header>
 
@@ -67,7 +78,7 @@ function RealtimeQuotations({ serverQuotations }) {
             </tr>
           </thead>
           <tbody>
-            {items.map(quotation => {
+            {quotationsToRender.map(quotation => {
               const { total } = getIgv(quotation.items)
               return (
                 <tr key={quotation.id}>
@@ -84,14 +95,14 @@ function RealtimeQuotations({ serverQuotations }) {
                   <td>{total}</td>
                   <td className="flex gap-x-2">
                     <button
-                      className="btn btn-error"
+                      className="btn "
                       onClick={() => deleteQuotation(quotation.id)}
                     >
                       <DeleteIcon />
                     </button>
                     <Link
                       href={`/quotations/${quotation.number}`}
-                      className="btn"
+                      className="btn "
                     >
                       <EyeIcon />
                     </Link>
@@ -102,11 +113,12 @@ function RealtimeQuotations({ serverQuotations }) {
           </tbody>
         </table>
       </div>
-      <Pagination 
+      <Pagination
         currentPage={page}
         onNextPage={nextPage}
-        updatePage={(page) => setPage(page)}
-        totalPages={totalPages} />
+        updatePage={page => setPage(page)}
+        totalPages={totalPages}
+      />
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { SearchIcon } from '@/icons'
 
-function InputSearch({ searchValue, onSearchChange}) {
+function InputSearch({ searchValue, onSearchChange, placeholder}) {
   return (
     <div className="group w-full flex flex-col sm:max-w-[40%]">
       <div className="h-full flex flex-col">
@@ -11,6 +11,7 @@ function InputSearch({ searchValue, onSearchChange}) {
             onChange={onSearchChange}
             className="w-full h-full outline-none font-normal bg-transparent placeholder:text-foreground-500"
             type="search"
+            placeholder={placeholder}
           />
         </div>
       </div>
