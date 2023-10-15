@@ -7,6 +7,8 @@ import { PlusIcon } from '@/icons'
 import { getRuc, getDni } from '@/services/sunat'
 import ItemModal from '@/components/item-modal'
 import TableItems from '@/components/table-items'
+import toast, { Toaster } from 'react-hot-toast'
+import ConfirmModal from './confirm-modal'
 
 const initialState = {
   ruc: '',
@@ -21,7 +23,9 @@ function CreateUpdateQuotation({ serverQuotation }) {
   const [loading, setLoading] = useState(false)
   const [quotation, setQuotation] = useState(serverQuotation || initialState)
   const [editingItem, setEditingItem] = useState(null)
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
   const modalRef = useRef()
+  const confirmModalRef = useRef()
 
   const handleOpenModal = item => {
     setIsOpenModal(true)
@@ -99,6 +103,13 @@ function CreateUpdateQuotation({ serverQuotation }) {
 
   const handleSubmit = async event => {
     event.preventDefault()
+    if (quotation.items.length === 0) {
+      const notify = () => toast.error('Debe ingresar al menos un producto')
+      notify()
+      return
+    }
+
+    // Create quotation
     if (!serverQuotation) {
       try {
         setLoading(true)
@@ -113,7 +124,6 @@ function CreateUpdateQuotation({ serverQuotation }) {
           console.log('error', error)
           throw new Error('error create quotation')
         }
-
         setIsOpenModal(false)
         window.navigation.navigate('/')
 
@@ -124,7 +134,9 @@ function CreateUpdateQuotation({ serverQuotation }) {
         setLoading(false)
       }
     } else {
+      // Update quotation
       try {
+        setLoading(true)
         const { data, error } = await supabase
           .from('quotations')
           .update(quotation)
@@ -157,6 +169,7 @@ function CreateUpdateQuotation({ serverQuotation }) {
 
   return (
     <div>
+      <Toaster />
       {/* Form  */}
       <ItemModal
         onAddItem={handleAddItem}
@@ -192,12 +205,25 @@ function CreateUpdateQuotation({ serverQuotation }) {
           />
         </div>
         <div>
-          <p className="text-xl text-green-300">{quotation.company}</p>
-          <p className="text-md">{quotation.address}</p>
+          <Input
+            labelText="Cliente"
+            name="company"
+            placeholder="Sin Ruc Proporcionado"
+            value={quotation.company}
+            disabled
+          />
+
+          <Input
+            labelText="Dirección"
+            name="address"
+            placeholder=""
+            value={quotation.address}
+            disabled
+          />
         </div>
 
         {/* List Items  */}
-        <h3>Productos</h3>
+        <h3 className="text-2xl font-bold">Lista de Productos</h3>
         {quotation?.items && (
           <TableItems
             items={quotation.items}
@@ -210,13 +236,23 @@ function CreateUpdateQuotation({ serverQuotation }) {
         <button
           type="button"
           onClick={() => handleOpenModal()}
-          className="btn btn-outline btn-primary"
+          className="btn btn-outline "
         >
           <PlusIcon /> Agregar Producto
         </button>
-        <button type="submit" disabled={loading} className="btn btn-primary">
-          {loading ? 'Loading...' : serverQuotation ? 'Actualizar' : 'Crear'}
-        </button>
+        <buttton
+          type="button"
+          className="btn"
+          onClick={() => setIsOpenConfirmModal(true)}
+        >
+          {serverQuotation ? 'Actualizar' : 'Crear'}
+        </buttton>
+        <ConfirmModal
+          modalRef={confirmModalRef}
+          isOpen={isOpenConfirmModal}
+          onCloseModal={() => setIsOpenConfirmModal(false)}
+          loading={loading}
+        />
       </form>
     </div>
   )

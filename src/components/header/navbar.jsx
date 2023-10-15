@@ -37,7 +37,7 @@ function Navbar() {
       <nav className="flex-1">
         <ul className="menu menu-horizontal rounded-box">
           {navs.map(({ href, title, icon: Icon }) => (
-            <li key={title} className="p-2  rounded-lg hover:bg-content2">
+            <li key={title} >
               <Link href={href}>
                 <Icon />
                 <span className="hidden md:block">{title}</span>

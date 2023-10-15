@@ -11,8 +11,9 @@ function Modal({ children, modalRef, onClose }) {
     >
       <div className="modal-box">
         <button
+          type='button'
           onClick={onClose}
-          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-red-500"
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-primary"
         >
           ✕
         </button>

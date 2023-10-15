@@ -5,7 +5,7 @@ export default function TrashIcon({ size}) {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="red"
+      stroke="currentColor"
       width={size ?? 24}
       height={size ?? 24}
     >

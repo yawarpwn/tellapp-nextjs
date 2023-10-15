@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import DownloadPDF from '@/components/pdf/download-pdf'
+import {  EditIcon } from '@/icons'
 import Link from 'next/link'
 import { getIgv } from '@/utils'
 
@@ -12,7 +13,10 @@ function RealtimeQuotation({ serverQuotation }) {
   return (
     <>
       <header className="flex gap-x-2">
-        <Link href={`/quotations/update?id=${id}`} className="btn btn-primary">Editar</Link>
+        <Link href={`/quotations/update?id=${id}`} className="btn btn-primary">
+          <EditIcon />
+          Editar
+        </Link>
         <DownloadPDF quotation={quotation} />
       </header>
       <div className="container mx-auto px-4 py-8">

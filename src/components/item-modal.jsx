@@ -113,39 +113,48 @@ function ItemModal({
         <h2 className="text-primary text-2xl font-bold">Agregar Producto</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4 items-center">
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">Description</span>
-              </label>
-              <textarea
-                autoFocus
-                className="textarea w-full resize-none h-[120px]"
-                ref={searchInputRef}
-                onChange={handleSearchProduct}
-                value={item.description}
-                name="description"
-                required
-              />
-            </div>
-            <div className="results">
-              <ul className="menu bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto">
-                {results.length > 0 ? (
-                  results.map(item => (
+            <Input
+              autoFocus
+              classContainer={'w-full'}
+              className={'input-bordered input-primary'}
+              ref={searchInputRef}
+              placeholder="Buscar producto"
+              type="search"
+              onChange={handleSearchProduct}
+              textLabel="Descripción"
+              value={item.description}
+              name="description"
+              required
+            />
+
+            <ul className="menu bg-none w-full bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto">
+              {results.length > 0
+                ? results.map(item => (
                     <li
                       onClick={() => handleProductClick(item)}
-                      className="hover:text-warning cursor-pointer"
+                      className="hover:text-primary cursor-pointer"
                       key={item.id}
                     >
+                    <span className=''>
+
                       {item.description}
+                    </span>
                     </li>
                   ))
-                ) : (
-                  Array.from({ length: 6 }).fill(0).map((_, index) => (
-                      <li className='w-[350px] bg-base-200-[15px]' key={index}></li>
-                    ))
-                )}
-              </ul>
-            </div>
+                : Array.from({ length: 6 })
+                    .fill(0)
+                    .map((_, index) => (
+                      <li
+                        key={index}
+                      >
+                    <span
+                        className=" h-[30px] bg-base-100 rounded"
+                    >
+                    </span>
+
+                  </li>
+                    ))}
+            </ul>
             <div className="flex gap-2">
               <Input
                 onChange={handleChangeItem}

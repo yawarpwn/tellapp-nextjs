@@ -2,6 +2,7 @@
 import { usePDF } from '@react-pdf/renderer'
 import { useEffect } from 'react'
 import PDFGenerator from './pdf-generator'
+import { ShareIcon, DownloadIcon } from '@/icons'
 
 export default function DownloadPDF({ quotation }) {
   const [instance, updateInstance] = usePDF({
@@ -44,6 +45,7 @@ export default function DownloadPDF({ quotation }) {
   return (
     <>
       <button onClick={handleShare} className="btn">
+        <ShareIcon />
         Compartir
       </button>
       <a
@@ -51,6 +53,8 @@ export default function DownloadPDF({ quotation }) {
         download={`COT-2023-00${quotation.number}.pdf`}
         className="btn"
       >
+
+        <DownloadIcon/>
         Descargar
       </a>
     </>

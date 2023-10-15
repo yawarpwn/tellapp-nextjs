@@ -87,7 +87,9 @@ function RealtimeQuotations({ serverQuotations }) {
             const {total} = getIgv(quotation.items)
             return (
               <tr key={quotation.id}>
-                <th className='text-warning'>#{quotation.number}</th>
+                <td >
+                  <span className='text-primary text-lg font-bold'>#{' '}</span>
+                  {quotation.number}</td>
                 <td>
                   <div>
                     <p className='w-[300px]'>{quotation.company}</p>
@@ -97,7 +99,7 @@ function RealtimeQuotations({ serverQuotations }) {
                 <td>S/{' '}{total}</td>
                 <td className="flex gap-x-2">
                   <button
-                    className="btn"
+                    className="btn btn-error"
                     onClick={() => handleDeleteQuotation(quotation.id)}
                   >
                     <DeleteIcon />
