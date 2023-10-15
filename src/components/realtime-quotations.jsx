@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { DeleteIcon, EyeIcon } from '@/icons'
+import { getIgv } from '@/utils'
 
 function RealtimeQuotations({ serverQuotations }) {
   const [quotations, setQuotations] = useState(serverQuotations)
@@ -68,6 +69,7 @@ function RealtimeQuotations({ serverQuotations }) {
     }
   }, [supabase, setQuotations, quotations])
 
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -82,17 +84,17 @@ function RealtimeQuotations({ serverQuotations }) {
         </thead>
         <tbody>
           {quotations.map(quotation => {
+            const {total} = getIgv(quotation.items)
             return (
               <tr key={quotation.id}>
-                <th>{quotation.number}</th>
+                <th className='text-warning'>#{quotation.number}</th>
                 <td>
                   <div>
-                    <p>{quotation.company}</p>
-
-                    <p>{quotation.ruc}</p>
+                    <p className='w-[300px]'>{quotation.company}</p>
+                    <p >{quotation.ruc}</p>
                   </div>
                 </td>
-                <td>{200}</td>
+                <td>S/{' '}{total}</td>
                 <td className="flex gap-x-2">
                   <button
                     className="btn"

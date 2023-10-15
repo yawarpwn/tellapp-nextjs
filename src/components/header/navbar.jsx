@@ -1,13 +1,52 @@
 import Login from './login'
 import Link from 'next/link'
+
+import {
+  ProductsIcon,
+  PrinterIcon,
+  QuotationIcon,
+  CustomersIcon,
+} from '@/icons'
+
+const navs = [
+  {
+    title: 'Cotizaciones',
+    href: '/',
+    icon: QuotationIcon,
+  },
+  {
+    title: 'Productos',
+    href: '/productos',
+    icon: ProductsIcon,
+  },
+
+  {
+    title: 'Clientes',
+    href: '/clientes',
+    icon: CustomersIcon,
+  },
+  {
+    title: 'Rotulos',
+    href: '/rotulos',
+    icon: PrinterIcon,
+  },
+]
 function Navbar() {
   return (
     <div className="navbar ">
-      <div className="flex-1">
-        <Link href="/" className="btn btn-ghost normal-case text-xl">
-          TellApp
-        </Link>
-      </div>
+      <nav className="flex-1">
+        <ul className="menu menu-horizontal rounded-box">
+          {navs.map(({ href, title, icon: Icon }) => (
+            <li key={title} className="p-2  rounded-lg hover:bg-content2">
+              <Link href={href}>
+                <Icon />
+                <span className="hidden md:block">{title}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
       <Login />
     </div>
   )

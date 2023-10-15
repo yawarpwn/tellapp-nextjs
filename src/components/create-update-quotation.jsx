@@ -3,16 +3,15 @@
 import Input from '@/components/input'
 import { useState, useRef, useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import {  PlusIcon } from '@/icons'
+import { PlusIcon } from '@/icons'
 import { getRuc, getDni } from '@/services/sunat'
 import ItemModal from '@/components/item-modal'
 import TableItems from '@/components/table-items'
-import { redirect } from 'next/navigation'
 
 const initialState = {
   ruc: '',
   company: 'Sin Ruc proporcionado',
-  address: 'Sin Direccion proporcionada',
+  address: '',
   deadline: 1,
   items: [],
 }
@@ -96,9 +95,10 @@ function CreateUpdateQuotation({ serverQuotation }) {
     }
   }
 
+  const supabase = createClientComponentClient()
+
   const handleSubmit = async event => {
     event.preventDefault()
-    const supabase = createClientComponentClient()
     if (!serverQuotation) {
       try {
         setLoading(true)
@@ -138,7 +138,7 @@ function CreateUpdateQuotation({ serverQuotation }) {
         console.log('update quotation', data)
 
         setIsOpenModal(false)
-        window.navigation.navigate('/')
+        window.navigation.navigate(`/quotations/${quotation.number}`)
       } catch (error) {
         console.log(error)
       } finally {
@@ -165,6 +165,11 @@ function CreateUpdateQuotation({ serverQuotation }) {
         editingItem={editingItem}
         onEditItem={handleEditItem}
       />
+      <div>
+        <h2 className="text-warning font-bold text-2xl">
+          #{serverQuotation ? quotation.number : '5000'}
+        </h2>
+      </div>
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <div className="flex justify-between gap-2">
           <Input

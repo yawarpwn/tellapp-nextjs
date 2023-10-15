@@ -1,11 +1,13 @@
 import { DeleteIcon, EditIcon} from '@/icons'
-import { Play } from 'next/font/google'
+import { getIgv } from '@/utils'
 
 function TableItems({ items, onDeleteItem, onOpenModal }) {
 
   const handleEditItem = (item) => {
     onOpenModal(item)
   }
+
+  const {total } = getIgv(items)
 
   return (
     <div className="overflow-x-auto">
@@ -58,7 +60,7 @@ function TableItems({ items, onDeleteItem, onOpenModal }) {
               Total :
             </td>
             <td colSpan={3} className="text-left py-3 px-4">
-              220.00
+              {total}
             </td>
           </tr>
         </tbody>

@@ -2,16 +2,13 @@
 import { useState, useEffect } from 'react'
 import DownloadPDF from '@/components/pdf/download-pdf'
 import Link from 'next/link'
+import { getIgv } from '@/utils'
 
 function RealtimeQuotation({ serverQuotation }) {
   const [quotation, setQuotation] = useState(serverQuotation)
   const { number, create_at, items, id } = quotation
-
-
-
-
-
   const formatedDate = new Intl.DateTimeFormat('es').format(create_at)
+  const {total, subTotal, igv} = getIgv(quotation.items)
   return (
     <>
       <header className="flex gap-x-2">
@@ -43,47 +40,48 @@ function RealtimeQuotation({ serverQuotation }) {
               </thead>
               <tbody>
                 {items.map(item => {
+                  const total = (item.price * item.qty).toFixed(2) 
                   return (
                     <tr key={item.id}>
                       <td>{item.description}</td>
                       <td>{item.unit_size}</td>
                       <td>{item.qty}</td>
                       <td>{item.price.toFixed(2)}</td>
-                      <td>100.00</td>
+                      <td>{total}</td>
                     </tr>
                   )
                 })}
                 <tr>
                   <td
                     colSpan={4}
-                    className="text-right py-3 px-4 uppercase font-semibold text-sm"
+                    className="text-right py-3 px-4 uppercase font-semibold text-sm text-primary"
                   >
                     Subtotal:
                   </td>
-                  <td colSpan="" className="text-right py-3 px-4">
-                    200.00
+                  <td colSpan="" className="text-left py-3 px-4">
+                    {subTotal}
                   </td>
                 </tr>
                 <tr>
                   <td
                     colSpan={4}
-                    className="text-right py-3 px-4 uppercase font-semibold text-sm"
+                    className="text-right py-3 px-4 uppercase font-semibold text-sm text-primary"
                   >
                     IGV:
                   </td>
-                  <td colSpan="" className="text-right py-3 px-4">
-                    20.00
+                  <td colSpan="" className="text-left py-3 px-4">
+                    {igv}
                   </td>
                 </tr>
                 <tr>
                   <td
                     colSpan={4}
-                    className="text-right py-3 px-4 uppercase font-semibold text-sm"
+                    className="text-right py-3 px-4 uppercase font-semibold text-sm text-primary"
                   >
                     Total :
                   </td>
-                  <td colSpan="" className="text-right py-3 px-4">
-                    220.00
+                  <td colSpan="" className="text-left py-3 px-4">
+                    {total}
                   </td>
                 </tr>
               </tbody>
