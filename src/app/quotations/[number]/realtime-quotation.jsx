@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import DownloadPDF from '@/components/pdf/download-pdf'
-import {  EditIcon } from '@/icons'
+import { EditIcon } from '@/icons'
 import Link from 'next/link'
 import { getIgv } from '@/utils'
 
@@ -9,7 +9,7 @@ function RealtimeQuotation({ serverQuotation }) {
   const [quotation, setQuotation] = useState(serverQuotation)
   const { number, create_at, items, id } = quotation
   const formatedDate = new Intl.DateTimeFormat('es').format(create_at)
-  const {total, subTotal, igv} = getIgv(quotation.items)
+  const { total, subTotal, igv } = getIgv(quotation.items)
   return (
     <>
       <header className="flex gap-x-2">
@@ -44,10 +44,13 @@ function RealtimeQuotation({ serverQuotation }) {
               </thead>
               <tbody>
                 {items.map(item => {
-                  const total = (item.price * item.qty).toFixed(2) 
+                  const total = (item.price * item.qty).toFixed(2)
                   return (
                     <tr key={item.id}>
-                      <td>{item.description}</td>
+                      <td>
+                        <p className="w-[300px]"></p>
+                        {item.description}
+                      </td>
                       <td>{item.unit_size}</td>
                       <td>{item.qty}</td>
                       <td>{item.price.toFixed(2)}</td>

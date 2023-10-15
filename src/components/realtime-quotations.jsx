@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { DeleteIcon, EyeIcon } from '@/icons'
 import { getIgv } from '@/utils'
+import InputSearch from '@/components/input-search'
+
 
 function RealtimeQuotations({ serverQuotations }) {
   const [quotations, setQuotations] = useState(serverQuotations)
@@ -71,6 +73,14 @@ function RealtimeQuotations({ serverQuotations }) {
 
 
   return (
+    <>
+          <header className='flex justify-between items-center'>
+        <InputSearch />
+        <Link href="/quotations/create" className="btn btn-primary">
+          Create
+        </Link>
+      </header>
+
     <div className="overflow-x-auto">
       <table className="table">
         {/* head */}
@@ -88,7 +98,7 @@ function RealtimeQuotations({ serverQuotations }) {
             return (
               <tr key={quotation.id}>
                 <td >
-                  <span className='text-primary text-lg font-bold'>#{' '}</span>
+                  <span className='text-primary font-bold'>#</span>
                   {quotation.number}</td>
                 <td>
                   <div>
@@ -96,7 +106,7 @@ function RealtimeQuotations({ serverQuotations }) {
                     <p >{quotation.ruc}</p>
                   </div>
                 </td>
-                <td>S/{' '}{total}</td>
+                <td>{total}</td>
                 <td className="flex gap-x-2">
                   <button
                     className="btn btn-error"
@@ -117,6 +127,7 @@ function RealtimeQuotations({ serverQuotations }) {
         </tbody>
       </table>
     </div>
+    </>
   )
 }
 
