@@ -6,14 +6,14 @@ export function createSearchInstance(data, opts) {
   }
 
   const defaultOpts = {
-    isCaseSensitive: true,
+    // isCaseSensitive: false,
     includeScore: true,
-    shouldSort: true,
+    // shouldSort: true,
     // includeMatches: false,
     // findAllMatches: false,
     minMatchCharLength: 2,
     // location: 0,
-    threshold: 0.5,
+    threshold: 0.4,
     // distance: 100,
     // useExtendedSearch: false,
     // ignoreLocation: false,

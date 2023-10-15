@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useMemo } from 'react'
 import Input from '@/components/input'
 import Modal from '@/components/modal'
 import { PlusIcon, UpdateIcon } from '@/icons'
@@ -43,14 +43,17 @@ function ItemModal({
     }
   }, [editingItem])
 
-  const handleSearchProduct = (event, index) => {
-    const { value } = event.target
-    setItem(prev => ({ ...prev, description: value }))
-    const searchResult = searchInstance?.current.search(item.description)
-    const searchResultMapped = searchResult?.map(({ item }) => item)
-    setResults(searchResultMapped)
-    console.log('searchResult', searchResultMapped)
-  }
+
+  const resultsToRender = useMemo(() => {
+      const searchResult = searchInstance?.current.search(item.description)
+      const searchResultMapped = searchResult?.map(({ item }) => item)
+      return searchResultMapped
+  }, [item.description])
+
+
+  console.log(resultsToRender)
+
+
 
   const handleChangeItem = event => {
     let { value, name } = event.target
@@ -104,7 +107,6 @@ function ItemModal({
         description: product.description,
       })
     }
-    qtyInputRef?.current.focus()
   }
 
   return (
@@ -112,7 +114,7 @@ function ItemModal({
       <div>
         <h2 className="text-primary text-2xl font-bold">Agregar Producto</h2>
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-4 items-center">
+          <div className="flex flex-col gap-4 ">
             <Input
               autoFocus
               classContainer={'w-full'}
@@ -120,7 +122,7 @@ function ItemModal({
               ref={searchInputRef}
               placeholder="Buscar producto"
               type="search"
-              onChange={handleSearchProduct}
+              onChange={handleChangeItem}
               textLabel="Descripción"
               value={item.description}
               name="description"
@@ -128,21 +130,21 @@ function ItemModal({
             />
 
             <ul className="menu bg-none w-full bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto">
-              {results.length > 0
-                ? results.map(item => (
+              {resultsToRender.length > 0
+                ? resultsToRender.map(item => (
                     <li
                       onClick={() => handleProductClick(item)}
                       className="flex gap-x-1 "
                       key={item.id}
                     >
-                    <div className='p-0 flex items-center gap-x-2'>
-                      <span className='btn btn-primary btn-xs h-full '>
-                        <p style={{writingMode: 'vertical-lr'}}>
-                          {item.code}
-                        </p>
-                      </span>
-                      <span className='p-0'>{item.description}</span>
-                    </div>
+                      <div className="p-0 flex items-center gap-x-2">
+                        <span className="btn btn-primary btn-xs h-full ">
+                          <p style={{ writingMode: 'vertical-lr' }}>
+                            {item.code}
+                          </p>
+                        </span>
+                        <span className="p-0">{item.description}</span>
+                      </div>
                     </li>
                   ))
                 : Array.from({ length: 6 })
@@ -153,15 +155,15 @@ function ItemModal({
                       </li>
                     ))}
             </ul>
+            <Input
+              onChange={handleChangeItem}
+              value={item.unit_size}
+              type="text"
+              labelText="U/M"
+              name="unit_size"
+              required
+            />
             <div className="flex gap-2">
-              <Input
-                onChange={handleChangeItem}
-                value={item.unit_size}
-                type="text"
-                labelText="U/M"
-                name="unit_size"
-                required
-              />
               <Input
                 onChange={handleChangeItem}
                 value={item.qty}

@@ -35,7 +35,10 @@ export default function DownloadPDF({ quotation }) {
   }
 
   if (instance.loading) {
-    return <div>Loading...</div>
+    return <div>
+      <button className='loading loading-dots'></button>
+      <button className='loading loading-dots'></button>
+    </div>
   }
 
   if (instance.error) {
@@ -46,7 +49,9 @@ export default function DownloadPDF({ quotation }) {
     <>
       <button onClick={handleShare} className="btn">
         <ShareIcon />
-        Compartir
+        <span className='hidden md:block'>
+          Compartir
+        </span>
       </button>
       <a
         href={instance.url}
@@ -55,7 +60,9 @@ export default function DownloadPDF({ quotation }) {
       >
 
         <DownloadIcon/>
-        Descargar
+        <span className='hidden md:block'>
+          Descargar
+        </span>
       </a>
     </>
   )

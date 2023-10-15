@@ -15,7 +15,9 @@ function RealtimeQuotation({ serverQuotation }) {
       <header className="flex gap-x-2">
         <Link href={`/quotations/update?id=${id}`} className="btn btn-primary">
           <EditIcon />
-          Editar
+          <span className='hidden md:block'>
+            Editar
+          </span>
         </Link>
         <DownloadPDF quotation={quotation} />
       </header>

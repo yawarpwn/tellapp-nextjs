@@ -9,6 +9,7 @@ import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
 import Pagination from './pagination'
 import { ROW_PER_PAGE } from '@/constants'
+import ConfirmModal from './confirm-modal'
 
 function RealtimeQuotations({ serverQuotations }) {
   const [page, setPage] = useState(1)
@@ -21,9 +22,8 @@ function RealtimeQuotations({ serverQuotations }) {
   const handleSearchChange = event => {
     const { value } = event.target
     setSearchValue(value)
+    setPage(1)
   }
-
-
 
   const quotationsFiltered = useMemo(() => {
     if (!searchValue) {
