@@ -1,19 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect, useMemo, useCallback } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useState, useMemo } from 'react'
 import { DeleteIcon, EyeIcon } from '@/icons'
 import { getIgv } from '@/utils'
 import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
 import Pagination from './pagination'
 import { ROW_PER_PAGE } from '@/constants'
-import ConfirmModal from './confirm-modal'
 
 function RealtimeQuotations({ serverQuotations }) {
   const [page, setPage] = useState(1)
-  const { data: quotations, deleteData: deleteQuotation } = useRealTime({
+  const { rows: quotations, deleteRow } = useRealTime({
     initialData: serverQuotations,
   })
 
@@ -96,7 +94,7 @@ function RealtimeQuotations({ serverQuotations }) {
                   <td className="flex gap-x-2">
                     <button
                       className="btn "
-                      onClick={() => deleteQuotation(quotation.id)}
+                      onClick={() => deleteRow(quotation.id)}
                     >
                       <DeleteIcon />
                     </button>

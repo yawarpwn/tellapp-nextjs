@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
-export function useRealTime({ initialData}) {
-  const [data, setData] = useState(initialData)
+export function useRealTime({ initialData, table = 'quotations' }) {
+  const [rows, setRows] = useState(initialData)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const deleteData= async id => {
-    const { error } = await supabase.from('quotations').delete().eq('id', id)
+  const deleteRow = async id => {
+    const { error } = await supabase.from(table).delete().eq('id', id)
 
     if (error) {
       console.log('error delete quotation', error)
@@ -17,6 +17,19 @@ export function useRealTime({ initialData}) {
     console.log('delete quotation', id)
   }
 
+  const updateRow = async rowToUpdate => {
+    const { error } = await supabase
+      .from(table)
+      .update(rowToUpdate)
+      .eq('id', rowToUpdate.id)
+    setError(error)
+  }
+
+  const insertRow = async rowToInsert => {
+    const { error } = await supabase.from(table).insert(rowToInsert)
+    console.log(error)
+    setError(error)
+  }
 
   const supabase = createClientComponentClient()
   useEffect(() => {
@@ -28,18 +41,18 @@ export function useRealTime({ initialData}) {
 
     const handleSubscription = payload => {
       if (payload.eventType === TYPE.INSERT) {
-        setData(quotations => [...quotations, payload.new])
+        setRows(quotations => [...quotations, payload.new])
       }
 
       if (payload.eventType === TYPE.DELETE) {
-        setData(prevQuos => {
+        setRows(prevQuos => {
           const quosToUpdate = prevQuos.filter(q => q.id !== payload.old.id)
           return quosToUpdate
         })
       }
 
       if (payload.eventType === TYPE.UPDATE) {
-        setData(quotations =>
+        setRows(quotations =>
           quotations.map(quotation =>
             quotation.id === payload.new.id ? payload.new : quotation,
           ),
@@ -51,7 +64,7 @@ export function useRealTime({ initialData}) {
       .channel('*')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'quotations' },
+        { event: '*', schema: 'public', table },
         handleSubscription,
       )
       .subscribe()
@@ -59,12 +72,14 @@ export function useRealTime({ initialData}) {
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [supabase, setData, data])
+  }, [supabase, setRows, rows, table])
 
   return {
-    data,
+    rows,
     error,
     loading,
-    deleteData
+    deleteRow,
+    insertRow,
+    updateRow,
   }
 }

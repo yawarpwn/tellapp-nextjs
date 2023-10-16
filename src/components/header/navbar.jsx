@@ -16,7 +16,7 @@ const navs = [
   },
   {
     title: 'Productos',
-    href: '/productos',
+    href: '/products',
     icon: ProductsIcon,
   },
 

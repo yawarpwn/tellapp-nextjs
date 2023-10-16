@@ -22,8 +22,6 @@ function ItemModal({
 }) {
   const [item, setItem] = useState(initialState)
   const searchInstance = useRef(null)
-  const [results, setResults] = useState([])
-  // const [products, setProducts] = useState([])
 
   useEffect(() => {
     const supabase = createClientComponentClient()
@@ -45,9 +43,14 @@ function ItemModal({
 
 
   const resultsToRender = useMemo(() => {
+    if(item.description.length > 1) {
       const searchResult = searchInstance?.current.search(item.description)
       const searchResultMapped = searchResult?.map(({ item }) => item)
       return searchResultMapped
+    }
+    return []
+
+
   }, [item.description])
 
 

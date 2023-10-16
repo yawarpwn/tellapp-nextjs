@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
-function ConfirmModal({ modalRef, onCloseModal, children, isOpen, loading }) {
+import { useEffect, useRef } from 'react'
+function ConfirmModal({  onCloseModal, children, isOpen, loading }) {
+  const modalRef = useRef()
   useEffect(() => {
     if (isOpen) {
       modalRef.current?.showModal()

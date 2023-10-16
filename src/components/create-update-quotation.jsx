@@ -25,7 +25,6 @@ function CreateUpdateQuotation({ serverQuotation }) {
   const [editingItem, setEditingItem] = useState(null)
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
   const modalRef = useRef()
-  const confirmModalRef = useRef()
 
   const handleOpenModal = item => {
     setIsOpenModal(true)
@@ -248,11 +247,10 @@ function CreateUpdateQuotation({ serverQuotation }) {
           {serverQuotation ? 'Actualizar' : 'Crear'}
         </buttton>
         <ConfirmModal
-          modalRef={confirmModalRef}
           isOpen={isOpenConfirmModal}
           onCloseModal={() => setIsOpenConfirmModal(false)}
           loading={loading}
-        />
+        ></ConfirmModal>
       </form>
     </div>
   )
