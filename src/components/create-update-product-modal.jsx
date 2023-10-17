@@ -21,14 +21,8 @@ function CreateUpdateProductModal({
   createProduct,
   editingProduct,
 }) {
-  const [product, setProduct] = useState(initialState)
+  const [product, setProduct] = useState( editingProduct || initialState)
   const modalRef = useRef()
-  console.log(editingProduct ? 'MODE: --- edit ---' :  'MODE: --- create ---')
-
-  useEffect(() => {
-    console.log('modal render')
-    setProduct(editingProduct)
-  }, [editingProduct])
 
   useEffect(() => {
     if (isOpenModal) {

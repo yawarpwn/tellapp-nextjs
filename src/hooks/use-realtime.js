@@ -26,9 +26,14 @@ export function useRealTime({ initialData, table = 'quotations' }) {
   }
 
   const insertRow = async rowToInsert => {
-    const { error } = await supabase.from(table).insert(rowToInsert)
-    console.log(error)
-    setError(error)
+    const { data, error } = await supabase.from(table).insert(rowToInsert).select()
+    if(error) {
+      console.log(error)
+      setError(error)
+    }
+
+    console.log('inserted Row',data)
+
   }
 
   const supabase = createClientComponentClient()

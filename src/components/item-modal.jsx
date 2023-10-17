@@ -44,7 +44,7 @@ function ItemModal({
 
   const resultsToRender = useMemo(() => {
     if(item.description.length > 1) {
-      const searchResult = searchInstance?.current.search(item.description)
+      const searchResult = searchInstance?.current?.search(item.description)
       const searchResultMapped = searchResult?.map(({ item }) => item)
       return searchResultMapped
     }
@@ -52,9 +52,6 @@ function ItemModal({
 
 
   }, [item.description])
-
-
-  console.log(resultsToRender)
 
 
 
@@ -133,7 +130,7 @@ function ItemModal({
             />
 
             <ul className="menu bg-none w-full bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto">
-              {resultsToRender.length > 0
+              {resultsToRender?.length > 0
                 ? resultsToRender.map(item => (
                     <li
                       onClick={() => handleProductClick(item)}
@@ -193,7 +190,7 @@ function ItemModal({
                 </>
               ) : (
                 <>
-                  <PlusIcon /> Agregar
+                  <PlusIcon /> Agregar 
                 </>
               )}
             </button>

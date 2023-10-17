@@ -170,13 +170,15 @@ function CreateUpdateQuotation({ serverQuotation }) {
     <div>
       <Toaster />
       {/* Form  */}
-      <ItemModal
-        onAddItem={handleAddItem}
-        onCloseModal={handleCloseModal}
-        modalRef={modalRef}
-        editingItem={editingItem}
-        onEditItem={handleEditItem}
-      />
+      {isOpenModal && (
+        <ItemModal
+          onAddItem={handleAddItem}
+          onCloseModal={handleCloseModal}
+          modalRef={modalRef}
+          editingItem={editingItem}
+          onEditItem={handleEditItem}
+        />
+      )}
       <div>
         <h2 className="text-warning font-bold text-2xl">
           #{serverQuotation ? quotation.number : '5000'}
@@ -241,7 +243,7 @@ function CreateUpdateQuotation({ serverQuotation }) {
         </button>
         <buttton
           type="button"
-          className="btn"
+          className="btn btn-primary"
           onClick={() => setIsOpenConfirmModal(true)}
         >
           {serverQuotation ? 'Actualizar' : 'Crear'}

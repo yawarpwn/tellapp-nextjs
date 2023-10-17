@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useRef } from 'react'
+import { useState, useMemo, useEffect} from 'react'
 import { DeleteIcon, EditIcon } from '@/icons'
 import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
@@ -25,6 +25,8 @@ function RealtimeQuotations({ serverProducts }) {
     table: 'products',
   })
 
+  console.log('products', products)
+
   const handleEditProduct = product => {
     setEditingProduct(product)
     setIsOpenModal(true)
@@ -33,8 +35,12 @@ function RealtimeQuotations({ serverProducts }) {
   const [searchValue, setSearchValue] = useState('')
 
   const handleOpenModal = item => {
+    if (item) {
+      setIsOpenModal(true)
+      setEditingProduct(item)
+    }
     setIsOpenModal(true)
-    setEditingProduct(item)
+    setEditingProduct(null)
   }
 
   const handleCloseModal = () => {
@@ -73,8 +79,8 @@ function RealtimeQuotations({ serverProducts }) {
   }, [page, quotationsFiltered])
 
   // useEffect(() => {
-  //   setQuotations(serverQuotations)
-  // }, [serverQuotations])
+  //   setQuotations(serverProducts)
+  // }, [serverProducts])
 
   return (
     <>
@@ -88,13 +94,15 @@ function RealtimeQuotations({ serverProducts }) {
           Crear
         </button>
       </header>
-      <CreateUpdateProductModal
-        isOpenModal={isOpenModal}
-        onCloseModal={handleCloseModal}
-        editingProduct={editingProduct}
-        updateProduct={updateRow}
-        createProduct={insertRow}
-      />
+      {isOpenModal && (
+        <CreateUpdateProductModal
+          isOpenModal={isOpenModal}
+          onCloseModal={handleCloseModal}
+          editingProduct={editingProduct}
+          updateProduct={updateRow}
+          createProduct={insertRow}
+        />
+      )}
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

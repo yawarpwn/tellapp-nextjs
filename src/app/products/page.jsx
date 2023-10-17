@@ -7,7 +7,7 @@ export default async function Home() {
   const { data } = await supabase
     .from('products')
     .select()
-    .order('description', { ascending: false })
+    .order('description', { ascending: true})
   return (
     <div>
       {/* <NewQuotation /> */}
