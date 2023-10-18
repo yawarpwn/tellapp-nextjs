@@ -3,9 +3,26 @@ import { cookies } from 'next/headers'
 import React from 'react'
 
 async function Page() {
-  // const storeCookies = cookies()
-  // const supabase = createServerComponentClient({ cookies: () => storeCookies})
-  // const { data, error } = await supabase.from('cotizaciones').select('*')
+  const storeCookies = cookies()
+  const supabase = createServerComponentClient({ cookies: () => storeCookies})
+  const { data, error } = await supabase.from('cotizaciones').select('*')
+  // const safeQuos = data.filter(q => q.viability === 'Safe')
+  // const quos = new Set(safeQuos.map(q => q.ruc))
+  // const customersUnique = [...quos].map(ruc => {
+  //   return data.find(quo => quo.ruc === ruc)
+  // }) 
+
+  // customersUnique.forEach(async quo => {
+  //   const customToInsert = {
+  //     name: quo.company,
+  //     address: quo.address,
+  //     ruc: quo.ruc,
+  //     phone: quo.phone,
+  //     email: quo.email
+  //   }
+  //   await supabase.from('customers').insert(customToInsert)
+  // })
+
   //   const quotations = data.map(item => {
   //   const { created_at, company, address, quo_number, ruc, deadline, quotation_items} = item
   //   return {

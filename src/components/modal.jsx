@@ -1,4 +1,16 @@
-function Modal({ children, modalRef, onClose }) {
+'use client'
+
+import { useEffect, useRef } from "react"
+function Modal({ children,  onClose, isOpen }) {
+  const modalRef = useRef(null)
+  useEffect(() => {
+    if(isOpen) {
+      modalRef.current?.showModal()
+    } else {
+      modalRef.current?.close()
+    }
+  })
+
   return (
     <dialog
       ref={modalRef}

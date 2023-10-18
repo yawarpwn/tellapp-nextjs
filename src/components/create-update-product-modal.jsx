@@ -22,15 +22,7 @@ function CreateUpdateProductModal({
   editingProduct,
 }) {
   const [product, setProduct] = useState( editingProduct || initialState)
-  const modalRef = useRef()
 
-  useEffect(() => {
-    if (isOpenModal) {
-      modalRef?.current.showModal()
-    } else {
-      modalRef?.current.close()
-    }
-  }, [isOpenModal])
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -47,7 +39,7 @@ function CreateUpdateProductModal({
   }
 
   return (
-    <Modal modalRef={modalRef} onClose={onCloseModal}>
+    <Modal isOpen={isOpenModal}  onClose={onCloseModal}>
       <div>
         <h2 className="text-primary text-2xl font-bold">Agregar Producto</h2>
         <form onSubmit={handleSubmit}>

@@ -14,11 +14,11 @@ const initialState = {
 }
 
 function ItemModal({
-  modalRef,
   onCloseModal,
   onAddItem,
   onEditItem,
   editingItem,
+  isOpenModal,
 }) {
   const [item, setItem] = useState(initialState)
   const searchInstance = useRef(null)
@@ -41,19 +41,14 @@ function ItemModal({
     }
   }, [editingItem])
 
-
   const resultsToRender = useMemo(() => {
-    if(item.description.length > 1) {
+    if (item.description.length > 1) {
       const searchResult = searchInstance?.current?.search(item.description)
       const searchResultMapped = searchResult?.map(({ item }) => item)
       return searchResultMapped
     }
     return []
-
-
   }, [item.description])
-
-
 
   const handleChangeItem = event => {
     let { value, name } = event.target
@@ -64,9 +59,6 @@ function ItemModal({
 
     setItem(prev => ({ ...prev, [name]: value }))
   }
-
-  const searchInputRef = useRef()
-  const qtyInputRef = useRef()
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -110,7 +102,7 @@ function ItemModal({
   }
 
   return (
-    <Modal modalRef={modalRef} onClose={onCloseModal}>
+    <Modal isOpen={isOpenModal} onClose={onCloseModal}>
       <div>
         <h2 className="text-primary text-2xl font-bold">Agregar Producto</h2>
         <form onSubmit={handleSubmit}>
@@ -119,11 +111,10 @@ function ItemModal({
               autoFocus
               classContainer={'w-full'}
               className={'input-bordered input-primary'}
-              ref={searchInputRef}
               placeholder="Buscar producto"
               type="search"
               onChange={handleChangeItem}
-              textLabel="Descripción"
+              labelText="Descripción"
               value={item.description}
               name="description"
               required
@@ -170,7 +161,6 @@ function ItemModal({
                 type="number"
                 labelText="Cantidad"
                 name="qty"
-                inputRef={qtyInputRef}
                 required
               />
               <Input
@@ -190,7 +180,7 @@ function ItemModal({
                 </>
               ) : (
                 <>
-                  <PlusIcon /> Agregar 
+                  <PlusIcon /> Agregar
                 </>
               )}
             </button>

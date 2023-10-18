@@ -57,7 +57,7 @@ function RealtimeQuotations({ serverQuotations }) {
         <InputSearch
           onSearchChange={handleSearchChange}
           searchValue={searchValue}
-          placeholder="4023"
+          placeholder="Buscar cotización..."
         />
         <Link href="/quotations/create" className="btn btn-primary">
           Crear

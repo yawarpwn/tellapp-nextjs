@@ -1,7 +1,7 @@
 'use client'
 
 import Input from '@/components/input'
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { PlusIcon } from '@/icons'
 import { getRuc, getDni } from '@/services/sunat'
@@ -9,6 +9,7 @@ import ItemModal from '@/components/item-modal'
 import TableItems from '@/components/table-items'
 import toast, { Toaster } from 'react-hot-toast'
 import ConfirmModal from './confirm-modal'
+import Modal from './modal'
 
 const initialState = {
   ruc: '',
@@ -24,7 +25,8 @@ function CreateUpdateQuotation({ serverQuotation }) {
   const [quotation, setQuotation] = useState(serverQuotation || initialState)
   const [editingItem, setEditingItem] = useState(null)
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
-  const modalRef = useRef()
+
+  console.log(isOpenModal)
 
   const handleOpenModal = item => {
     setIsOpenModal(true)
@@ -158,26 +160,18 @@ function CreateUpdateQuotation({ serverQuotation }) {
     }
   }
 
-  useEffect(() => {
-    if (isOpenModal) {
-      modalRef.current?.showModal()
-    } else {
-      modalRef.current?.close()
-    }
-  }, [isOpenModal])
-
   return (
     <div>
       <Toaster />
       {/* Form  */}
       {isOpenModal && (
-        <ItemModal
-          onAddItem={handleAddItem}
+          <ItemModal
+          isOpenModal={isOpenModal}
           onCloseModal={handleCloseModal}
-          modalRef={modalRef}
-          editingItem={editingItem}
-          onEditItem={handleEditItem}
-        />
+            onAddItem={handleAddItem}
+            editingItem={editingItem}
+            onEditItem={handleEditItem}
+          />
       )}
       <div>
         <h2 className="text-warning font-bold text-2xl">

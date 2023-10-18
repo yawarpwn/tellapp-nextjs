@@ -22,12 +22,12 @@ const navs = [
 
   {
     title: 'Clientes',
-    href: '/clientes',
+    href: '/customers',
     icon: CustomersIcon,
   },
   {
-    title: 'Rotulos',
-    href: '/rotulos',
+    title: 'Rótulos',
+    href: '/labels',
     icon: PrinterIcon,
   },
 ]

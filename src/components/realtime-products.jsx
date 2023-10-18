@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect} from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { DeleteIcon, EditIcon } from '@/icons'
 import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
@@ -25,7 +25,6 @@ function RealtimeQuotations({ serverProducts }) {
     table: 'products',
   })
 
-  console.log('products', products)
 
   const handleEditProduct = product => {
     setEditingProduct(product)
@@ -59,7 +58,7 @@ function RealtimeQuotations({ serverProducts }) {
       return products
     }
     return products.filter(quotation =>
-      quotation.description.includes(searchValue),
+      quotation.description.toLowerCase().includes(searchValue.toLowerCase()),
     )
   }, [products, searchValue])
 
@@ -88,7 +87,7 @@ function RealtimeQuotations({ serverProducts }) {
         <InputSearch
           onSearchChange={handleSearchChange}
           searchValue={searchValue}
-          placeholder="4023"
+          placeholder="Buscar producto..."
         />
         <button onClick={handleOpenModal} className="btn btn-primary">
           Crear
