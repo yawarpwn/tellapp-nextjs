@@ -25,7 +25,7 @@ function RealtimeQuotation({ serverQuotation }) {
         <div className="rounded-lg shadow overflow-hidden">
           <div className="px-6 py-4 flex justify-between">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Cotización #{number}</h2>
+              <h2 className="text-2xl font-bold mb-2">#{number}</h2>
               <h3>{quotation.company}</h3>
               <p className="text-xs">{quotation?.address ?? 'Sin dirección'}</p>
             </div>

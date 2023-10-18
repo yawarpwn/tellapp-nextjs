@@ -23,6 +23,18 @@ export function getIgv(items) {
   }
 }
 
+export const getFormatedDate = (date) => {
+  const currentDate = date ? new Date(date) : new Date()
+  const year = currentDate.getFullYear()
+  let month = currentDate.getMonth() + 1
+  let day = currentDate.getDate()
+
+  const formatedDate = `${year}-${String(month).padStart(2, '0')}-${String(
+    day
+  ).padStart(2, '0')}`
+  return formatedDate
+}
+
 export const quotationToCreate = {
   ruc: '20100170681',
   company: 'PRODUCTOS QUIMICOS INDUSTRIALES S A',

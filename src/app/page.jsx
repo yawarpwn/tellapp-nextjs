@@ -4,14 +4,16 @@ import RealtimeQuotations from '@/components/realtime-quotations'
 export default async function Home() {
   const cookiesStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookiesStore })
-  const { data } = await supabase
+  const { data: serverQuotations } = await supabase
     .from('quotations')
     .select()
     .order('number', { ascending: false })
+
+
   return (
     <div>
       {/* <NewQuotation /> */}
-      <RealtimeQuotations serverQuotations={data ?? []} />
+      <RealtimeQuotations serverQuotations={serverQuotations ?? []} />
     </div>
   )
 }

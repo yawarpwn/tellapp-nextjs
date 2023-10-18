@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
-import { DeleteIcon, EyeIcon } from '@/icons'
+import { ChevronDobleRightIcon, ChevronDownIcon, DeleteIcon, EyeIcon } from '@/icons'
 import { getIgv } from '@/utils'
 import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
@@ -14,6 +14,7 @@ function RealtimeQuotations({ serverQuotations }) {
   const { rows: quotations, deleteRow } = useRealTime({
     initialData: serverQuotations,
   })
+
 
   const [searchValue, setSearchValue] = useState('')
 
@@ -71,6 +72,7 @@ function RealtimeQuotations({ serverQuotations }) {
             <tr>
               <th>No</th>
               <th>Cliente</th>
+              <th>Fecha</th>
               <th>Total</th>
               <th>Acciones</th>
             </tr>
@@ -90,18 +92,24 @@ function RealtimeQuotations({ serverQuotations }) {
                       <p>{quotation.ruc}</p>
                     </div>
                   </td>
+                  <td>
+                    <span className='text-xs'>
+                      {new Intl.DateTimeFormat('es').format(new Date(quotation.created_at))}
+                    </span>
+                  </td>
                   <td>{total}</td>
                   <td className="flex gap-x-2">
-                    <button
-                      className="btn "
-                      onClick={() => deleteRow(quotation.id)}
-                    >
-                      <DeleteIcon />
-                    </button>
+                    {/* <button */}
+                    {/*   className="btn " */}
+                    {/*   onClick={() => deleteRow(quotation.id)} */}
+                    {/* > */}
+                    {/*   <DeleteIcon /> */}
+                    {/* </button> */}
                     <Link
                       href={`/quotations/${quotation.number}`}
-                      className="btn "
+                      className="btn btn-secondary "
                     >
+                      Ver
                       <EyeIcon />
                     </Link>
                   </td>

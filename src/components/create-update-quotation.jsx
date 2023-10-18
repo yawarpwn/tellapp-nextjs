@@ -10,6 +10,7 @@ import TableItems from '@/components/table-items'
 import toast, { Toaster } from 'react-hot-toast'
 import ConfirmModal from './confirm-modal'
 import CustomersModal from './customers-modal'
+import { getFormatedDate } from '@/utils'
 
 const initialState = {
   ruc: '',
@@ -19,15 +20,22 @@ const initialState = {
   items: [],
 }
 
-function CreateUpdateQuotation({ serverQuotation }) {
+function CreateUpdateQuotation({
+  serverQuotation,
+  serverCustomers,
+  lastQuotationNumber,
+}) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [quotation, setQuotation] = useState(serverQuotation || initialState)
   const [editingItem, setEditingItem] = useState(null)
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false)
+  const [checked, setChecked] = useState(false)
 
-  console.log('isCustomerModalOpen', isCustomerModalOpen)
+  const formatedDate = getFormatedDate(
+    serverQuotation && serverQuotation.created_at,
+  )
 
   const handleOpenModal = item => {
     setIsOpenModal(true)
@@ -114,6 +122,34 @@ function CreateUpdateQuotation({ serverQuotation }) {
 
   const handleSubmit = async event => {
     event.preventDefault()
+
+    const insertCustomer = async customerToCreate => {
+      const supabase = createClientComponentClient()
+      const { data, error } = await supabase
+        .from('customers')
+        .insert(customerToCreate)
+        .select()
+        .single()
+      if (error) {
+        console.log(error)
+      }
+
+      console.log('inserted customer', data)
+    }
+    if (
+      checked &&
+      quotation.ruc.length === 11 &&
+      quotation.company !== 'Sin Ruc proporcionado'
+    ) {
+      console.log('is Checked y debemos agregar: ', quotation)
+      const customerToCreate = {
+        name: quotation.company,
+        ruc: quotation.ruc,
+        address: quotation.address,
+      }
+      insertCustomer(customerToCreate)
+    }
+
     if (quotation.items.length === 0) {
       const notify = () => toast.error('Debe ingresar al menos un producto')
       notify()
@@ -187,15 +223,17 @@ function CreateUpdateQuotation({ serverQuotation }) {
           isOpenModal={isCustomerModalOpen}
           onCloseModal={() => setIsCustomerModalOpen(false)}
           onCustomerPick={handleCustomerPick}
+          serverCustomers={serverCustomers}
         />
       )}
       <header className="p-4 flex items-center justify-between">
         <h2 className="text-warning font-bold text-2xl">
-          #{serverQuotation ? quotation.number : '5000'}
+          #{serverQuotation ? quotation.number : lastQuotationNumber + 1}
         </h2>
         <button
           onClick={() => setIsCustomerModalOpen(true)}
-          className="btn btn-ghost"
+          type="button"
+          className="btn btn-warning"
         >
           Clientes Frecuentes
         </button>
@@ -222,6 +260,9 @@ function CreateUpdateQuotation({ serverQuotation }) {
           />
         </div>
         <div>
+          <Input labelText="Fecha" type="date" disabled value={formatedDate} />
+        </div>
+        <div>
           <Input
             labelText="Cliente"
             name="company"
@@ -237,6 +278,15 @@ function CreateUpdateQuotation({ serverQuotation }) {
             value={quotation.address}
             disabled
           />
+        </div>
+        <div className="flex gap-2 py-2 items-center">
+          <input
+            type="checkbox"
+            className="checkbox checkbox-primary"
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+          />
+          <span>Agregar a clientes frecuentes</span>
         </div>
 
         {/* List Items  */}

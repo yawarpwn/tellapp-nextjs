@@ -7,12 +7,16 @@ async function UpdatePage({ searchParams }) {
   const { id } = searchParams
   const cookiesStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookiesStore })
-  const { data: quotation } = await supabase
+  const { data: serverCustomers } = await supabase
+    .from('customers')
+    .select()
+    .order('name')
+  const { data: serverQuotations } = await supabase
     .from('quotations')
     .select()
     .match({ id })
     .single()
-  return <CreateUpdateQuotation serverQuotation={quotation} />
+  return <CreateUpdateQuotation serverQuotation={serverQuotations} serverCustomers={serverCustomers} />
 }
 
 export default UpdatePage
