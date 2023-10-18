@@ -9,7 +9,7 @@ import ItemModal from '@/components/item-modal'
 import TableItems from '@/components/table-items'
 import toast, { Toaster } from 'react-hot-toast'
 import ConfirmModal from './confirm-modal'
-import Modal from './modal'
+import CustomersModal from './customers-modal'
 
 const initialState = {
   ruc: '',
@@ -25,8 +25,9 @@ function CreateUpdateQuotation({ serverQuotation }) {
   const [quotation, setQuotation] = useState(serverQuotation || initialState)
   const [editingItem, setEditingItem] = useState(null)
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
+  const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false)
 
-  console.log(isOpenModal)
+  console.log('isCustomerModalOpen', isCustomerModalOpen)
 
   const handleOpenModal = item => {
     setIsOpenModal(true)
@@ -42,6 +43,15 @@ function CreateUpdateQuotation({ serverQuotation }) {
     setQuotation(prev => ({
       ...prev,
       items: [...quotation.items, item],
+    }))
+  }
+
+  const handleCustomerPick = customer => {
+    setQuotation(prev => ({
+      ...prev,
+      company: customer.name,
+      ruc: customer.ruc,
+      address: customer.address,
     }))
   }
 
@@ -161,23 +171,35 @@ function CreateUpdateQuotation({ serverQuotation }) {
   }
 
   return (
-    <div>
+    <section>
       <Toaster />
-      {/* Form  */}
       {isOpenModal && (
-          <ItemModal
+        <ItemModal
           isOpenModal={isOpenModal}
           onCloseModal={handleCloseModal}
-            onAddItem={handleAddItem}
-            editingItem={editingItem}
-            onEditItem={handleEditItem}
-          />
+          onAddItem={handleAddItem}
+          editingItem={editingItem}
+          onEditItem={handleEditItem}
+        />
       )}
-      <div>
+      {isCustomerModalOpen && (
+        <CustomersModal
+          isOpenModal={isCustomerModalOpen}
+          onCloseModal={() => setIsCustomerModalOpen(false)}
+          onCustomerPick={handleCustomerPick}
+        />
+      )}
+      <header className="p-4 flex items-center justify-between">
         <h2 className="text-warning font-bold text-2xl">
           #{serverQuotation ? quotation.number : '5000'}
         </h2>
-      </div>
+        <button
+          onClick={() => setIsCustomerModalOpen(true)}
+          className="btn btn-ghost"
+        >
+          Clientes Frecuentes
+        </button>
+      </header>
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <div className="flex justify-between gap-2">
           <Input
@@ -248,7 +270,7 @@ function CreateUpdateQuotation({ serverQuotation }) {
           loading={loading}
         ></ConfirmModal>
       </form>
-    </div>
+    </section>
   )
 }
 
