@@ -21,18 +21,40 @@ export function getRuc(ruc) {
     })
 }
 
+// data {
+//   nombres: 'ERACLEO JUAN',
+//   apellidoPaterno: 'HUAMANI',
+//   apellidoMaterno: 'MENDOZA',
+//   tipoDocumento: '1',
+//   numeroDocumento: '46027897',
+//   digitoVerificador: ''
+// }
+
 export function getDni(dni) {
-  const query = `${URL}/dni/${dni}?token=${TOKEN}`
-  return fetch(query)
+  const URL = `https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`
+  const token = 'apis-token-6026.Ga7rPY7Cu8q2sEuzkmIVxEdlOMExM6LU'
+  // curl -H 'Accept: application/json' -H "Authorization: Bearer $TOKEN" https://api.apis.net.pe/v2/reniec/dni?numero=46027897
+  return fetch(URL, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
     .then(res => {
       if (!res.ok) {
         throw new Error('Fetching DNI Error')
       }
       return res.json()
     })
-    .then(data => ({
-      ruc: data.dni,
-      company: `${data.nombres} ${data.apellidoPaterno} ${data.apellidoMaterno}`,
-      address: '',
-    }))
+
+    .then(data => {
+      const { nombres, apellidoPaterno, apellidoMaterno } = data
+      return {
+        ruc: dni,
+        company: `${nombres} ${apellidoPaterno} ${apellidoMaterno}`,
+        address: '',
+      }
+    })
 }
