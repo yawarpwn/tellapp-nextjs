@@ -158,12 +158,18 @@ function CreateUpdateQuotation({
 
     // Create quotation
     if (!serverQuotation) {
+
+      const quotationToInsert  = {
+        ...quotation,
+        number: lastQuotationNumber + 1
+      }
+
+      console.log(quotationToInsert)
       try {
         setLoading(true)
-
         const { data, error } = await supabase
           .from('quotations')
-          .insert(quotation)
+          .insert(quotationToInsert)
           .select()
           .single()
 
@@ -242,6 +248,7 @@ function CreateUpdateQuotation({
         <div className="flex justify-between gap-2">
           <Input
             labelText="Ruc"
+            autoFocus={!serverQuotation}
             name="ruc"
             type="number"
             placeholder="20610555536"
