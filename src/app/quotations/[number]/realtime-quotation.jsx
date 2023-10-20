@@ -40,6 +40,7 @@ function RealtimeQuotation({ serverQuotation }) {
                   <th>Descripción</th>
                   <th>U/M</th>
                   <th>Cant</th>
+                  <th>Si IGv</th>
                   <th>P.Unit</th>
                   <th>Total</th>
                 </tr>
@@ -55,6 +56,7 @@ function RealtimeQuotation({ serverQuotation }) {
                       </td>
                       <td>{item.unit_size}</td>
                       <td>{item.qty}</td>
+                      <td>{(item.price /1.18).toFixed(4)}</td>
                       <td>{item.price.toFixed(2)}</td>
                       <td>{total}</td>
                     </tr>

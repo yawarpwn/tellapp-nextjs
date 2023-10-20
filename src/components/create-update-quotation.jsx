@@ -11,6 +11,8 @@ import toast, { Toaster } from 'react-hot-toast'
 import ConfirmModal from './confirm-modal'
 import CustomersModal from './customers-modal'
 import { getFormatedDate } from '@/utils'
+import { shootCoffeti } from '@/services/confetti'
+import { insertRow, updateRow } from '@/services/supabase'
 
 const initialState = {
   ruc: '',
@@ -123,31 +125,21 @@ function CreateUpdateQuotation({
   const handleSubmit = async event => {
     event.preventDefault()
 
-    const insertCustomer = async customerToCreate => {
-      const supabase = createClientComponentClient()
-      const { data, error } = await supabase
-        .from('customers')
-        .insert(customerToCreate)
-        .select()
-        .single()
-      if (error) {
-        console.log(error)
-      }
-
-      console.log('inserted customer', data)
-    }
     if (
       checked &&
       quotation.ruc.length === 11 &&
       quotation.company !== 'Sin Ruc proporcionado'
     ) {
-      console.log('is Checked y debemos agregar: ', quotation)
       const customerToCreate = {
         name: quotation.company,
         ruc: quotation.ruc,
         address: quotation.address,
       }
-      insertCustomer(customerToCreate)
+      await insertRow({
+        client: supabase,
+        table: 'customers',
+        row: customerToCreate,
+      })
     }
 
     if (quotation.items.length === 0) {
@@ -158,29 +150,21 @@ function CreateUpdateQuotation({
 
     // Create quotation
     if (!serverQuotation) {
-
-      const quotationToInsert  = {
+      const quotationToInsert = {
         ...quotation,
-        number: lastQuotationNumber + 1
+        number: lastQuotationNumber + 1,
       }
 
-      console.log(quotationToInsert)
       try {
         setLoading(true)
-        const { data, error } = await supabase
-          .from('quotations')
-          .insert(quotationToInsert)
-          .select()
-          .single()
-
-        if (error) {
-          console.log('error', error)
-          throw new Error('error create quotation')
-        }
+        await insertRow({
+          client: supabase,
+          table: 'quotations',
+          row: quotationToInsert,
+        })
         setIsOpenModal(false)
+        shootCoffeti()
         window.navigation.navigate('/')
-
-        console.log('create quotation', data)
       } catch (error) {
         console.log(error)
       } finally {
@@ -190,18 +174,12 @@ function CreateUpdateQuotation({
       // Update quotation
       try {
         setLoading(true)
-        const { data, error } = await supabase
-          .from('quotations')
-          .update(quotation)
-          .eq('id', quotation.id)
-
-        if (error) {
-          console.log('error', error)
-          throw new Error('error create quotation')
-        }
-
-        console.log('update quotation', data)
-
+        await updateRow({
+          client: supabase,
+          table: 'quotations',
+          row: quotation,
+        })
+        shootCoffeti()
         setIsOpenModal(false)
         window.navigation.navigate(`/quotations/${quotation.number}`)
       } catch (error) {
