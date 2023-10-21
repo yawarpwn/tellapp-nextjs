@@ -2,6 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { siteConfig } from '@/config/site'
 import Navbar from '@/components/header/navbar'
+import NextTopLoader from 'nextjs-toploader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html data-theme="dark" lang="en">
       <body className={`${inter.className} min-h-screen font-sans antialiased`}>
+        <NextTopLoader />
         <div className="max-w-3xl mx-auto px-4 md:px-6">
           <Navbar />
           <main >{children}</main>

@@ -80,6 +80,7 @@ function RealtimeQuotations({ serverQuotations }) {
           <tbody>
             {quotationsToRender.map(quotation => {
               const { total } = getIgv(quotation.items)
+              const formatedDate = new Intl.DateTimeFormat('es').format(new Date(quotation.created_at))
               return (
                 <tr key={quotation.id}>
                   <td>
@@ -94,7 +95,7 @@ function RealtimeQuotations({ serverQuotations }) {
                   </td>
                   <td>
                     <span className='text-xs'>
-                      {new Intl.DateTimeFormat('es').format(new Date(quotation.created_at))}
+                      {formatedDate}
                     </span>
                   </td>
                   <td>{total}</td>

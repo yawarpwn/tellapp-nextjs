@@ -14,13 +14,12 @@
     "@supabase/supabase-js": "2.38.0",
     "canvas-confetti": "^1.9.0",
     "clsx": "2.0.0",
-    "confetti": "2.0.0",
     "fuse.js": "6.6.2",
     "next": "latest",
+    "nextjs-toploader": "1.5.3",
     "react": "latest",
     "react-dom": "latest",
     "react-hot-toast": "2.4.1",
-    "react-to-pdf": "1.0.1",
     "react-to-print": "2.14.15"
   },
   "devDependencies": {
