@@ -21,7 +21,7 @@ function CreateUpdateProductModal({
   createProduct,
   editingProduct,
 }) {
-  const [product, setProduct] = useState( editingProduct || initialState)
+  const [product, setProduct] = useState(editingProduct || initialState)
 
 
   const handleSubmit = async event => {
@@ -39,23 +39,27 @@ function CreateUpdateProductModal({
   }
 
   return (
-    <Modal isOpen={isOpenModal}  onClose={onCloseModal}>
+    <Modal isOpen={isOpenModal} onClose={onCloseModal}>
       <div>
         <h2 className="text-primary text-2xl font-bold">Agregar Producto</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4 ">
             <div className="flex flex-col gap-4">
-              <Input
-                required
-                onChange={e =>
-                  setProduct(prev => ({ ...prev, description: e.target.value }))
-                }
-                value={product?.description}
-                labelText="Descripcion"
-                type="text"
-                placeholder="Descripcion de producto"
-                autoFocus
-              />
+              <div className='form-control'>
+                <label className='label'>
+                  <span className='label-text'>Descripción</span>
+                </label>
+
+                <textarea required
+                  onChange={e =>
+                    setProduct(prev => ({ ...prev, description: e.target.value }))
+                  }
+                  value={product?.description}
+                  placeholder="Descripcion de producto"
+                  autoFocus
+                  className='textarea textarea-primary h-[120px]'
+                />
+              </div>
               <Input
                 required
                 onChange={e =>

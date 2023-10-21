@@ -18,7 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html data-theme="dark" lang="en">
       <body className={`${inter.className} min-h-screen font-sans antialiased`}>
-        <NextTopLoader />
+        <NextTopLoader
+          showSpinner={false}
+        />
         <div className="max-w-3xl mx-auto px-4 md:px-6">
           <Navbar />
           <main >{children}</main>
