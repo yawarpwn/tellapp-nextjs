@@ -4,7 +4,9 @@ function Input({ labelText, className, classContainer, inputRef, ...props }) {
       <label className="label">
         <span className="label-text">{labelText}</span>
       </label>
-      <input ref={inputRef} className={`input input-bordered w-full ${className}`} {...props} />
+      <input ref={inputRef}
+        className={`input input-bordered w-full ${className}`} {...props}
+      />
     </div>
   )
 }

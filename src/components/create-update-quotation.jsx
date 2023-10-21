@@ -164,7 +164,7 @@ function CreateUpdateQuotation({
         })
         setIsOpenModal(false)
         shootCoffeti()
-        window.navigation.navigate('/')
+        window.navigation.navigate(`/quotations/${lastQuotationNumber + 1}`)
       } catch (error) {
         console.log(error)
       } finally {
