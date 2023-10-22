@@ -6,6 +6,7 @@ import {
   PrinterIcon,
   QuotationIcon,
   CustomersIcon,
+  TruckIcon
 } from '@/icons'
 
 const navs = [
@@ -30,6 +31,12 @@ const navs = [
     href: '/labels',
     icon: PrinterIcon,
   },
+  {
+    title: 'Agencias',
+    href: '/agencies',
+    icon: TruckIcon,
+  },
+
 ]
 function Navbar() {
   return (

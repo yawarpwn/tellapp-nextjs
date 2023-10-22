@@ -15,12 +15,13 @@
     "canvas-confetti": "^1.9.0",
     "clsx": "2.0.0",
     "fuse.js": "6.6.2",
-    "next": "latest",
+    "next": "13.5.4",
     "nextjs-toploader": "1.5.3",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-hot-toast": "2.4.1",
-    "react-to-print": "2.14.15"
+    "react-to-print": "2.14.15",
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "autoprefixer": "latest",
