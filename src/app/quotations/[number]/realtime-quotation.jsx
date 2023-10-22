@@ -23,7 +23,7 @@ function RealtimeQuotation({ serverQuotation }) {
       </header>
       <div className="container mx-auto px-4 py-8">
         <div className="rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 flex justify-between">
+          <div className="py-4 flex justify-between">
             <div>
               <h2 className="text-2xl font-bold mb-2">#{number}</h2>
               <h3>{quotation.company}</h3>
@@ -33,6 +33,7 @@ function RealtimeQuotation({ serverQuotation }) {
               <p className="text-sm">Fecha: {formatedDate}</p>
             </div>
           </div>
+          <p>Tiempo de entrega: <strong className='text-warning'> {quotation.deadline} días</strong> hábiles</p>
           <div className="overflow-x-auto">
             <table className="table">
               <thead>

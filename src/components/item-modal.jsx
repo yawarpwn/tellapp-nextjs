@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect, useMemo } from 'react'
 import Input from '@/components/input'
 import Modal from '@/components/modal'
-import { PlusIcon, UpdateIcon } from '@/icons'
+import { PlusIcon, UpdateIcon, XIcon } from '@/icons'
 import { createSearchInstance } from '@/services/search'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
@@ -21,6 +21,7 @@ function ItemModal({
   isOpenModal,
 }) {
   const [item, setItem] = useState(initialState)
+  const [showClearDescription, setShowClearDescription] = useState(false)
   const searchInstance = useRef(null)
 
   useEffect(() => {
@@ -40,6 +41,15 @@ function ItemModal({
       setItem(initialState)
     }
   }, [editingItem])
+
+  useEffect(() => {
+    if(item.description.length >= 3) {
+      setShowClearDescription(true)
+    } else {
+      setShowClearDescription(false)
+    }
+
+  }, [item.description])
 
   const resultsToRender = useMemo(() => {
     if (item.description.length > 1) {
@@ -101,24 +111,45 @@ function ItemModal({
     }
   }
 
+  const clearDescription = () => {
+    setItem(prev => ({
+      ...prev,
+      description: '',
+    }))
+  }
+
+
+
   return (
     <Modal isOpen={isOpenModal} onClose={onCloseModal}>
       <div>
-        <h2 className="text-primary text-2xl font-bold">Agregar Producto</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4 ">
-            <Input
-              autoFocus
-              classContainer={'w-full'}
-              className={'input-bordered input-primary'}
-              placeholder="Buscar producto"
-              type="search"
-              onChange={handleChangeItem}
-              labelText="Descripción"
-              value={item.description}
-              name="description"
-              required
-            />
+            <div className="form-control relative">
+              {showClearDescription && (
+                <button
+                  type="button"
+                  onClick={clearDescription}
+                  className="btn btn-circle btn-xs absolute right-2 top-12"
+                >
+                  <XIcon />
+                </button>
+              )}
+              <label className="label">
+                <span className="label-text">Descripción</span>
+              </label>
+              <textarea
+                autoFocus
+                className="textarea textarea-primary h-[120px]  w-full resize-none"
+                placeholder="Buscar producto"
+                // type="search"
+                onChange={handleChangeItem}
+                // labelText="Descripción"
+                value={item.description}
+                name="description"
+                required
+              />
+            </div>
 
             <ul className="menu bg-none w-full bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto">
               {resultsToRender?.length > 0

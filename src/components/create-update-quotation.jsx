@@ -222,7 +222,7 @@ function CreateUpdateQuotation({
           Clientes Frecuentes
         </button>
       </header>
-      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-2" >
         <div className="flex justify-between gap-2">
           <Input
             labelText="Ruc"
@@ -292,17 +292,18 @@ function CreateUpdateQuotation({
         >
           <PlusIcon /> Agregar Producto
         </button>
-        <buttton
+        <button
           type="button"
           className="btn btn-primary"
           onClick={() => setIsOpenConfirmModal(true)}
         >
           {serverQuotation ? 'Actualizar' : 'Crear'}
-        </buttton>
+        </button>
         <ConfirmModal
           isOpen={isOpenConfirmModal}
           onCloseModal={() => setIsOpenConfirmModal(false)}
           loading={loading}
+          onConfirm={handleSubmit}
         ></ConfirmModal>
       </form>
     </section>

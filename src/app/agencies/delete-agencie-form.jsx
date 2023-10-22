@@ -1,27 +1,35 @@
 'use client'
 import { deleteAgencieForm } from './actions'
-import { experimental_useFormStatus as useFormStatus } from 'react-dom'
+import { useState } from 'react'
 import { DeleteIcon } from '@/icons'
-
-function SubmitButton() {
-  const { pending } = useFormStatus()
-  return (
-    <button className="btn btn-error" type="submit">
-      {pending ? (
-        <span className="loading loading-spinner "></span>
-      ) : (
-        <DeleteIcon />
-      )}
-    </button>
-  )
-}
+import ConfirmActionModal from '@/components/confirm-action-modal'
 
 function DeleteAgencieForm({ id }) {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
+
+  const closeConfirmModal = () => setIsConfirmModalOpen(false)
+  const openConfirmModal = () => setIsConfirmModalOpen(true)
   return (
-    <form action={deleteAgencieForm}>
-      <input name="id" defaultValue={id} className="sr-only" />
-      <SubmitButton />
-    </form>
+    <>
+      <form action={deleteAgencieForm}>
+        <input name="id" defaultValue={id} className="sr-only" />
+        <button
+          type="button"
+          onClick={openConfirmModal}
+          className="btn btn-error"
+        >
+          <DeleteIcon />
+        </button>
+
+        {isConfirmModalOpen && (
+          <ConfirmActionModal
+            isOpen={isConfirmModalOpen}
+            onClose={closeConfirmModal}
+            message="¿Seguro deseas eliminar esta agencia?"
+          />
+        )}
+      </form>
+    </>
   )
 }
 

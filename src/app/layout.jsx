@@ -17,7 +17,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html data-theme="dark" lang="en">
-      <body className={`${inter.className} min-h-screen font-sans antialiased`}>
+      <body 
+suppressHydrationWarning={true}
+        className={`${inter.className} min-h-screen font-sans antialiased`}>
         <NextTopLoader
           showSpinner={false}
           color='#6519e6'
