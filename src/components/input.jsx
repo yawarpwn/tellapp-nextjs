@@ -5,7 +5,7 @@ function Input({ labelText, className, classContainer, inputRef, ...props }) {
         <span className="label-text">{labelText}</span>
       </label>
       <input ref={inputRef}
-        className={`input input-bordered w-full ${className}`} {...props}
+        className={`input input-bordered  placeholder:text-base-content/30 w-full ${className}`} {...props}
       />
     </div>
   )

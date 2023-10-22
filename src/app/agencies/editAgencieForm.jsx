@@ -1,33 +1,35 @@
 'use client'
 import Input from '@/components/input'
 import Modal from '@/components/modal'
-import { PlusIcon } from '@/icons'
-import { createAgencie } from './actions'
-import {  useState } from 'react'
+import { updateAgencie } from './actions'
+import { useState } from 'react'
 // import { experimental_useFormState as useFormState } from 'react-dom'
 import { experimental_useFormStatus as useFormStatus } from 'react-dom'
+import { EditIcon, UpdateIcon } from '@/icons'
 
 function SubmitButton() {
-  const status = useFormStatus()
+  const { pending } = useFormStatus()
 
   return (
-    <button type="submit" className="btn btn-primary w-full mt-4">
-      {status.pending ? (
-        <>
-          <span className="loading loading-spinner"></span>
-        </>
+    <button
+      aria-disabled={pending}
+      disabled={pending}
+      type="submit"
+      className="btn btn-primary mt-4 w-full"
+    >
+      {pending ? (
+        <span className="loading loading-dots loading-sm">Actualizando</span>
       ) : (
         <>
-          <PlusIcon />
-          Crear Agencia
+          <UpdateIcon />
+          Actualizar
         </>
       )}
     </button>
   )
 }
 
-
-function AddAgencieForm() {
+function AddAgencieForm({ agency }) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const closeModal = () => setIsOpenModal(false)
   const openModal = () => setIsOpenModal(true)
@@ -39,35 +41,44 @@ function AddAgencieForm() {
         className="btn btn-primary"
         type="button"
       >
-        Agregar Agencia
+        <EditIcon />
       </button>
       {isOpenModal && (
         <Modal isOpen={isOpenModal} onClose={closeModal}>
-          <form action={async (formData) => {
-            await createAgencie(formData)
-            closeModal()
-          }}>
+          <header>
+            <h2 className="text-primary font-bold text-xl">Editar Agencia</h2>
+          </header>
+          <form
+            action={async formData => {
+              await updateAgencie(formData)
+              closeModal()
+            }}
+          >
             <Input
               name="company"
-              labelText={'Nombre de agencia'}
-              placeholder="Shalom Empresarial"
+              labelText={'Agencia'}
               type="text"
               required
+              defaultValue={agency.company}
             />
             <Input
               labelText={'Ruc'}
               name="ruc"
               type="number"
-              placeholder="206006666035"
+              defaultValue={agency.ruc}
               required
             />
+
             <Input
               labelText={'Dirección'}
               name="address"
+              placeholder='Dirección'
+              
               type="text"
-              placeholder="Av. Fauccett 232 - Callao"
+              defaultValue={agency.address ?? ''}
             />
-            <SubmitButton />
+            <input className="sr-only" name="id" defaultValue={agency.id} />
+            <SubmitButton onCloseModal={closeModal} />
           </form>
         </Modal>
       )}

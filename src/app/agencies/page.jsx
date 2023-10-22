@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import AddAgencieForm from "./add-agencie-form";
 import DeleteAgencieForm from "./delete-agencie-form";
+import EditAgencieForm from './editAgencieForm'
 
 export const dynamic = 'force-dynamic'
 async function AgenciesPage() {
@@ -22,7 +23,6 @@ async function AgenciesPage() {
               <th>Empresa</th>
               <th>Ruc</th>
               <th>Telefono</th>
-              <th>Email</th>
               <th>Accciones</th>
             </tr>
           </thead>
@@ -44,10 +44,10 @@ async function AgenciesPage() {
                     null
                   </td>
                   <td>
-                    null
-                  </td>
-                  <td>
-                    <DeleteAgencieForm id={id} />
+                    <div className="flex gap-2">
+                      <EditAgencieForm agency={agency} />
+                      <DeleteAgencieForm id={id} />
+                    </div>
                   </td>
                 </tr>
               )
