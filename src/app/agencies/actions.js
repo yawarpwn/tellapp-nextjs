@@ -63,12 +63,13 @@ export async function updateAgencie(formData) {
 
 export async function deleteAgencieForm(formData) {
   const id = formData.get('id')
+  console.log('>>>>id:', id)
   if (!id) return
 
   try {
-    deleteRow({ table: 'agencies', client: supabase, id })
+    await deleteRow({ table: 'agencies', client: supabase, id })
     revalidatePath('/')
   } catch (error) {
-    console.log('eRror inserting Row', error)
+    console.log('error deleting Agencie', formData)
   }
 }

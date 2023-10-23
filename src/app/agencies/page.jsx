@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import AddAgencieForm from "./add-agencie-form";
 import DeleteAgencieForm from "./delete-agencie-form";
 import EditAgencieForm from './editAgencieForm'
+import { createAgencie } from "./actions";
+import Input from '@/components/input'
 
 export const dynamic = 'force-dynamic'
 async function AgenciesPage() {
@@ -14,7 +16,32 @@ async function AgenciesPage() {
     <div>
       <div className="overflow-x-auto">
         <header>
-          <AddAgencieForm />
+          <AddAgencieForm  
+            addAction={createAgencie}
+            titleModal='Agregar Agencia'
+          >
+            <Input
+              name="company"
+              labelText={'Nombre de agencia'}
+              placeholder="Shalom Empresarial"
+              type="text"
+              required
+            />
+            <Input
+              labelText={'Ruc'}
+              name="ruc"
+              type="number"
+              placeholder="206006666035"
+              required
+            />
+            <Input
+              labelText={'Dirección'}
+              name="address"
+              type="text"
+              placeholder="Av. Fauccett 232 - Callao"
+            />
+            
+          </AddAgencieForm>
         </header>
         <table className="table">
           {/* head */}

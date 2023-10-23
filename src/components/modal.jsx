@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useRef } from "react"
-function Modal({ children,  onClose, isOpen }) {
+import { useEffect, useRef } from 'react'
+function Modal({ children, onClose, isOpen }) {
   const modalRef = useRef(null)
   useEffect(() => {
-    if(isOpen) {
+    if (isOpen) {
       modalRef.current?.showModal()
     } else {
       modalRef.current?.close()
@@ -23,7 +23,7 @@ function Modal({ children,  onClose, isOpen }) {
     >
       <div className="modal-box">
         <button
-          type='button'
+          type="button"
           onClick={onClose}
           className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-primary"
         >
