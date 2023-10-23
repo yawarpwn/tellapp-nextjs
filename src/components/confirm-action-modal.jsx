@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import {  useRef } from 'react'
 import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 
 function SubmitButton({ onClose }) {
@@ -34,7 +34,7 @@ export default function ConfirmActionModal({
   maxWidthModal = 'lg',
   openButtonContent = <span>open </span> ,
   openButtonVariant = 'primary',
-  message = 'Default message on modal',
+  title = 'Default message on modal',
 }) {
   const modalRef = useRef(null)
   const formRef = useRef(null)
@@ -60,7 +60,7 @@ export default function ConfirmActionModal({
       </button>
       <dialog ref={modalRef} className="modal">
         <div className={`modal-box max-w-${maxWidthModal}`}>
-          <p className="mb-4 text-center">{message}</p>
+          <p className="mb-4  text-center">{title}</p>
           <form ref={formRef} action={onAction}>
             {children}
             <div className="flex justify-between mt-4">

@@ -8,49 +8,55 @@ import { revalidatePath } from 'next/cache'
 import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 const supabase = createServerActionClient({ cookies })
 
-export async function createAgencieAction(formData) {
-  const company = formData.get('company')
+export async function createCustomerAction(formData) {
+  const name = formData.get('name')
   const ruc = formData.get('ruc')
   const address = formData.get('address')
+  const phone = formData.get('phone')
+  const email = formData.get('email')
 
-  const agencieToInsert = {
-    company,
+  const customerToInsert = {
+    name,
     ruc,
     address,
-    destinations: [],
+    phone,
+    email,
   }
 
   try {
     await insertRow({
-      table: 'agencies',
-      row: agencieToInsert,
+      table: 'customers',
+      row: customerToInsert,
       client: supabase,
     })
     revalidatePath('/')
   } catch (error) {
-    console.log('ERror inserting Row', error)
+    console.log('Error inserting Row', error)
   }
 }
 
-export async function updateAgencieAction(formData) {
-  const company = formData.get('company')
+export async function updateCustomerAction(formData) {
+  const name = formData.get('name')
   const ruc = formData.get('ruc')
   const address = formData.get('address')
   const id = formData.get('id')
+  const phone = formData.get('phone')
+  const email = formData.get('email')
 
-  const agencieToUpdate = {
+  const customerToUpdate = {
     id,
-    company,
+    name,
     ruc,
+    phone,
+    email,
     address,
-    destinations: [],
   }
 
   try {
     await updateRow({
       client: supabase,
-      table: 'agencies',
-      row: agencieToUpdate,
+      table: 'customers',
+      row: customerToUpdate,
     })
     revalidatePath('/')
   } catch (error) {
@@ -62,15 +68,14 @@ export async function updateAgencieAction(formData) {
   }
 }
 
-export async function deleteAgencieAction(formData) {
+export async function deleteCustomerAction(formData) {
   const id = formData.get('id')
-  console.log('>>>>id:', id)
   if (!id) return
 
   try {
-    await deleteRow({ table: 'agencies', client: supabase, id })
+    await deleteRow({ table: 'customers', client: supabase, id })
     revalidatePath('/')
   } catch (error) {
-    console.log('error deleting Agencie', formData)
+    console.log('error deleting customer', formData)
   }
 }

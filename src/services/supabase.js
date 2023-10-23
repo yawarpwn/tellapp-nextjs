@@ -1,5 +1,5 @@
 export async function updateRow({ client, table, row }) {
-  console.log(':::::update row::::::')
+  console.log(':::::update row::::::', row)
   const { data, error } = await client
     .from(table)
     .update(row)

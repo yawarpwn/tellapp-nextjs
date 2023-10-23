@@ -1,15 +1,18 @@
 'use client'
-import { deleteAgencieForm } from './actions'
 import { DeleteIcon } from '@/icons'
 import ConfirmActionModal from '@/components/confirm-action-modal'
 
-function DeleteAgencieForm({ id }) {
+function DeleteFormAction({
+  id,
+  titleModal = '¿Seguro deseas eliminar?',
+  deleteAction
+}) {
   return (
     <>
       <ConfirmActionModal
-        message="¿Seguro deseas eliminar esta agencia?"
-        action={deleteAgencieForm}
-        maxWidthModal='xs'
+        title={titleModal}
+        action={deleteAction}
+        maxWidthModal="xs"
         openButtonContent={
           <>
             <DeleteIcon />
@@ -23,4 +26,4 @@ function DeleteAgencieForm({ id }) {
   )
 }
 
-export default DeleteAgencieForm
+export default DeleteFormAction

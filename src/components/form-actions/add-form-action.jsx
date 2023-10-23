@@ -1,11 +1,9 @@
 'use client'
 import ConfirmActionModal from '@/components/confirm-action-modal'
-import Modal from '@/components/modal'
 import { PlusIcon } from '@/icons'
 import { useState } from 'react'
-// import { experimental_useFormState as useFormState } from 'react-dom'
 
-function AddAgencieForm({ addAction, children, titleModal }) {
+function AddFormAction({ addAction, children, titleModal = 'Agregar' }) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const closeModal = () => setIsOpenModal(false)
 
@@ -30,4 +28,4 @@ function AddAgencieForm({ addAction, children, titleModal }) {
   )
 }
 
-export default AddAgencieForm
+export default AddFormAction

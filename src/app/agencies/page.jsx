@@ -1,10 +1,44 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import AddAgencieForm from "./add-agencie-form";
-import DeleteAgencieForm from "./delete-agencie-form";
-import EditAgencieForm from './editAgencieForm'
-import { createAgencie } from "./actions";
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+import AddFormAction from '@/components/form-actions/add-form-action'
+import DeleteFormAction from '@/components/form-actions/delete-form-action'
+import EditFormAction from '@/components/form-actions/edit-form-action'
+import {
+  createAgencieAction,
+  deleteAgencieAction,
+  updateAgencieAction,
+} from './actions'
 import Input from '@/components/input'
+
+function InputsCreateUpdate({ agency }) {
+  return (
+    <>
+      <Input
+        name="company"
+        labelText={'Agencia'}
+        type="text"
+        required
+        defaultValue={agency?.company}
+      />
+      <Input
+        labelText={'Ruc'}
+        name="ruc"
+        type="number"
+        defaultValue={agency?.ruc}
+        required
+      />
+
+      <Input
+        labelText={'Dirección'}
+        name="address"
+        placeholder="Dirección"
+        type="text"
+        defaultValue={agency?.address}
+      />
+      <input className="sr-only" name="id" defaultValue={agency?.id} />
+    </>
+  )
+}
 
 export const dynamic = 'force-dynamic'
 async function AgenciesPage() {
@@ -16,32 +50,12 @@ async function AgenciesPage() {
     <div>
       <div className="overflow-x-auto">
         <header>
-          <AddAgencieForm  
-            addAction={createAgencie}
-            titleModal='Agregar Agencia'
+          <AddFormAction
+            addAction={createAgencieAction}
+            titleModal="Agregar Agencia"
           >
-            <Input
-              name="company"
-              labelText={'Nombre de agencia'}
-              placeholder="Shalom Empresarial"
-              type="text"
-              required
-            />
-            <Input
-              labelText={'Ruc'}
-              name="ruc"
-              type="number"
-              placeholder="206006666035"
-              required
-            />
-            <Input
-              labelText={'Dirección'}
-              name="address"
-              type="text"
-              placeholder="Av. Fauccett 232 - Callao"
-            />
-            
-          </AddAgencieForm>
+            <InputsCreateUpdate />
+          </AddFormAction>
         </header>
         <table className="table">
           {/* head */}
@@ -55,25 +69,30 @@ async function AgenciesPage() {
           </thead>
           <tbody>
             {agencies.map(agency => {
-              const { company, id, ruc, address, destinations, } = agency
+              const { company, id, ruc, address, destinations } = agency
               return (
                 <tr key={id}>
                   <td>
                     <div>
                       <p className="w-[300px] text-yellow-100">{company}</p>
-                      <p className='text-xs'>{address ?? 'Sin dirección'}</p>
+                      <p className="text-xs">{address ?? 'Sin dirección'}</p>
                     </div>
                   </td>
-                  <td>
-                    {ruc}
-                  </td>
-                  <td>
-                    null
-                  </td>
+                  <td>{ruc}</td>
+                  <td>null</td>
                   <td>
                     <div className="flex gap-2">
-                      <EditAgencieForm agency={agency} />
-                      <DeleteAgencieForm id={id} />
+                      <EditFormAction
+                        titleModal="Editar Agencia"
+                        updateAction={updateAgencieAction}
+                      >
+                        <InputsCreateUpdate agency={agency} />
+                      </EditFormAction>
+                      <DeleteFormAction
+                        titleModal="¿Seguro deseas eliminar esta agencia?"
+                        deleteAction={deleteAgencieAction}
+                        id={id}
+                      />
                     </div>
                   </td>
                 </tr>
