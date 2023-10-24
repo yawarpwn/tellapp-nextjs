@@ -11,13 +11,6 @@ import {
 import EditFormAction from '@/components/form-actions/edit-form-action'
 
 function InputsCreateUpdate({ customer }) {
-  // console.log(customer)
-  //  name: 'PRODUCTOS QUIMICOS INDUSTRIALES S A',
-  // ruc: '20100170681',
-  // address: 'AV. EL SANTUARIO NRO. 1239 Z.I. ZARATE LIMA LIMA SAN JUAN DE LURIGANCHO',
-  // phone: '',
-  // email: null
-  // const { name, ruc, address, phone, email } = customer
   return (
     <>
       <Input
@@ -62,6 +55,8 @@ function InputsCreateUpdate({ customer }) {
     </>
   )
 }
+
+export const dynamic = 'force-dynamic'
 export default async function CustomersPage() {
   const cookiesStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookiesStore })
