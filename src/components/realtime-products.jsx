@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo  } from 'react'
 import { DeleteIcon, EditIcon } from '@/icons'
 import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
@@ -12,19 +12,32 @@ import CreateUpdateProductModal from './create-update-product-modal'
 function RealtimeQuotations({ serverProducts }) {
   const [page, setPage] = useState(1)
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [currentId, setCurrentId] = useState(null)
   const [editingProduct, setEditingProduct] = useState(null)
+  const [isConfirmModalOpen, setIsConfirModalOpen] = useState(false)
+
+  const closeConfirmModal = () => {
+    setIsConfirModalOpen(false)
+  }
+
+  const handleDeleteProduct = id => {
+    setCurrentId(id)
+    setIsConfirModalOpen(true)
+  }
 
   const {
     rows: products,
     deleteRow,
     updateRow,
     insertRow,
+    loading,
+    error,
   } = useRealTime({
     initialData: serverProducts,
     table: 'products',
   })
 
+  console.log('ERROR::::', error)
 
   const handleEditProduct = product => {
     setEditingProduct(product)
@@ -77,9 +90,10 @@ function RealtimeQuotations({ serverProducts }) {
     return quotationsFiltered.slice(start, end)
   }, [page, quotationsFiltered])
 
-  // useEffect(() => {
-  //   setQuotations(serverProducts)
-  // }, [serverProducts])
+  const onConfirm = async () => {
+    await deleteRow(currentId)
+    closeConfirmModal()
+  }
 
   return (
     <>
@@ -93,15 +107,22 @@ function RealtimeQuotations({ serverProducts }) {
           Crear
         </button>
       </header>
-      {isOpenModal && (
-        <CreateUpdateProductModal
-          isOpenModal={isOpenModal}
-          onCloseModal={handleCloseModal}
-          editingProduct={editingProduct}
-          updateProduct={updateRow}
-          createProduct={insertRow}
-        />
-      )}
+      <CreateUpdateProductModal
+        isOpenModal={isOpenModal}
+        onCloseModal={handleCloseModal}
+        editingProduct={editingProduct}
+        updateProduct={updateRow}
+        createProduct={insertRow}
+      />
+
+      <ConfirmModal
+        modalTitle="¿Estas seguro de eliminar este producto?"
+        isOpen={isConfirmModalOpen}
+        onClose={closeConfirmModal}
+        onConfirm={onConfirm}
+        loading={loading}
+      />
+
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -145,7 +166,7 @@ function RealtimeQuotations({ serverProducts }) {
                     </button>
                     <button
                       className="btn "
-                      onClick={() => deleteRow(product.id)}
+                      onClick={() => handleDeleteProduct(product.id)}
                     >
                       <DeleteIcon />
                     </button>

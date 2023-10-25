@@ -191,122 +191,130 @@ function CreateUpdateQuotation({
   }
 
   return (
-    <section>
-      <Toaster />
-      {isOpenModal && (
-        <ItemModal
-          isOpenModal={isOpenModal}
-          onCloseModal={handleCloseModal}
-          onAddItem={handleAddItem}
-          editingItem={editingItem}
-          onEditItem={handleEditItem}
-        />
-      )}
-      {isCustomerModalOpen && (
-        <CustomersModal
-          isOpenModal={isCustomerModalOpen}
-          onCloseModal={() => setIsCustomerModalOpen(false)}
-          onCustomerPick={handleCustomerPick}
-          serverCustomers={serverCustomers}
-        />
-      )}
-      <header className="p-4 flex items-center justify-between">
-        <h2 className="text-warning font-bold text-2xl">
-          #{serverQuotation ? quotation.number : lastQuotationNumber + 1}
-        </h2>
-        <button
-          onClick={() => setIsCustomerModalOpen(true)}
-          type="button"
-          className="btn btn-warning"
-        >
-          Clientes Frecuentes
-        </button>
-      </header>
-      <form className="flex flex-col gap-2" >
-        <div className="flex justify-between gap-2">
-          <Input
-            labelText="Ruc"
-            autoFocus={!serverQuotation}
-            name="ruc"
-            type="number"
-            placeholder="20610555536"
-            value={quotation.ruc}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-
-          <Input
-            labelText="Tiempo de entrega"
-            name="deadline"
-            type="number"
-            placeholder="10"
-            value={quotation.deadline}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <Input labelText="Fecha" type="date" disabled value={formatedDate} />
-        </div>
-        <div>
-          <Input
-            labelText="Cliente"
-            name="company"
-            placeholder="Sin Ruc Proporcionado"
-            value={quotation.company}
-            disabled
-          />
-
-          <Input
-            labelText="Dirección"
-            name="address"
-            placeholder=""
-            value={quotation.address}
-            disabled
-          />
-        </div>
-        <div className="flex gap-2 py-2 items-center">
-          <input
-            type="checkbox"
-            className="checkbox checkbox-primary"
-            checked={checked}
-            onChange={() => setChecked(!checked)}
-          />
-          <span>Agregar a clientes frecuentes</span>
-        </div>
-
-        {/* List Items  */}
-        <h3 className="text-2xl font-bold">Lista de Productos</h3>
-        {quotation?.items && (
-          <TableItems
-            items={quotation.items}
-            onDeleteItem={handleDeleteItem}
-            onOpenModal={handleOpenModal}
+    <>
+      <section>
+        <Toaster />
+        {isOpenModal && (
+          <ItemModal
+            isOpenModal={isOpenModal}
+            onCloseModal={handleCloseModal}
+            onAddItem={handleAddItem}
+            editingItem={editingItem}
             onEditItem={handleEditItem}
           />
         )}
+        {isCustomerModalOpen && (
+          <CustomersModal
+            isOpenModal={isCustomerModalOpen}
+            onCloseModal={() => setIsCustomerModalOpen(false)}
+            onCustomerPick={handleCustomerPick}
+            serverCustomers={serverCustomers}
+          />
+        )}
+        <header className="p-4 flex items-center justify-between">
+          <h2 className="text-warning font-bold text-2xl">
+            #{serverQuotation ? quotation.number : lastQuotationNumber + 1}
+          </h2>
+          <button
+            onClick={() => setIsCustomerModalOpen(true)}
+            type="button"
+            className="btn btn-warning"
+          >
+            Clientes Frecuentes
+          </button>
+        </header>
+        <form className="flex flex-col gap-2">
+          <div className="flex justify-between gap-2">
+            <Input
+              labelText="Ruc"
+              autoFocus={!serverQuotation}
+              name="ruc"
+              type="number"
+              placeholder="20610555536"
+              value={quotation.ruc}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
 
-        <button
-          type="button"
-          onClick={() => handleOpenModal()}
-          className="btn btn-outline "
-        >
-          <PlusIcon /> Agregar Producto
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => setIsOpenConfirmModal(true)}
-        >
-          {serverQuotation ? 'Actualizar' : 'Crear'}
-        </button>
-        <ConfirmModal
-          isOpen={isOpenConfirmModal}
-          onCloseModal={() => setIsOpenConfirmModal(false)}
-          loading={loading}
-          onConfirm={handleSubmit}
-        ></ConfirmModal>
-      </form>
-    </section>
+            <Input
+              labelText="Tiempo de entrega"
+              name="deadline"
+              type="number"
+              placeholder="10"
+              value={quotation.deadline}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <Input
+              labelText="Fecha"
+              type="date"
+              disabled
+              value={formatedDate}
+            />
+          </div>
+          <div>
+            <Input
+              labelText="Cliente"
+              name="company"
+              placeholder="Sin Ruc Proporcionado"
+              value={quotation.company}
+              disabled
+            />
+
+            <Input
+              labelText="Dirección"
+              name="address"
+              placeholder=""
+              value={quotation.address}
+              disabled
+            />
+          </div>
+          <div className="flex gap-2 py-2 items-center">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-primary"
+              checked={checked}
+              onChange={() => setChecked(!checked)}
+            />
+            <span>Agregar a clientes frecuentes</span>
+          </div>
+
+          {/* List Items  */}
+          <h3 className="text-2xl font-bold">Lista de Productos</h3>
+          {quotation?.items && (
+            <TableItems
+              items={quotation.items}
+              onDeleteItem={handleDeleteItem}
+              onOpenModal={handleOpenModal}
+              onEditItem={handleEditItem}
+            />
+          )}
+
+          <button
+            type="button"
+            onClick={() => handleOpenModal()}
+            className="btn btn-outline "
+          >
+            <PlusIcon /> Agregar Producto
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => setIsOpenConfirmModal(true)}
+          >
+            {serverQuotation ? 'Actualizar' : 'Crear'}
+          </button>
+        </form>
+      </section>
+      <ConfirmModal
+        modalTitle='¿Estas seguro de realizar esta acción?'
+        isOpen={isOpenConfirmModal}
+        onClose={() => setIsOpenConfirmModal(false)}
+        loading={loading}
+        onConfirm={handleSubmit}
+      />
+    </>
   )
 }
 

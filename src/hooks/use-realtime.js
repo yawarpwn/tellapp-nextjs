@@ -1,4 +1,9 @@
 import { useState, useEffect } from 'react'
+import {
+  updateRow as updateRowFn,
+  deleteRow as deleteRowFn,
+  insertRow as insertRowFn,
+} from '@/services/supabase'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
@@ -7,36 +12,41 @@ export function useRealTime({ initialData, table = 'quotations' }) {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
+  const supabase = createClientComponentClient()
+
   const deleteRow = async id => {
-    const { error } = await supabase.from(table).delete().eq('id', id)
-
-    if (error) {
-      console.log('error delete quotation', error)
+    try {
+      setLoading(true)
+      await deleteRowFn({ table, id, client: supabase })
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
     }
-
-    console.log('delete quotation', id)
   }
 
   const updateRow = async rowToUpdate => {
-    const { error } = await supabase
-      .from(table)
-      .update(rowToUpdate)
-      .eq('id', rowToUpdate.id)
-    setError(error)
+    try {
+      setLoading(true)
+      await updateRowFn({ table, row: rowToUpdate, client: supabase })
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const insertRow = async rowToInsert => {
-    const { data, error } = await supabase.from(table).insert(rowToInsert).select()
-    if(error) {
-      console.log(error)
+    try {
+      setLoading(true)
+      await insertRowFn({ table, row: rowToInsert, client: supabase })
+    } catch (error) {
       setError(error)
+    } finally {
+      setLoading(false)
     }
-
-    console.log('inserted Row',data)
-
   }
 
-  const supabase = createClientComponentClient()
   useEffect(() => {
     const TYPE = {
       INSERT: 'INSERT',

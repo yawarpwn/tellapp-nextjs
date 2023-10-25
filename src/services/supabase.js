@@ -7,7 +7,7 @@ export async function updateRow({ client, table, row }) {
     .select()
 
   if (error) {
-    console.log('error', error)
+    console.warn({error, row} )
     throw new Error('error updating row: ', row)
   }
 }
@@ -30,6 +30,6 @@ export async function deleteRow({ id, client, table }) {
     .select()
     .single()
   if (error) {
-    throw new Error('error deleting row: ', data)
+    throw new Error('error deleting row')
   }
 }
