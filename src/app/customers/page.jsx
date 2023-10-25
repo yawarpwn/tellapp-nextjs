@@ -91,8 +91,8 @@ export default async function CustomersPage() {
                 <tr key={id}>
                   <td>
                     <div>
-                      <p className="w-[300px] text-yellow-100">{name}</p>
-                      <p className="text-xs">{address}</p>
+                      <p className="w-[300px] ">{name}</p>
+                      <p className="text-xs text-base-content">{address}</p>
                     </div>
                   </td>
                   <td>{ruc}</td>

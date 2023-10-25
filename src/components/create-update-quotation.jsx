@@ -25,16 +25,20 @@ const initialState = {
 function CreateUpdateQuotation({
   serverQuotation,
   lastQuotationNumber,
-  serverCustomers
+  serverCustomers,
 }) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(null)
   const [quotation, setQuotation] = useState(serverQuotation || initialState)
   const [editingItem, setEditingItem] = useState(null)
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false)
   const [checked, setChecked] = useState(false)
+
+  console.log('Error modal quotation: ', error)
+
+  const isEditMode = serverQuotation
 
   const formatedDate = getFormatedDate(
     serverQuotation && serverQuotation.created_at,
@@ -149,8 +153,25 @@ function CreateUpdateQuotation({
       return
     }
 
-    // Create quotation
-    if (!serverQuotation) {
+    if (isEditMode) {
+      // Update quotation
+      try {
+        setLoading(true)
+        await updateRow({
+          client: supabase,
+          table: 'quotations',
+          row: quotation,
+        })
+        shootCoffeti()
+        setIsOpenModal(false)
+        window.navigation.navigate(`/quotations/${quotation.number}`)
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      // Create quotation
       const quotationToInsert = {
         ...quotation,
         number: lastQuotationNumber + 1,
@@ -167,24 +188,7 @@ function CreateUpdateQuotation({
         shootCoffeti()
         window.navigation.navigate(`/quotations/${lastQuotationNumber + 1}`)
       } catch (error) {
-        console.log(error)
-      } finally {
-        setLoading(false)
-      }
-    } else {
-      // Update quotation
-      try {
-        setLoading(true)
-        await updateRow({
-          client: supabase,
-          table: 'quotations',
-          row: quotation,
-        })
-        shootCoffeti()
-        setIsOpenModal(false)
-        window.navigation.navigate(`/quotations/${quotation.number}`)
-      } catch (error) {
-        console.log(error)
+        setError(error.message)
       } finally {
         setLoading(false)
       }
@@ -242,8 +246,9 @@ function CreateUpdateQuotation({
               name="deadline"
               type="number"
               placeholder="10"
-              value={quotation.deadline}
+              value={quotation?.deadline}
               onChange={handleChange}
+              required
             />
           </div>
           <div>
@@ -309,7 +314,7 @@ function CreateUpdateQuotation({
         </form>
       </section>
       <ConfirmModal
-        modalTitle='¿Estas seguro de realizar esta acción?'
+        modalTitle="¿Estas seguro de realizar esta acción?"
         isOpen={isOpenConfirmModal}
         onClose={() => setIsOpenConfirmModal(false)}
         loading={loading}

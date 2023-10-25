@@ -4,13 +4,12 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import CreateUpdateLabelModal from './crea-update-label-modal'
 import PrintLabel from './print-label'
-import { DeleteIcon, EditIcon, PrinterIcon } from "@/icons"
+import { DeleteIcon, EditIcon, PrinterIcon } from '@/icons'
 
 const loadFromLocalStorage = () => {
   const labels = window.localStorage.getItem('__TELL__LABELS')
   return JSON.parse(labels) ?? []
 }
-
 
 const PrintComponent = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -23,7 +22,7 @@ const PrintComponent = () => {
     content: () => componenteRef.current,
   })
 
-  const handleClickPrint = (label) => {
+  const handleClickPrint = label => {
     setLabelToPrint(label)
     handlePrint()
   }
@@ -32,52 +31,55 @@ const PrintComponent = () => {
     setIsOpenModal(false)
   }
 
-  const handleEditLabelClick = (label) => {
+  const handleEditLabelClick = label => {
     setEditingLabel(label)
     setIsOpenModal(true)
   }
 
-  const saveOnLocalStorage = (labels) => {
+  const saveOnLocalStorage = labels => {
     window.localStorage.setItem('__TELL__LABELS', JSON.stringify(labels))
   }
 
   useEffect(() => {
     if (labelToPrint) {
-      handlePrint();
+      handlePrint()
     }
-  }, [labelToPrint, handlePrint]);
+  }, [labelToPrint, handlePrint])
 
-  const handleCreateLabel = (labelToCreate) => {
-    const labelsToUpdate = [...labels, { ...labelToCreate, id: crypto.randomUUID() }]
+  const handleCreateLabel = labelToCreate => {
+    const labelsToUpdate = [
+      ...labels,
+      { ...labelToCreate, id: crypto.randomUUID() },
+    ]
     setLabels(labelsToUpdate)
     saveOnLocalStorage(labelsToUpdate)
   }
 
-  const handleUpdateLabel = (labelToUpdate) => {
-    const labelsToUpdate = labels.map(label => label.id === labelToUpdate.id ? labelToUpdate : label)
+  const handleUpdateLabel = labelToUpdate => {
+    const labelsToUpdate = labels.map(label =>
+      label.id === labelToUpdate.id ? labelToUpdate : label,
+    )
     setLabels(labelsToUpdate)
     saveOnLocalStorage(labelsToUpdate)
   }
 
-  const handleDeleteLabel = (id) => {
+  const handleDeleteLabel = id => {
     const filteredLabels = labels.filter(label => label.id !== id)
     setLabels(filteredLabels)
     saveOnLocalStorage(filteredLabels)
   }
 
-
   const hasLabels = labels && labels.length > 0
 
   return (
     <div>
-      {isOpenModal && (
-        <CreateUpdateLabelModal
-          editingLabel={editingLabel}
-          onEditLabel={handleUpdateLabel}
-          onCreateLabel={handleCreateLabel}
-          isOpenModal={isOpenModal}
-          onCloseModal={onCloseModal} />
-      )}
+      <CreateUpdateLabelModal
+        editingLabel={editingLabel}
+        onEditLabel={handleUpdateLabel}
+        onCreateLabel={handleCreateLabel}
+        isOpenModal={isOpenModal}
+        onCloseModal={onCloseModal}
+      />
       <header className="flex items-center justify-between">
         <button
           onClick={() => setIsOpenModal(true)}
@@ -104,38 +106,36 @@ const PrintComponent = () => {
                 return (
                   <tr key={index}>
                     <td>
-                      <p className='w-[250px]'>
-                        {label.recipient}
-                      </p>
+                      <p className="w-[250px]">{label.recipient}</p>
                     </td>
                     <td>
-                      <p>
-                        {label.ruc}
-                      </p>
+                      <p>{label.ruc}</p>
                     </td>
                     <td>
-                      <p className='whitespace-nowrap'>
-                        {label.destination}
-                      </p>
+                      <p className="whitespace-nowrap">{label.destination}</p>
                     </td>
                     <td>
-                      <p className='whitespace-nowrap'>
-                        {label.phone}
-                      </p>
+                      <p className="whitespace-nowrap">{label.phone}</p>
                     </td>
                     <td>{label.address}</td>
                     <td>
-                      <div className='flex gap-2'>
-                        <button className='btn btn-primary'
-                          onClick={() => handleEditLabelClick(label)}>
+                      <div className="flex gap-2">
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleEditLabelClick(label)}
+                        >
                           <EditIcon />
                         </button>
-                        <button className='btn btn-primary'
-                          onClick={() => handleClickPrint(label)}>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleClickPrint(label)}
+                        >
                           <PrinterIcon />
                         </button>
-                        <button className='btn btn-error'
-                          onClick={() => handleDeleteLabel(label.id)}>
+                        <button
+                          className="btn btn-error"
+                          onClick={() => handleDeleteLabel(label.id)}
+                        >
                           <DeleteIcon />
                         </button>
                       </div>

@@ -74,7 +74,7 @@ async function AgenciesPage() {
                 <tr key={id}>
                   <td>
                     <div>
-                      <p className="w-[300px] text-yellow-100">{company}</p>
+                      <p className="w-[300px]">{company}</p>
                       <p className="text-xs">{address ?? 'Sin dirección'}</p>
                     </div>
                   </td>

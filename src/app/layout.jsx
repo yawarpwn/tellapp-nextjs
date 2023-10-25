@@ -17,16 +17,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html data-theme="dark" lang="en">
-      <body 
-suppressHydrationWarning={true}
-        className={`${inter.className} min-h-screen font-sans antialiased`}>
-        <NextTopLoader
-          showSpinner={false}
-          color='#6519e6'
-        />
+      <body
+        suppressHydrationWarning={true}
+        className={`${inter.className} min-h-screen font-sans antialiased`}
+      >
+        <NextTopLoader showSpinner={false} color="#6519e6" />
+        <Navbar />
         <div className="max-w-3xl mx-auto px-4 md:px-6">
-          <Navbar />
-          <main >{children}</main>
+          <main>{children}</main>
         </div>
       </body>
     </html>

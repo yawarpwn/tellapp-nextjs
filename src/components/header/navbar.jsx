@@ -40,9 +40,9 @@ const navs = [
 ]
 function Navbar() {
   return (
-    <div className="navbar ">
+    <div className="navbar max-w-3xl mx-auto">
       <nav className="flex-1">
-        <ul className="menu menu-horizontal rounded-box">
+        <ul className="menu menu-sm menu-horizontal rounded-box">
           {navs.map(({ href, title, icon: Icon }) => (
             <li key={title} >
               <Link href={href}>
@@ -53,7 +53,6 @@ function Navbar() {
           ))}
         </ul>
       </nav>
-
       <Login />
     </div>
   )

@@ -1,6 +1,7 @@
-import Input from "./input"
-import Modal from "./modal"
-import { useState } from "react"
+import Input from './input'
+// import Modal from "./modal"
+import FormModal from './form-modal'
+import { useState } from 'react'
 import { getRuc, getDni } from '@/services/sunat'
 
 const initialLabel = {
@@ -8,7 +9,7 @@ const initialLabel = {
   ruc: ' ',
   recipient: '',
   phone: '',
-  address: ''
+  address: '',
 }
 
 function CreateUpdateLabelModal({
@@ -16,7 +17,8 @@ function CreateUpdateLabelModal({
   editingLabel,
   onEditLabel,
   onCreateLabel,
-  onCloseModal }) {
+  onCloseModal,
+}) {
   const [label, setLabel] = useState(editingLabel || initialLabel)
   const isEditing = Boolean(editingLabel)
 
@@ -29,7 +31,7 @@ function CreateUpdateLabelModal({
       const { company } = await getDni(label.ruc)
       setLabel({
         ...label,
-        recipient: company
+        recipient: company,
       })
     }
 
@@ -38,12 +40,12 @@ function CreateUpdateLabelModal({
       const { company } = await getRuc(label.ruc)
       setLabel({
         ...label,
-        recipient: company
+        recipient: company,
       })
     }
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault()
     if (isEditing) {
       console.log('update')
@@ -56,15 +58,16 @@ function CreateUpdateLabelModal({
     onCloseModal()
   }
 
-  console.log({ label })
-
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { value, name } = event.target
     setLabel({ ...label, [name]: value })
-
   }
   return (
-    <Modal isOpen={isOpenModal} onClose={onCloseModal}>
+    <FormModal
+      title={isEditing ? 'Actualizar' : 'Crear'}
+      isOpen={isOpenModal}
+      onClose={onCloseModal}
+    >
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <div className="relative w-full">
           <Input
@@ -109,14 +112,8 @@ function CreateUpdateLabelModal({
           labelText="Dirección"
           type="text"
         />
-        <footer className="flex">
-          <button className="btn btn-primary" type="submit">
-            {isEditing ? 'Actualizar' : 'Crear'}
-          </button>
-        </footer>
       </form>
-    </Modal>
-
+    </FormModal>
   )
 }
 

@@ -21,7 +21,7 @@ function RealTimeAgencies({ serverAgencies  }) {
     const value = event.target.value
     setFilterValue(value)
     const filteredData = serverAgencies.filter((agency) => {
-      return agency.company.toLowerCase().includes(value.toLowerCase())
+      return agency.company.toLonerCase().includes(value.toLowerCase())
     })
     setAgencies(filteredData)
   }
@@ -63,7 +63,7 @@ function RealTimeAgencies({ serverAgencies  }) {
                 <tr key={id}>
                   <td>
                     <div>
-                      <p className="w-[300px] text-yellow-100">{company}</p>
+                      <p className="w-[300px]">{company}</p>
                       <p className="text-xs">{address ?? 'Sin dirección'}</p>
                     </div>
                   </td>
@@ -76,12 +76,6 @@ function RealTimeAgencies({ serverAgencies  }) {
                         setIsOpenModalAgency(true)
                       }
                       }>edit</button>
-                      {/* <EditFormAction */}
-                      {/*   titleModal="Editar Agencia" */}
-                      {/*   updateAction={updateAgencieAction} */}
-                      {/* > */}
-                      {/*   <InputsCreateUpdateAgency agency={agency} /> */}
-                      {/* </EditFormAction> */}
                       <DeleteFormAction
                         titleModal="¿Seguro deseas eliminar esta agencia?"
                         deleteAction={deleteAgencieAction}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
-import { ChevronDobleRightIcon, ChevronDownIcon, DeleteIcon, EyeIcon } from '@/icons'
+import { EyeIcon } from '@/icons'
 import { getIgv } from '@/utils'
 import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
@@ -14,7 +14,6 @@ function RealtimeQuotations({ serverQuotations }) {
   const { rows: quotations, deleteRow } = useRealTime({
     initialData: serverQuotations,
   })
-
 
   const [searchValue, setSearchValue] = useState('')
 
@@ -80,12 +79,16 @@ function RealtimeQuotations({ serverQuotations }) {
           <tbody>
             {quotationsToRender.map(quotation => {
               const { total } = getIgv(quotation.items)
-              const formatedDate = new Intl.DateTimeFormat('es').format(new Date(quotation.created_at))
+              const formatedDate = new Intl.DateTimeFormat('es').format(
+                new Date(quotation.created_at),
+              )
               return (
                 <tr key={quotation.id}>
                   <td>
-                    <span className="text-primary font-bold">#</span>
-                    {quotation.number}
+                    <Link href={`/quotations/${quotation.number}`}>
+                      <span className="text-primary font-bold">#</span>
+                      {quotation.number}
+                    </Link>
                   </td>
                   <td>
                     <div>
@@ -94,21 +97,13 @@ function RealtimeQuotations({ serverQuotations }) {
                     </div>
                   </td>
                   <td>
-                    <span className='text-xs'>
-                      {formatedDate}
-                    </span>
+                    <span className="text-xs">{formatedDate}</span>
                   </td>
                   <td>{total}</td>
                   <td className="flex gap-x-2">
-                    {/* <button */}
-                    {/*   className="btn " */}
-                    {/*   onClick={() => deleteRow(quotation.id)} */}
-                    {/* > */}
-                    {/*   <DeleteIcon /> */}
-                    {/* </button> */}
                     <Link
                       href={`/quotations/${quotation.number}`}
-                      className="btn btn-secondary "
+                      className="btn"
                     >
                       Ver
                       <EyeIcon />

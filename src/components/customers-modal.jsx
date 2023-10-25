@@ -12,7 +12,7 @@ function CustomersModal({
   const [filter, setFilter] = useState('')
   const [selectedCustomer, setSelectedCustomer] = useState(null)
 
-  console.log({selectedCustomer})
+  console.log({ selectedCustomer })
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -52,13 +52,13 @@ function CustomersModal({
       onSubmit={handleSubmit}
       title="Selecciona un cliente frecuente"
     >
-      <div className='mt-4'>
-      <InputSearch
-        placeholder={'Buscar cliente'}
-        onSearchChange={handleSearchCustomer}
-      />
+      <div className="mt-4">
+        <InputSearch
+          placeholder={'Buscar cliente'}
+          onSearchChange={handleSearchCustomer}
+        />
       </div>
-      <div className='overflow-y-auto h-[300px] mt-4'>
+      <div className="overflow-y-auto h-[300px] mt-4">
         {hasCustomers &&
           customersToRender.map(customer => {
             return (
@@ -66,16 +66,16 @@ function CustomersModal({
                 className="flex items-center justify-between gap-x-4"
                 key={customer.id}
               >
-                <div className='flex items-center gap-2'>
-                <input
-                  onChange={() => {
-                    setSelectedCustomer(customer)
-                  }}
-                  type="checkbox"
-                  className="checkbox"
-                  checked={selectedCustomer?.id === customer.id}
-                />
-                <p className="py-2 text-sm">{customer.name}</p>
+                <div className="flex items-center gap-2">
+                  <input
+                    onChange={() => {
+                      setSelectedCustomer(customer)
+                    }}
+                    type="checkbox"
+                    className="checkbox"
+                    checked={selectedCustomer?.id === customer.id}
+                  />
+                  <p className="py-2 text-sm">{customer.name}</p>
                 </div>
               </label>
             )

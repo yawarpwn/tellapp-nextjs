@@ -1,9 +1,8 @@
 'use client'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import Input from '@/components/input'
-// import Modal from '@/components/modal'
 import FormModal from './form-modal'
-import { PlusIcon, UpdateIcon, XIcon } from '@/icons'
+import { XIcon } from '@/icons'
 import { createSearchInstance } from '@/services/search'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
@@ -73,14 +72,11 @@ function ItemModal({
   const handleSubmit = event => {
     event.preventDefault()
 
-    // Si Es edicion
     if (editingItem) {
-      console.log('editing item')
       onEditItem(item)
       setItem(() => initialState)
       onCloseModal()
     } else {
-      //Si es nuevo
       const id = crypto.randomUUID()
       const newItem = {
         ...item,
@@ -124,6 +120,7 @@ function ItemModal({
       title="Agregar productos"
       isOpen={isOpenModal}
       onClose={onCloseModal}
+      disableButton={!item.description || !item.qty || !item.price || !item.unit_size}
     >
       <div className="flex flex-col gap-4 ">
         <div className="form-control relative">
