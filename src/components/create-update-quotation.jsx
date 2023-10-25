@@ -24,11 +24,12 @@ const initialState = {
 
 function CreateUpdateQuotation({
   serverQuotation,
-  serverCustomers,
   lastQuotationNumber,
+  serverCustomers
 }) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [quotation, setQuotation] = useState(serverQuotation || initialState)
   const [editingItem, setEditingItem] = useState(null)
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
@@ -114,7 +115,7 @@ function CreateUpdateQuotation({
       }
     } catch (error) {
       // TODO:Toast
-      console.log(error)
+      setError(error.message)
     } finally {
       setLoading(false)
     }

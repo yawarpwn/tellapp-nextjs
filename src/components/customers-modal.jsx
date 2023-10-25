@@ -1,7 +1,7 @@
 'use client'
 
 import InputSearch from './input-search'
-import Modal from './modal'
+import FormModal from './form-modal'
 import { useMemo, useState } from 'react'
 function CustomersModal({
   isOpenModal,
@@ -10,11 +10,9 @@ function CustomersModal({
   serverCustomers,
 }) {
   const [filter, setFilter] = useState('')
-  const [selectedCustomer, setSelectedCustomer] = useState(
-    serverCustomers[0].id,
-  )
+  const [selectedCustomer, setSelectedCustomer] = useState(null)
 
-  console.log({ filter })
+  console.log({selectedCustomer})
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -32,17 +30,14 @@ function CustomersModal({
         const filterLower = filter.toLocaleLowerCase()
         const customerNameLower = customer.name.toLowerCase()
         return customerNameLower.includes(filterLower)
-      }
-      )
+      })
       return filteredCustomers
-
     } else {
       return serverCustomers
     }
-
   }, [filter, serverCustomers])
 
-  const handleSearchCustomer = (event) => {
+  const handleSearchCustomer = event => {
     const { value } = event.target
     setFilter(value)
   }
@@ -50,9 +45,20 @@ function CustomersModal({
   const hasCustomers = serverCustomers && serverCustomers.length > 0
 
   return (
-    <Modal isOpen={isOpenModal} onClose={onCloseModal}>
-      <InputSearch placeholder={'Buscar cliente'} onSearchChange={handleSearchCustomer} />
-      <form className="relative" onSubmit={handleSubmit}>
+    <FormModal
+      isOpen={isOpenModal}
+      disableButton={selectedCustomer === null}
+      onClose={onCloseModal}
+      onSubmit={handleSubmit}
+      title="Selecciona un cliente frecuente"
+    >
+      <div className='mt-4'>
+      <InputSearch
+        placeholder={'Buscar cliente'}
+        onSearchChange={handleSearchCustomer}
+      />
+      </div>
+      <div className='overflow-y-auto h-[300px] mt-4'>
         {hasCustomers &&
           customersToRender.map(customer => {
             return (
@@ -60,7 +66,7 @@ function CustomersModal({
                 className="flex items-center justify-between gap-x-4"
                 key={customer.id}
               >
-                <p className="py-2">{customer.name}</p>
+                <div className='flex items-center gap-2'>
                 <input
                   onChange={() => {
                     setSelectedCustomer(customer)
@@ -69,14 +75,13 @@ function CustomersModal({
                   className="checkbox"
                   checked={selectedCustomer?.id === customer.id}
                 />
+                <p className="py-2 text-sm">{customer.name}</p>
+                </div>
               </label>
             )
           })}
-        <footer className="py-4">
-          <button className="btn btn-primary w-full">Agregar</button>
-        </footer>
-      </form>
-    </Modal>
+      </div>
+    </FormModal>
   )
 }
 

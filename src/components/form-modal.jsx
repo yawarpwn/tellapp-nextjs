@@ -9,6 +9,7 @@ function FormModal({
   loading,
   title = 'Default modal title',
   onSubmit,
+  disableButton
 }) {
   const modalRef = useRef(null)
   useEffect(() => {
@@ -56,7 +57,7 @@ function FormModal({
             </header>
             {children}
             <footer className="flex justify-between mt-4">
-              <button disabled={loading} type="submit" className="btn">
+              <button disabled={loading || disableButton} type="submit" className="btn">
                 {loading ? (
                   <span className="loading loading-dots" />
                 ) : (
