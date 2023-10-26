@@ -1,4 +1,4 @@
-import CreateUpdateQuotation from '@/components/create-update-quotation'
+import CreateUpdateQuotation from '@/app/create-update-quotation'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 

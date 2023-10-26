@@ -6,7 +6,7 @@ import { EyeIcon } from '@/icons'
 import { getIgv } from '@/utils'
 import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
-import Pagination from './pagination'
+import Pagination from '@/components/pagination'
 import { ROW_PER_PAGE } from '@/constants'
 
 function RealtimeQuotations({ serverQuotations }) {

@@ -46,7 +46,7 @@ function LoginForm({ session }) {
 
   return (
     <>
-      <button onClick={handleSignIn}>Sign in</button>
+      <button className='btn' onClick={handleSignIn}>Entrar</button>
     </>
   )
 }

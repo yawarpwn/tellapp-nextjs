@@ -1,7 +1,7 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import React from 'react'
 import { cookies } from 'next/headers'
-import CreateUpdateQuotation from '@/components/create-update-quotation'
+import CreateUpdateQuotation from '@/app/create-update-quotation'
 
 async function UpdatePage({ searchParams }) {
   const { id } = searchParams

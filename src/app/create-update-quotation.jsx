@@ -1,15 +1,21 @@
 'use client'
 
-import Input from '@/components/input'
 import { useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { PlusIcon } from '@/icons'
-import { getRuc, getDni } from '@/services/sunat'
+import { useRouter } from 'next/navigation'
+// Components
+import Input from '@/components/input'
 import ItemModal from '@/components/item-modal'
 import TableItems from '@/components/table-items'
 import toast, { Toaster } from 'react-hot-toast'
-import ConfirmModal from './confirm-modal'
-import CustomersModal from './customers-modal'
+import ConfirmModal from '@/components/confirm-modal'
+import CustomersModal from '@/components/customers-modal'
+
+// Icons
+import { PlusIcon } from '@/icons'
+
+// utils 
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { getRuc, getDni } from '@/services/sunat'
 import { getFormatedDate } from '@/utils'
 import { shootCoffeti } from '@/services/confetti'
 import { insertRow, updateRow } from '@/services/supabase'
@@ -35,8 +41,7 @@ function CreateUpdateQuotation({
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false)
   const [checked, setChecked] = useState(false)
-
-  console.log('Error modal quotation: ', error)
+  const router = useRouter()
 
   const isEditMode = serverQuotation
 
@@ -163,8 +168,9 @@ function CreateUpdateQuotation({
           row: quotation,
         })
         shootCoffeti()
+        router.push(`/quotations/${quotation.number}`)
         setIsOpenModal(false)
-        window.navigation.navigate(`/quotations/${quotation.number}`)
+
       } catch (error) {
         setError(error.message)
       } finally {
@@ -184,9 +190,9 @@ function CreateUpdateQuotation({
           table: 'quotations',
           row: quotationToInsert,
         })
-        setIsOpenModal(false)
         shootCoffeti()
-        window.navigation.navigate(`/quotations/${lastQuotationNumber + 1}`)
+        router.push(`/quotations/${lastQuotationNumber + 1}`)
+        setIsOpenModal(false)
       } catch (error) {
         setError(error.message)
       } finally {

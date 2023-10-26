@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useMemo  } from 'react'
+import { useState, useMemo } from 'react'
 import { DeleteIcon, EditIcon } from '@/icons'
 import InputSearch from '@/components/input-search'
 import { useRealTime } from '@/hooks/use-realtime'
-import Pagination from './pagination'
+import Pagination from '@/components/pagination'
 import { ROW_PER_PAGE } from '@/constants'
-import ConfirmModal from './confirm-modal'
+import ConfirmModal from '@/components/confirm-modal'
 import CreateUpdateProductModal from './create-update-product-modal'
 
 function RealtimeQuotations({ serverProducts }) {

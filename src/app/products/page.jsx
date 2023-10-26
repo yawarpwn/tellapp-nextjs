@@ -1,6 +1,6 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import RealtimeProducts from '@/components/realtime-products'
+import RealtimeProducts from './realtime-products'
 export default async function Home() {
   const cookiesStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookiesStore })
