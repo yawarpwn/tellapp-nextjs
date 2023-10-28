@@ -13,7 +13,7 @@ import CustomersModal from '@/components/customers-modal'
 // Icons
 import { PlusIcon } from '@/icons'
 
-// utils 
+// utils
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { getRuc, getDni } from '@/services/sunat'
 import { getFormatedDate } from '@/utils'
@@ -132,6 +132,17 @@ function CreateUpdateQuotation({
 
   const supabase = createClientComponentClient()
 
+  const getLastQuotation = async () => {
+    // TODO:  add try catch
+    const { data: lastQuotation } = await supabase
+      .from('quotations')
+      .select('number')
+      .order('number', { ascending: false })
+      .limit(1)
+
+    return lastQuotation[0].number
+  }
+
   const handleSubmit = async event => {
     event.preventDefault()
 
@@ -170,7 +181,6 @@ function CreateUpdateQuotation({
         shootCoffeti()
         router.push(`/quotations/${quotation.number}`)
         setIsOpenModal(false)
-
       } catch (error) {
         setError(error.message)
       } finally {
@@ -180,7 +190,7 @@ function CreateUpdateQuotation({
       // Create quotation
       const quotationToInsert = {
         ...quotation,
-        number: lastQuotationNumber + 1,
+        number: getLastQuotation() + 1,
       }
 
       try {
@@ -200,6 +210,7 @@ function CreateUpdateQuotation({
       }
     }
   }
+
 
   return (
     <>
@@ -246,6 +257,9 @@ function CreateUpdateQuotation({
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            <button className="btn" onClick={getLastQuotation} type="button">
+              Click
+            </button>
 
             <Input
               labelText="Tiempo de entrega"
