@@ -28,11 +28,7 @@ const initialState = {
   items: [],
 }
 
-function CreateUpdateQuotation({
-  serverQuotation,
-  lastQuotationNumber,
-  serverCustomers,
-}) {
+function CreateUpdateQuotation({ serverQuotation, serverCustomers }) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -132,7 +128,7 @@ function CreateUpdateQuotation({
 
   const supabase = createClientComponentClient()
 
-  const getLastQuotation = async () => {
+  const getQuotationNumber = async () => {
     // TODO:  add try catch
     const { data: lastQuotation } = await supabase
       .from('quotations')
@@ -140,7 +136,8 @@ function CreateUpdateQuotation({
       .order('number', { ascending: false })
       .limit(1)
 
-    return lastQuotation[0].number
+    const lastQuotationNumber = lastQuotation[0].number
+    return lastQuotationNumber + 1
   }
 
   const handleSubmit = async event => {
@@ -188,9 +185,10 @@ function CreateUpdateQuotation({
       }
     } else {
       // Create quotation
+      const quotationNumber = await getQuotationNumber()
       const quotationToInsert = {
         ...quotation,
-        number: getLastQuotation() + 1,
+        number: quotationNumber,
       }
 
       try {
@@ -201,7 +199,7 @@ function CreateUpdateQuotation({
           row: quotationToInsert,
         })
         shootCoffeti()
-        router.push(`/quotations/${lastQuotationNumber + 1}`)
+        router.push(`/quotations/${quotationNumber}`)
         setIsOpenModal(false)
       } catch (error) {
         setError(error.message)
@@ -210,7 +208,6 @@ function CreateUpdateQuotation({
       }
     }
   }
-
 
   return (
     <>
@@ -235,7 +232,7 @@ function CreateUpdateQuotation({
         )}
         <header className="p-4 flex items-center justify-between">
           <h2 className="text-warning font-bold text-2xl">
-            #{serverQuotation ? quotation.number : lastQuotationNumber + 1}
+            #{isEditMode && quotation.number}
           </h2>
           <button
             onClick={() => setIsCustomerModalOpen(true)}
@@ -257,10 +254,6 @@ function CreateUpdateQuotation({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <button className="btn" onClick={getLastQuotation} type="button">
-              Click
-            </button>
-
             <Input
               labelText="Tiempo de entrega"
               name="deadline"
