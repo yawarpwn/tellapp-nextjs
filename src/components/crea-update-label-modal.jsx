@@ -1,7 +1,7 @@
 import Input from './input'
 // import Modal from "./modal"
 import FormModal from './form-modal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getRuc, getDni } from '@/services/sunat'
 
 const initialLabel = {
@@ -19,8 +19,17 @@ function CreateUpdateLabelModal({
   onCreateLabel,
   onCloseModal,
 }) {
-  const [label, setLabel] = useState(editingLabel || initialLabel)
+  const [label, setLabel] = useState(editingLabel ?? initialLabel)
   const isEditing = Boolean(editingLabel)
+
+
+
+  useEffect(() => {
+    if(isEditing) {
+      setLabel(editingLabel)
+    }
+
+  }, [editingLabel])
 
   const handleSearch = async () => {
     const isRuc = label.ruc.length === 11
@@ -64,55 +73,54 @@ function CreateUpdateLabelModal({
   }
   return (
     <FormModal
+      onSubmit={handleSubmit}
       title={isEditing ? 'Actualizar' : 'Crear'}
       isOpen={isOpenModal}
       onClose={onCloseModal}
     >
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-        <div className="relative w-full">
-          <Input
-            name="ruc"
-            autoFocus
-            onChange={handleChange}
-            onBlur={handleSearch}
-            value={label.ruc}
-            labelText="Ruc"
-            type="search"
-          />
-        </div>
+      <div className="relative w-full">
+        <Input
+          name="ruc"
+          autoFocus
+          onChange={handleChange}
+          onBlur={handleSearch}
+          value={label?.ruc}
+          labelText="Ruc"
+          type="search"
+        />
+      </div>
 
-        <Input
-          name="recipient"
-          onChange={handleChange}
-          value={label.recipient}
-          labelText="Destinatario"
-          type="text"
-        />
-        <Input
-          name="destination"
-          required
-          onChange={handleChange}
-          value={label.destination}
-          labelText="Destino"
-          type="text"
-        />
+      <Input
+        name="recipient"
+        onChange={handleChange}
+        value={label?.recipient}
+        labelText="Destinatario"
+        type="text"
+      />
+      <Input
+        name="destination"
+        required
+        onChange={handleChange}
+        value={label?.destination}
+        labelText="Destino"
+        type="text"
+      />
 
-        <Input
-          name="phone"
-          onChange={handleChange}
-          value={label.phone}
-          labelText="Télefono"
-          type="number"
-        />
+      <Input
+        name="phone"
+        onChange={handleChange}
+        value={label?.phone}
+        labelText="Télefono"
+        type="number"
+      />
 
-        <Input
-          name="address"
-          onChange={handleChange}
-          value={label?.address}
-          labelText="Dirección"
-          type="text"
-        />
-      </form>
+      <Input
+        name="address"
+        onChange={handleChange}
+        value={label?.address}
+        labelText="Dirección"
+        type="text"
+      />
     </FormModal>
   )
 }

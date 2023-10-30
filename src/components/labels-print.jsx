@@ -6,9 +6,10 @@ import CreateUpdateLabelModal from './crea-update-label-modal'
 import PrintLabel from './print-label'
 import { DeleteIcon, EditIcon, PrinterIcon } from '@/icons'
 
+
 const loadFromLocalStorage = () => {
-  const labels = window.localStorage.getItem('__TELL__LABELS')
-  return JSON.parse(labels) ?? []
+    const labels = window.localStorage.getItem('__TELL__LABELS')
+    return JSON.parse(labels) ?? []
 }
 
 const PrintComponent = () => {
@@ -28,8 +29,10 @@ const PrintComponent = () => {
   }
 
   const onCloseModal = () => {
+    setEditingLabel(null)
     setIsOpenModal(false)
   }
+
 
   const handleEditLabelClick = label => {
     setEditingLabel(label)
