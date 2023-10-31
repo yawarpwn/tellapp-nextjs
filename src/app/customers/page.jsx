@@ -1,124 +1,22 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import AddFormAction from '@/components/form-actions/add-form-action'
-import DeleteFormAction from '@/components/form-actions/delete-form-action'
-import Input from '@/components/input'
-import {
-  createCustomerAction,
-  deleteCustomerAction,
-  updateCustomerAction,
-} from './actions'
-import EditFormAction from '@/components/form-actions/edit-form-action'
+import { fetchCustomersPages } from '@/lib/customers-data'
+import SearchCustomers from '@/ui/customers/search'
+import CustomersTable from '@/ui/customers/table'
+import Pagination from '@/ui/pagination'
+import { Suspense } from 'react'
+export default async function CustomersPage({ searchParams}) {
+  const currentPage = Number(searchParams?.page) || 1
+  const query = searchParams?.query || ''
+  const totalPage = await fetchCustomersPages(query)
 
-function InputsCreateUpdate({ customer }) {
   return (
-    <>
-      <Input
-        name="name"
-        defaultValue={customer?.name}
-        labelText={'Nombre'}
-        placeholder="Nombre del cliente"
-        type="text"
-        required
-      />
-      <Input
-        name="ruc"
-        defaultValue={customer?.ruc}
-        labelText={'Ruc'}
-        placeholder="Ruc del cliente"
-        type="number"
-        required
-      />
-      <Input
-        labelText={'Dirección'}
-        defaultValue={customer?.address}
-        name="address"
-        type="text"
-        placeholder="Av. Fauccett 232 - Callao"
-      />
-
-      <Input
-        name="phone"
-        defaultValue={customer?.phone}
-        labelText={'Telefono'}
-        type="number"
-        placeholder="999 999 999"
-      />
-      <Input
-        name="email"
-        defaultValue={customer?.email}
-        labelText={'Email'}
-        type="email"
-        placeholder="ventas@example.com"
-      />
-      <input defaultValue={customer?.id} name="id" className="sr-only" />
-    </>
-  )
-}
-
-export const dynamic = 'force-dynamic'
-export default async function CustomersPage() {
-  const cookiesStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookiesStore })
-  const { data: customers } = await supabase.from('customers').select()
-  return (
-    <div>
-      {/* <NewQuotation /> */}
+    <main>
       <header>
-        <AddFormAction
-          addAction={createCustomerAction}
-          titleModal="Agregar cliente"
-        >
-          <InputsCreateUpdate />
-        </AddFormAction>
+        <SearchCustomers />
       </header>
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Ruc</th>
-              {/* <th>Telefono</th> */}
-              {/* <th>Email</th> */}
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {customers.map(customer => {
-              const { id, phone, email, ruc, name, address } = customer
-              return (
-                <tr key={id}>
-                  <td>
-                    <div>
-                      <p className="w-[300px] ">{name}</p>
-                      <p className="text-xs text-base-content">{address}</p>
-                    </div>
-                  </td>
-                  <td>{ruc}</td>
-                  {/* <td>{phone}</td> */}
-                  {/* <td>{email}</td> */}
-                  <td>
-                    <div className="flex gap-2">
-                      <EditFormAction
-                        titleModal="Editar Cliente"
-                        updateAction={updateCustomerAction}
-                      >
-                        <InputsCreateUpdate customer={customer} />
-                      </EditFormAction>
-                      <DeleteFormAction
-                        titleModal="¿Seguro deseas eliminar esta empresa?"
-                        deleteAction={deleteCustomerAction}
-                        id={id}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <Suspense fallback={'Loading...'}>
+        <CustomersTable query={query} currentPage={currentPage} />
+      </Suspense>
+    <Pagination totalPages={totalPage} />
+    </main>
   )
 }

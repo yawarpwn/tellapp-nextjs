@@ -23,14 +23,14 @@ export function getIgv(items) {
   }
 }
 
-export const getFormatedDate = (date) => {
+export const getFormatedDate = date => {
   const currentDate = date ? new Date(date) : new Date()
   const year = currentDate.getFullYear()
   let month = currentDate.getMonth() + 1
   let day = currentDate.getDate()
 
   const formatedDate = `${year}-${String(month).padStart(2, '0')}-${String(
-    day
+    day,
   ).padStart(2, '0')}`
   return formatedDate
 }
@@ -82,4 +82,43 @@ export const quotationToCreate = {
       description: 'Pvc',
     },
   ],
+}
+
+export function generatePagination(currentPage, totalPages) {
+  // Si el total de paginas es menor o igual a 7
+  // muestra todas las paginas sin saltos de pagina.
+  if (totalPages <= 7) {
+    console.log('totalPages <= 7')
+    return Array.from({ length: totalPages }, (_, i) => i + 1)
+  }
+
+  //Si la pagina actual esta entre las primeras 3
+  //Muestra las primeras 3, puntos suspensivos y las ultimas 2 paginas
+  if (currentPage <= 3) {
+    console.log('currentPage <= 3')
+    return [1, 2, 3, '...', totalPages - 1, totalPages]
+  }
+
+  //Si la pagina actual esta entre las ultimas 3
+  //Muestra las ultimas 3, un salto de pagina, y las primeras 2 paginas
+  if (currentPage >= totalPages - 2) {
+    console.log('currentPage >= totalPages - 2')
+    return [1, 2, '...', totalPages - 2, totalPages - 1, totalPages]
+  }
+
+  // Si la pagina actual esta en un punto intermedio
+  // Muestra la primera pagina, puntos suspensivos, la pagina actual y sus vecinos,
+  // Otros puntos suspensivos y la ultima pagina
+
+  console.log('default')
+
+  return [
+    1,
+    '...',
+    currentPage - 1,
+    currentPage,
+    currentPage + 2,
+    '...',
+    totalPages,
+  ]
 }

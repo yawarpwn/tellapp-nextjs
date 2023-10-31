@@ -13,3 +13,5 @@ export  const CATEGORIES = {
   SERVICIO: 'servicio' ,
   ROPA_SEGURIDAD: 'ropa seguridad'
 }
+
+export const ITEMS_PER_PAGE = 10
