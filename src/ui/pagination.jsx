@@ -1,5 +1,4 @@
 'use client'
-
 import { generatePagination } from '@/utils'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight } from '@/icons'

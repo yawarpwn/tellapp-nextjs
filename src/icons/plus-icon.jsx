@@ -1,4 +1,4 @@
-export default function Icon({ size = 24 }) {
+export default function Icon({ size = 24, ...props }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +8,7 @@ export default function Icon({ size = 24 }) {
       stroke="currentColor"
       width={size}
       height={size}
+      {...props}
     >
       <path
         strokeLinecap="round"

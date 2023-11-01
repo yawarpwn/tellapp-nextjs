@@ -21,7 +21,7 @@ export async function fetchFilteredCustomers(query, currentPage) {
       .from('customers')
       .select('*')
       .ilike('name', `%${query}%`)
-      .order('name')
+      .order('created_at', { ascending: false })
       .limit(ITEMS_PER_PAGE)
       .range(offset, offset + ITEMS_PER_PAGE)
     return data

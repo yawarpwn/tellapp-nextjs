@@ -22,7 +22,7 @@ function Modal({ children, onClose, isOpen, title = 'Default modal title' }) {
 
     window.addEventListener('keydown', handleKeyEscape)
     return () => window.removeEventListener('keydown', handleKeyEscape)
-  })
+  }, [])
 
   return (
     isOpen &&
