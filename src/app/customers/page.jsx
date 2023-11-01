@@ -6,6 +6,7 @@ import { PlusIcon } from '@/icons'
 import { Suspense } from 'react'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
 export default async function CustomersPage({ searchParams }) {
   const currentPage = Number(searchParams?.page) || 1
   const query = searchParams?.query || ''
