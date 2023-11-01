@@ -8,6 +8,8 @@ import { revalidatePath } from 'next/cache'
 import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 const supabase = createServerActionClient({ cookies })
 
+console.log(supabase)
+
 export async function createCustomerAction(formData) {
   const name = formData.get('name')
   const ruc = formData.get('ruc')

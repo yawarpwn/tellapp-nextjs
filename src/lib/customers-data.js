@@ -1,8 +1,7 @@
 import { ITEMS_PER_PAGE } from '@/constants'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-const cookiesStore = cookies()
-const supabase = createServerComponentClient({ cookies: () => cookiesStore })
+const supabase = createServerActionClient({ cookies  })
 
 export async function fetchCustomers() {
   await new Promise(resolve => setTimeout(resolve, 1000))

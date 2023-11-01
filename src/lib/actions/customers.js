@@ -17,7 +17,9 @@ const CustomerSchema = z.object({
   phone: z.string(),
   email: z.string(),
 })
-const supabase = createServerActionClient({ cookies })
+
+const coookiesStore = cookies()
+const supabase = createServerActionClient({ cookies: () => coookiesStore })
 
 export async function createCustomer(_, formData) {
 
