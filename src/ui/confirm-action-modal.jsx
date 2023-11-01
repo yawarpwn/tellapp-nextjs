@@ -8,7 +8,7 @@ import clsx from 'clsx'
 function ConfirmModalAction({
   isOpen,
   onClose,
-  action,
+  onAction,
   title = '¿ Estás seguro ?',
   children,
   size = 'sm',
@@ -36,8 +36,8 @@ function ConfirmModalAction({
 
   const modalBoxClass = clsx('modal-box', `max-w-${size}`)
 
-  const onAction = async formData => {
-    await action(formData)
+  const handleAction = async formData => {
+    await onAction(formData)
     // onClose()
   }
 
@@ -53,14 +53,14 @@ function ConfirmModalAction({
           }
         }}
       >
-        <form className={modalBoxClass} action={onAction}>
+        <form className={modalBoxClass} action={handleAction}>
           <header className="py-2">
             <p className="text-center mb-2">{title}</p>
           </header>
           {children}
           <footer className="flex items-center justify-between">
             <SubmitActionButton />
-            <button type="button" className="btn btn-error">
+            <button onClick={onClose} type="button" className="btn btn-error">
               Cancelar
             </button>
           </footer>

@@ -9,38 +9,44 @@ import { redirect } from 'next/navigation'
 import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 
 const CustomerSchema = z.object({
-  name: z.coerce.number({
-    invalid_type_error: 'El nombre debe ser un número',
-  }),
-  ruc: z.string(),
-  address: z.string().optional(),
-  phone: z.string(),
-  email: z.string(),
+  name: z
+    .string()
+    .min(10, { message: 'El nombre debe tener al menos 10 caracteres' }),
+  ruc: z.coerce
+    .string()
+    .length(11, { message: 'El ruc debe tener al menos 11 caracteres' }),
+  address: z
+    .string()
+    .min(10, { message: 'La dirección debe tener al menos 10 caracteres' })
+    .nullable(),
+  phone: z.coerce.string().length(9, {
+    message: 'El telefono debe tener 9 caracteres',
+  }).nullable(),
+  email: z.string().email({
+    message: 'El correo no es valido',
+  }).nullable(),
 })
 
 const coookiesStore = cookies()
 const supabase = createServerActionClient({ cookies: () => coookiesStore })
 
 export async function createCustomer(_, formData) {
-
   const rawData = {
-    name:  formData.get('name'),
-    ruc : formData.get('ruc'),
-    address : formData.get('address'),
-    phone : formData.get('phone'),
-    email : formData.get('email'),
+    name: formData.get('name'),
+    ruc: formData.get('ruc'),
+    address: formData.get('address') || null,
+    phone: formData.get('phone') || null,
+    email: formData.get('email') || null,
   }
+
+  console.log({ rawData })
 
   const validatedFields = CustomerSchema.safeParse(rawData)
 
-
-  if(!validatedFields.success) {
+  if (!validatedFields.success) {
     return {
-      errors:
-        validatedFields.error.flatten()
-          .fieldErrors,
-      message:
-        'Missing Fields. Failed to Create Invoice.',
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Invoice.',
     }
   }
 
@@ -52,8 +58,8 @@ export async function createCustomer(_, formData) {
     })
   } catch (error) {
     console.log('Error inserting Row', error)
-    return { 
-      message: 'Database Error: Failed to create customer'
+    return {
+      message: 'Database Error: Failed to create customer',
     }
   }
 
@@ -100,13 +106,11 @@ export async function deleteCustomer(_, formData) {
     await deleteRow({ table: 'customers', client: supabase, id })
     revalidatePath('/customers')
     return {
-      message: 'Cliente eliminado'
+      message: 'Cliente eliminado',
     }
   } catch (error) {
     return {
       message: 'Error eliminando cliente',
     }
   }
-
-
 }

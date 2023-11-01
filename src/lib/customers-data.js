@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache'
 import { ITEMS_PER_PAGE } from '@/constants'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
@@ -31,6 +32,7 @@ export async function fetchFilteredCustomers(query, currentPage) {
 }
 
 export async function fetchCustomersPages(query) {
+  noStore()
   try {
     const {count} = await supabase.from('customers').select('*', { count: 'exact'}).ilike('name', `%${query}%`)
     const totalPages = Math.ceil(count / ITEMS_PER_PAGE)

@@ -13,7 +13,6 @@ const initialState = {
 }
 function Form() {
   const [state, dispatch] = useFormState(createCustomer, initialState)
-  console.log({state})
   return (
     <form action={dispatch}>
       <Input
@@ -21,6 +20,7 @@ function Form() {
         labelText={'Nombre'}
         placeholder="Nuevo Cliente S.A.C."
         type="text"
+        errors={state.errors?.name}
         required
       />
       <Input
@@ -28,12 +28,14 @@ function Form() {
         labelText={'Ruc'}
         placeholder="20610555599"
         type="number"
+        errors={state.errors?.ruc}
         required
       />
       <Input
         labelText={'Dirección'}
         name="address"
         type="text"
+        errors={state.errors?.address}
         placeholder="Av. Fauccett 232 - Callao"
       />
 
@@ -41,14 +43,17 @@ function Form() {
         name="phone"
         labelText={'Telefono'}
         type="number"
+        errors={state.errors?.phone}
         placeholder="971 531 019"
       />
       <Input
         name="email"
         labelText={'Email'}
         type="email"
+        errors={state.errors?.email}
         placeholder="ventas@example.com"
       />
+      {/* {state?.message && <div className='text-red-500 text-sm'>{state.message}</div>} */}
       <footer className="mt-4 flex justify-between">
         <Link href={'/customers'} className="btn">
           Cancelar

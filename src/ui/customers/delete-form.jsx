@@ -18,7 +18,7 @@ function DeleteForm({ id }) {
   return (
     <>
       <ConfirmModalAction
-        action={dispatch}
+        onAction={dispatch}
         isOpen={isOpenModal}
         onClose={closeModal}
       >

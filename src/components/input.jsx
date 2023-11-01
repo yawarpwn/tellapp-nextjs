@@ -1,15 +1,41 @@
-function Input({ labelText, className, classContainer, inputRef, ...props }) {
+import clsx from 'clsx'
+function Input({
+  labelText,
+  className,
+  classContainer,
+  inputRef,
+  errors,
+  ariaLabelledby,
+  ...props
+}) {
+  const inputClassName = clsx(
+    'input input-bordered',
+    {
+      'input-error': errors?.length > 0,
+      'input-success': !errors,
+    },
+    className,
+  )
   return (
     <div className={`form-control ${classContainer}`}>
       <label className="label">
         <span className="label-text">{labelText}</span>
       </label>
-      <input ref={inputRef}
-        className={`input input-bordered  placeholder:text-base-content/30 w-full ${className}`} {...props}
+      <input
+        ref={inputRef}
+        aria-labelledby={ariaLabelledby}
+        className={inputClassName}
+        {...props}
       />
-    {/* <div className="ml-2 text-sm text-red-500"> */}
-    {/* Otro text Error */}
-    {/* </div> */}
+      {errors?.map(error => (
+        <div
+          id={ariaLabelledby}
+          className="text-error text-sm ml-1"
+          key={error}
+        >
+          {error}
+        </div>
+      ))}
     </div>
   )
 }
