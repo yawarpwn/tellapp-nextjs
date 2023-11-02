@@ -11,14 +11,20 @@ import { CATEGORIES } from '@/constants'
 const categoriesArray = Object.values(CATEGORIES)
 
 const ProductSchema = z.object({
-  description: z.string(),
-  code: z.string(),
-  price: z.coerce.number(),
-  cost: z.coerce.number(),
+  description: z
+    .string()
+    .min(10, { message: 'Mínimo 10 caracteres' }),
+  code: z
+    .string()
+    .min(3, { message: 'Mínimo 3 caracteres' })
+    .max(6, { message: 'Máximo  6 caracteres' }),
+  price: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
+  cost: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
   category: z.enum(categoriesArray),
-  unit_size: z.string(),
+  unit_size: z
+    .string()
+    .min(3, { message: 'Mínimo 3 caracteres' }),
 })
-
 
 export async function createProduct(_, formData) {
   const coookiesStore = cookies()
@@ -61,7 +67,6 @@ export async function createProduct(_, formData) {
 }
 
 export async function updateCustomerAction(formData) {
-
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
   const name = formData.get('name')
@@ -112,4 +117,3 @@ export async function deleteProduct(_, formData) {
     }
   }
 }
-

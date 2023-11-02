@@ -16,19 +16,15 @@ function Form() {
   console.log(state)
   return (
     <form action={dispatch}>
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Descripción</span>
-        </label>
-
-        <textarea
-          required
-          name="description"
-          placeholder="Descripcion de producto"
-          autoFocus
-          className="textarea textarea-primary placeholder:text-base-content/30 h-[120px] resize-none"
-        />
-      </div>
+      <Input
+        required
+        name="description"
+        placeholder="Descripcion de producto"
+        autoFocus
+        as="textarea"
+        ariaLabelledby={'description-error'}
+        errors={state.errors?.description}
+      />
 
       <Input
         required
@@ -36,7 +32,8 @@ function Form() {
         labelText="Codigo"
         type="text"
         placeholder="Descripcion de producto"
-      errors={state.errors?.code}
+        errors={state.errors?.code}
+        ariaLabelledby={'code-error'}
       />
       <div className="flex gap-4">
         <Input
@@ -46,6 +43,8 @@ function Form() {
           type="number"
           step="0.5"
           placeholder="100"
+          errors={state.errors?.price}
+          ariaLabelledby={'price-error'}
         />
 
         <Input
@@ -54,7 +53,8 @@ function Form() {
           labelText="Costo"
           type="number"
           placeholder="10.00"
-    errors={state.errors?.cost}
+          errors={state.errors?.cost}
+          ariaLabelledby={'cost-error'}
         />
       </div>
       <div className="flex items-center gap-2 ">
@@ -63,15 +63,20 @@ function Form() {
           name="unit_size"
           labelText="Unidad / Medida"
           type="text"
+          errors={state.errors?.unit_size}
           placeholder="30x30cm"
+          ariaLabelledby={'unit-size-error'}
         />
         <select
           name="category"
-          className="select"
-          defaultValue=''
+          className="select mt-2"
+          defaultValue=""
+          errors={state.errors?.category}
           required
         >
-          <option value='' disabled>Categoria</option>
+          <option value="" disabled>
+            Categoria
+          </option>
           {Object.values(CATEGORIES).map(value => (
             <option value={value} key={value}>
               {value}
@@ -91,4 +96,3 @@ function Form() {
 }
 
 export default Form
-

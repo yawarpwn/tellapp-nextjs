@@ -6,9 +6,10 @@ import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { deleteRow, insertRow, updateRow } from '@/services/supabase'
-const supabase = createServerActionClient({ cookies })
 
 export async function createAgencieAction(formData) {
+  const cookieStore = cookies()
+  const supabase = createServerActionClient({ cookies: () => cookieStore })
   const company = formData.get('company')
   const ruc = formData.get('ruc')
   const address = formData.get('address')
@@ -33,6 +34,8 @@ export async function createAgencieAction(formData) {
 }
 
 export async function updateAgencieAction(formData) {
+  const cookieStore = cookies()
+  const supabase = createServerActionClient({ cookies: () => cookieStore })
   const company = formData.get('company')
   const ruc = formData.get('ruc')
   const address = formData.get('address')
@@ -63,6 +66,8 @@ export async function updateAgencieAction(formData) {
 }
 
 export async function deleteAgencieAction(formData) {
+  const cookieStore = cookies()
+  const supabase = createServerActionClient({ cookies: () => cookieStore })
   const id = formData.get('id')
   console.log('>>>>id:', id)
   if (!id) return
