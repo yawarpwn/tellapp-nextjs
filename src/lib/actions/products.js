@@ -11,6 +11,7 @@ import { CATEGORIES } from '@/constants'
 const categoriesArray = Object.values(CATEGORIES)
 
 const ProductSchema = z.object({
+  id: z.string(),
   description: z
     .string()
     .min(10, { message: 'Mínimo 10 caracteres' }),
@@ -26,6 +27,8 @@ const ProductSchema = z.object({
     .min(3, { message: 'Mínimo 3 caracteres' }),
 })
 
+// Create Product 
+const CreateProduct = ProductSchema.omit({id: true}) 
 export async function createProduct(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
@@ -40,7 +43,7 @@ export async function createProduct(_, formData) {
 
   console.log({ rawData })
 
-  const validatedFields = ProductSchema.safeParse(rawData)
+  const validatedFields = CreateProduct.safeParse(rawData)
 
   if (!validatedFields.success) {
     return {
@@ -66,39 +69,47 @@ export async function createProduct(_, formData) {
   redirect('/products')
 }
 
-export async function updateCustomerAction(formData) {
+// Update Product 
+const UpdateProduct = ProductSchema
+export async function updateProduct(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
-  const name = formData.get('name')
-  const ruc = formData.get('ruc')
-  const address = formData.get('address')
-  const id = formData.get('id')
-  const phone = formData.get('phone')
-  const email = formData.get('email')
+  const rawData = {
+    id : formData.get('id'),
+    description: formData.get('description'),
+    code: formData.get('code'),
+    price: formData.get('price'),
+    cost: formData.get('cost'),
+    category: formData.get('category'),
+    unit_size: formData.get('unit_size'),
+  }
 
-  const customerToUpdate = {
-    id,
-    name,
-    ruc,
-    phone,
-    email,
-    address,
+  console.log({ rawData })
+
+  const validatedFields = UpdateProduct.safeParse(rawData)
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to UPdate Product.',
+    }
   }
 
   try {
     await updateRow({
+      table: 'products',
+      row: validatedFields.data,
       client: supabase,
-      table: 'customers',
-      row: customerToUpdate,
     })
-    revalidatePath('/')
   } catch (error) {
-    console.log('ERror updating Row', error)
+    console.log('Error inserting Row', error)
     return {
-      message: 'Error actualizando agencia',
-      success: false,
+      message: 'Database Error: Failed to update product',
     }
   }
+
+  revalidatePath('/products')
+  redirect('/products')
 }
 
 export async function deleteProduct(_, formData) {

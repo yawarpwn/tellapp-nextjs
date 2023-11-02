@@ -23,7 +23,7 @@ function DeleteActionForm({ id, deleteAction  }) {
       >
         <input name="id" value={id} type="hidden" className="sr-only" />
       </ConfirmModalAction>
-      <button onClick={openModal} className="btn btn-sm">
+      <button className='text-error'  onClick={openModal} >
         <DeleteIcon />
       </button>
     </>

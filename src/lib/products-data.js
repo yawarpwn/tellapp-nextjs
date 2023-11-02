@@ -26,6 +26,8 @@ export async function fetchFilteredProducts({ query = '', currentPage = 1 }) {
       .ilike('description', `%${query}%`)
       .limit(ITEMS_PER_PAGE)
       .range(offset, offset + ITEMS_PER_PAGE)
+      .order('inserted_at', { ascending: false })
+    console.log(data)
     return data
   } catch (error) {
     console.log('Error Database', error)
@@ -36,7 +38,7 @@ export async function fetchFilteredProducts({ query = '', currentPage = 1 }) {
 export async function fetchProductsPages(query = '') {
   const cookieStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
-  noStore()
+  //WARN: noStore()
   try {
     const { count } = await supabase
       .from('products')
@@ -47,5 +49,18 @@ export async function fetchProductsPages(query = '') {
   } catch (error) {
     console.log('Database Error: ', error)
     throw new Error('Failed to fetch total number of customers')
+  }
+}
+
+export async function fetchProductById({ id }) {
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+
+  try {
+    const { data } = await supabase.from('products').select('*').eq('id', id)
+    return data[0]
+  } catch (error) {
+    console.log('Database Error: ', error)
+    throw new Error('Failed to fetch product by id ')
   }
 }

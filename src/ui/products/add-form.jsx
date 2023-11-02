@@ -1,98 +1,20 @@
 'use client'
 
-import Input from '@/components/input'
-import { CATEGORIES } from '@/constants'
-import Link from 'next/link'
-import SubmitActionButton from '../submit-action-button'
 import { createProduct } from '@/lib/actions/products'
 import { useFormState } from 'react-dom'
+import CreateEditInputs from './create-edit-inputs'
 
 const initialState = {
   message: null,
   errors: {},
 }
-function Form() {
+function AddForm() {
   const [state, dispatch] = useFormState(createProduct, initialState)
-  console.log(state)
   return (
     <form action={dispatch}>
-      <Input
-        required
-        name="description"
-        placeholder="Descripcion de producto"
-        autoFocus
-        as="textarea"
-        ariaLabelledby={'description-error'}
-        errors={state.errors?.description}
-      />
-
-      <Input
-        required
-        name="code"
-        labelText="Codigo"
-        type="text"
-        placeholder="Descripcion de producto"
-        errors={state.errors?.code}
-        ariaLabelledby={'code-error'}
-      />
-      <div className="flex gap-4">
-        <Input
-          required
-          name="price"
-          labelText="Precio"
-          type="number"
-          step="0.5"
-          placeholder="100"
-          errors={state.errors?.price}
-          ariaLabelledby={'price-error'}
-        />
-
-        <Input
-          required
-          name="cost"
-          labelText="Costo"
-          type="number"
-          placeholder="10.00"
-          errors={state.errors?.cost}
-          ariaLabelledby={'cost-error'}
-        />
-      </div>
-      <div className="flex items-center gap-2 ">
-        <Input
-          required
-          name="unit_size"
-          labelText="Unidad / Medida"
-          type="text"
-          errors={state.errors?.unit_size}
-          placeholder="30x30cm"
-          ariaLabelledby={'unit-size-error'}
-        />
-        <select
-          name="category"
-          className="select mt-2"
-          defaultValue=""
-          errors={state.errors?.category}
-          required
-        >
-          <option value="" disabled>
-            Categoria
-          </option>
-          {Object.values(CATEGORIES).map(value => (
-            <option value={value} key={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <footer className="mt-4 flex justify-between">
-        <Link href={'/products'} className="btn">
-          Cancelar
-        </Link>
-        <SubmitActionButton />
-      </footer>
+      <CreateEditInputs state={state} />
     </form>
   )
 }
 
-export default Form
+export default AddForm

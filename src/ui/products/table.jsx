@@ -13,39 +13,40 @@ async function ProductTable({ query, currentPage }) {
         {/* head */}
         <thead>
           <tr>
+            <th></th>
             <th>Descripcion</th>
             <th>Codigo</th>
-            <th>Categoria</th>
             <th>U/M</th>
             <th>Costo</th>
             <th>Precio</th>
-            <th>Acciones</th>
+            <th>Categoria</th>
           </tr>
         </thead>
         <tbody>
           {products?.map(product => {
             return (
               <tr key={product.id}>
+                <td className="flex gap-x-2">
+                  <DeleteActionForm
+                    id={product.id}
+                    deleteAction={deleteProduct}
+                  />
+                  <EditButton href={`/products/update/${product.id}`} />
+                </td>
                 <td>
                   <div>
                     <p className="w-[300px]">{product.description}</p>
                   </div>
                 </td>
                 <td>
-                  <p className="w-[70px]">{product.code}</p>
+                  <p className="w-[70px] font-bold text-xs">{product.code.toUpperCase()}</p>
                 </td>
 
-                <td>{product.category}</td>
 
                 <td>{product.unit_size}</td>
-
-                <td>{product.cost}</td>
-
-                <td>{product.price}</td>
-                <td className="flex gap-x-2">
-                  <DeleteActionForm id={product.id} deleteAction={deleteProduct} />
-                  <EditButton href={`/products/update/${product.id}`} />
-                </td>
+                <td>{product.cost.toFixed(2)}</td>
+                <td>{product.price.toFixed(2)}</td>
+                <td>{product.category}</td>
               </tr>
             )
           })}

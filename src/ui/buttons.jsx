@@ -12,7 +12,7 @@ export function AddButton({ href }) {
 
 export function EditButton({ href }) {
   return (
-    <Link className='btn btn-sm' href={href}>
+    <Link  href={href}>
       <EditIcon />
     </Link>
   )
