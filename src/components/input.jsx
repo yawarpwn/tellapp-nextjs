@@ -12,7 +12,6 @@ function Input({
     'input input-bordered',
     {
       'input-error': errors?.length > 0,
-      'input-success': !errors,
     },
     className,
   )

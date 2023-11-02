@@ -1,18 +1,26 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import RealtimeProducts from './realtime-products'
-export default async function Home() {
-  const cookiesStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookiesStore })
-  const { data } = await supabase
-    .from('products')
-    .select()
-    .order('description', { ascending: true})
+import { fetchProductsPages } from '@/lib/products-data'
+import { Suspense } from 'react'
+import ProductTable from '@/ui/products/table'
+import Search from '@/ui/search'
+import { AddButton } from '@/ui/buttons'
+import Pagination from '@/ui/pagination'
+
+async function ProductsPage({ searchParams}) {
+  const page = Number(searchParams?.page) || 1
+  const query = searchParams?.query || ''
+  const totalPages = await fetchProductsPages(query)
   return (
     <div>
-      {/* <NewQuotation /> */}
-      <RealtimeProducts serverProducts={data ?? []} />
+      <header className="flex items-center justify-between">
+        <Search placeholder="Buscar producto..." />
+        <AddButton href={'/products/create'} />
+      </header>
+      <Suspense fallback="Loading...">
+        <ProductTable query={query} currentPage={page} />
+      </Suspense>
+      <Pagination totalPages={totalPages} />
     </div>
   )
 }
 
+export default ProductsPage

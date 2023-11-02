@@ -1,8 +1,7 @@
-import { DeleteIcon } from '@/icons'
 import { fetchFilteredCustomers } from '@/lib/customers-data'
 import DeleteForm from './delete-form'
 export default async function CustomersTable({ query, currentPage }) {
-  const customers = await fetchFilteredCustomers(query, currentPage)
+  const customers = await fetchFilteredCustomers({ query, currentPage })
   return (
     <div className="overflow-x-auto">
       <table className="table">
