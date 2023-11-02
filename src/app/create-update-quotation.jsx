@@ -243,27 +243,25 @@ function CreateUpdateQuotation({ serverQuotation, serverCustomers }) {
           </button>
         </header>
         <form className="flex flex-col gap-2">
-          <div className="flex justify-between gap-2">
-            <Input
-              labelText="Ruc"
-              autoFocus={!serverQuotation}
-              name="ruc"
-              type="number"
-              placeholder="20610555536"
-              value={quotation.ruc}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <Input
-              labelText="Tiempo de entrega"
-              name="deadline"
-              type="number"
-              placeholder="10"
-              value={quotation?.deadline}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <Input
+            labelText="Ruc"
+            autoFocus={!serverQuotation}
+            name="ruc"
+            type="number"
+            placeholder="20610555536"
+            value={quotation.ruc}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <Input
+            labelText="Tiempo de entrega"
+            name="deadline"
+            type="number"
+            placeholder="10"
+            value={quotation?.deadline}
+            onChange={handleChange}
+            required
+          />
           <div>
             <Input
               labelText="Fecha"

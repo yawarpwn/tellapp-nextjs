@@ -22,7 +22,7 @@ function Input({
 
   const Component = as ? as : 'input'
   return (
-    <div className={`form-control w-full`}>
+    <div className={`form-control`}>
       <label className="label">
         <span className="label-text">{labelText}</span>
       </label>

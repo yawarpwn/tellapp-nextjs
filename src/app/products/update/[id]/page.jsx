@@ -8,16 +8,20 @@ async function UpdateProductPage({ params }) {
 
   return (
     <>
-      <Breadcrumbs breadcrumbs={[{
-        label: 'Productos',
-        href: '/products'
-      }, {
-        label: product.code,
-        href: `/products/update/${id}`,
-        active: true
-      }]} />
+      <Breadcrumbs
+        breadcrumbs={[
+          {
+            label: 'Productos',
+            href: '/products',
+          },
+          {
+            label: 'Edit',
+            href: `/products/update/${id}`,
+            active: true,
+          },
+        ]}
+      />
       <EditForm product={product} />
-
     </>
   )
 }
