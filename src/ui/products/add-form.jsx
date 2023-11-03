@@ -11,9 +11,11 @@ const initialState = {
 function AddForm() {
   const [state, dispatch] = useFormState(createProduct, initialState)
   return (
+    <>
     <form action={dispatch}>
       <CreateEditInputs state={state} />
     </form>
+    </>
   )
 }
 
