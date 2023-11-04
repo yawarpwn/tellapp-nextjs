@@ -13,7 +13,7 @@ const QuotationSchema = z.object({
   id: z.string(),
   ruc: z.string().length(11, {
     message: 'Ruc debe tener 11 caracteres'
-  }),
+  }).nullable(),
   company: z.string().default('Sin Ruc Proporcionado'),
   address: z.string(),
   deadline: z.coerce.number().gt(0, {
@@ -39,7 +39,7 @@ export async function createQuotation(_, formData) {
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
   const rawData = {
     number: formData.get('number'),
-    ruc: formData.get('ruc'),
+    ruc: formData.get('ruc') || null,
     company: formData.get('company'),
     address: formData.get('address'),
     deadline: formData.get('deadline'),
@@ -82,7 +82,7 @@ export async function updateQuotation(_, formData) {
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
   const rawData = {
     id : formData.get('id'),
-    ruc: formData.get('ruc'),
+    ruc: formData.get('ruc') || null,
     company: formData.get('company'),
     address: formData.get('address'),
     deadline: formData.get('deadline'),
