@@ -6,6 +6,7 @@ function Input({
   inputRef,
   errors,
   ariaLabelledby,
+  disabled,
   as,
   ...props
 }) {
@@ -30,6 +31,7 @@ function Input({
         ref={inputRef}
         aria-labelledby={ariaLabelledby}
         className={inputClassName}
+        disabled={disabled}
         {...props}
       />
 

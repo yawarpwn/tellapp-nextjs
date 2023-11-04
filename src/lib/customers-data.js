@@ -8,7 +8,7 @@ export async function fetchCustomers() {
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
   await new Promise(resolve => setTimeout(resolve, 1000))
   try {
-    const { data } = await supabase.from('customers').select().limit(10)
+    const { data } = await supabase.from('customers').select()
     return data
   } catch (error) {
     console.log('Error Database', error)

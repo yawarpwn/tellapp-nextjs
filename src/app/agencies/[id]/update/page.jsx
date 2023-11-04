@@ -10,7 +10,12 @@ async function UpdatePage({ params}) {
     breadcrumbs={[{
       label: 'Agencias',
       href: '/agencies',
-    }, {
+    }, 
+      {
+        label: id,
+        href: `/agencies/${id}`,
+      },
+      {
       label: 'Actualizar',
       href: `/agencies/${id}/update`,
       active: true

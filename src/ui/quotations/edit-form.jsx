@@ -1,38 +1,28 @@
+
 'use client'
 
-import { createProduct } from '@/lib/actions/products'
+import { updateQuotation } from '@/lib/actions/quoatations'
 import { useFormState } from 'react-dom'
 import CreateEditInputs from './create-edit-inputs'
 import { useState } from 'react'
 import { PlusIcon } from '@/icons'
 import ItemModal from './item-modal'
+import { quotationToCreate } from '@/utils'
 
 const initialState = {
   message: null,
   errors: {},
 }
 
-const initialQuotation = {
-  ruc: '20305100',
-  company: 'Sin Ruc proporcionado',
-  address: 'En un lugalglj z',
-  deadline: 1,
-  items: [
-    {
-      id: '2zdjlzz',
-      price: 20,
-      qty: 2,
-      unit_size: 'und',
-      description: 'producto de preuba para ananorjf ajdalsl',
-    },
-  ],
-}
 
 function AddForm({ quotationToUpdate }) {
-  const [state, dispatch] = useFormState(createProduct, initialState)
+  const [state, dispatch] = useFormState(updateQuotation, initialState)
   const [quotation, setQuotation] = useState(
-    quotationToUpdate || initialQuotation,
+    quotationToUpdate || quotationToCreate,
   )
+
+  console.log('state: ', state)
+  console.log('quoatations', quotation)
 
   const [isOpenModal, setIsOpenModal] = useState(false)
 
@@ -69,7 +59,11 @@ function AddForm({ quotationToUpdate }) {
 
   return (
     <>
-      <ItemModal isOpenModal={isOpenModal} onCloseModal={closeModal} />
+      <ItemModal
+        isOpenModal={isOpenModal}
+        onCloseModal={closeModal}
+        onAddItem={addItem}
+      />
       <form action={dispatch}>
         <CreateEditInputs
           onChange={handleChange}

@@ -1,4 +1,4 @@
-import Modal from '@/components/modal'
+import Modal from '@/ui/modal'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { XIcon } from '@/icons'
 import Input from '@/components/input'
@@ -113,7 +113,12 @@ function ItemModal({
   }
 
   return (
-    <Modal isOpen={isOpenModal} onClose={onCloseModal}>
+    <Modal
+      size="lg"
+      title="Agregar/Editar Producto"
+      isOpen={isOpenModal}
+      onClose={onCloseModal}
+    >
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 ">
           <div className="form-control relative">
@@ -176,24 +181,30 @@ function ItemModal({
             name="unit_size"
             required
           />
-          <div className="flex gap-2">
-            <Input
-              onChange={handleChangeItem}
-              value={item.qty}
-              type="number"
-              labelText="Cantidad"
-              name="qty"
-              required
-            />
-            <Input
-              onChange={handleChangeItem}
-              value={item.price}
-              type="number"
-              labelText="Precio"
-              name="price"
-              required
-            />
-          </div>
+          <Input
+            onChange={handleChangeItem}
+            value={item.qty}
+            type="number"
+            labelText="Cantidad"
+            name="qty"
+            required
+          />
+          <Input
+            onChange={handleChangeItem}
+            value={item.price}
+            type="number"
+            labelText="Precio"
+            name="price"
+            required
+          />
+        </div>
+        <div className="mt-4 flex items-center justify-between">
+          <button type="submit" className="btn">
+            Aceptar
+          </button>
+          <button onClick={onCloseModal} type="button" className="btn">
+            Cancelar
+          </button>
         </div>
       </form>
     </Modal>

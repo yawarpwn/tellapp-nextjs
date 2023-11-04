@@ -2,9 +2,7 @@ import { DeleteIcon, EditIcon } from '@/icons'
 import { getIgv } from '@/utils'
 
 function ItemsTable({ items, onEdit, onDelete }) {
-  console.log('items', items)
   const { total } = getIgv(items)
-
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -30,7 +28,7 @@ function ItemsTable({ items, onEdit, onDelete }) {
                 <td>{item.price.toFixed(2)}</td>
                 <td>
                   <div className="flex gap-x-1">
-                    <button type="button" className="btn">
+                    <button onClick={() => onEdit(item)} type="button" className="btn">
                       <EditIcon />
                     </button>
 
