@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
         <NextTopLoader showSpinner={false} color="#6519e6" />
         <Navbar />
         <div className="max-w-3xl mx-auto px-4 md:px-6">
-          <main>{children}</main>
+          <main className='pb-4'>{children}</main>
         </div>
       </body>
     </html>

@@ -11,6 +11,7 @@ function Input({
   ...props
 }) {
   const inputClassName = clsx(
+    'w-full',
     as === 'textarea' ? 'textarea textarea-bordered' : 'input input-bordered',
     {
       'input-error': errors?.length > 0,
@@ -23,7 +24,7 @@ function Input({
 
   const Component = as ? as : 'input'
   return (
-    <div className={`form-control`}>
+    <div className={`form-control w-full`}>
       <label className="label">
         <span className="label-text">{labelText}</span>
       </label>

@@ -17,6 +17,7 @@ function CreateEditInputs({
   onOpenModal,
   updateCompanyInfo,
 }) {
+  console.log({quotation})
   const [lastQuotationNumber, setLastQuotationNumber] = useState(null)
   const [loading, setLoading] = useState(false)
   const getLasQuotationNumber = useCallback(async () => {
@@ -50,7 +51,7 @@ function CreateEditInputs({
         name="ruc"
         type="number"
         placeholder="20610555536"
-        value={quotation?.ruc}
+        value={quotation?.ruc ?? ''}
         onChange={onChange}
         errors={state.errors?.ruc}
         onBlur={handleBlur}
@@ -96,7 +97,7 @@ function CreateEditInputs({
       <input type="hidden" name="id" defaultValue={quotation?.id} />
       <section className="mt-4">
         <header className="flex items-center justify-between">
-          <h3 className="text-2xl font-bold">Lista de Productos</h3>
+          <h3 className="text-xl font-bold">Productos: </h3>
           <button
             type="button"
             onClick={onOpenModal}

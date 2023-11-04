@@ -14,7 +14,7 @@ const QuotationSchema = z.object({
   ruc: z.string().length(11, {
     message: 'Ruc debe tener 11 caracteres'
   }).nullable(),
-  company: z.string().default('Sin Ruc Proporcionado'),
+  company: z.string().default('SIN RUC PROPORCIONADO'),
   address: z.string(),
   deadline: z.coerce.number().gt(0, {
     message: 'Debe ser mayor a 0'
@@ -40,7 +40,7 @@ export async function createQuotation(_, formData) {
   const rawData = {
     number: formData.get('number'),
     ruc: formData.get('ruc') || null,
-    company: formData.get('company'),
+    company: formData.get('company') || 'SIN RUC PROPORCIONADO',
     address: formData.get('address'),
     deadline: formData.get('deadline'),
     items: JSON.parse(formData.get('items'))
@@ -83,7 +83,7 @@ export async function updateQuotation(_, formData) {
   const rawData = {
     id : formData.get('id'),
     ruc: formData.get('ruc') || null,
-    company: formData.get('company'),
+    company: formData.get('company') || 'Sin Ruc Proporcionado',
     address: formData.get('address'),
     deadline: formData.get('deadline'),
     items: JSON.parse(formData.get('items'))

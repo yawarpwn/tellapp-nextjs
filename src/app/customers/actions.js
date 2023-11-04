@@ -1,14 +1,11 @@
 'use server'
 
-import z from 'zod'
-// import { createClient } from '@supabase/supabase-js'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 const supabase = createServerActionClient({ cookies })
 
-console.log(supabase)
 
 export async function createCustomerAction(formData) {
   const name = formData.get('name')

@@ -102,7 +102,6 @@ function AddForm({ quotationToUpdate, action, serverCustomers }) {
     })
   }
 
-
   return (
     <>
       <ItemModal
@@ -118,7 +117,8 @@ function AddForm({ quotationToUpdate, action, serverCustomers }) {
         serverCustomers={serverCustomers}
         onCustomerPick={handleCustomerPick}
       />
-      <div className="">
+      <div className="flex justify-between">
+        <div />
         <button onClick={openCustomersModal} className="btn">
           Cliente frecuentes
         </button>

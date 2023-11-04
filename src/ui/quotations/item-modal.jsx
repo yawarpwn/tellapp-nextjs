@@ -115,7 +115,6 @@ function ItemModal({
   return (
     <Modal
       size="lg"
-      title="Agregar/Editar Producto"
       isOpen={isOpenModal}
       onClose={onCloseModal}
     >
@@ -181,6 +180,7 @@ function ItemModal({
             name="unit_size"
             required
           />
+    <div className='flex gap-2 w-full'>
           <Input
             onChange={handleChangeItem}
             value={item.qty}
@@ -197,6 +197,7 @@ function ItemModal({
             name="price"
             required
           />
+    </div>
         </div>
         <div className="mt-4 flex items-center justify-between">
           <button type="submit" className="btn">

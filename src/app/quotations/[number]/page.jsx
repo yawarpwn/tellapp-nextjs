@@ -29,12 +29,14 @@ async function QuotationPage({ params }) {
           },
         ]}
       />
-      <header className="flex gap-x-2">
+      <header className="flex justify-end gap-x-2">
+    <div className='flex gap-2'>
         <Link href={`/quotations/${number}/update`} className="btn btn-primary">
           <EditIcon />
           <span className="hidden md:block">Editar</span>
         </Link>
         <DownloadPDF quotation={quotation} />
+    </div>
       </header>
       <div className="container mx-auto px-4 py-8">
         <div className="rounded-lg shadow overflow-hidden">

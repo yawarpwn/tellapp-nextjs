@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom'
 export default function Modal({
   isOpen,
   onClose,
-  title = '¿ Estás seguro ?',
+  title,
   children,
   size = 'sm',
 }) {
@@ -31,7 +31,6 @@ export default function Modal({
     return () => window.removeEventListener('keydown', handleKeyEscape)
   }, [onClose])
 
-
   return (
     isOpen &&
     createPortal(
@@ -44,15 +43,16 @@ export default function Modal({
           }
         }}
       >
-      <div className={`modal-box max-w-${size}`}>
-        <header className="py-2">
-          <p className="text-center mb-2">{title}</p>
-        </header>
-        {children}
-      </div>
+        <div className={`modal-box max-w-${size}`}>
+          {title && (
+            <header className="py-2">
+              <p className="text-center mb-2">{title}</p>
+            </header>
+          )}
+          {children}
+        </div>
       </dialog>,
       window.document.body,
     )
   )
 }
-

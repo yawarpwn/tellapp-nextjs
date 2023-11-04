@@ -40,14 +40,19 @@ function CustomersModal({
     setFilter(value)
   }
 
+  const handleCloseModal = () => {
+    setFilter('')
+    onCloseModal()
+  }
+
   const hasCustomers = serverCustomers && serverCustomers.length > 0
 
   return (
-    <Modal isOpen={isOpenModal} onClose={onCloseModal}>
+    <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
       <form onSubmit={handleSubmit}>
         <div className="mt-4">
           <InputSearch
-            placeholder={'Buscar cliente'}
+            placeholder={'Buscar cliente...'}
             onSearchChange={handleSearchCustomer}
           />
         </div>
@@ -75,8 +80,10 @@ function CustomersModal({
             })}
         </div>
         <footer className="flex mt-4 items-center justify-between">
-          <button className="btn">Aceptar</button>
-          <button className="btn">Cancelar</button>
+          <button type='submit' className="btn">Aceptar</button>
+          <button type='button' onClick={handleCloseModal} className="btn">
+            Cancelar
+          </button>
         </footer>
       </form>
     </Modal>
