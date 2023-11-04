@@ -5,8 +5,8 @@ import { updateQuotation } from '@/lib/actions/quoatations'
 import { fetchCustomers } from '@/lib/customers-data'
 
 async function UpdatePage({ params }) {
-  const { id } = params
-  const quotation = await fetchQuotationById({ id })
+  const { number } = params
+  const quotation = await fetchQuotationById({ number })
   const customers = await fetchCustomers()
   return (
     <>
@@ -17,12 +17,12 @@ async function UpdatePage({ params }) {
             href: '/quotations',
           },
           {
-            label: id,
-            href: `/quotations/${id}`,
+            label: `#${number}`,
+            href: `/quotations/${number}`,
           },
           {
             label: 'Editar',
-            href: `/quotations/${id}/update`,
+            href: `/quotations/${number}/update`,
             active: true,
           },
         ]}

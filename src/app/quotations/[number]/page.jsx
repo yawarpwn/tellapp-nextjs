@@ -8,9 +8,9 @@ import Breadcrumbs from '@/ui/breadcrumbs'
 
 export const dynamic = 'force-dynamic'
 async function QuotationPage({ params }) {
-  const { id } = params
-  const quotation = await fetchQuotationById({ id })
-  const { number, create_at, items } = quotation
+  const { number } = params
+  const quotation = await fetchQuotationById({ number })
+  const {  create_at, items } = quotation
   const formatedDate = new Intl.DateTimeFormat('es').format(create_at)
   const { total, subTotal, igv } = getIgv(quotation.items)
 
@@ -24,13 +24,13 @@ async function QuotationPage({ params }) {
           },
           {
             label: ` #${number}`,
-            href: `/quotations/${id}`,
+            href: `/quotations/${number}`,
             active: true,
           },
         ]}
       />
       <header className="flex gap-x-2">
-        <Link href={`/quotations/${id}/update`} className="btn btn-primary">
+        <Link href={`/quotations/${number}/update`} className="btn btn-primary">
           <EditIcon />
           <span className="hidden md:block">Editar</span>
         </Link>

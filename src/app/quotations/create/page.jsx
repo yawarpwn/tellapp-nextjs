@@ -1,16 +1,28 @@
-import CreateUpdateQuotation from '@/app/create-update-quotation'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import Breadcrumbs from '@/ui/breadcrumbs'
+import AddEditForm from '@/ui/quotations/add-edit-form'
+import { createQuotation } from '@/lib/actions/quoatations'
+import { fetchCustomers } from '@/lib/customers-data'
 
-async function NewQuotation() {
-  const cookiesStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookiesStore })
-  const { data: serverCustomers } = await supabase
-    .from('customers')
-    .select()
-    .order('name')
-
-  return <CreateUpdateQuotation serverCustomers={serverCustomers} />
+async function CreateQuotationPage() {
+  const customers = await fetchCustomers()
+  return (
+    <>
+      <Breadcrumbs
+        breadcrumbs={[
+          {
+            label: 'Cotizaciones',
+            href: '/quotations',
+          },
+          {
+            label: 'Crear',
+            href: '/quotations/crear',
+            active: true,
+          },
+        ]}
+      />
+      <AddEditForm action={createQuotation} serverCustomers={customers} />
+    </>
+  )
 }
 
-export default NewQuotation
+export default CreateQuotationPage

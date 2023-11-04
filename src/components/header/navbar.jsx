@@ -12,7 +12,7 @@ import {
 const navs = [
   {
     title: 'Cotizaciones',
-    href: '/',
+    href: '/quotations',
     icon: QuotationIcon,
   },
   {

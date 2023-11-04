@@ -29,7 +29,7 @@ async function QuotationsTable({ query, currentPage }) {
             return (
               <tr key={quotation.id}>
                 <td>
-                  <Link href={`/quotations/${quotation.id}`}>
+                  <Link href={`/quotations/${quotation.number}`}>
                     <span className="text-primary font-bold">#</span>
                     {quotation.number}
                   </Link>
@@ -45,8 +45,8 @@ async function QuotationsTable({ query, currentPage }) {
                 </td>
                 <td>{total}</td>
                 <td className="flex gap-x-2">
-                  <EditButton href={`/quotations/${quotation.id}/update`} />
-                  <Link className="" href={`/quotations/${quotation.id}`}>
+                  <EditButton href={`/quotations/${quotation.number}/update`} />
+                  <Link className="" href={`/quotations/${quotation.number}`}>
                     <EyeIcon />
                   </Link>
                 </td>

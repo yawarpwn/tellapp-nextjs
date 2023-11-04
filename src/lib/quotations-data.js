@@ -42,12 +42,12 @@ export async function fetchQuotationsPages({ query = '' }) {
   }
 }
 
-export async function fetchQuotationById({ id }) {
+export async function fetchQuotationById({ number}) {
   const cookieStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
   try {
-    const { data } = await supabase.from('quotations').select('*').eq('id', id)
+    const { data } = await supabase.from('quotations').select('*').eq('number', Number(number))
     return data[0]
   } catch (error) {
     console.log('Database Error: ', error)

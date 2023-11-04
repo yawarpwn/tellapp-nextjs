@@ -7,7 +7,7 @@ function Breadcrumbs({ breadcrumbs }) {
       <ol>
         {breadcrumbs.map(({ label, href, active }, index) => (
           <li
-            className={clsx({ 'breadcrumbs-active': active })}
+            className={clsx({ 'breadcrumbs-active text-primary': active })}
             aria-current={active}
             key={href}
           >
