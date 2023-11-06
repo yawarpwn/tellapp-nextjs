@@ -1,3 +1,5 @@
+'use client'
+
 import Input from '@/components/input'
 import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'
@@ -12,12 +14,11 @@ function CreateEditInputs({
   state,
   quotation,
   onChange,
-  onDeleteItem,
-  onEditItem,
-  onOpenModal,
-  updateCompanyInfo,
+  openEditItemModal,
+  updateQuotation,
+  deleteItem,
+  openItemModal,
 }) {
-  console.log({quotation})
   const [lastQuotationNumber, setLastQuotationNumber] = useState(null)
   const [loading, setLoading] = useState(false)
   const getLasQuotationNumber = useCallback(async () => {
@@ -35,14 +36,13 @@ function CreateEditInputs({
   }, [getLasQuotationNumber])
 
   const handleBlur = useCallback(async () => {
-    if(quotation.ruc && quotation.ruc.length === 11) {
+    if (quotation.ruc && quotation.ruc.length === 11) {
       setLoading(true)
-      const { ruc, company, address} = await getRuc(quotation.ruc)
-      updateCompanyInfo({ruc, company, address})
+      const { ruc, company, address } = await getRuc(quotation.ruc)
+      updateQuotation({ ruc, company, address })
       setLoading(false)
     }
-
-  }, [quotation.ruc, updateCompanyInfo])
+  }, [quotation.ruc, updateQuotation])
 
   return (
     <>
@@ -88,19 +88,12 @@ function CreateEditInputs({
         disabled={loading}
       />
 
-      <input
-        type="hidden"
-        name="items"
-        value={JSON.stringify(quotation?.items)}
-      />
-      <input name="number" type="hidden" value={lastQuotationNumber + 1} />
-      <input type="hidden" name="id" defaultValue={quotation?.id} />
       <section className="mt-4">
         <header className="flex items-center justify-between">
           <h3 className="text-xl font-bold">Productos: </h3>
           <button
             type="button"
-            onClick={onOpenModal}
+            onClick={openItemModal}
             className="btn btn-primary"
           >
             <PlusIcon />
@@ -109,8 +102,8 @@ function CreateEditInputs({
         </header>
         <ItemsTable
           items={quotation.items}
-          onDelete={onDeleteItem}
-          onEdit={onEditItem}
+          onDelete={deleteItem}
+          onEdit={openEditItemModal}
         />
         {state.errors?.items &&
           state.errors.items.map(error => (

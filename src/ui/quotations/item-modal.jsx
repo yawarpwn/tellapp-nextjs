@@ -15,8 +15,8 @@ function ItemModal({
   isOpenModal,
   onCloseModal,
   editingItem,
-  onAddItem,
-  onEditItem,
+  addItem,
+  updateItem
 }) {
   const [item, setItem] = useState(initialState)
   const [showClearDescription, setShowClearDescription] = useState(false)
@@ -71,7 +71,7 @@ function ItemModal({
     event.preventDefault()
 
     if (editingItem) {
-      onEditItem(item)
+      updateItem(item)
       setItem(() => initialState)
       onCloseModal()
     } else {
@@ -81,7 +81,7 @@ function ItemModal({
         id,
       }
 
-      onAddItem(newItem)
+      addItem(newItem)
       setItem(() => initialState)
       onCloseModal()
     }

@@ -15,7 +15,11 @@ function CustomersModal({
   const handleSubmit = event => {
     event.preventDefault()
     if (selectedCustomer !== null) {
-      onCustomerPick(selectedCustomer)
+      onCustomerPick({
+        company: selectedCustomer.name,
+        address: selectedCustomer.address,
+        ruc: selectedCustomer.ruc,
+      })
       onCloseModal()
     } else {
       return
@@ -42,6 +46,7 @@ function CustomersModal({
 
   const handleCloseModal = () => {
     setFilter('')
+    setSelectedCustomer(null)
     onCloseModal()
   }
 

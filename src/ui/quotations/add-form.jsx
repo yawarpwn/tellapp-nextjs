@@ -6,16 +6,25 @@ import ItemModal from './item-modal'
 import confetti from 'canvas-confetti'
 import CustomersModal from '@/ui/quotations/customers-modal'
 import useQuotations from '@/hooks/use-quotations'
+import useAutoSave from '@/hooks/use-autosave'
+import { useEffect, useState } from 'react'
 
 const initialState = {
   message: null,
   errors: {},
 }
 
-function EditForm({ quotationToUpdate, action, serverCustomers }) {
+function AddForm({ quotationToUpdate, action, serverCustomers }) {
   const [state, dispatch] = useFormState(action, initialState)
+  const [savedQuotation, setSavedQuotation] = useState(null)
 
-  //TODO: Mejorar
+  useEffect(() => {
+
+  }, [])
+  const savedQuotation = () => {}
+
+  useAutoSave({callback: savedQuotation, delay: 1000 })
+
   const {
     addItem,
     deleteItem,
@@ -76,5 +85,4 @@ function EditForm({ quotationToUpdate, action, serverCustomers }) {
   )
 }
 
-export default EditForm
-
+export default AddForm

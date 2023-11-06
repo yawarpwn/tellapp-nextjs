@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic'
 async function QuotationPage({ params }) {
   const { number } = params
   const quotation = await fetchQuotationById({ number })
-  const {  create_at, items } = quotation
+  const { create_at, items } = quotation
   const formatedDate = new Intl.DateTimeFormat('es').format(create_at)
   const { total, subTotal, igv } = getIgv(quotation.items)
 
@@ -30,13 +30,16 @@ async function QuotationPage({ params }) {
         ]}
       />
       <header className="flex justify-end gap-x-2">
-    <div className='flex gap-2'>
-        <Link href={`/quotations/${number}/update`} className="btn btn-primary">
-          <EditIcon />
-          <span className="hidden md:block">Editar</span>
-        </Link>
-        <DownloadPDF quotation={quotation} />
-    </div>
+        <div className="flex gap-2">
+          <Link
+            href={`/quotations/${number}/update`}
+            className="btn btn-primary"
+          >
+            <EditIcon />
+            <span className="hidden md:block">Editar</span>
+          </Link>
+          <DownloadPDF quotation={quotation} />
+        </div>
       </header>
       <div className="container mx-auto px-4 py-8">
         <div className="rounded-lg shadow overflow-hidden">

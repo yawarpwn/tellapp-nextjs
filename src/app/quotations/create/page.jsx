@@ -1,5 +1,5 @@
 import Breadcrumbs from '@/ui/breadcrumbs'
-import AddEditForm from '@/ui/quotations/add-edit-form'
+import AddForm from '@/ui/quotations/add-form'
 import { createQuotation } from '@/lib/actions/quoatations'
 import { fetchCustomers } from '@/lib/customers-data'
 
@@ -20,7 +20,7 @@ async function CreateQuotationPage() {
           },
         ]}
       />
-      <AddEditForm action={createQuotation} serverCustomers={customers} />
+      <AddForm action={createQuotation} serverCustomers={customers} />
     </>
   )
 }

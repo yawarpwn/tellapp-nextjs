@@ -44,11 +44,15 @@ async function QuotationsTable({ query, currentPage }) {
                   <span className="text-xs">{formatedDate}</span>
                 </td>
                 <td>{total}</td>
-                <td className="flex gap-x-2">
-                  <EditButton href={`/quotations/${quotation.number}/update`} />
-                  <Link className="" href={`/quotations/${quotation.number}`}>
-                    <EyeIcon />
-                  </Link>
+                <td>
+                  <div className="flex items-center gap-x-2">
+                    <EditButton
+                      href={`/quotations/${quotation.number}/update`}
+                    />
+                    <Link href={`/quotations/${quotation.number}`}>
+                      <EyeIcon />
+                    </Link>
+                  </div>
                 </td>
               </tr>
             )

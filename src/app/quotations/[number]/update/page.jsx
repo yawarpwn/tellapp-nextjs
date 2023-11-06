@@ -1,6 +1,6 @@
 import { fetchQuotationById } from '@/lib/quotations-data'
 import Breadcrumbs from '@/ui/breadcrumbs'
-import AddEditForm from '@/ui/quotations/add-edit-form'
+import EditForm from '@/ui/quotations/edit-form'
 import { updateQuotation } from '@/lib/actions/quoatations'
 import { fetchCustomers } from '@/lib/customers-data'
 
@@ -27,7 +27,7 @@ async function UpdatePage({ params }) {
           },
         ]}
       />
-      <AddEditForm
+      <EditForm
         action={updateQuotation}
         quotationToUpdate={quotation}
         serverCustomers={customers}
