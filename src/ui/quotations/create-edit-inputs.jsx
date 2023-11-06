@@ -87,6 +87,8 @@ function CreateEditInputs({
         errors={state.errors?.address}
         disabled={loading}
       />
+      <input type='hidden' name='id' value={quotation?.id} />
+      <input type='hidden' name='items' value={JSON.stringify(quotation?.items)} />
 
       <section className="mt-4">
         <header className="flex items-center justify-between">

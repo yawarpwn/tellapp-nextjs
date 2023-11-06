@@ -8,23 +8,29 @@ import CustomersModal from '@/ui/quotations/customers-modal'
 import useQuotations from '@/hooks/use-quotations'
 import useAutoSave from '@/hooks/use-autosave'
 import { useEffect, useState } from 'react'
+import _ from 'lodash'
+import SavedQuotationModal from './saved-quotation-modal'
 
 const initialState = {
   message: null,
   errors: {},
 }
 
-function AddForm({ quotationToUpdate, action, serverCustomers }) {
+const initialQuotationState = {
+  company: '',
+  ruc: '',
+  address: '',
+  deadline: '',
+  items: [],
+};
+
+function AddForm({ action, serverCustomers }) {
   const [state, dispatch] = useFormState(action, initialState)
   const [savedQuotation, setSavedQuotation] = useState(null)
 
-  useEffect(() => {
-
-  }, [])
-  const savedQuotation = () => {}
-
-  useAutoSave({callback: savedQuotation, delay: 1000 })
-
+  const closeSavedQuotationModal = () => {
+    setSavedQuotation(null)
+  }
   const {
     addItem,
     deleteItem,
@@ -40,10 +46,47 @@ function AddForm({ quotationToUpdate, action, serverCustomers }) {
     isItemModalOpen,
     isCustomersModalOpen,
     editingItem,
-  } = useQuotations({ initialData: quotationToUpdate })
+  } = useQuotations({ initialData: initialQuotationState })
+
+  console.log({quotation})
+
+  useEffect(() => {
+    const quotationFromLocalStorage = JSON.parse(localStorage.getItem('__QUOTATION__'))
+      console.log({quotationFromLocalStorage})
+
+      if(quotationFromLocalStorage) {
+        setSavedQuotation(quotationFromLocalStorage)
+      }
+
+  }, [])
+
+  const saveInLocalStoreage = () => {
+   const isEmpety = _.isEqual(quotation, initialQuotationState)
+    console.log('isEmpety: ', isEmpety)
+    console.log('save in localStorage')
+    if(!isEmpety) {
+      localStorage.setItem('__QUOTATION__', JSON.stringify(quotation))
+    }
+  }
+
+  useAutoSave({callback: saveInLocalStoreage, delay: 3000 })
+
+  console.log(savedQuotation)
+
 
   return (
     <>
+      <SavedQuotationModal 
+      isOpen={savedQuotation}
+      onClose={closeSavedQuotationModal}
+      onConfirm={() => {
+        updateQuotation({
+          ...quotation,
+          ...savedQuotation
+          })
+        closeSavedQuotationModal()
+      }}
+    />
       <ItemModal
         isOpenModal={isItemModalOpen}
         onCloseModal={closeEditItemModal}
@@ -66,6 +109,7 @@ function AddForm({ quotationToUpdate, action, serverCustomers }) {
       <form
         action={async formData => {
           await dispatch(formData)
+          localStorage.removeItem('__QUOTATION__')
           confetti()
         }}
       >

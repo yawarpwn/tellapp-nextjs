@@ -1,14 +1,7 @@
 import { useState } from 'react';
 
-const initialQuotationState = {
-  company: '',
-  ruc: '',
-  address: '',
-  deadline: '',
-  items: [],
-};
 
-export default function useQuotations({ initialData = initialQuotationState }) {
+export default function useQuotations({ initialData  }) {
   const [quotation, setQuotation] = useState(initialData);
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
   const [isCustomersModalOpen, setIsCustomersModalOpen] = useState(false);

@@ -46,6 +46,8 @@ export async function createQuotation(_, formData) {
     items: JSON.parse(formData.get('items'))
   }
 
+  console.log('rawData: ',rawData)
+
 
   const validatedFields = CreateQuotation.safeParse(rawData)
 
@@ -89,7 +91,7 @@ export async function updateQuotation(_, formData) {
     items: JSON.parse(formData.get('items'))
   }
 
-  console.log({ rawData })
+  console.log('update Raw: ', rawData)
 
   const validatedFields = UpdateQuotation.safeParse(rawData)
 
