@@ -9,10 +9,10 @@ function SavedQuotationModal({ isOpen, onClose, onConfirm }) {
       onClose={onClose}
     >
       <div className="flex items-center justify-between">
-        <button className="btn btn-success" onClick={onConfirm}>
+        <button type="button" className="btn btn-success" onClick={onConfirm}>
           Aceptar
         </button>
-        <button className="btn btn-error" onClick={onClose}>
+        <button type="button" className="btn btn-error" onClick={onClose}>
           Cancelar
         </button>
       </div>

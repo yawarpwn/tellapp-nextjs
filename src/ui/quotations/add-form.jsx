@@ -1,5 +1,6 @@
 'use client'
 
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useFormState } from 'react-dom'
 import CreateEditInputs from './create-edit-inputs'
 import ItemModal from './item-modal'
@@ -7,7 +8,7 @@ import confetti from 'canvas-confetti'
 import CustomersModal from '@/ui/quotations/customers-modal'
 import useQuotations from '@/hooks/use-quotations'
 import useAutoSave from '@/hooks/use-autosave'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import _ from 'lodash'
 import SavedQuotationModal from './saved-quotation-modal'
 
@@ -27,6 +28,21 @@ const initialQuotationState = {
 function AddForm({ action, serverCustomers }) {
   const [state, dispatch] = useFormState(action, initialState)
   const [savedQuotation, setSavedQuotation] = useState(null)
+
+  const [lastQuotationNumber, setLastQuotationNumber] = useState(null)
+  const getLasQuotationNumber = useCallback(async () => {
+    const supabase = createClientComponentClient()
+    const { data } = await supabase
+      .from('quotations')
+      .select('number')
+      .order('number', { ascending: false })
+      .limit(1)
+    setLastQuotationNumber(data[0]?.number)
+  }, [])
+
+  useEffect(() => {
+    getLasQuotationNumber()
+  }, [getLasQuotationNumber])
 
   const closeSavedQuotationModal = () => {
     setSavedQuotation(null)
@@ -71,14 +87,19 @@ function AddForm({ action, serverCustomers }) {
 
   useAutoSave({callback: saveInLocalStoreage, delay: 3000 })
 
-  console.log(savedQuotation)
+  const onCancel = () => {
+    updateQuotation(initialQuotationState)
+    localStorage.removeItem('__QUOTATION__')
+    closeSavedQuotationModal()
+  }
+
 
 
   return (
     <>
       <SavedQuotationModal 
       isOpen={savedQuotation}
-      onClose={closeSavedQuotationModal}
+      onClose={onCancel}
       onConfirm={() => {
         updateQuotation({
           ...quotation,
@@ -124,6 +145,8 @@ function AddForm({ action, serverCustomers }) {
           openItemModal={openItemModal}
           deleteItem={deleteItem}
         />
+
+    <input type='hidden' name='number' value={lastQuotationNumber + 1} />
       </form>
     </>
   )

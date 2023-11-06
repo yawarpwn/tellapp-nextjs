@@ -6,8 +6,7 @@ import SubmitActionButton from '../submit-action-button'
 import ItemsTable from './items-table'
 import { PlusIcon } from '@/icons'
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useEffect, useCallback, useState } from 'react'
+import {  useCallback, useState } from 'react'
 import { getRuc } from '@/services/sunat'
 
 function CreateEditInputs({
@@ -19,21 +18,7 @@ function CreateEditInputs({
   deleteItem,
   openItemModal,
 }) {
-  const [lastQuotationNumber, setLastQuotationNumber] = useState(null)
   const [loading, setLoading] = useState(false)
-  const getLasQuotationNumber = useCallback(async () => {
-    const supabase = createClientComponentClient()
-    const { data } = await supabase
-      .from('quotations')
-      .select('number')
-      .order('number', { ascending: false })
-      .limit(1)
-    setLastQuotationNumber(data[0]?.number)
-  }, [])
-
-  useEffect(() => {
-    getLasQuotationNumber()
-  }, [getLasQuotationNumber])
 
   const handleBlur = useCallback(async () => {
     if (quotation.ruc && quotation.ruc.length === 11) {
