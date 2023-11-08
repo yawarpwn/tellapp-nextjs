@@ -1,9 +1,8 @@
-import TellLogo from './tell-logo'
-const PrintLabel = ({ label, containerRef }) => {
-  const { dni_ruc, destination, recipient, phone, address } = label
+import TellLogo from '@/ui/components/tell-logo'
+const PrintLabel = ({ label }) => {
+  const { ruc, destination, recipient, phone, address } = label
   return (
     <>
-    <div ref={containerRef} className='overflow-x-hidden'>
       {[1, 2, 3].map((_, index) => {
         return (
           <div
@@ -27,7 +26,7 @@ const PrintLabel = ({ label, containerRef }) => {
                   <h3 className="text-xl font-bold uppercase">Destinatario:</h3>
                   <p>{recipient}</p>
                   <h3 className="text-xl font-bold uppercase">Ruc/Dni:</h3>
-                  <p>{dni_ruc}</p>
+                  <p>{ruc}</p>
                 </div>
                 <div className="w-1/2 p-3">
                   <h3 className="text-xl font-bold uppercase">Destino:</h3>
@@ -44,9 +43,9 @@ const PrintLabel = ({ label, containerRef }) => {
           </div>
         )
       })}
-    </div>
     </>
   )
 }
 
 export default PrintLabel
+

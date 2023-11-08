@@ -49,10 +49,11 @@ export default function QuoHeader() {
         <View>
           <SvgLogo />
         </View>
-        <View>
-          <Text style={{ textAlign: 'left', marginLeft: 50 }}>
-            Av. Argentina 538 - Lima - Lima
+        <View style={{marginLeft: 10}}>
+          <Text>
+            Maquinaria 325 Urb. Villa Señor de los Milagros
           </Text>
+          <Text>Carmen de la Legua - Reynoso - Callao</Text>
         </View>
       </View>
       <View style={styles.info}>
