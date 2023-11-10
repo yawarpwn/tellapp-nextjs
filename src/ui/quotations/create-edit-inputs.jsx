@@ -5,8 +5,9 @@ import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'
 import ItemsTable from './items-table'
 import { PlusIcon } from '@/icons'
+import toast, {Toaster} from '@/ui/components/toaster'
 
-import {  useCallback, useState } from 'react'
+import {  useCallback, useEffect, useState } from 'react'
 import { getRuc } from '@/services/sunat'
 
 function CreateEditInputs({
@@ -19,18 +20,40 @@ function CreateEditInputs({
   openItemModal,
 }) {
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
 
   const handleBlur = useCallback(async () => {
     if (quotation.ruc && quotation.ruc.length === 11) {
+      setError(null)
       setLoading(true)
-      const { ruc, company, address } = await getRuc(quotation.ruc)
-      updateQuotation({ ruc, company, address })
-      setLoading(false)
+      try {
+        const { ruc, company, address } = await getRuc(quotation.ruc)
+        console.log('buscando....ruc')
+        updateQuotation({ ruc, company, address })
+      } catch (error) {
+        console.log('error::::::',error)
+        setError('Ruc no encontrado')
+      } 
+      finally {
+        setLoading(false)
+      }
     }
   }, [quotation.ruc, updateQuotation])
 
+  useEffect(() => {
+    if(error) {
+      const notify = () =>  toast.error(error)
+      notify()
+    }
+
+  }, [error])
+
+  console.log('error',error)
+
   return (
     <>
+        <Toaster />
       <Input
         labelText="Ruc"
         name="ruc"

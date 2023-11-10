@@ -1,10 +1,13 @@
 import React from 'react'
 import DeleteActionForm from '../delete-action-form'
-import PrinterIcon from '@/icons/printer-icon'
 import { EditButton } from '../buttons'
 import { deleteLabel } from '@/lib/actions/labels'
+import { fetchFilteredLabels } from '@/lib/labels-data'
+import Link from 'next/link'
+import { EyeIcon } from '@/icons'
 
-async function LabelsTable({ onPrint, labels }) {
+async function LabelsTable({ query, currentPage }) {
+  const labels = await fetchFilteredLabels({ query, currentPage })
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -33,9 +36,9 @@ async function LabelsTable({ onPrint, labels }) {
                 <td>{label.phone}</td>
                 <td>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => onPrint(label)}>
-                      <PrinterIcon />
-                    </button>
+                    <Link href={`/labels/${label.id}`}>
+                      <EyeIcon />
+                    </Link>
                     <EditButton href={`/labels/${label.id}/update`} />
                     <DeleteActionForm
                       id={label.id}
