@@ -1,4 +1,4 @@
-import { fetchQuotationsPages } from "@/lib/quotations-data"
+import { fetchLastQuotation, fetchQuotationsPages } from "@/lib/quotations-data"
 import Search from "@/ui/search"
 import { AddButton } from "@/ui/buttons"
 import QuotationsTable from "@/ui/quotations/table"

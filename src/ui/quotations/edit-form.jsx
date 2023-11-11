@@ -3,8 +3,7 @@
 import { useFormState } from 'react-dom'
 import CreateEditInputs from './create-edit-inputs'
 import ItemModal from './item-modal'
-import confetti from 'canvas-confetti'
-import CustomersModal from '@/ui/quotations/customers-modal'
+import { shootCoffeti } from '@/services/confetti'
 import useQuotations from '@/hooks/use-quotations'
 
 const initialState = {
@@ -12,7 +11,7 @@ const initialState = {
   errors: {},
 }
 
-function EditForm({ quotationToUpdate, action, serverCustomers }) {
+function EditForm({ quotationToUpdate, action }) {
   const [state, dispatch] = useFormState(action, initialState)
 
   //TODO: Mejorar
@@ -21,15 +20,12 @@ function EditForm({ quotationToUpdate, action, serverCustomers }) {
     deleteItem,
     updateItem,
     updateQuotation,
-    openCustomersModal,
-    closeCustomersModal,
     handleInputChange,
     openEditItemModal,
     openItemModal,
     closeEditItemModal,
     quotation,
     isItemModalOpen,
-    isCustomersModalOpen,
     editingItem,
   } = useQuotations({ initialData: quotationToUpdate })
 
@@ -42,22 +38,10 @@ function EditForm({ quotationToUpdate, action, serverCustomers }) {
         addItem={addItem}
         updateItem={updateItem}
       />
-      <CustomersModal
-        isOpenModal={isCustomersModalOpen}
-        onCloseModal={closeCustomersModal}
-        serverCustomers={serverCustomers}
-        onCustomerPick={updateQuotation}
-      />
-      <div className="flex justify-between">
-        <div />
-        <button onClick={openCustomersModal} className="btn">
-          Cliente frecuentes
-        </button>
-      </div>
       <form
         action={async formData => {
           await dispatch(formData)
-          confetti()
+          shootCoffeti()
         }}
       >
         <CreateEditInputs
@@ -77,4 +61,3 @@ function EditForm({ quotationToUpdate, action, serverCustomers }) {
 }
 
 export default EditForm
-

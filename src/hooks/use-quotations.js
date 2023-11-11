@@ -4,7 +4,6 @@ import { useState } from 'react';
 export default function useQuotations({ initialData  }) {
   const [quotation, setQuotation] = useState(initialData);
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
-  const [isCustomersModalOpen, setIsCustomersModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
 
   const updateQuotation = newQuotationData => {
@@ -16,8 +15,6 @@ export default function useQuotations({ initialData  }) {
 
   const closeItemModal = () => setIsItemModalOpen(false);
   const openItemModal = () => setIsItemModalOpen(true);
-  const openCustomersModal = () => setIsCustomersModalOpen(true);
-  const closeCustomersModal = () => setIsCustomersModalOpen(false);
 
   const deleteItem = id => {
     setQuotation({
@@ -68,15 +65,12 @@ export default function useQuotations({ initialData  }) {
     deleteItem,
     updateItem,
     updateQuotation,
-    openCustomersModal,
-    closeCustomersModal,
     handleInputChange,
     openEditItemModal,
     openItemModal,
     closeEditItemModal,
     quotation,
     isItemModalOpen,
-    isCustomersModalOpen,
     editingItem,
   };
 }

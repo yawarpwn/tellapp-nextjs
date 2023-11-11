@@ -5,9 +5,9 @@ import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'
 import ItemsTable from './items-table'
 import { PlusIcon } from '@/icons'
-import toast, {Toaster} from '@/ui/components/toaster'
+import toast from '@/ui/components/toaster'
 
-import {  useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { getRuc } from '@/services/sunat'
 
 function CreateEditInputs({
@@ -22,7 +22,6 @@ function CreateEditInputs({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-
   const handleBlur = useCallback(async () => {
     if (quotation.ruc && quotation.ruc.length === 11) {
       setError(null)
@@ -32,28 +31,23 @@ function CreateEditInputs({
         console.log('buscando....ruc')
         updateQuotation({ ruc, company, address })
       } catch (error) {
-        console.log('error::::::',error)
+        console.log('error::::::', error)
         setError('Ruc no encontrado')
-      } 
-      finally {
+      } finally {
         setLoading(false)
       }
     }
   }, [quotation.ruc, updateQuotation])
 
   useEffect(() => {
-    if(error) {
-      const notify = () =>  toast.error(error)
+    if (error) {
+      const notify = () => toast.error(error)
       notify()
     }
-
   }, [error])
-
-  console.log('error',error)
 
   return (
     <>
-        <Toaster />
       <Input
         labelText="Ruc"
         name="ruc"
@@ -65,17 +59,29 @@ function CreateEditInputs({
         onBlur={handleBlur}
         disabled={loading}
       />
-      <Input
-        labelText="Tiempo de entrega"
-        name="deadline"
-        type="number"
-        placeholder="10"
-        value={quotation?.deadline}
-        onChange={onChange}
-        errors={state.errors?.deadline}
-        disabled={loading}
-        required
-      />
+      <div className="flex gap-2">
+        <Input
+          labelText="Tiempo de entrega"
+          name="deadline"
+          type="number"
+          placeholder="10"
+          value={quotation?.deadline}
+          onChange={onChange}
+          errors={state.errors?.deadline}
+          disabled={loading}
+          required
+        />
+        <Input
+          labelText="Número"
+          type="number"
+          name="number"
+          onChange={onChange}
+          value={quotation?.number}
+          errors={state.errors?.number}
+          disabled={loading}
+          required
+        />
+      </div>
       <Input
         labelText="Cliente"
         name="company"
@@ -95,8 +101,12 @@ function CreateEditInputs({
         errors={state.errors?.address}
         disabled={loading}
       />
-      <input type='hidden' name='id' value={quotation?.id} />
-      <input type='hidden' name='items' value={JSON.stringify(quotation?.items)} />
+      <input type="hidden" name="id" value={quotation?.id} />
+      <input
+        type="hidden"
+        name="items"
+        value={JSON.stringify(quotation?.items)}
+      />
 
       <section className="mt-4">
         <header className="flex items-center justify-between">

@@ -42,15 +42,34 @@ export async function fetchQuotationsPages({ query = '' }) {
   }
 }
 
-export async function fetchQuotationById({ number}) {
+export async function fetchQuotationById({ number }) {
   const cookieStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
   try {
-    const { data } = await supabase.from('quotations').select('*').eq('number', Number(number))
+    const { data } = await supabase
+      .from('quotations')
+      .select('*')
+      .eq('number', Number(number))
     return data[0]
   } catch (error) {
     console.log('Database Error: ', error)
     throw new Error('Failed to fetch product by id ')
+  }
+}
+
+export async function fetchLastQuotation() {
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  try {
+    const { data } = await supabase
+      .from('quotations')
+      .select('number')
+      .order('number', { ascending: false })
+      .limit(1)
+    return data[0]
+  } catch (error) {
+    console.log('Database Error: ', error)
+    throw new Error('Failed to fetch last quotation')
   }
 }

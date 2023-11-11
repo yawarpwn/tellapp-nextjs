@@ -9,12 +9,11 @@ export function getRuc(ruc) {
     .then(res => {
       if (!res.ok) {
         throw new Error('Fetching RUc Error')
-      } else {
-        return res.json()
       }
+      return res.json()
     })
     .then(data => {
-      if(!data.success) {
+      if (!data.success) {
         throw new Error(data.message)
       }
       return {
@@ -23,9 +22,6 @@ export function getRuc(ruc) {
         address: data.direccion ?? '',
       }
     })
-  .catch(error => {
-    throw error
-  })
 }
 
 // data {
