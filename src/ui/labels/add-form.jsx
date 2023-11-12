@@ -1,10 +1,11 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Input from '@/components/input'
 import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'
 import { useFormState } from 'react-dom'
 import { getRuc, getDni } from '@/services/sunat'
+import toast from '@/ui/components/toaster'
 
 const initialState = {
   message: null,
@@ -23,6 +24,7 @@ function AddLabelForm({ labelToEdit, action }) {
   const [state, dispatch] = useFormState(action, initialState)
   const [label, setLabel] = useState(labelToEdit ?? initialLabel)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const handleChange = event => {
     const { value, name } = event.target
     setLabel({ ...label, [name]: value })
@@ -35,25 +37,44 @@ function AddLabelForm({ labelToEdit, action }) {
     if (isDni) {
       console.log('isDni')
       setLoading(true)
-      const { company } = await getDni(label.dni_ruc)
-      setLoading(false)
-      setLabel({
-        ...label,
-        recipient: company,
-      })
+      try {
+        const { company } = await getDni(label.dni_ruc)
+        setLabel({
+          ...label,
+          recipient: company,
+        })
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
     }
 
     if (isRuc) {
       console.log('isRuc')
       setLoading(true)
-      const { company } = await getRuc(label.dni_ruc)
-      setLoading(false)
-      setLabel({
-        ...label,
-        recipient: company,
-      })
+      try {
+
+        const { company } = await getRuc(label.dni_ruc)
+        setLabel({
+          ...label,
+          recipient: company,
+        })
+
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
     }
   }
+
+  useEffect(() => {
+    if (error) {
+      const errorNotify = () => toast.error(error)
+      errorNotify()
+    }
+  }, [error])
 
   return (
     <form action={dispatch}>

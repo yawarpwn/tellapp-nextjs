@@ -87,12 +87,6 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
     })
   }
 
-  useEffect(() => {
-      console.log(state.message)
-  }, [state.message])
-
-
-  console.log(quotation)
 
 
   return (

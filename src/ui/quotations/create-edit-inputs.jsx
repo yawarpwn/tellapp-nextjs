@@ -28,11 +28,9 @@ function CreateEditInputs({
       setLoading(true)
       try {
         const { ruc, company, address } = await getRuc(quotation.ruc)
-        console.log('buscando....ruc')
         updateQuotation({ ruc, company, address })
       } catch (error) {
-        console.log('error::::::', error)
-        setError('Ruc no encontrado')
+        setError(error.message)
       } finally {
         setLoading(false)
       }
