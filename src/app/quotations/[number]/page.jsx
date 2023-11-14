@@ -1,6 +1,6 @@
 import { fetchQuotationById } from '@/lib/quotations-data'
 
-import DownloadPDF from '@/components/pdf/download-pdf'
+import DownloadPDF from '@/ui/pdf/download-pdf'
 import { EditIcon } from '@/icons'
 import Link from 'next/link'
 import { getIgv } from '@/utils'

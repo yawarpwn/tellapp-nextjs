@@ -36,8 +36,6 @@ export async function getDni(dni) {
 
   const json = await res.json()
 
-  console.log(json)
-
   if (json.success === false) {
     throw new Error('Dni no encontrado')
   }
@@ -51,3 +49,5 @@ export async function getDni(dni) {
   }
 
 }
+
+

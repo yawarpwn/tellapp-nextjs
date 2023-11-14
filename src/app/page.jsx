@@ -1,11 +1,5 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import RealtimeQuotations from './realtime-quotations'
 import { notFound, redirect } from 'next/navigation'
 export default async function Home() {
-  const cookiesStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookiesStore })
-
   // const {
   //   data: { session },
   // } = await supabase.auth.getSession()
@@ -24,10 +18,4 @@ export default async function Home() {
   // }
   redirect('/quotations')
 
-  // return (
-  //   <>
-  //     {/* <NewQuotation /> */}
-  //     <RealtimeQuotations serverQuotations={serverQuotations ?? []} />
-  //   </>
-  // )
 }

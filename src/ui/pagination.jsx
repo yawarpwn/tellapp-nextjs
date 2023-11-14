@@ -5,7 +5,6 @@ import { ArrowLeft, ArrowRight } from '@/icons'
 import { usePathname, useSearchParams } from 'next/navigation'
 import clsx from 'clsx'
 function Pagination({ totalPages }) {
-  console.log({totalPages})
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const currentPage = Number(searchParams.get('page') || 1)

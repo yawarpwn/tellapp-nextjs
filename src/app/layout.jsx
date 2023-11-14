@@ -1,7 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { siteConfig } from '@/config/site'
-import Navbar from '@/components/header/navbar'
+import Navbar from '@/ui/header/navbar'
 import NextTopLoader from 'nextjs-toploader'
 import { Toaster } from '@/ui/components/toaster'
 
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
         className={`${inter.className} min-h-screen font-sans antialiased`}
       >
         <NextTopLoader showSpinner={false} color="#6519e6" />
-    <Toaster />
+        <Toaster />
         <Navbar />
         <div className="max-w-3xl mx-auto px-4 md:px-6">
           <main className='pb-4'>{children}</main>

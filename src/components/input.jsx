@@ -12,7 +12,7 @@ function Input({
 }) {
   const inputClassName = clsx(
     'w-full placeholder:text-base-content/30',
-    as === 'textarea' ? 'textarea textarea-bordered' : 'input input-bordered  ', 
+    as === 'textarea' ? 'textarea textarea-bordered' : 'input input-bordered  ',
     {
       'input-error': errors?.length > 0,
       'resize-none': as === 'textarea',
