@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import Input from '@/components/input'
+import Input from '@/ui/components/input'
 import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'
 import { useFormState } from 'react-dom'

@@ -1,6 +1,5 @@
 import { fetchFilteredAgencies } from '@/lib/agencies-data'
 import { EditButton } from '../buttons'
-import DeleteFormAction from '@/components/form-actions/delete-form-action'
 import { deleteAgency } from '@/lib/actions/agencies'
 import DeleteActionForm from '../delete-action-form'
 async function AgenciesTable({ query, currentPage }) {

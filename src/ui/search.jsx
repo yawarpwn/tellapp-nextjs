@@ -1,8 +1,8 @@
 'use client'
-import InputSearch from '@/components/input-search'
+import InputSearch from '@/ui/components/input-search'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
-function Search({ placeholder = 'Buscar..'}) {
+function Search({ placeholder = 'Buscar..' }) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()

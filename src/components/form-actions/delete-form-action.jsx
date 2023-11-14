@@ -1,6 +1,6 @@
 'use client'
 import { DeleteIcon } from '@/icons'
-import ConfirmActionModal from '@/components/confirm-action-modal'
+import ConfirmActionModal from '@/ui/components/confirm-action-modal'
 
 function DeleteFormAction({
   id,

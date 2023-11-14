@@ -1,5 +1,5 @@
 'use client'
-import ConfirmActionModal from '@/components/confirm-action-modal'
+import ConfirmActionModal from '@/ui/components/confirm-action-modal'
 import { PlusIcon } from '@/icons'
 import { useState } from 'react'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import Input from '@/components/input'
+import Input from '@/ui/components/input'
 import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'
 import ItemsTable from './items-table'

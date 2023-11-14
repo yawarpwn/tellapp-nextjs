@@ -9,10 +9,12 @@ export async function fetchFilteredProducts({ query = '', currentPage = 1 }) {
     const { data } = await supabase
       .from('products')
       .select('*')
-      .ilike('description', `%${query}%`)
-      .limit(ITEMS_PER_PAGE)
+      .or(`description.ilike.%${query}%, code.ilike.${query}`)
       .range(offset, offset + ITEMS_PER_PAGE)
       .order('inserted_at', { ascending: false })
+    // .limit(ITEMS_PER_PAGE)
+    //
+    console.log({ data })
     return data
   } catch (error) {
     console.log('Error Database', error)
@@ -28,7 +30,7 @@ export async function fetchProductsPages(query = '') {
     const { count } = await supabase
       .from('products')
       .select('*', { count: 'exact' })
-      .ilike('description', `%${query}%`)
+      .or(`description.ilike.%${query}%, code.ilike.${query}`)
     const totalPages = Math.ceil(count / ITEMS_PER_PAGE)
     return totalPages
   } catch (error) {

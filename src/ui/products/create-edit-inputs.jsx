@@ -1,4 +1,4 @@
-import Input from '@/components/input'
+import Input from '@/ui/components/input'
 import { CATEGORIES } from '@/constants'
 import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'

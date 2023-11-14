@@ -1,5 +1,5 @@
 import React from 'react'
-import Input from '@/components/input'
+import Input from '@/ui/components/input'
 import Link from 'next/link'
 import SubmitActionButton from '@/ui/submit-action-button'
 

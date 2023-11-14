@@ -18,7 +18,7 @@ const ProductSchema = z.object({
   code: z
     .string()
     .min(3, { message: 'Mínimo 3 caracteres' })
-    .max(6, { message: 'Máximo  6 caracteres' }),
+    .max(10, { message: 'Máximo  6 caracteres' }),
   price: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
   cost: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
   category: z.enum(categoriesArray),
@@ -28,7 +28,7 @@ const ProductSchema = z.object({
 })
 
 // Create Product 
-const CreateProduct = ProductSchema.omit({id: true}) 
+const CreateProduct = ProductSchema.omit({ id: true })
 export async function createProduct(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
@@ -75,7 +75,7 @@ export async function updateProduct(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
   const rawData = {
-    id : formData.get('id'),
+    id: formData.get('id'),
     description: formData.get('description'),
     code: formData.get('code'),
     price: formData.get('price'),

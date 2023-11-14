@@ -40,9 +40,9 @@ const navs = [
 ]
 function Navbar() {
   return (
-    <div className="navbar max-w-3xl mx-auto">
-      <nav className="flex-1">
-        <ul className="menu menu-sm menu-horizontal rounded-box">
+    <div className="navbar max-w-3xl mx-auto flex justify-between">
+      <nav className="flex-1 ">
+        <ul className="menu flex-row  menu-sm rounded-box">
           {navs.map(({ href, title, icon: Icon }) => (
             <li key={title} >
               <Link href={href}>

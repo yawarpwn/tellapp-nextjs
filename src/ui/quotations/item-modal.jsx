@@ -1,7 +1,7 @@
 import Modal from '@/ui/modal'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { XIcon } from '@/icons'
-import Input from '@/components/input'
+import Input from '@/ui/components/input'
 import { createSearchInstance } from '@/services/search'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
@@ -10,6 +10,7 @@ const initialState = {
   price: 0,
   unit_size: '',
   description: '',
+  cost: '',
 }
 function ItemModal({
   isOpenModal,
@@ -18,6 +19,9 @@ function ItemModal({
   addItem,
   updateItem
 }) {
+
+  console.log('editingItem', editingItem)
+
   const [item, setItem] = useState(initialState)
   const [showClearDescription, setShowClearDescription] = useState(false)
   const searchInstance = useRef(null)
@@ -94,6 +98,7 @@ function ItemModal({
         description: product.description,
         unit_size: product.unit_size,
         price: product.price,
+        cost: product.cost,
         qty: 1,
       })
     } else {
@@ -101,6 +106,7 @@ function ItemModal({
         ...item,
         unit_size: product.unit_size,
         description: product.description,
+        cost: product.cost
       })
     }
   }
@@ -149,55 +155,65 @@ function ItemModal({
           <ul className="menu bg-none w-full bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto">
             {resultsToRender?.length > 0
               ? resultsToRender.map(item => (
-                  <li
-                    onClick={() => handleProductClick(item)}
-                    className="flex gap-x-1 "
-                    key={item.id}
-                  >
-                    <div className="p-0 flex items-center gap-x-2">
-                      <span className="btn btn-primary btn-xs h-full ">
-                        <p style={{ writingMode: 'vertical-lr' }}>
-                          {item.code}
-                        </p>
-                      </span>
-                      <span className="p-0">{item.description}</span>
-                    </div>
-                  </li>
-                ))
+                <li
+                  onClick={() => handleProductClick(item)}
+                  className="flex gap-x-1 "
+                  key={item.id}
+                >
+                  <div className="p-0 flex items-center gap-x-2">
+                    <span className="btn btn-primary btn-xs h-full ">
+                      <p style={{ writingMode: 'vertical-lr' }}>
+                        {item.code}
+                      </p>
+                    </span>
+                    <span className="p-0">{item.description}</span>
+                  </div>
+                </li>
+              ))
               : Array.from({ length: 6 })
-                  .fill(0)
-                  .map((_, index) => (
-                    <li key={index}>
-                      <span className=" h-[30px] bg-base-100 rounded"></span>
-                    </li>
-                  ))}
+                .fill(0)
+                .map((_, index) => (
+                  <li key={index}>
+                    <span className=" h-[30px] bg-base-100 rounded"></span>
+                  </li>
+                ))}
           </ul>
-          <Input
-            onChange={handleChangeItem}
-            value={item.unit_size}
-            type="text"
-            labelText="U/M"
-            name="unit_size"
-            required
-          />
-    <div className='flex gap-2 w-full'>
-          <Input
-            onChange={handleChangeItem}
-            value={item.qty}
-            type="number"
-            labelText="Cantidad"
-            name="qty"
-            required
-          />
-          <Input
-            onChange={handleChangeItem}
-            value={item.price}
-            type="number"
-            labelText="Precio"
-            name="price"
-            required
-          />
-    </div>
+          <div className='flex gap-2 w-full'>
+            <Input
+              onChange={handleChangeItem}
+              value={item.qty}
+              type="number"
+              labelText="Cantidad"
+              name="qty"
+              required
+            />
+
+            <Input
+              onChange={handleChangeItem}
+              value={item.unit_size}
+              type="text"
+              labelText="U/M"
+              name="unit_size"
+              required
+            />
+          </div>
+          <div className='flex gap-2 w-full'>
+            <Input
+              onChange={handleChangeItem}
+              value={item.price}
+              type="number"
+              labelText="Precio"
+              name="price"
+              required
+            />
+            <Input
+              value={item.cost}
+              type="number"
+              labelText="Costo"
+              name="cost"
+              disabled
+            />
+          </div>
         </div>
         <div className="mt-4 flex items-center justify-between">
           <button type="submit" className="btn">

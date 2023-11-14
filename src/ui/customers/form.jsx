@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import Input from '@/components/input'
+import Input from '@/ui/components/input'
 import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'
 import { createCustomer } from '@/lib/actions/customers'
