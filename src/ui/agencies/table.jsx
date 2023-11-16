@@ -13,12 +13,13 @@ async function AgenciesTable({ query, currentPage }) {
             <th>Empresa</th>
             <th>Ruc</th>
             <th>Telefono</th>
+            <th>Destinos</th>
             <th>Accciones</th>
           </tr>
         </thead>
         <tbody>
           {agencies.map(agency => {
-            const { company, id, ruc, address, destinations } = agency
+            const { company, id, ruc, address, destinations, phone } = agency
             return (
               <tr key={id}>
                 <td>
@@ -28,7 +29,21 @@ async function AgenciesTable({ query, currentPage }) {
                   </div>
                 </td>
                 <td>{ruc}</td>
-                <td>null</td>
+                <td>{phone ?? 'Desconocido'}</td>
+                <td>
+                  {destinations?.length > 0 && (
+                    <select defaultValue="" className="select">
+                      <option defaultValue="" disabled>
+                        Destinos
+                      </option>
+                      {destinations.map(destination => (
+                        <option key={destination} value={destination}>
+                          {destination}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </td>
                 <td>
                   <div className="flex gap-2">
                     <EditButton href={`/agencies/${id}/update`} />

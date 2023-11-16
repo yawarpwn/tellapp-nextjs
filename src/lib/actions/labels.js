@@ -14,13 +14,14 @@ const LabelSchema = z.object({
   destination: z.string(),
   dni_ruc: z.coerce.string(),
   address: z.string().nullable(),
+  suggested_agency: z.string().nullable(),
   phone: z.coerce
     .string()
     .length(9, { message: 'El telefono debe tener 9 caracteres' })
     .nullable(),
 })
 
-const CreateLabel = LabelSchema.omit({id: true})
+const CreateLabel = LabelSchema.omit({ id: true })
 export async function createLabel(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
@@ -30,6 +31,7 @@ export async function createLabel(_, formData) {
     dni_ruc: formData.get('dni_ruc'),
     address: formData.get('address') || null,
     phone: formData.get('phone') || null,
+    suggested_agency: formData.get('suggested_agency') || null,
   }
 
   console.log({ rawData })
@@ -72,6 +74,7 @@ export async function updateLabel(_, formData) {
     dni_ruc: formData.get('dni_ruc'),
     address: formData.get('address') || null,
     phone: formData.get('phone') || null,
+    suggested_agency: formData.get('suggested_agency') || null,
   }
 
   console.log({ rawData })

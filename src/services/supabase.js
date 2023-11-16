@@ -7,8 +7,8 @@ export async function updateRow({ client, table, row }) {
     .select()
 
   if (error) {
-    console.warn({error, row} )
-    throw new Error('error updating row: ', row)
+    console.warn({ error, row })
+    throw new Error('error updating row')
   }
 }
 
@@ -17,7 +17,7 @@ export async function insertRow({ client, table, row }) {
   const { data, error } = await client.from(table).insert(row).select().single()
   if (error) {
     console.log('error', error)
-    throw new Error('error create row: ', row)
+    throw new Error('error create row')
   }
 }
 

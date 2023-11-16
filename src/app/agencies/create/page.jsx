@@ -1,5 +1,5 @@
 import Breadcrumbs from '@/ui/breadcrumbs'
-import AddForm from '@/ui/agencies/add-form'
+import CreateEditAgencyForm from '@/ui/agencies/create-edit-form'
 
 function CreateAgencyPage() {
   return (
@@ -10,7 +10,7 @@ function CreateAgencyPage() {
           { label: 'Crear', href: '/agencies/create', active: true },
         ]}
       />
-      <AddForm />
+      <CreateEditAgencyForm />
     </>
   )
 }

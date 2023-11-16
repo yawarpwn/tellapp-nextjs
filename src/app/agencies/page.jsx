@@ -1,7 +1,7 @@
 import AgenciesTable from '@/ui/agencies/table'
 import Search from '@/ui/search'
 import { AddButton } from '@/ui/buttons'
-import { fetchAgenciesPages } from '@/lib/agencies-data'
+// import { fetchAgenciesPages } from '@/lib/agencies-data'
 async function AgenciesPage({ searchParams }) {
   const page = Number(searchParams?.page) || 1
   const query = searchParams?.query || ''

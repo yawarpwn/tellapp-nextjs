@@ -23,7 +23,7 @@ function Pagination({ totalPages }) {
         direction="left"
         isDisabled={currentPage <= 1}
       />
-      <div className='join'>
+      <div className="join">
         {allPages.map((page, index) => {
           let position
 
@@ -66,7 +66,7 @@ function PaginationArrow({ href, direction, isDisabled }) {
 
 function PaginationNumber({ isActive, href, position, page }) {
   const className = clsx('join-item btn', {
-    'btn-active': isActive
+    'btn-active': isActive,
   })
   return isActive ? (
     <div className={className}>{page}</div>

@@ -7,6 +7,7 @@ import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { deleteRow, insertRow, updateRow } from '@/services/supabase'
+import { formatRevalidate } from 'next/dist/server/lib/revalidate'
 
 const AgencieSchema = z.object({
   id: z.string(),
@@ -14,20 +15,30 @@ const AgencieSchema = z.object({
   ruc: z.coerce.number(),
   address: z.string().nullable(),
   phone: z.coerce.number().nullable(),
-  destinations: z.array()
+  destinations: z.string().refine(
+    data => {
+      if (!data) return false
+      const items = data.split(',').map(item => item.trim())
+      return items.length > 0
+    },
+    {
+      message: 'Uno o mas destinos, separados por coma',
+    },
+  ),
 })
 
-// Create Product 
-const CreateAgency = AgencieSchema.omit({id: true}) 
+// Create Product
+const CreateAgency = AgencieSchema.omit({ id: true })
 export async function createAgency(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
+
   const rawData = {
     company: formData.get('company'),
     ruc: formData.get('ruc'),
     address: formData.get('address') || null,
     phone: formData.get('phone') || null,
-    destinations: []
+    destinations: formData.get('destinations'),
   }
 
   console.log({ rawData })
@@ -44,7 +55,10 @@ export async function createAgency(_, formData) {
   try {
     await insertRow({
       table: 'agencies',
-      row: validatedFields.data,
+      row: {
+        ...validatedFields.data,
+        destinations: validatedFields.data.destinations.split(','),
+      },
       client: supabase,
     })
   } catch (error) {
@@ -58,21 +72,22 @@ export async function createAgency(_, formData) {
   redirect('/agencies')
 }
 
-// Update Product 
+// Update Product
 const UpdateAgency = AgencieSchema
 export async function updateAgency(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
+
   const rawData = {
-    id : formData.get('id'),
+    id: formData.get('id'),
     company: formData.get('company'),
     ruc: formData.get('ruc'),
     address: formData.get('address') || null,
     phone: formData.get('phone') || null,
-    destinations: []
+    destinations: formData.get('destinations'),
   }
 
-  console.log({ rawData })
+  console.log({ ...rawData })
 
   const validatedFields = UpdateAgency.safeParse(rawData)
 
@@ -86,7 +101,10 @@ export async function updateAgency(_, formData) {
   try {
     await updateRow({
       table: 'agencies',
-      row: validatedFields.data,
+      row: {
+        ...validatedFields.data,
+        destinations: validatedFields.data.destinations.split(','),
+      },
       client: supabase,
     })
   } catch (error) {
@@ -116,4 +134,3 @@ export async function deleteAgency(_, formData) {
     }
   }
 }
-

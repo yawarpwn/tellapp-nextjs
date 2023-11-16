@@ -10,6 +10,7 @@ export default function Modal({
   children,
   size = 'sm',
 }) {
+
   const modalRef = useRef(null)
 
   useEffect(() => {
@@ -20,16 +21,17 @@ export default function Modal({
     }
   }, [isOpen])
 
+
   useEffect(() => {
     const handleKeyEscape = event => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && isOpen) {
         onClose()
       }
     }
 
     window.addEventListener('keydown', handleKeyEscape)
     return () => window.removeEventListener('keydown', handleKeyEscape)
-  }, [onClose])
+  }, [onClose, isOpen])
 
   return (
     isOpen &&

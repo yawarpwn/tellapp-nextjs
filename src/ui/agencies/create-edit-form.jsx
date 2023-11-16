@@ -1,12 +1,20 @@
-import React from 'react'
+'use client'
+import { useFormState } from 'react-dom'
 import Input from '@/ui/components/input'
 import Link from 'next/link'
 import SubmitActionButton from '@/ui/submit-action-button'
 
-function CreateEditInputs({ agency, state }) {
+const initialState = {
+  message: null,
+  errors: {},
+}
+export default function CreateEditAgencyForm({ agency, action }) {
+  const [state, dispatch] = useFormState(action, initialState)
+
   const destinations = agency?.destinations?.toString() || ''
+  console.log({ state })
   return (
-    <>
+    <form action={dispatch}>
       <Input
         name="company"
         labelText={'Agencia'}
@@ -59,8 +67,6 @@ function CreateEditInputs({ agency, state }) {
         </Link>
         <SubmitActionButton />
       </footer>
-    </>
+    </form>
   )
 }
-
-export default CreateEditInputs
