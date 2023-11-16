@@ -7,7 +7,8 @@ import { useRef } from 'react'
 import TellLogo from '@/ui/components/tell-logo'
 const PrintLabel = ({ label }) => {
   const containerRef = useRef()
-  const { dni_ruc, destination, recipient, phone, address, id } = label
+  const { dni_ruc, destination, recipient, phone, address, id, agencies } =
+    label
 
   const print = useReactToPrint({
     content: () => containerRef.current,
@@ -27,9 +28,7 @@ const PrintLabel = ({ label }) => {
           Imprimir
         </button>
       </header>
-      <div
-        className="flex items-center  overflow-x-auto border"
-      >
+      <div className="flex items-center  overflow-x-auto border">
         <div
           ref={containerRef}
           className="container-print flex flex-col border justify-between"
@@ -38,7 +37,7 @@ const PrintLabel = ({ label }) => {
             return (
               <div
                 key={index}
-                style={{width: '750px'}}
+                style={{ width: '750px', height: '350px', overflow: 'hidden' }}
                 className="shipping-label bg-white p-4 text-black  h-full"
               >
                 <div className="flex flex-col justify-between">
@@ -70,6 +69,16 @@ const PrintLabel = ({ label }) => {
                       <h3 className="text-xl font-bold uppercase">Teléfono:</h3>
                       <p>{phone ?? ''}</p>
                     </div>
+                  </div>
+                  <div>
+                    <p>
+                      <strong>Agencia Sugerida:</strong>
+                      <span className="ml-2">{agencies?.company}</span>
+                    </p>
+                    <p>
+                      <strong>Dirección:</strong>
+                      <span className="ml-2">{agencies?.address}</span>
+                    </p>
                   </div>
                   {/* Bottom */}
                   <div className="flex justify-center items-center  p-3 ">

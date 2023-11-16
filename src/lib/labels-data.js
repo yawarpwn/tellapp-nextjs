@@ -8,30 +8,11 @@ export async function fetchFilteredLabels({ query = '', currentPage = 1 }) {
     const offset = (currentPage - 1) * ITEMS_PER_PAGE
     const { data: labels } = await supabase
       .from('labels')
-      .select('*')
+      .select('*, agencies(*)')
       .ilike('recipient', `%${query}%`)
       .limit(ITEMS_PER_PAGE)
       .range(offset, offset + ITEMS_PER_PAGE)
-    // .order('inserted_at', { ascending: false })
-    const labelsWithRelationship = await Promise.all(
-      labels.map(async label => {
-        if (label.suggested_agency) {
-          const { data: agency } = await supabase
-            .from('agencies')
-            .select('*')
-            .eq('id', label.suggested_agency)
-            .single()
-          if (agency) {
-            return {
-              ...label,
-              suggested_agency: agency,
-            }
-          }
-        }
-        return label
-      }),
-    )
-    return labelsWithRelationship
+    return labels
   } catch (error) {
     console.log('Error Database', error)
     throw new Error('Error fetching customers')
@@ -60,7 +41,10 @@ export async function fetchLabelsById({ id }) {
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
   try {
-    const { data } = await supabase.from('labels').select('*').eq('id', id)
+    const { data } = await supabase
+      .from('labels')
+      .select(`*, agencies (*)`)
+      .eq('id', id)
     return data[0]
   } catch (error) {
     console.log('Database Error: ', error)

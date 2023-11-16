@@ -1,3 +1,4 @@
+import { updateAgency } from '@/lib/actions/agencies'
 import { fetchAgencyById } from '@/lib/agencies-data'
 import CreateEditAgencyForm from '@/ui/agencies/create-edit-form'
 import Breadcrumbs from '@/ui/breadcrumbs'
@@ -23,7 +24,7 @@ async function UpdatePage({ params }) {
           },
         ]}
       />
-      <CreateEditAgencyForm agency={agency} />
+      <CreateEditAgencyForm agency={agency} action={updateAgency} />
     </>
   )
 }

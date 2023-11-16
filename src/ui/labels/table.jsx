@@ -8,7 +8,7 @@ import { EyeIcon } from '@/icons'
 
 async function LabelsTable({ query, currentPage }) {
   const labels = await fetchFilteredLabels({ query, currentPage })
-  console.log(labels[4]?.suggested_agency)
+  console.log({ labels })
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -33,6 +33,7 @@ async function LabelsTable({ query, currentPage }) {
                 <td>
                   <p>{label.address}</p>
                   <p style={{ width: '200px' }}>{label.destination}</p>
+                  <p className="text-xs">{label?.agencies?.company}</p>
                 </td>
                 <td>{label.phone}</td>
                 <td>

@@ -19,7 +19,7 @@ const initialLabel = {
   recipient: '',
   phone: '',
   address: '',
-  suggested_agency: '',
+  agency_id: '',
 }
 
 function AddLabelForm({ labelToEdit, action, serverAgencies }) {
@@ -32,6 +32,8 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
     const { value, name } = event.target
     setLabel({ ...label, [name]: value })
   }
+
+  console.log({ labelToEdit })
 
   const handleSearch = async () => {
     const isRuc = label.dni_ruc.length === 11
@@ -81,9 +83,11 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
   const handlePick = agency => {
     setLabel({
       ...label,
-      suggested_agency: agency.id,
+      agencies: agency,
     })
   }
+
+  const hasAgency = label?.agencies
 
   useEffect(() => {
     if (error) {
@@ -91,8 +95,6 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
       errorNotify()
     }
   }, [error])
-
-  console.log({ label })
 
   return (
     <>
@@ -122,7 +124,7 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
             onChange={handleChange}
             onBlur={handleSearch}
             value={label?.dni_ruc}
-            labelText="Ruc"
+            labelText="Dni / Ruc"
             type="number"
             disabled={loading}
             required
@@ -172,9 +174,21 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
         <input type="hidden" name="id" value={label?.id} />
         <input
           type="hidden"
-          name="suggested_agency"
-          value={label?.suggested_agency ?? ''}
+          name="agency_id"
+          value={label?.agencies?.id ?? ''}
         />
+        <div className="flex justify-center mt-4">
+          {hasAgency && (
+            <div className="card w-80 bg-primary text-primary-content">
+              <div className="card-body">
+                <h2 className="card-title">Agencia Sugerida</h2>
+                <p>{label.agencies.company}</p>
+                <p>{label.agencies.address}</p>
+                <p>{label.agencies?.phone}</p>
+              </div>
+            </div>
+          )}
+        </div>
         <footer className="mt-4 flex justify-between">
           <Link href={'/customers'} className="btn">
             Cancelar
