@@ -16,6 +16,6 @@ export default async function Home() {
   // if (!serverQuotations) {
   //   notFound()
   // }
-  redirect('/quotations')
-
+  // redirect('/quotations')
+  return <div>HOme Page</div>
 }

@@ -6,7 +6,7 @@ import { EditButton } from '../buttons'
 import { EyeIcon } from '@/icons'
 
 async function QuotationsTable({ query, currentPage }) {
-  const products = await fetchFilteredQuotations({ query, currentPage })
+  const quotations = await fetchFilteredQuotations({ query, currentPage })
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -21,7 +21,7 @@ async function QuotationsTable({ query, currentPage }) {
           </tr>
         </thead>
         <tbody>
-          {products.map(quotation => {
+          {quotations.map(quotation => {
             const { total } = getIgv(quotation.items)
             const formatedDate = new Intl.DateTimeFormat('es').format(
               new Date(quotation.created_at),

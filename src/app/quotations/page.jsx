@@ -1,9 +1,13 @@
-import { fetchQuotationsPages } from "@/lib/quotations-data"
-import Search from "@/ui/search"
-import { AddButton } from "@/ui/buttons"
-import QuotationsTable from "@/ui/quotations/table"
-import Pagination from "@/ui/pagination"
-import { Suspense } from "react"
+import fs from 'node:fs'
+import {
+  fetchFilteredQuotations,
+  fetchQuotationsPages,
+} from '@/lib/quotations-data'
+import Search from '@/ui/search'
+import { AddButton } from '@/ui/buttons'
+import QuotationsTable from '@/ui/quotations/table'
+import Pagination from '@/ui/pagination'
+import { Suspense } from 'react'
 async function QuotationsPage({ searchParams }) {
   const page = Number(searchParams?.page) || 1
   const query = searchParams?.query || ''

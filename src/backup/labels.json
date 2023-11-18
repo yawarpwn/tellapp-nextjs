@@ -1,0 +1,48 @@
+[
+  {
+    "id": "c3adef46-11d1-462d-93f1-e67acb0c5729",
+    "recipient": "Ethan Andrew Sommers ",
+    "destination": "Huaral",
+    "dni_ruc": "001147776",
+    "phone": "996691730",
+    "address": null,
+    "agency_id": null
+  },
+  {
+    "id": "5114d218-fbba-49b2-abce-fdd8debfad96",
+    "recipient": "ENRIQUE VALENTIN VIZCARRA IBEROS",
+    "destination": "CAJAMARCA",
+    "dni_ruc": "29648981",
+    "phone": "920570858",
+    "address": null,
+    "agency_id": null
+  },
+  {
+    "id": "2805eb81-728a-42d3-9645-b38e01eacb40",
+    "recipient": "CORPORACION ELMARVI SOCIEDAD ANONIMA CERRADA",
+    "destination": "CERRO DE PASCO",
+    "dni_ruc": "20601229766",
+    "phone": "921358077",
+    "address": null,
+    "agency_id": "35c7555e-d6d4-4643-b4aa-5a79482b5146"
+  },
+  {
+    "id": "6be1f285-d186-4529-9b33-15bee326fe2d",
+    "recipient": "Wilmark Jesus Velasquez avila ",
+    "destination": "Huanuco",
+    "dni_ruc": "005947471",
+    "phone": "962398620",
+    "address": null,
+    "agency_id": "648e2a4e-d765-40ed-affa-bdcab9119788"
+  },
+  {
+    "id": "0a6581e0-906b-46a7-9062-5596904134d7",
+    "recipient": "JOSE LUIS MAR ESCOBEDO",
+    "destination": "QUILLABAMBA  / CUSCO",
+    "dni_ruc": "70576114",
+    "phone": "921897498",
+    "address": null,
+    "agency_id": "860fc99e-9750-4e92-972a-a7b8ba8f3f4f"
+  }
+]
+
