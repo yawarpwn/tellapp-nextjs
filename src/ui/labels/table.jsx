@@ -8,7 +8,6 @@ import { EyeIcon } from '@/icons'
 
 async function LabelsTable({ query, currentPage }) {
   const labels = await fetchFilteredLabels({ query, currentPage })
-  console.log({ labels })
   return (
     <div className="overflow-x-auto">
       <table className="table">

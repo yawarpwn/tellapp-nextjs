@@ -1,4 +1,3 @@
-import Login from './login'
 import Link from 'next/link'
 
 import {
@@ -6,8 +5,9 @@ import {
   PrinterIcon,
   QuotationIcon,
   CustomersIcon,
-  TruckIcon
+  TruckIcon,
 } from '@/icons'
+import SignOutButton from '../sign-out-button'
 
 const navs = [
   {
@@ -36,7 +36,6 @@ const navs = [
     href: '/agencies',
     icon: TruckIcon,
   },
-
 ]
 function Navbar() {
   return (
@@ -44,7 +43,7 @@ function Navbar() {
       <nav className="flex-1 ">
         <ul className="menu flex-row  menu-sm rounded-box">
           {navs.map(({ href, title, icon: Icon }) => (
-            <li key={title} >
+            <li key={title}>
               <Link href={href}>
                 <Icon />
                 <span className="hidden md:block">{title}</span>
@@ -53,7 +52,7 @@ function Navbar() {
           ))}
         </ul>
       </nav>
-      <Login />
+      <SignOutButton />
     </div>
   )
 }

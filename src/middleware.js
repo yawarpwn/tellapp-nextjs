@@ -9,15 +9,20 @@ export async function middleware(req) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const isAutorized = user?.email === 'neyda.mili11@gmail.com'
+  const isAutorized = !!user
+  const isHome = req.nextUrl.pathname === '/'
+  const isLoginPath = req.nextUrl.pathname === '/login'
 
-  // if user is signed in and the current path is / redirect the user to /account
-  if (isAutorized && req.nextUrl.pathname === '/') {
+  console.log('Middleware --->', { isAutorized, isHome })
+  if (isLoginPath && !isAutorized) {
+    return res
+  }
+
+  if (isLoginPath && isAutorized) {
     return NextResponse.redirect(new URL('/quotations', req.url))
   }
 
-  // if user is not signed in and the current path is not / redirect the user to /
-  if (!isAutorized && req.nextUrl.pathname !== '/') {
+  if (!isAutorized) {
     return NextResponse.redirect(new URL('/login', req.url))
   }
 
@@ -25,12 +30,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: [
-    '/',
-    '/quotations',
-    '/products',
-    '/customers',
-    '/labels',
-    '/agencies',
-  ],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }
