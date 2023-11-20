@@ -105,6 +105,17 @@ function CreateEditInputs({
         name="items"
         value={JSON.stringify(quotation?.items)}
       />
+      <div className="mt-4 flex items-center gap-4">
+        <input
+          name="customer-checkbox"
+          className="checkbox checkbox-primary"
+          checked
+          type="checkbox"
+        />
+        <label htmlFor="customer-checkbox" className="text-primary">
+          Guardar como cliente frecuente
+        </label>
+      </div>
 
       <section className="mt-4">
         <header className="flex items-center justify-between">

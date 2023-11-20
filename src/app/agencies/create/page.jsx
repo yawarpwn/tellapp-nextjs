@@ -1,6 +1,6 @@
 import Breadcrumbs from '@/ui/breadcrumbs'
 import CreateEditAgencyForm from '@/ui/agencies/create-edit-form'
-
+import { createAgency } from '@/lib/actions/agencies'
 function CreateAgencyPage() {
   return (
     <>
@@ -10,7 +10,7 @@ function CreateAgencyPage() {
           { label: 'Crear', href: '/agencies/create', active: true },
         ]}
       />
-      <CreateEditAgencyForm />
+      <CreateEditAgencyForm action={createAgency} />
     </>
   )
 }

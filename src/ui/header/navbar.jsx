@@ -8,6 +8,7 @@ import {
   TruckIcon,
 } from '@/icons'
 import SignOutButton from '../sign-out-button'
+import TellLogo from '../components/tell-logo'
 
 const navs = [
   {
@@ -39,21 +40,26 @@ const navs = [
 ]
 function Navbar() {
   return (
-    <div className="navbar max-w-3xl mx-auto flex justify-between">
-      <nav className="flex-1 ">
-        <ul className="menu flex-row  menu-sm rounded-box">
+    <header className="mb-4">
+      <div className="navbar bg-base justify-between">
+        <Link href={'/'} className="btn btn-ghost gap-2">
+          <TellLogo compact={true} />
+        </Link>
+        <SignOutButton />
+      </div>
+      <nav className="overflow-x-auto ">
+        <ul className="menu menu-horizontal flex-nowrap bg-base-200  rounded-box">
           {navs.map(({ href, title, icon: Icon }) => (
             <li key={title}>
               <Link href={href}>
                 <Icon />
-                <span className="hidden md:block">{title}</span>
+                <span className="">{title}</span>
               </Link>
             </li>
           ))}
         </ul>
       </nav>
-      <SignOutButton />
-    </div>
+    </header>
   )
 }
 

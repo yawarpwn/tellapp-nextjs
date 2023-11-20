@@ -3,6 +3,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { PowerIcon } from '@/icons'
 
 function SignOutButton() {
   const supabase = createClientComponentClient()
@@ -15,8 +16,8 @@ function SignOutButton() {
   }
 
   return (
-    <button className="btn" onClick={signOut}>
-      Salir
+    <button className="btn btn-md" onClick={signOut}>
+      <PowerIcon />
     </button>
   )
 }

@@ -14,7 +14,6 @@ export async function fetchFilteredProducts({ query = '', currentPage = 1 }) {
       .order('inserted_at', { ascending: false })
     // .limit(ITEMS_PER_PAGE)
     //
-    console.log({ data })
     return data
   } catch (error) {
     console.log('Error Database', error)

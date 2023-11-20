@@ -15,9 +15,9 @@ export const metadata = {
   description: siteConfig.description,
   links: [
     {
-      rel: ''
-    }
-  ]
+      rel: '',
+    },
+  ],
 }
 
 export default function RootLayout({ children }) {
@@ -29,9 +29,9 @@ export default function RootLayout({ children }) {
       >
         <NextTopLoader showSpinner={false} color="#6519e6" />
         <Toaster />
-        <Navbar />
         <div className="max-w-3xl mx-auto px-4 md:px-6">
-          <main className='pb-4'>{children}</main>
+          <Navbar />
+          <main className="pb-4">{children}</main>
         </div>
       </body>
     </html>
