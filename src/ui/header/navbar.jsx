@@ -47,13 +47,13 @@ function Navbar() {
         </Link>
         <SignOutButton />
       </div>
-      <nav className="overflow-x-auto ">
+      <nav className="overflow-x-auto sticky ">
         <ul className="menu menu-horizontal flex-nowrap bg-base-200  rounded-box">
           {navs.map(({ href, title, icon: Icon }) => (
             <li key={title}>
               <Link href={href}>
                 <Icon />
-                <span className="">{title}</span>
+                <span className="hidden md:block">{title}</span>
               </Link>
             </li>
           ))}

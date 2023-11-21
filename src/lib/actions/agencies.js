@@ -60,7 +60,6 @@ export async function createAgency(_, formData) {
       client: supabase,
     })
   } catch (error) {
-    console.log('Error inserting Row', error)
     return {
       message: 'Database Error: Failed to create customer',
     }

@@ -12,7 +12,7 @@ export default function CreateEditAgencyForm({ agency, action }) {
   const [state, dispatch] = useFormState(action, initialState)
 
   const destinations = agency?.destinations?.toString() || ''
-  console.log({ state })
+
   return (
     <form action={dispatch}>
       <Input
@@ -65,7 +65,7 @@ export default function CreateEditAgencyForm({ agency, action }) {
         <Link href={'/products'} className="btn">
           Cancelar
         </Link>
-        <SubmitActionButton />
+        <SubmitActionButton action={action} />
       </footer>
     </form>
   )

@@ -16,8 +16,8 @@ function SignOutButton() {
   }
 
   return (
-    <button className="btn btn-md" onClick={signOut}>
-      <PowerIcon />
+    <button className="btn btn-sm" onClick={signOut}>
+      <PowerIcon size={20} />
     </button>
   )
 }

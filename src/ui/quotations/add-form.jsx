@@ -3,7 +3,7 @@
 import { useFormState } from 'react-dom'
 import CreateEditInputs from './create-edit-inputs'
 import ItemModal from './item-modal'
-import confetti from 'canvas-confetti'
+import { shootCoffeti } from '@/services/confetti'
 import ItemPickerModal from '@/ui/components/item-picker-modal'
 import useQuotations from '@/hooks/use-quotations'
 import useAutoSave from '@/hooks/use-autosave'
@@ -11,15 +11,12 @@ import { useEffect, useState } from 'react'
 import _ from 'lodash'
 import SavedQuotationModal from './saved-quotation-modal'
 
-
 const initialState = {
   message: null,
   errors: {},
 }
 
-
 function AddForm({ action, serverCustomers, lastQuotationNumber }) {
-
   const initialQuotationState = {
     number: lastQuotationNumber + 1,
     company: '',
@@ -31,14 +28,14 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
 
   const [state, dispatch] = useFormState(action, initialState)
   const [savedQuotation, setSavedQuotation] = useState(null)
-  const [isCustomersModalOpen, setIsCustomersModalOpen] = useState(false);
+  const [isCustomersModalOpen, setIsCustomersModalOpen] = useState(false)
 
   const closeSavedQuotationModal = () => {
     setSavedQuotation(null)
   }
 
-  const openCustomersModal = () => setIsCustomersModalOpen(true);
-  const closeCustomersModal = () => setIsCustomersModalOpen(false);
+  const openCustomersModal = () => setIsCustomersModalOpen(true)
+  const closeCustomersModal = () => setIsCustomersModalOpen(false)
   const {
     addItem,
     deleteItem,
@@ -78,7 +75,7 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
     closeSavedQuotationModal()
   }
 
-  const handlePick = (customer) => {
+  const handlePick = customer => {
     updateQuotation({
       ...quotation,
       company: customer.name,
@@ -86,8 +83,6 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
       address: customer.address,
     })
   }
-
-
 
   return (
     <>
@@ -114,7 +109,7 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
         onClose={closeCustomersModal}
         onPick={handlePick}
         items={serverCustomers}
-        renderLabel={item => <p className='text-sm'>{item.name}</p>}
+        renderLabel={item => <p className="text-sm">{item.name}</p>}
         filterProperty="name"
       />
       <div className="flex justify-between">
@@ -127,7 +122,7 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
         action={async formData => {
           await dispatch(formData)
           localStorage.removeItem('__QUOTATION__')
-          confetti()
+          shootCoffeti()
         }}
       >
         <CreateEditInputs
@@ -141,7 +136,6 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
           openItemModal={openItemModal}
           deleteItem={deleteItem}
         />
-
       </form>
     </>
   )

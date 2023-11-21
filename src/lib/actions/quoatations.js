@@ -11,29 +11,34 @@ import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 const QuotationSchema = z.object({
   number: z.coerce.number(),
   id: z.string(),
-  ruc: z.string().length(11, {
-    message: 'Ruc debe tener 11 caracteres'
-  }).nullable(),
+  ruc: z
+    .string()
+    .length(11, {
+      message: 'Ruc debe tener 11 caracteres',
+    })
+    .nullable(),
   company: z.string().default('SIN RUC PROPORCIONADO'),
   address: z.string(),
   deadline: z.coerce.number().gt(0, {
-    message: 'Debe ser mayor a 0'
+    message: 'Debe ser mayor a 0',
   }),
-  items: z.array(
-    z.object({
-      id: z.string(),
-      price: z.number(),
-      qty: z.number(),
-      unit_size: z.string(),
-      description: z.string(),
+  items: z
+    .array(
+      z.object({
+        id: z.string(),
+        price: z.number(),
+        qty: z.number(),
+        unit_size: z.string(),
+        description: z.string(),
+      }),
+    )
+    .nonempty({
+      message: 'Debe tener al menos un Producto',
     }),
-  ).nonempty({
-    message: 'Debe tener al menos un Producto'
-  })
 })
 
-// Create Product 
-const CreateQuotation = QuotationSchema.omit({id: true}) 
+// Create Product
+const CreateQuotation = QuotationSchema.omit({ id: true })
 export async function createQuotation(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
@@ -43,15 +48,14 @@ export async function createQuotation(_, formData) {
     company: formData.get('company') || 'SIN RUC PROPORCIONADO',
     address: formData.get('address'),
     deadline: formData.get('deadline'),
-    items: JSON.parse(formData.get('items'))
+    items: JSON.parse(formData.get('items')),
   }
 
-  console.log('rawData: ',rawData)
-
+  console.log('rawData: ', rawData)
 
   const validatedFields = CreateQuotation.safeParse(rawData)
 
-  console.log('validate Fields',validatedFields.data)
+  console.log('validate Fields', validatedFields.data)
 
   if (!validatedFields.success) {
     return {
@@ -77,18 +81,19 @@ export async function createQuotation(_, formData) {
   redirect('/quotations')
 }
 
-// Update Product 
-const UpdateQuotation = QuotationSchema.omit({number: true})
+// Update Product
+const UpdateQuotation = QuotationSchema.omit({ number: true })
 export async function updateQuotation(_, formData) {
   const coookiesStore = cookies()
   const supabase = createServerActionClient({ cookies: () => coookiesStore })
+  const quoNumber = formData.get('number')
   const rawData = {
-    id : formData.get('id'),
+    id: formData.get('id'),
     ruc: formData.get('ruc') || null,
     company: formData.get('company') || 'Sin Ruc Proporcionado',
     address: formData.get('address'),
     deadline: formData.get('deadline'),
-    items: JSON.parse(formData.get('items'))
+    items: JSON.parse(formData.get('items')),
   }
 
   console.log('update Raw: ', rawData)
@@ -116,7 +121,7 @@ export async function updateQuotation(_, formData) {
   }
 
   revalidatePath('/quotations')
-  redirect('/quotations')
+  redirect(`/quotations/${quoNumber}`)
 }
 
 export async function deleteQuotation(_, formData) {
@@ -135,4 +140,3 @@ export async function deleteQuotation(_, formData) {
     }
   }
 }
-

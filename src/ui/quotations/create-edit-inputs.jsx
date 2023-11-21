@@ -109,7 +109,7 @@ function CreateEditInputs({
         <input
           name="customer-checkbox"
           className="checkbox checkbox-primary"
-          checked
+          defaultChecked
           type="checkbox"
         />
         <label htmlFor="customer-checkbox" className="text-primary">

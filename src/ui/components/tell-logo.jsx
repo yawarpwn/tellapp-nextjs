@@ -1,7 +1,7 @@
 function TellLogo({ compact }) {
   if (compact) {
     return (
-      <div className="h-8">
+      <div className="h-6">
         <svg
           className="w-full h-full"
           width="56"

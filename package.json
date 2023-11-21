@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "autoprefixer": "latest",
-    "daisyui": "^3.9.2",
+    "daisyui": "4.4.2",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "eslint-plugin-react": "^7.33.2",
