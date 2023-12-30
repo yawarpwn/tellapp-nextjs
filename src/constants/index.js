@@ -1,3 +1,11 @@
+import {
+	CustomersIcon,
+	PrinterIcon,
+	ProductsIcon,
+	QuotationIcon,
+	TruckIcon,
+} from '@/icons'
+
 export const ROW_PER_PAGE = 10
 export const CATEGORIES = {
 	CINTAS_SEGURIDAD: 'cintas seguridad',
@@ -15,3 +23,32 @@ export const CATEGORIES = {
 }
 
 export const ITEMS_PER_PAGE = 10
+
+export const NAVIGATION = [
+	{
+		title: 'Cotizaciones',
+		href: '/quotations',
+		icon: QuotationIcon,
+	},
+	{
+		title: 'Productos',
+		href: '/products',
+		icon: ProductsIcon,
+	},
+
+	{
+		title: 'Clientes',
+		href: '/customers',
+		icon: CustomersIcon,
+	},
+	{
+		title: 'Rótulos',
+		href: '/labels',
+		icon: PrinterIcon,
+	},
+	{
+		title: 'Agencias',
+		href: '/agencies',
+		icon: TruckIcon,
+	},
+]

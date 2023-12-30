@@ -1,7 +1,6 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-
 export async function fetchFilteredAgencies({ query = '', currentPage = 1 }) {
 	const cookieStore = cookies()
 	const supabase = createServerComponentClient({ cookies: () => cookieStore })

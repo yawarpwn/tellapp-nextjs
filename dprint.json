@@ -5,7 +5,7 @@
     "lineWidth": 80,
     "quoteStyle": "preferSingle",
     "semiColons": "asi",
-    "preferSingleLine": true
+    "preferSingleLine": false
   },
   "json": {},
   "includes": ["src/**/*.{ts,tsx,js,jsx,json,css}"],
