@@ -7,6 +7,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 
+
 const AgencieSchema = z.object({
   id: z.string(),
   company: z.string(),
@@ -39,7 +40,6 @@ export async function createAgency(_, formData) {
     destinations: formData.get('destinations'),
   }
 
-  console.log({ rawData })
 
   const validatedFields = CreateAgency.safeParse(rawData)
 

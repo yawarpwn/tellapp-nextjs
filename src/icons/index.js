@@ -1,5 +1,5 @@
 export { default as ChevronDownIcon } from './chevron-down-icon'
-export { default as DeleteIcon } from './delete-icon'
+    export { default as DeleteIcon } from './delete-icon'
 export { default as EditIcon } from './edit-icon'
 export { default as EyeIcon } from './eye-icon'
 export { default as MoonIcon } from './moon-icon'

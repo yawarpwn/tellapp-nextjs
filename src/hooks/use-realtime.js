@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
 import {
-  updateRow as updateRowFn,
   deleteRow as deleteRowFn,
   insertRow as insertRowFn,
+  updateRow as updateRowFn,
 } from '@/services/supabase'
+import { useEffect, useState } from 'react'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 

@@ -33,9 +33,7 @@
     "address": "Jr Humbolt N° 700 - La Victoria",
     "phone": "949070513",
     "created_at": "2023-11-10T16:23:37.574951+00:00",
-    "destinations": [
-      "Huánuco "
-    ]
+    "destinations": ["Huánuco "]
   },
   {
     "id": "e94a8b9e-cf13-42c7-9842-3dfbd9ce3db2",
@@ -44,9 +42,7 @@
     "address": null,
     "phone": null,
     "created_at": "2023-10-21T22:51:24.818483+00:00",
-    "destinations": [
-      "Casi todo el Perú"
-    ]
+    "destinations": ["Casi todo el Perú"]
   },
   {
     "id": "860fc99e-9750-4e92-972a-a7b8ba8f3f4f",
@@ -55,9 +51,7 @@
     "address": "Av. Mexico Nro. 1187",
     "phone": null,
     "created_at": "2023-10-21T22:51:24.818483+00:00",
-    "destinations": [
-      "Casi todo el Perú"
-    ]
+    "destinations": ["Casi todo el Perú"]
   },
   {
     "id": "b4489edc-7a4f-4278-a9a7-f92fcf1d8d2e",
@@ -66,9 +60,7 @@
     "address": "Av. San Luis Nro. 784",
     "phone": null,
     "created_at": "2023-10-21T22:51:24.818483+00:00",
-    "destinations": [
-      "Ayacucho"
-    ]
+    "destinations": ["Ayacucho"]
   },
   {
     "id": "35c7555e-d6d4-4643-b4aa-5a79482b5146",
@@ -77,9 +69,7 @@
     "address": "Av. Luna Pizarro 234",
     "phone": null,
     "created_at": "2023-10-21T22:51:24.818483+00:00",
-    "destinations": [
-      "Cerro de Pasco"
-    ]
+    "destinations": ["Cerro de Pasco"]
   },
   {
     "id": "8a152dc7-4607-478d-8aca-43b9b88a6325",
@@ -88,8 +78,7 @@
     "address": "Av. Luna Pizarro Nro. 429",
     "phone": null,
     "created_at": "2023-10-21T22:51:24.818483+00:00",
-    "destinations": [
-      "Desconocido"
-    ]
+    "destinations": ["Desconocido"]
   }
 ]
+

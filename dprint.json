@@ -1,0 +1,17 @@
+{
+  "lineWidth": 120,
+  "useTabs": true,
+  "typescript": {
+    "lineWidth": 80,
+    "quoteStyle": "preferSingle",
+    "semiColons": "asi",
+    "preferSingleLine": true
+  },
+  "json": {},
+  "includes": ["src/**/*.{ts,tsx,js,jsx,json,css}"],
+  "excludes": ["**/node_modules", "**/*-lock.json"],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.88.7.wasm",
+    "https://plugins.dprint.dev/json-0.19.1.wasm"
+  ]
+}
