@@ -1,34 +1,23 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { NextResponse } from 'next/server'
+// import { NextResponse } from 'next/server'
+import { createMiddlewareClient } from './lib/supabase'
 
 export async function middleware(req) {
-  const res = NextResponse.next()
-  const supabase = createMiddlewareClient({ req, res })
+	// Create a Supabase client configured to use cookies
+	const { supabase, response } = createMiddlewareClient(req)
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+	// Refresh session if expired - required for Server Components
+	await supabase.auth.getSession()
 
-  const isAutorized = !!user
-  const isHome = req.nextUrl.pathname === '/'
-  const isLoginPath = req.nextUrl.pathname === '/login'
-
-  console.log('Middleware --->', { isAutorized, isHome })
-  if (isLoginPath && !isAutorized) {
-    return res
-  }
-
-  if (isLoginPath && isAutorized) {
-    return NextResponse.redirect(new URL('/quotations', req.url))
-  }
-
-  if (!isAutorized) {
-    return NextResponse.redirect(new URL('/login', req.url))
-  }
-
-  return res
+	return response
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+	/*
+	 * Match all request paths except for the ones starting with:
+	 * - _next/static (static files)
+	 * - _next/image (image optimization files)
+	 * - favicon.ico (favicon file)
+	 * Feel free to modify this pattern to include more paths.
+	 */
+	matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }

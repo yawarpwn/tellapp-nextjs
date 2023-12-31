@@ -1,9 +1,9 @@
 import { ITEMS_PER_PAGE } from '@/constants'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@/lib/supabase'
 import { cookies } from 'next/headers'
 export async function fetchFilteredAgencies({ query = '', currentPage = 1 }) {
 	const cookieStore = cookies()
-	const supabase = createServerComponentClient({ cookies: () => cookieStore })
+	const supabase = createServerClient(cookieStore)
 
 	try {
 		const offset = (currentPage - 1) * ITEMS_PER_PAGE
@@ -22,7 +22,7 @@ export async function fetchFilteredAgencies({ query = '', currentPage = 1 }) {
 
 export async function fetchAgenciesPages(query = '') {
 	const cookieStore = cookies()
-	const supabase = createServerComponentClient({ cookies: () => cookieStore })
+	const supabase = createServerClient(cookieStore)
 	// WARN: noStore()
 	try {
 		const { count } = await supabase
@@ -39,7 +39,7 @@ export async function fetchAgenciesPages(query = '') {
 
 export async function fetchAgencyById({ id }) {
 	const cookieStore = cookies()
-	const supabase = createServerComponentClient({ cookies: () => cookieStore })
+	const supabase = createServerClient(cookieStore)
 
 	try {
 		const { data } = await supabase.from('agencies').select('*').eq('id', id)

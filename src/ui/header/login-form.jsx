@@ -1,11 +1,11 @@
 'use client'
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
 function LoginForm({ session }) {
   const router = useRouter()
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient()
 
   const handleSignIn = async () => {
     await supabase.auth.signInWithOAuth({

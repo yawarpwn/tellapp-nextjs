@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@/lib/supabase'
 import { cookies } from 'next/headers'
 import products from '@/backup/products.json'
 import quotations from '@/backup/quotations.json'
@@ -9,7 +9,7 @@ import agencies from '@/backup/agencies.json'
 
 async function Page() {
   const storeCookies = cookies()
-  const supabase = createServerComponentClient({ cookies: () => storeCookies })
+  const supabase = createServerClient({ cookies: () => storeCookies })
   // const quotations = supabase.from('quotations').select('*')
   // const customers = supabase.from('customers').select('*')
   // const labels = supabase.from('labels').select('*')

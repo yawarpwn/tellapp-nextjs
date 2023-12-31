@@ -1,21 +1,24 @@
+import { createServerClient } from '@/lib/supabase'
+import LoginForm from '@/ui/login-form'
+import { cookies } from 'next/headers'
+import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 export default async function Home() {
-  // const {
-  //   data: { session },
-  // } = await supabase.auth.getSession()
+	const storeCookie = cookies()
+	const supabase = createServerClient(storeCookie)
+	const { data: { session } } = await supabase.auth.getSession()
 
-  // if (!session) {
-  //   redirect('/login')
-  // }
-
-  // const { data: serverQuotations } = await supabase
-  //   .from('quotations')
-  //   .select()
-  //   .order('number', { ascending: false })
-
-  // if (!serverQuotations) {
-  //   notFound()
-  // }
-  // redirect('/quotations')
-  return <div>HOme Page</div>
+	if (session) {
+		redirect('/quotations')
+	}
+	return (
+		<>
+			{/* <p> */}
+			{/* 	<Link href={`${siteUrl}/auth/confirm?token_hash=${token}&type=email`}> */}
+			{/* 		Log In */}
+			{/* 	</Link> */}
+			{/* </p> */}
+			<LoginForm />
+		</>
+	)
 }

@@ -3,7 +3,7 @@ import { useRef, useState, useEffect, useMemo } from 'react'
 import { XIcon } from '@/icons'
 import Input from '@/ui/components/input'
 import { createSearchInstance } from '@/services/search'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@/lib/supabase'
 
 const initialState = {
   qty: 0,
@@ -27,7 +27,7 @@ function ItemModal({
   const searchInstance = useRef(null)
 
   useEffect(() => {
-    const supabase = createClientComponentClient()
+    const supabase = createBrowserClient()
     const getProducts = async () => {
       const { data } = await supabase.from('products').select()
       searchInstance.current = createSearchInstance(data)

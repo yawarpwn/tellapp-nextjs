@@ -1,7 +1,6 @@
 import './globals.css'
 import { siteConfig } from '@/config/site'
 import { Toaster } from '@/ui/components/toaster'
-import Navbar from '@/ui/header/navbar'
 import { Inter } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 
@@ -20,7 +19,7 @@ export const metadata = {
 	],
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
 	return (
 		<html data-theme='dark' lang='en'>
 			<body
@@ -29,10 +28,7 @@ export default function RootLayout({ children }) {
 			>
 				<NextTopLoader showSpinner={false} color='#6519e6' />
 				<Toaster />
-				<div className='max-w-3xl mx-auto px-4 md:px-6'>
-					<Navbar />
-					<main className='pb-4'>{children}</main>
-				</div>
+				{children}
 			</body>
 		</html>
 	)

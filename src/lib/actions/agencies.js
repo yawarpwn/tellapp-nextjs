@@ -1,6 +1,6 @@
 'use server'
+import { createServerClient } from '@/lib/supabase'
 import { deleteRow, insertRow, updateRow } from '@/services/supabase'
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -27,8 +27,8 @@ const AgencieSchema = z.object({
 // Create Product
 const CreateAgency = AgencieSchema.omit({ id: true })
 export async function createAgency(_, formData) {
-	const coookiesStore = cookies()
-	const supabase = createServerActionClient({ cookies: () => coookiesStore })
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
 
 	const rawData = {
 		company: formData.get('company'),
@@ -69,8 +69,8 @@ export async function createAgency(_, formData) {
 // Update Product
 const UpdateAgency = AgencieSchema
 export async function updateAgency(_, formData) {
-	const coookiesStore = cookies()
-	const supabase = createServerActionClient({ cookies: () => coookiesStore })
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
 
 	const rawData = {
 		id: formData.get('id'),
@@ -113,8 +113,8 @@ export async function updateAgency(_, formData) {
 }
 
 export async function deleteAgency(_, formData) {
-	const coookiesStore = cookies()
-	const supabase = createServerActionClient({ cookies: () => coookiesStore })
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
 	const id = formData.get('id')
 	try {
 		await deleteRow({ table: 'agencies', client: supabase, id })
