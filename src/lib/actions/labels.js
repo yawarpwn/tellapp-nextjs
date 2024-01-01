@@ -15,10 +15,7 @@ const LabelSchema = z.object({
 	dni_ruc: z.coerce.string(),
 	address: z.string().nullable(),
 	agency_id: z.string().nullable(),
-	phone: z.coerce
-		.string()
-		.length(9, { message: 'El telefono debe tener 9 caracteres' })
-		.nullable(),
+	phone: z.coerce.string().length(9, { message: 'El telefono debe tener 9 caracteres' }).nullable(),
 })
 
 const CreateLabel = LabelSchema.omit({ id: true })

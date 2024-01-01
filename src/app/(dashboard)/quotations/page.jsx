@@ -1,6 +1,4 @@
-import {
-	fetchQuotationsPages,
-} from '@/lib/quotations-data'
+import { fetchQuotationsPages } from '@/lib/quotations-data'
 import { AddButton } from '@/ui/buttons'
 import Pagination from '@/ui/pagination'
 import QuotationsTable from '@/ui/quotations/table'
@@ -13,7 +11,7 @@ async function QuotationsPage({ searchParams }) {
 
 	return (
 		<>
-			<header className='flex items-center justify-between'>
+			<header className="flex items-center justify-between">
 				<Search />
 				<AddButton href={'/quotations/create'} />
 			</header>

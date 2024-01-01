@@ -12,19 +12,12 @@ const categoriesArray = Object.values(CATEGORIES)
 
 const ProductSchema = z.object({
 	id: z.string(),
-	description: z
-		.string()
-		.min(10, { message: 'Mínimo 10 caracteres' }),
-	code: z
-		.string()
-		.min(3, { message: 'Mínimo 3 caracteres' })
-		.max(10, { message: 'Máximo  6 caracteres' }),
+	description: z.string().min(10, { message: 'Mínimo 10 caracteres' }),
+	code: z.string().min(3, { message: 'Mínimo 3 caracteres' }).max(10, { message: 'Máximo  6 caracteres' }),
 	price: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
 	cost: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
 	category: z.enum(categoriesArray),
-	unit_size: z
-		.string()
-		.min(3, { message: 'Mínimo 3 caracteres' }),
+	unit_size: z.string().min(3, { message: 'Mínimo 3 caracteres' }),
 })
 
 // Create Product

@@ -21,12 +21,9 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 	return (
-		<html data-theme='dark' lang='en'>
-			<body
-				suppressHydrationWarning={true}
-				className={`${inter.className} min-h-screen font-sans antialiased`}
-			>
-				<NextTopLoader showSpinner={false} color='#6519e6' />
+		<html data-theme="dark" lang="en">
+			<body suppressHydrationWarning={true} className={`${inter.className} min-h-screen font-sans antialiased`}>
+				<NextTopLoader showSpinner={false} color="#6519e6" />
 				<Toaster />
 				{children}
 			</body>

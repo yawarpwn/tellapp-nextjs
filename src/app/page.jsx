@@ -1,12 +1,13 @@
 import { createServerClient } from '@/lib/supabase'
-import TellLogo from '@/ui/components/tell-logo'
 import LoginForm from '@/ui/login-form'
 import { cookies } from 'next/headers'
 import { notFound, redirect } from 'next/navigation'
 export default async function Home() {
 	const storeCookie = cookies()
 	const supabase = createServerClient(storeCookie)
-	const { data: { session } } = await supabase.auth.getSession()
+	const {
+		data: { session },
+	} = await supabase.auth.getSession()
 
 	if (session) {
 		redirect('/quotations')
@@ -15,26 +16,26 @@ export default async function Home() {
 	return (
 		<>
 			<main className=''>
-				<div className='min-h-screen h-full flex flex-col xl:flex-row '>
-					<div className='pb-16 min-h-screen pt-8 px-5 border-r border-primary/50 bg-base-200 flex flex-col items-center  flex-1 flex-shrink-0'>
-						<aside className='flex flex-col w-[320px] sm:[384px]  '>
+				<div className='flex flex-col xl:flex-row '>
+					<div className='flex min-h-screen flex-1 flex-shrink-0 flex-col justify-center items-center border-r border-primary/50 bg-base-200'>
+						<aside className='sm:[384px] flex w-[320px] flex-col '>
 							<header className='mb-10 '>
-								<h1 className='text-2xl mt-8 mb-2 lg:text-3xl '>
+								<h1 className='mb-2 mt-8 text-2xl lg:text-3xl '>
 									Bienvenido a TellApp
 								</h1>
-								<h2 className='opacity-45 text-sm'>
+								<h2 className='text-sm opacity-45'>
 									Identificate para continuar
 								</h2>
 							</header>
 							<LoginForm />
-							<footer className='text-sm mt-10 text-center'>
-								<p>Olvidaste tu contraseña?</p>
+							<footer className='mt-10 text-center text-sm'>
+								<a href='#'>Olvidaste tu contraseña?</a>
 							</footer>
 						</aside>
 					</div>
-					<article className='min-h-screen flex items-center justify-center flex-col flex-1 flex-shrink basis-1/4 bg-secondary text-white '>
-						<div className='flex flex-col gap-4 max-w-[320px] xl:max-w-xl  '>
-							<div className='max-w-xl text-2xl font-mono flex flex-col gap-4'>
+					<article className='flex min-h-screen flex-1 flex-shrink basis-1/4 flex-col items-center justify-center bg-secondary text-white '>
+						<div className='flex max-w-md px-4 flex-col gap-4'>
+							<div className='flex max-w-xl flex-col gap-4 font-mono text-2xl text-pretty'>
 								<p>
 									Desde que supimos que venías, nuestras vidas tomaron, rumbo,
 									un horizonte, una meta, un camino🌈.
@@ -48,9 +49,9 @@ export default async function Home() {
 									Para nuestro hijo Johneyder
 								</small>
 							</div>
-							<div className='flex justify-center'>
+							<div className='flex justify-center mt-4'>
 								<img
-									className='w-36 h-36'
+									className='h-36 w-36 animate-bounce'
 									src='/johneyder-yoshi.webp'
 									alt='Johneyer mi hijo montando yoshi'
 								/>

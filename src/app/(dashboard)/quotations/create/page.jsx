@@ -5,30 +5,26 @@ import { fetchCustomers } from '@/lib/customers-data'
 import { fetchLastQuotation } from '@/lib/quotations-data'
 
 async function CreateQuotationPage() {
-  const customers = await fetchCustomers()
-  const lastQuotation = await fetchLastQuotation()
-  return (
-    <>
-      <Breadcrumbs
-        breadcrumbs={[
-          {
-            label: 'Cotizaciones',
-            href: '/quotations',
-          },
-          {
-            label: 'Crear',
-            href: '/quotations/crear',
-            active: true,
-          },
-        ]}
-      />
-      <AddForm
-        action={createQuotation}
-        lastQuotationNumber={lastQuotation.number}
-        serverCustomers={customers}
-      />
-    </>
-  )
+	const customers = await fetchCustomers()
+	const lastQuotation = await fetchLastQuotation()
+	return (
+		<>
+			<Breadcrumbs
+				breadcrumbs={[
+					{
+						label: 'Cotizaciones',
+						href: '/quotations',
+					},
+					{
+						label: 'Crear',
+						href: '/quotations/crear',
+						active: true,
+					},
+				]}
+			/>
+			<AddForm action={createQuotation} lastQuotationNumber={lastQuotation.number} serverCustomers={customers} />
+		</>
+	)
 }
 
 export default CreateQuotationPage

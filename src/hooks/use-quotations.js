@@ -32,7 +32,7 @@ export default function useQuotations({ initialData }) {
 	const updateItem = editedItem => {
 		setQuotation({
 			...quotation,
-			items: quotation.items.map(item => item.id === editedItem.id ? editedItem : item),
+			items: quotation.items.map(item => (item.id === editedItem.id ? editedItem : item)),
 		})
 	}
 

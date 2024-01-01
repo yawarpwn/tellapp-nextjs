@@ -1,8 +1,4 @@
-import {
-	deleteRow as deleteRowFn,
-	insertRow as insertRowFn,
-	updateRow as updateRowFn,
-} from '@/services/supabase'
+import { deleteRow as deleteRowFn, insertRow as insertRowFn, updateRow as updateRowFn } from '@/services/supabase'
 import { useEffect, useState } from 'react'
 
 import { createBrowserClient } from '@/lib/supabase'
@@ -67,21 +63,13 @@ export function useRealTime({ initialData, table = 'quotations' }) {
 			}
 
 			if (payload.eventType === TYPE.UPDATE) {
-				setRows(quotations =>
-					quotations.map(quotation =>
-						quotation.id === payload.new.id ? payload.new : quotation
-					)
-				)
+				setRows(quotations => quotations.map(quotation => (quotation.id === payload.new.id ? payload.new : quotation)))
 			}
 		}
 
 		const channel = supabase
 			.channel('*')
-			.on(
-				'postgres_changes',
-				{ event: '*', schema: 'public', table },
-				handleSubscription,
-			)
+			.on('postgres_changes', { event: '*', schema: 'public', table }, handleSubscription)
 			.subscribe()
 
 		return () => {

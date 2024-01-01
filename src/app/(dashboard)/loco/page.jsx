@@ -1,9 +1,5 @@
 const functionname = () => {
-	return (
-		<div>
-			Loco
-		</div>
-	)
+	return <div>Loco</div>
 }
 
 export default functionname

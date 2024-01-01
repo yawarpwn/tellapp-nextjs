@@ -6,24 +6,26 @@ import { useState } from 'react'
 
 export default function LoginForm() {
 	const [isPending, setIsPending] = useState(false)
+	const [error, setError] = useState()
 	const router = useRouter()
 	const signInWithEmail = async ({ password, email }) => {
 		const supabase = createBrowserClient()
 		setIsPending(true)
-		const { error } = await supabase.auth.signInWithPassword({
-			password,
-			email,
-		})
+		try {
+			const { error } = await supabase.auth.signInWithPassword({
+				password,
+				email,
+			})
 
-		if (error) {
-			console.log('error', error)
+			if (error) throw new Error(error)
+			router.push('/quotations')
+		} catch (error) {
+			setError('Credenciales invalidas')
+		} finally {
 			setIsPending(false)
 		}
-
-		setIsPending(false)
-		router.push('/quotations')
 	}
-	const handleSubmit = (e) => {
+	const handleSubmit = e => {
 		e.preventDefault()
 		const formData = new FormData(e.target)
 		const email = formData.get('email')
@@ -60,7 +62,16 @@ export default function LoginForm() {
 						required
 					/>
 				</div>
-				<button type='submit' className='btn btn-secondary mt-4 w-full'>
+				{error && (
+					<div className='text-error mt-2'>
+						<p>{error}</p>
+					</div>
+				)}
+				<button
+					disabled={isPending}
+					type='submit'
+					className='btn btn-secondary mt-4 w-full'
+				>
 					<span>Iniciar Session</span>
 					{isPending && <span className='loading loading-dots'></span>}
 				</button>

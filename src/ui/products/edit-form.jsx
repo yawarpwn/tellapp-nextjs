@@ -5,17 +5,17 @@ import { useFormState } from 'react-dom'
 import CreateEditInputs from './create-edit-inputs'
 
 const initialState = {
-  message: null,
-  errors: {},
+	message: null,
+	errors: {},
 }
-function EditForm({ product}) {
-  const [state, dispatch] = useFormState(updateProduct, initialState)
-  console.log({state})
-  return (
-    <form action={dispatch}>
-      <CreateEditInputs product={product} state={state} />
-    </form>
-  )
+function EditForm({ product }) {
+	const [state, dispatch] = useFormState(updateProduct, initialState)
+	console.log({ state })
+	return (
+		<form action={dispatch}>
+			<CreateEditInputs product={product} state={state} />
+		</form>
+	)
 }
 
 export default EditForm

@@ -9,22 +9,21 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 const CustomerSchema = z.object({
-	name: z
+	name: z.string().min(10, { message: 'El nombre debe tener al menos 10 caracteres' }),
+	ruc: z.coerce.string().length(11, { message: 'El ruc debe tener al menos 11 caracteres' }),
+	address: z.string().min(10, { message: 'La dirección debe tener al menos 10 caracteres' }).nullable(),
+	phone: z.coerce
 		.string()
-		.min(10, { message: 'El nombre debe tener al menos 10 caracteres' }),
-	ruc: z.coerce
-		.string()
-		.length(11, { message: 'El ruc debe tener al menos 11 caracteres' }),
-	address: z
-		.string()
-		.min(10, { message: 'La dirección debe tener al menos 10 caracteres' })
+		.length(9, {
+			message: 'El telefono debe tener 9 caracteres',
+		})
 		.nullable(),
-	phone: z.coerce.string().length(9, {
-		message: 'El telefono debe tener 9 caracteres',
-	}).nullable(),
-	email: z.string().email({
-		message: 'El correo no es valido',
-	}).nullable(),
+	email: z
+		.string()
+		.email({
+			message: 'El correo no es valido',
+		})
+		.nullable(),
 })
 
 export async function createCustomer(_, formData) {

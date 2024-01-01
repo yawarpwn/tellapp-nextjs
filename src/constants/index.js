@@ -1,10 +1,4 @@
-import {
-	CustomersIcon,
-	PrinterIcon,
-	ProductsIcon,
-	QuotationIcon,
-	TruckIcon,
-} from '@/icons'
+import { CustomersIcon, PrinterIcon, ProductsIcon, QuotationIcon, TruckIcon } from '@/icons'
 
 export const ROW_PER_PAGE = 10
 export const CATEGORIES = {
