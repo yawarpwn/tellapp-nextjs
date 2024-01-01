@@ -36,12 +36,12 @@ export default async function Home() {
 						<div className='flex flex-col gap-4 max-w-[320px] xl:max-w-xl  '>
 							<div className='max-w-xl text-2xl font-mono flex flex-col gap-4'>
 								<p>
-									Desde que supimos que venías, nuesras vidas cambiaron tomando
-									un rumbo, un camino.
+									Desde que supimos que venías, nuestras vidas tomaron, rumbo,
+									un horizonte, una meta, un camino🌈.
 								</p>
 								<p>
-									Le has dado sentido a nuestras vidas, llenando de amor,
-									trabajo, alegría y desvelos 👶 jejeje
+									Ahora esta lleno de amor, paciencia, alegria , optimismo,
+									trabajo, compromiso y desvelos 👶 jejeje
 								</p>
 								<p>Todo nuestros logros son para ti y gracias a ti🙏</p>
 								<small className='text-sm italic'>
