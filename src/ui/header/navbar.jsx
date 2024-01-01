@@ -2,7 +2,6 @@ import { NAVIGATION } from '@/constants'
 import { BarsIcon } from '@/icons'
 import Link from 'next/link'
 
-import TellLogo from '../components/tell-logo'
 import SignOutButton from '../sign-out-button'
 
 function Navbar() {

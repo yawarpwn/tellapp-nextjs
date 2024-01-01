@@ -1,37 +1,16 @@
 'use client'
 
-import { loginWithEmailAndPassword } from '@/lib/actions/auth'
 import { createBrowserClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useTransition } from 'react'
 
 export default function LoginForm() {
 	const [isPending, setIsPending] = useState(false)
 	const router = useRouter()
-	// const [isPending, startTransition] = useTransition()
-	//
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault()
-	// 	const formData = new FormData(e.target)
-	// 	const email = formData.get('email')
-	// 	const password = formData.get('password')
-	// 	startTransition(async () => {
-	// 		const { error } = JSON.parse(
-	// 			await loginWithEmailAndPassword({ email, password }),
-	// 		)
-	// 		if (error) {
-	// 			console.log(error)
-	// 		} else {
-	// 			console.log('login correct')
-	// 			redirect('/quotations')
-	// 		}
-	// 	})
-	// }
 	const signInWithEmail = async ({ password, email }) => {
 		const supabase = createBrowserClient()
 		setIsPending(true)
-		const { data, error } = await supabase.auth.signInWithPassword({
+		const { error } = await supabase.auth.signInWithPassword({
 			password,
 			email,
 		})
@@ -54,7 +33,7 @@ export default function LoginForm() {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit} className='max-w-sm mx-auto'>
+			<form onSubmit={handleSubmit}>
 				<div className='form-control'>
 					<label htmlFor='email' className='label'>
 						<span className='label-text'>Correo</span>
@@ -64,7 +43,7 @@ export default function LoginForm() {
 						name='email'
 						id='email'
 						className='input input-bordered'
-						placeholder='name@flowbite.com'
+						placeholder='correo@dominio.com'
 						required
 					/>
 				</div>
@@ -77,10 +56,11 @@ export default function LoginForm() {
 						name='password'
 						id='password'
 						className='input input-bordered'
+						placeholder='********'
 						required
 					/>
 				</div>
-				<button type='submit' className='btn mt-4'>
+				<button type='submit' className='btn btn-secondary mt-4 w-full'>
 					<span>Iniciar Session</span>
 					{isPending && <span className='loading loading-dots'></span>}
 				</button>

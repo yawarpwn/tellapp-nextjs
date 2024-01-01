@@ -83,7 +83,7 @@ export function createMiddlewareClient(request) {
 	return { supabase, response }
 }
 
-export function createServerActionClient(cookieStore) {
+export function createActionClient(cookieStore) {
 	'use use server'
 	return createServerClientSupabase(SUPABASE_URL, SUPABASE_KEY, {
 		cookies: {

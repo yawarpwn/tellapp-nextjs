@@ -1,5 +1,4 @@
-import toast, { Toaster} from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 
-
-export { Toaster }
+export { toast, Toaster }
 export default toast
