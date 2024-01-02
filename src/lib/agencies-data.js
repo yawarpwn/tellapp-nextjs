@@ -25,7 +25,9 @@ export async function fetchAgenciesPages(query = '') {
 	const supabase = createServerClient(cookieStore)
 	// WARN: noStore()
 	try {
-		const { count } = await supabase.from('agencies').select('*', { count: 'exact' }).ilike('company', `%${query}%`)
+		const { count } = await supabase.from('agencies').select('*', {
+			count: 'exact',
+		}).ilike('company', `%${query}%`)
 		const totalPages = Math.ceil(count / ITEMS_PER_PAGE)
 		return totalPages
 	} catch (error) {

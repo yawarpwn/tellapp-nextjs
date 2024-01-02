@@ -11,7 +11,7 @@ async function QuotationsPage({ searchParams }) {
 
 	return (
 		<>
-			<header className="flex items-center justify-between">
+			<header className='flex items-center justify-between'>
 				<Search />
 				<AddButton href={'/quotations/create'} />
 			</header>

@@ -21,7 +21,10 @@ function Search({ placeholder = 'Buscar..' }) {
 
 	return (
 		<div>
-			<InputSearch onSearchChange={event => handleSearch(event.target.value)} placeholder={placeholder} />
+			<InputSearch
+				onSearchChange={event => handleSearch(event.target.value)}
+				placeholder={placeholder}
+			/>
 		</div>
 	)
 }

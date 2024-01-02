@@ -1,11 +1,20 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import SubmitActionButton from './submit-action-button'
-import { createPortal } from 'react-dom'
 import clsx from 'clsx'
+import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import SubmitActionButton from './submit-action-button'
 
-function ConfirmModalAction({ isOpen, onClose, onAction, title = '¿ Estás seguro ?', children, size = 'sm' }) {
+function ConfirmModalAction(
+	{
+		isOpen,
+		onClose,
+		onAction,
+		title = '¿ Estás seguro ?',
+		children,
+		size = 'sm',
+	},
+) {
 	const modalRef = useRef(null)
 
 	useEffect(() => {
@@ -35,10 +44,10 @@ function ConfirmModalAction({ isOpen, onClose, onAction, title = '¿ Estás segu
 	}
 
 	return (
-		isOpen &&
-		createPortal(
+		isOpen
+		&& createPortal(
 			<dialog
-				className="modal"
+				className='modal'
 				ref={modalRef}
 				onMouseDown={event => {
 					if (event.target === event.currentTarget) {
@@ -47,13 +56,13 @@ function ConfirmModalAction({ isOpen, onClose, onAction, title = '¿ Estás segu
 				}}
 			>
 				<form className={modalBoxClass} action={handleAction}>
-					<header className="py-2">
-						<p className="text-center mb-2">{title}</p>
+					<header className='py-2'>
+						<p className='text-center mb-2'>{title}</p>
 					</header>
 					{children}
-					<footer className="flex items-center justify-between">
+					<footer className='flex items-center justify-between'>
 						<SubmitActionButton />
-						<button onClick={onClose} type="button" className="btn btn-error">
+						<button onClick={onClose} type='button' className='btn btn-error'>
 							Cancelar
 						</button>
 					</footer>

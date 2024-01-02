@@ -77,7 +77,9 @@ export default function QuoCustomer({ quotation }) {
 				<View style={styles.row}>
 					<Text style={styles.l}>Fecha</Text>
 					<Text style={styles.c}>:</Text>
-					<Text style={styles.r}>{Intl.DateTimeFormat('es-ES').format(create_at)}</Text>
+					<Text style={styles.r}>
+						{Intl.DateTimeFormat('es-ES').format(create_at)}
+					</Text>
 				</View>
 			</View>
 		</View>

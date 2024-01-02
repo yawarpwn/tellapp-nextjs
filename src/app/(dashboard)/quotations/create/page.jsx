@@ -1,8 +1,8 @@
-import Breadcrumbs from '@/ui/breadcrumbs'
-import AddForm from '@/ui/quotations/add-form'
 import { createQuotation } from '@/lib/actions/quoatations'
 import { fetchCustomers } from '@/lib/customers-data'
 import { fetchLastQuotation } from '@/lib/quotations-data'
+import Breadcrumbs from '@/ui/breadcrumbs'
+import AddForm from '@/ui/quotations/add-form'
 
 async function CreateQuotationPage() {
 	const customers = await fetchCustomers()
@@ -22,7 +22,11 @@ async function CreateQuotationPage() {
 					},
 				]}
 			/>
-			<AddForm action={createQuotation} lastQuotationNumber={lastQuotation.number} serverCustomers={customers} />
+			<AddForm
+				action={createQuotation}
+				lastQuotationNumber={lastQuotation.number}
+				serverCustomers={customers}
+			/>
 		</>
 	)
 }

@@ -104,76 +104,84 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
 				onPick={handlePick}
 				items={serverAgencies}
 				renderLabel={item => <p>{item.company}</p>}
-				filterProperty="company"
+				filterProperty='company'
 			/>
-			<header className="flex justify-end">
-				<button onClick={openAgenciesModal} type="button" className="btn btn-primary">
+			<header className='flex justify-end'>
+				<button
+					onClick={openAgenciesModal}
+					type='button'
+					className='btn btn-primary'
+				>
 					Agencias Sugeridas
 				</button>
 			</header>
 			<form action={dispatch}>
 				{/* {state?.message && <div className='text-red-500 text-sm'>{state.message}</div>} */}
-				<div className="relative w-full">
+				<div className='relative w-full'>
 					<Input
-						name="dni_ruc"
+						name='dni_ruc'
 						autoFocus
 						onChange={handleChange}
 						onBlur={handleSearch}
 						value={label?.dni_ruc}
-						labelText="Dni / Ruc"
-						type="number"
+						labelText='Dni / Ruc'
+						type='number'
 						disabled={loading}
 						required
 					/>
 				</div>
 
 				<Input
-					name="recipient"
+					name='recipient'
 					onChange={handleChange}
 					value={label?.recipient}
-					labelText="Destinatario"
-					type="text"
+					labelText='Destinatario'
+					type='text'
 					disabled={loading}
 					required
 					errors={state.errors?.recipient}
 				/>
 				<Input
-					name="destination"
+					name='destination'
 					onChange={handleChange}
 					value={label?.destination}
-					labelText="Destino"
-					type="text"
+					labelText='Destino'
+					type='text'
 					disabled={loading}
 					required
 					errors={state.errors?.destination}
 				/>
 
 				<Input
-					name="phone"
+					name='phone'
 					onChange={handleChange}
 					value={label?.phone}
-					labelText="Télefono"
-					type="number"
+					labelText='Télefono'
+					type='number'
 					disabled={loading}
 					errors={state.errors?.phone}
 				/>
 
 				<Input
-					name="address"
+					name='address'
 					onChange={handleChange}
 					value={label?.address}
-					labelText="Dirección"
-					type="text"
+					labelText='Dirección'
+					type='text'
 					disabled={loading}
 					errors={state.errors?.address}
 				/>
-				<input type="hidden" name="id" value={label?.id} />
-				<input type="hidden" name="agency_id" value={label?.agencies?.id ?? ''} />
-				<div className="flex justify-center mt-4">
+				<input type='hidden' name='id' value={label?.id} />
+				<input
+					type='hidden'
+					name='agency_id'
+					value={label?.agencies?.id ?? ''}
+				/>
+				<div className='flex justify-center mt-4'>
 					{hasAgency && (
-						<div className="card w-80 bg-primary text-primary-content">
-							<div className="card-body">
-								<h2 className="card-title">Agencia Sugerida</h2>
+						<div className='card w-80 bg-primary text-primary-content'>
+							<div className='card-body'>
+								<h2 className='card-title'>Agencia Sugerida</h2>
 								<p>{label.agencies.company}</p>
 								<p>{label.agencies.address}</p>
 								<p>{label.agencies?.phone}</p>
@@ -181,8 +189,8 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
 						</div>
 					)}
 				</div>
-				<footer className="mt-4 flex justify-between">
-					<Link href={'/customers'} className="btn">
+				<footer className='mt-4 flex justify-between'>
+					<Link href={'/customers'} className='btn'>
 						Cancelar
 					</Link>
 					<SubmitActionButton />

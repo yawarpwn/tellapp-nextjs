@@ -1,5 +1,17 @@
 import clsx from 'clsx'
-function Input({ labelText, className, classContainer, inputRef, errors, ariaLabelledby, disabled, as, ...props }) {
+function Input(
+	{
+		labelText,
+		className,
+		classContainer,
+		inputRef,
+		errors,
+		ariaLabelledby,
+		disabled,
+		as,
+		...props
+	},
+) {
 	const inputClassName = clsx(
 		'w-full placeholder:text-base-content/30',
 		as === 'textarea' ? 'textarea textarea-bordered' : 'input input-bordered  ',
@@ -15,8 +27,8 @@ function Input({ labelText, className, classContainer, inputRef, errors, ariaLab
 	const Component = as ? as : 'input'
 	return (
 		<div className={`form-control w-full`}>
-			<label className="label">
-				<span className="label-text">{labelText}</span>
+			<label className='label'>
+				<span className='label-text'>{labelText}</span>
 			</label>
 			<Component
 				ref={inputRef}
@@ -28,7 +40,12 @@ function Input({ labelText, className, classContainer, inputRef, errors, ariaLab
 
 			{/* handle Error */}
 			{errors?.map(error => (
-				<div id={ariaLabelledby} aria-live="polite" className="text-error text-sm ml-1" key={error}>
+				<div
+					id={ariaLabelledby}
+					aria-live='polite'
+					className='text-error text-sm ml-1'
+					key={error}
+				>
 					{error}
 				</div>
 			))}

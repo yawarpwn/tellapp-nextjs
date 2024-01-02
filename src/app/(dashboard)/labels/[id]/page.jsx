@@ -1,6 +1,6 @@
 import { fetchLabelsById } from '@/lib/labels-data'
-import React from 'react'
 import PrintLabel from '@/ui/labels/print-label'
+import React from 'react'
 
 async function LabelIdPage({ params }) {
 	const id = params?.id

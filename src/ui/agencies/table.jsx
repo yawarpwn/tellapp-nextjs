@@ -1,12 +1,12 @@
+import { deleteAgency } from '@/lib/actions/agencies'
 import { fetchFilteredAgencies } from '@/lib/agencies-data'
 import { EditButton } from '../buttons'
-import { deleteAgency } from '@/lib/actions/agencies'
 import DeleteActionForm from '../delete-action-form'
 async function AgenciesTable({ query, currentPage }) {
 	const agencies = await fetchFilteredAgencies({ query, currentPage })
 	return (
-		<div className="overflow-x-auto">
-			<table className="table">
+		<div className='overflow-x-auto'>
+			<table className='table'>
 				{/* head */}
 				<thead>
 					<tr>
@@ -24,16 +24,16 @@ async function AgenciesTable({ query, currentPage }) {
 							<tr key={id}>
 								<td>
 									<div>
-										<p className="w-[300px]">{company}</p>
-										<p className="text-xs">{address ?? 'Sin dirección'}</p>
+										<p className='w-[300px]'>{company}</p>
+										<p className='text-xs'>{address ?? 'Sin dirección'}</p>
 									</div>
 								</td>
 								<td>{ruc}</td>
 								<td>{phone ?? 'Desconocido'}</td>
 								<td>
 									{destinations?.length > 0 && (
-										<select defaultValue="" className="select">
-											<option defaultValue="" disabled>
+										<select defaultValue='' className='select'>
+											<option defaultValue='' disabled>
 												Destinos
 											</option>
 											{destinations.map(destination => (
@@ -45,7 +45,7 @@ async function AgenciesTable({ query, currentPage }) {
 									)}
 								</td>
 								<td>
-									<div className="flex gap-2">
+									<div className='flex gap-2'>
 										<EditButton href={`/agencies/${id}/update`} />
 										<DeleteActionForm id={id} deleteAction={deleteAgency} />
 									</div>

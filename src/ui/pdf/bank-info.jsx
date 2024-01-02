@@ -41,7 +41,10 @@ export default function QuoBAnkInfo() {
 	return (
 		<View style={styles.footer}>
 			<View style={styles.title}>
-				<Text>&quot;SIRVASE A ABONAR EN NUESTRAS CUENTAS: TELL SENALES SOCIENDAD ANONIMA CERRADA&quot;</Text>
+				<Text>
+					&quot;SIRVASE A ABONAR EN NUESTRAS CUENTAS: TELL SENALES SOCIENDAD
+					ANONIMA CERRADA&quot;
+				</Text>
 			</View>
 			<View style={styles.row}>
 				<Text style={styles.bank}>BANCO</Text>

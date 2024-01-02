@@ -51,7 +51,9 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
 	} = useQuotations({ initialData: initialQuotationState })
 
 	useEffect(() => {
-		const quotationFromLocalStorage = JSON.parse(localStorage.getItem('__QUOTATION__'))
+		const quotationFromLocalStorage = JSON.parse(
+			localStorage.getItem('__QUOTATION__'),
+		)
 
 		if (quotationFromLocalStorage) {
 			setSavedQuotation(quotationFromLocalStorage)
@@ -107,12 +109,12 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
 				onClose={closeCustomersModal}
 				onPick={handlePick}
 				items={serverCustomers}
-				renderLabel={item => <p className="text-sm">{item.name}</p>}
-				filterProperty="name"
+				renderLabel={item => <p className='text-sm'>{item.name}</p>}
+				filterProperty='name'
 			/>
-			<div className="flex justify-between">
+			<div className='flex justify-between'>
 				<div />
-				<button onClick={openCustomersModal} className="btn">
+				<button onClick={openCustomersModal} className='btn'>
 					Cliente frecuentes
 				</button>
 			</div>

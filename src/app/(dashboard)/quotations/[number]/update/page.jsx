@@ -1,8 +1,8 @@
+import { updateQuotation } from '@/lib/actions/quoatations'
+import { fetchCustomers } from '@/lib/customers-data'
 import { fetchQuotationById } from '@/lib/quotations-data'
 import Breadcrumbs from '@/ui/breadcrumbs'
 import EditForm from '@/ui/quotations/edit-form'
-import { updateQuotation } from '@/lib/actions/quoatations'
-import { fetchCustomers } from '@/lib/customers-data'
 
 async function UpdatePage({ params }) {
 	const { number } = params
@@ -27,7 +27,11 @@ async function UpdatePage({ params }) {
 					},
 				]}
 			/>
-			<EditForm action={updateQuotation} quotationToUpdate={quotation} serverCustomers={customers} />
+			<EditForm
+				action={updateQuotation}
+				quotationToUpdate={quotation}
+				serverCustomers={customers}
+			/>
 		</>
 	)
 }

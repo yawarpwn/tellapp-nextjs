@@ -1,8 +1,8 @@
 'use client'
+import { DownloadIcon, ShareIcon } from '@/icons'
 import { usePDF } from '@react-pdf/renderer'
 import { useEffect } from 'react'
 import PDFGenerator from './pdf-generator'
-import { ShareIcon, DownloadIcon } from '@/icons'
 
 export default function DownloadPDF({ quotation }) {
 	const [instance, updateInstance] = usePDF({
@@ -37,8 +37,8 @@ export default function DownloadPDF({ quotation }) {
 	if (instance.loading) {
 		return (
 			<div>
-				<button className="loading loading-dots"></button>
-				<button className="loading loading-dots"></button>
+				<button className='loading loading-dots'></button>
+				<button className='loading loading-dots'></button>
 			</div>
 		)
 	}
@@ -49,13 +49,17 @@ export default function DownloadPDF({ quotation }) {
 
 	return (
 		<>
-			<button onClick={handleShare} className="btn">
+			<button onClick={handleShare} className='btn'>
 				<ShareIcon />
-				<span className="hidden md:block">Compartir</span>
+				<span className='hidden md:block'>Compartir</span>
 			</button>
-			<a href={instance.url} download={`COT-2023-00${quotation.number}.pdf`} className="btn">
+			<a
+				href={instance.url}
+				download={`COT-2023-00${quotation.number}.pdf`}
+				className='btn'
+			>
 				<DownloadIcon />
-				<span className="hidden md:block">Descargar</span>
+				<span className='hidden md:block'>Descargar</span>
 			</a>
 		</>
 	)

@@ -1,9 +1,9 @@
-import Modal from '@/ui/modal'
-import { useRef, useState, useEffect, useMemo } from 'react'
 import { XIcon } from '@/icons'
-import Input from '@/ui/components/input'
-import { createSearchInstance } from '@/services/search'
 import { createBrowserClient } from '@/lib/supabase'
+import { createSearchInstance } from '@/services/search'
+import Input from '@/ui/components/input'
+import Modal from '@/ui/modal'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 const initialState = {
 	qty: 0,
@@ -12,7 +12,9 @@ const initialState = {
 	description: '',
 	cost: '',
 }
-function ItemModal({ isOpenModal, onCloseModal, editingItem, addItem, updateItem }) {
+function ItemModal(
+	{ isOpenModal, onCloseModal, editingItem, addItem, updateItem },
+) {
 	console.log('editingItem', editingItem)
 
 	const [item, setItem] = useState(initialState)
@@ -112,91 +114,101 @@ function ItemModal({ isOpenModal, onCloseModal, editingItem, addItem, updateItem
 	}
 
 	return (
-		<Modal size="lg" isOpen={isOpenModal} onClose={onCloseModal}>
+		<Modal size='lg' isOpen={isOpenModal} onClose={onCloseModal}>
 			<form onSubmit={handleSubmit}>
-				<div className="flex flex-col gap-4 ">
-					<div className="form-control relative">
+				<div className='flex flex-col gap-4 '>
+					<div className='form-control relative'>
 						{showClearDescription && (
 							<button
-								type="button"
+								type='button'
 								onClick={clearDescription}
-								className="btn btn-circle btn-xs absolute right-2 top-12"
+								className='btn btn-circle btn-xs absolute right-2 top-12'
 							>
 								<XIcon />
 							</button>
 						)}
-						<label className="label">
-							<span className="label-text">Descripción</span>
+						<label className='label'>
+							<span className='label-text'>Descripción</span>
 						</label>
 						<textarea
 							autoFocus
-							className="textarea textarea-primary h-[120px]  w-full resize-none"
-							placeholder="Buscar producto"
+							className='textarea textarea-primary h-[120px]  w-full resize-none'
+							placeholder='Buscar producto'
 							// type="search"
 							onChange={handleChangeItem}
 							// labelText="Descripción"
 							value={item.description}
-							name="description"
+							name='description'
 							required
 						/>
 					</div>
 
-					<ul className="menu bg-none w-full bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto">
+					<ul className='menu bg-none w-full bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto'>
 						{resultsToRender?.length > 0
 							? resultsToRender.map(item => (
-									<li onClick={() => handleProductClick(item)} className="flex gap-x-1 " key={item.id}>
-										<div className="p-0 flex items-center gap-x-2">
-											<span className="btn btn-primary btn-xs h-full ">
-												<p style={{ writingMode: 'vertical-lr' }}>{item.code}</p>
-											</span>
-											<span className="p-0">{item.description}</span>
-										</div>
-									</li>
-								))
+								<li
+									onClick={() => handleProductClick(item)}
+									className='flex gap-x-1 '
+									key={item.id}
+								>
+									<div className='p-0 flex items-center gap-x-2'>
+										<span className='btn btn-primary btn-xs h-full '>
+											<p style={{ writingMode: 'vertical-lr' }}>{item.code}</p>
+										</span>
+										<span className='p-0'>{item.description}</span>
+									</div>
+								</li>
+							))
 							: Array.from({ length: 6 })
-									.fill(0)
-									.map((_, index) => (
-										<li key={index}>
-											<span className=" h-[30px] bg-base-100 rounded"></span>
-										</li>
-									))}
+								.fill(0)
+								.map((_, index) => (
+									<li key={index}>
+										<span className=' h-[30px] bg-base-100 rounded'></span>
+									</li>
+								))}
 					</ul>
-					<div className="flex gap-2 w-full">
+					<div className='flex gap-2 w-full'>
 						<Input
 							onChange={handleChangeItem}
 							value={item.qty}
-							type="number"
-							labelText="Cantidad"
-							name="qty"
+							type='number'
+							labelText='Cantidad'
+							name='qty'
 							required
 						/>
 
 						<Input
 							onChange={handleChangeItem}
 							value={item.unit_size}
-							type="text"
-							labelText="U/M"
-							name="unit_size"
+							type='text'
+							labelText='U/M'
+							name='unit_size'
 							required
 						/>
 					</div>
-					<div className="flex gap-2 w-full">
+					<div className='flex gap-2 w-full'>
 						<Input
 							onChange={handleChangeItem}
 							value={item.price}
-							type="number"
-							labelText="Precio"
-							name="price"
+							type='number'
+							labelText='Precio'
+							name='price'
 							required
 						/>
-						<Input value={item.cost} type="number" labelText="Costo" name="cost" disabled />
+						<Input
+							value={item.cost}
+							type='number'
+							labelText='Costo'
+							name='cost'
+							disabled
+						/>
 					</div>
 				</div>
-				<div className="mt-4 flex items-center justify-between">
-					<button type="submit" className="btn">
+				<div className='mt-4 flex items-center justify-between'>
+					<button type='submit' className='btn'>
 						Aceptar
 					</button>
-					<button onClick={onCloseModal} type="button" className="btn">
+					<button onClick={onCloseModal} type='button' className='btn'>
 						Cancelar
 					</button>
 				</div>

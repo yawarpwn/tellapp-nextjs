@@ -1,6 +1,6 @@
 'use client'
-import ConfirmModalAction from '@/ui/confirm-action-modal'
 import { DeleteIcon } from '@/icons'
+import ConfirmModalAction from '@/ui/confirm-action-modal'
 import { useState } from 'react'
 import { useFormState } from 'react-dom'
 
@@ -16,10 +16,14 @@ function DeleteActionForm({ id, deleteAction }) {
 	const [state, dispatch] = useFormState(deleteAction, initialState)
 	return (
 		<>
-			<ConfirmModalAction onAction={dispatch} isOpen={isOpenModal} onClose={closeModal}>
-				<input name="id" value={id} type="hidden" className="sr-only" />
+			<ConfirmModalAction
+				onAction={dispatch}
+				isOpen={isOpenModal}
+				onClose={closeModal}
+			>
+				<input name='id' value={id} type='hidden' className='sr-only' />
 			</ConfirmModalAction>
-			<button className="text-error" onClick={openModal}>
+			<button className='text-error' onClick={openModal}>
 				<DeleteIcon />
 			</button>
 		</>

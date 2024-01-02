@@ -1,10 +1,10 @@
 import { fetchQuotationById } from '@/lib/quotations-data'
 
-import DownloadPDF from '@/ui/pdf/download-pdf'
 import { EditIcon } from '@/icons'
-import Link from 'next/link'
-import { getIgv } from '@/utils'
 import Breadcrumbs from '@/ui/breadcrumbs'
+import DownloadPDF from '@/ui/pdf/download-pdf'
+import { getIgv } from '@/utils'
+import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 async function QuotationPage({ params }) {
@@ -29,32 +29,38 @@ async function QuotationPage({ params }) {
 					},
 				]}
 			/>
-			<header className="flex justify-end gap-x-2">
-				<div className="flex gap-2">
-					<Link href={`/quotations/${number}/update`} className="btn btn-primary">
+			<header className='flex justify-end gap-x-2'>
+				<div className='flex gap-2'>
+					<Link
+						href={`/quotations/${number}/update`}
+						className='btn btn-primary'
+					>
 						<EditIcon />
-						<span className="hidden md:block">Editar</span>
+						<span className='hidden md:block'>Editar</span>
 					</Link>
 					<DownloadPDF quotation={quotation} />
 				</div>
 			</header>
-			<div className="container mx-auto px-4 py-8">
-				<div className="rounded-lg shadow overflow-hidden">
-					<div className="py-4 flex justify-between">
+			<div className='container mx-auto px-4 py-8'>
+				<div className='rounded-lg shadow overflow-hidden'>
+					<div className='py-4 flex justify-between'>
 						<div>
-							<h2 className="text-2xl font-bold mb-2">#{number}</h2>
+							<h2 className='text-2xl font-bold mb-2'>#{number}</h2>
 							<h3>{quotation.company}</h3>
-							<p className="text-xs">{quotation?.address ?? 'Sin dirección'}</p>
+							<p className='text-xs'>{quotation?.address ?? 'Sin dirección'}</p>
 						</div>
 						<div>
-							<p className="text-sm">Fecha: {formatedDate}</p>
+							<p className='text-sm'>Fecha: {formatedDate}</p>
 						</div>
 					</div>
 					<p>
-						Tiempo de entrega: <strong className="text-warning"> {quotation.deadline} días</strong> hábiles
+						Tiempo de entrega:{' '}
+						<strong className='text-warning'>{quotation.deadline} días</strong>
+						{' '}
+						hábiles
 					</p>
-					<div className="overflow-x-auto">
-						<table className="table">
+					<div className='overflow-x-auto'>
+						<table className='table'>
 							<thead>
 								<tr>
 									<th>Descripción</th>
@@ -71,7 +77,7 @@ async function QuotationPage({ params }) {
 									return (
 										<tr key={item.id}>
 											<td>
-												<p className="w-[300px]"></p>
+												<p className='w-[300px]'></p>
 												{item.description}
 											</td>
 											<td>{item.unit_size}</td>
@@ -83,26 +89,35 @@ async function QuotationPage({ params }) {
 									)
 								})}
 								<tr>
-									<td colSpan={4} className="text-right py-3 px-4 uppercase font-semibold text-sm text-primary">
+									<td
+										colSpan={4}
+										className='text-right py-3 px-4 uppercase font-semibold text-sm text-primary'
+									>
 										Subtotal:
 									</td>
-									<td colSpan="" className="text-left py-3 px-4">
+									<td colSpan='' className='text-left py-3 px-4'>
 										{subTotal}
 									</td>
 								</tr>
 								<tr>
-									<td colSpan={4} className="text-right py-3 px-4 uppercase font-semibold text-sm text-primary">
+									<td
+										colSpan={4}
+										className='text-right py-3 px-4 uppercase font-semibold text-sm text-primary'
+									>
 										IGV:
 									</td>
-									<td colSpan="" className="text-left py-3 px-4">
+									<td colSpan='' className='text-left py-3 px-4'>
 										{igv}
 									</td>
 								</tr>
 								<tr>
-									<td colSpan={4} className="text-right py-3 px-4 uppercase font-semibold text-sm text-primary">
+									<td
+										colSpan={4}
+										className='text-right py-3 px-4 uppercase font-semibold text-sm text-primary'
+									>
 										Total :
 									</td>
-									<td colSpan="" className="text-left py-3 px-4">
+									<td colSpan='' className='text-left py-3 px-4'>
 										{total}
 									</td>
 								</tr>

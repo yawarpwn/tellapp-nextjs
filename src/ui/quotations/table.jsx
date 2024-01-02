@@ -8,8 +8,8 @@ import { EditButton } from '../buttons'
 async function QuotationsTable({ query, currentPage }) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
 	return (
-		<div className="overflow-x-auto">
-			<table className="table">
+		<div className='overflow-x-auto'>
+			<table className='table'>
 				{/* head */}
 				<thead>
 					<tr>
@@ -21,31 +21,35 @@ async function QuotationsTable({ query, currentPage }) {
 					</tr>
 				</thead>
 				<tbody>
-					{quotations?.length > 0 &&
-						quotations.map(quotation => {
+					{quotations?.length > 0
+						&& quotations.map(quotation => {
 							const { total } = getIgv(quotation.items)
-							const formatedDate = new Intl.DateTimeFormat('es').format(new Date(quotation.created_at))
+							const formatedDate = new Intl.DateTimeFormat('es').format(
+								new Date(quotation.created_at),
+							)
 							return (
 								<tr key={quotation.id}>
 									<td>
 										<Link href={`/quotations/${quotation.number}`}>
-											<span className="text-primary font-bold">#</span>
+											<span className='text-primary font-bold'>#</span>
 											{quotation.number}
 										</Link>
 									</td>
 									<td>
 										<div>
-											<p className="w-[300px]">{quotation.company}</p>
+											<p className='w-[300px]'>{quotation.company}</p>
 											<p>{quotation.ruc}</p>
 										</div>
 									</td>
 									<td>
-										<span className="text-xs">{formatedDate}</span>
+										<span className='text-xs'>{formatedDate}</span>
 									</td>
 									<td>{total}</td>
 									<td>
-										<div className="flex items-center gap-x-2">
-											<EditButton href={`/quotations/${quotation.number}/update`} />
+										<div className='flex items-center gap-x-2'>
+											<EditButton
+												href={`/quotations/${quotation.number}/update`}
+											/>
 											<Link href={`/quotations/${quotation.number}`}>
 												<EyeIcon />
 											</Link>

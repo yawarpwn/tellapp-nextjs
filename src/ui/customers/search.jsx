@@ -21,7 +21,10 @@ function SearchCustomers() {
 
 	return (
 		<div>
-			<InputSearch onSearchChange={event => handleSearch(event.target.value)} placeholder={'Buscar Cliente...'} />
+			<InputSearch
+				onSearchChange={event => handleSearch(event.target.value)}
+				placeholder={'Buscar Cliente...'}
+			/>
 		</div>
 	)
 }

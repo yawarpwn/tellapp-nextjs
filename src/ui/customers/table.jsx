@@ -3,8 +3,8 @@ import DeleteForm from './delete-form'
 export default async function CustomersTable({ query, currentPage }) {
 	const customers = await fetchFilteredCustomers({ query, currentPage })
 	return (
-		<div className="overflow-x-auto">
-			<table className="table">
+		<div className='overflow-x-auto'>
+			<table className='table'>
 				{/* head */}
 				<thead>
 					<tr>
@@ -22,15 +22,15 @@ export default async function CustomersTable({ query, currentPage }) {
 							<tr key={id}>
 								<td>
 									<div>
-										<p className="w-[300px] ">{name}</p>
-										<p className="text-xs text-base-content">{address}</p>
+										<p className='w-[300px] '>{name}</p>
+										<p className='text-xs text-base-content'>{address}</p>
 									</div>
 								</td>
 								<td>{ruc}</td>
 								{/* <td>{phone}</td> */}
 								{/* <td>{email}</td> */}
 								<td>
-									<div className="flex gap-2">
+									<div className='flex gap-2'>
 										<DeleteForm id={id} />
 									</div>
 								</td>

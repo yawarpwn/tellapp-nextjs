@@ -70,7 +70,7 @@ export default function LoginForm() {
 				<button
 					disabled={isPending}
 					type='submit'
-					className='btn btn-secondary mt-4 w-full'
+					className='btn btn-primary mt-4 w-full'
 				>
 					<span>Iniciar Session</span>
 					{isPending && <span className='loading loading-dots'></span>}

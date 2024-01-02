@@ -32,7 +32,7 @@ function SignOutButton() {
 	// }
 	return (
 		<form onSubmit={handleSubmit}>
-			<button className="btn btn-sm">
+			<button className='btn btn-sm'>
 				<PowerIcon size={20} />
 			</button>
 		</form>

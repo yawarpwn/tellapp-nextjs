@@ -22,7 +22,8 @@ export async function getRuc(ruc) {
 
 export async function getDni(dni) {
 	const URL = `https://apiperu.dev/api/dni/${dni}`
-	const token = '66ec9b5c4d6e359a3ca2117ce321ceddbd1aa54b5ea29a38e0a6eed061308dc1'
+	const token =
+		'66ec9b5c4d6e359a3ca2117ce321ceddbd1aa54b5ea29a38e0a6eed061308dc1'
 	// curl -H 'Accept: application/json' -H "Authorization: Bearer $TOKEN" https://api.apis.net.pe/v2/reniec/dni?numero=46027897
 	const res = await fetch(URL, {
 		method: 'GET',

@@ -1,5 +1,5 @@
-import Form from '@/ui/customers/form'
 import Breadcrumbs from '@/ui/breadcrumbs'
+import Form from '@/ui/customers/form'
 
 function CreatePage() {
 	return (

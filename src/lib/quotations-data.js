@@ -15,7 +15,8 @@ export async function fetchFilteredQuotations({ query = '', currentPage = 1 }) {
 			queryBuilder = queryBuilder.or(`company.ilike.%${query}%`)
 		}
 		const offset = (currentPage - 1) * ITEMS_PER_PAGE
-		const { data } = await queryBuilder.range(offset, offset + ITEMS_PER_PAGE).order('number', { ascending: false })
+		const { data } = await queryBuilder.range(offset, offset + ITEMS_PER_PAGE)
+			.order('number', { ascending: false })
 		return data
 	} catch (error) {
 		console.log('Error Database', error)
@@ -28,7 +29,9 @@ export async function fetchQuotationsPages({ query = '' }) {
 	const supabase = createServerClient(cookieStore)
 	// WARN: noStore()
 	try {
-		const { count } = await supabase.from('quotations').select('*', { count: 'exact' }).ilike('company', `%${query}%`)
+		const { count } = await supabase.from('quotations').select('*', {
+			count: 'exact',
+		}).ilike('company', `%${query}%`)
 		const totalPages = Math.ceil(count / ITEMS_PER_PAGE)
 		return totalPages
 	} catch (error) {
@@ -42,7 +45,10 @@ export async function fetchQuotationById({ number }) {
 	const supabase = createServerClient(cookieStore)
 
 	try {
-		const { data } = await supabase.from('quotations').select('*').eq('number', Number(number))
+		const { data } = await supabase.from('quotations').select('*').eq(
+			'number',
+			Number(number),
+		)
 		return data[0]
 	} catch (error) {
 		console.log('Database Error: ', error)
@@ -54,7 +60,10 @@ export async function fetchLastQuotation() {
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
 	try {
-		const { data } = await supabase.from('quotations').select('number').order('number', { ascending: false }).limit(1)
+		const { data } = await supabase.from('quotations').select('number').order(
+			'number',
+			{ ascending: false },
+		).limit(1)
 		return data[0]
 	} catch (error) {
 		console.log('Database Error: ', error)

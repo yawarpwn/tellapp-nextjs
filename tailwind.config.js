@@ -17,6 +17,23 @@ module.exports = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['dim'],
+        themes: [
+      {
+        myTheme: {
+      "primary": "oklch(60% 0.5 300)",
+      "primary-content": "oklch(90% 0 0)",
+      "secondary": "hsl(18 90% 50%)",
+      "accent": "oklch(70% 0.25 42)",
+      "accent-content":"oklch(100% 0 0)",
+      "neutral": "#222222",
+      "base-100": "oklch(11% 0 0)",
+      "base-content": "oklch(80% 0 0)",
+      "info": "hsl(158 100% 50%)",
+      "success": "hsl(158 100% 50%)",
+      "warning": "hsl(39 100% 50%)",
+      "error": "hsl(347 100% 50%)",
+    }
+      }
+    ],
   },
 }

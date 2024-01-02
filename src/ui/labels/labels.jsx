@@ -1,7 +1,7 @@
 'use client'
-import React, { useRef, useState, useEffect } from 'react'
-import { useReactToPrint } from 'react-to-print'
 import PrintLabel from '@/ui/components/print-label'
+import React, { useEffect, useRef, useState } from 'react'
+import { useReactToPrint } from 'react-to-print'
 import LabelsTable from './table'
 
 function Labels({ labels }) {

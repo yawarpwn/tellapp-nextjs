@@ -3,10 +3,14 @@ import Link from 'next/link'
 
 function Breadcrumbs({ breadcrumbs }) {
 	return (
-		<nav className="text-sm  breadcrumbs">
+		<nav className='text-sm  breadcrumbs'>
 			<ol>
 				{breadcrumbs.map(({ label, href, active }, index) => (
-					<li className={clsx({ 'breadcrumbs-active text-primary': active })} aria-current={active} key={href}>
+					<li
+						className={clsx({ 'breadcrumbs-active text-primary': active })}
+						aria-current={active}
+						key={href}
+					>
 						<Link href={href}>{label}</Link>
 					</li>
 				))}

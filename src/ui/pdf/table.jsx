@@ -74,8 +74,8 @@ export default function Table({ items }) {
 				<Text style={styles.price}>P. UNIT</Text>
 				<Text style={styles.total}>MONTO</Text>
 			</View>
-			{hasItems &&
-				items.map(({ id, description, price, unit_size, qty }, index) => {
+			{hasItems
+				&& items.map(({ id, description, price, unit_size, qty }, index) => {
 					const isOdd = index % 2 !== 0
 					return (
 						<View
@@ -90,7 +90,9 @@ export default function Table({ items }) {
 							<Text style={styles.size}>{unit_size}</Text>
 							<Text style={styles.amount}>{qty}</Text>
 							<Text style={styles.price}>{(price / 1.18).toFixed(4)}</Text>
-							<Text style={styles.total}>{((price * qty) / 1.18).toFixed(2)}</Text>
+							<Text style={styles.total}>
+								{((price * qty) / 1.18).toFixed(2)}
+							</Text>
 						</View>
 					)
 				})}

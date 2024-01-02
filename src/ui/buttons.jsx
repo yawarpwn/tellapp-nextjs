@@ -1,11 +1,11 @@
-import Link from 'next/link'
 import { EditIcon, PlusIcon } from '@/icons'
+import Link from 'next/link'
 
 export function AddButton({ href }) {
 	return (
-		<Link className="btn" href={href}>
+		<Link className='btn' href={href}>
 			<PlusIcon />
-			<span className="">Crear</span>
+			<span className=''>Crear</span>
 		</Link>
 	)
 }

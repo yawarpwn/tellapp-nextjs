@@ -45,7 +45,10 @@ export async function fetchLabelsById({ id }) {
 	const supabase = createServerClient(cookieStore)
 
 	try {
-		const { data } = await supabase.from('labels').select(`*, agencies (*)`).eq('id', id)
+		const { data } = await supabase.from('labels').select(`*, agencies (*)`).eq(
+			'id',
+			id,
+		)
 		return data[0]
 	} catch (error) {
 		console.log('Database Error: ', error)

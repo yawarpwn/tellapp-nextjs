@@ -12,9 +12,9 @@ export default async function CustomersPage({ searchParams }) {
 
 	return (
 		<>
-			<header className="flex items-center justify-between">
+			<header className='flex items-center justify-between'>
 				<Search />
-				<AddButton href="/customers/create" />
+				<AddButton href='/customers/create' />
 			</header>
 			<Suspense fallback={'Loading...'}>
 				<CustomersTable query={query} currentPage={currentPage} />

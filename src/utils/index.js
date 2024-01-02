@@ -21,14 +21,17 @@ export const getFormatedDate = date => {
 	let month = currentDate.getMonth() + 1
 	let day = currentDate.getDate()
 
-	const formatedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+	const formatedDate = `${year}-${String(month).padStart(2, '0')}-${
+		String(day).padStart(2, '0')
+	}`
 	return formatedDate
 }
 
 export const quotationToCreate = {
 	ruc: '20100170681',
 	company: 'PRODUCTOS QUIMICOS INDUSTRIALES S A',
-	address: 'AV. EL SANTUARIO NRO. 1239 Z.I. ZARATE LIMA LIMA SAN JUAN DE LURIGANCHO',
+	address:
+		'AV. EL SANTUARIO NRO. 1239 Z.I. ZARATE LIMA LIMA SAN JUAN DE LURIGANCHO',
 	deadline: 1,
 	items: [
 		{
@@ -36,7 +39,8 @@ export const quotationToCreate = {
 			qty: 4,
 			price: 45,
 			unit_size: '69x30cm',
-			description: 'Vinil arclad laminado aplicado sobre lamina imantada de 0.8 mm',
+			description:
+				'Vinil arclad laminado aplicado sobre lamina imantada de 0.8 mm',
 		},
 		{
 			id: 'f7f907ed-aaf0-485a-a2d8-58793e98abf0',
@@ -51,14 +55,16 @@ export const quotationToCreate = {
 			qty: 50,
 			price: 4.5,
 			unit_size: '20x30cm',
-			description: 'Señal vinil arclad laminado brillo (proteccion UV) c/ soporte pvc celtex espesor = 3 mm',
+			description:
+				'Señal vinil arclad laminado brillo (proteccion UV) c/ soporte pvc celtex espesor = 3 mm',
 		},
 		{
 			id: '883e65c4-66e6-499e-8649-2716a292d750',
 			qty: 1,
 			price: 5,
 			unit_size: '20x30cm',
-			description: 'Señal vinil arclad laminado brillo (proteccion UV) c/ soporte pvc celtex espesor = 3 mm',
+			description:
+				'Señal vinil arclad laminado brillo (proteccion UV) c/ soporte pvc celtex espesor = 3 mm',
 		},
 		{
 			id: 'a1974045-9278-4304-a1ac-a7a6c8e6ddd4',
@@ -93,5 +99,13 @@ export function generatePagination(currentPage, totalPages) {
 	// Muestra la primera pagina, puntos suspensivos, la pagina actual y sus vecinos,
 	// Otros puntos suspensivos y la ultima pagina
 
-	return [1, '...', currentPage - 1, currentPage, currentPage + 2, '...', totalPages]
+	return [
+		1,
+		'...',
+		currentPage - 1,
+		currentPage,
+		currentPage + 2,
+		'...',
+		totalPages,
+	]
 }

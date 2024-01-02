@@ -16,33 +16,46 @@ function Form() {
 	return (
 		<form action={dispatch}>
 			<Input
-				name="name"
+				name='name'
 				labelText={'Nombre'}
-				placeholder="Nuevo Cliente S.A.C."
-				type="text"
+				placeholder='Nuevo Cliente S.A.C.'
+				type='text'
 				errors={state.errors?.name}
 				required
 			/>
-			<Input name="ruc" labelText={'Ruc'} placeholder="20610555599" type="number" errors={state.errors?.ruc} required />
+			<Input
+				name='ruc'
+				labelText={'Ruc'}
+				placeholder='20610555599'
+				type='number'
+				errors={state.errors?.ruc}
+				required
+			/>
 			<Input
 				labelText={'Dirección'}
-				name="address"
-				type="text"
+				name='address'
+				type='text'
 				errors={state.errors?.address}
-				placeholder="Av. Fauccett 232 - Callao"
+				placeholder='Av. Fauccett 232 - Callao'
 			/>
 
-			<Input name="phone" labelText={'Telefono'} type="number" errors={state.errors?.phone} placeholder="971 531 019" />
 			<Input
-				name="email"
+				name='phone'
+				labelText={'Telefono'}
+				type='number'
+				errors={state.errors?.phone}
+				placeholder='971 531 019'
+			/>
+			<Input
+				name='email'
 				labelText={'Email'}
-				type="email"
+				type='email'
 				errors={state.errors?.email}
-				placeholder="ventas@example.com"
+				placeholder='ventas@example.com'
 			/>
 			{/* {state?.message && <div className='text-red-500 text-sm'>{state.message}</div>} */}
-			<footer className="mt-4 flex justify-between">
-				<Link href={'/customers'} className="btn">
+			<footer className='mt-4 flex justify-between'>
+				<Link href={'/customers'} className='btn'>
 					Cancelar
 				</Link>
 				<SubmitActionButton />

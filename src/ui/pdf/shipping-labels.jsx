@@ -1,6 +1,6 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
-import SvgLogo from './SvgLogo'
 import ShippingIcons from './ShippingIcons'
+import SvgLogo from './SvgLogo'
 
 const data = {
 	destination: 'Piura - Paracas',
@@ -123,7 +123,7 @@ export default function ShippingLabels({ currentLabel }) {
 	})
 	return (
 		<Document title={`Rotulos`}>
-			<Page size="a4" style={styles.page} orientation="landscape">
+			<Page size='a4' style={styles.page} orientation='landscape'>
 				<View style={styles.labelContainer}>
 					<Label label={currentLabel} />
 					<Label label={currentLabel} />

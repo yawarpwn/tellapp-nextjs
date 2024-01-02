@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer'
 import { getIgv } from '@/utils'
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
