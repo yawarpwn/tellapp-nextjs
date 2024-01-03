@@ -20,11 +20,11 @@ async function LayoutDashboar({ children }) {
 
 	return (
 		<>
-			<div className='max-w-3xl mx-auto px-2 md:px-6'>
+			<div className='max-w-3xl mx-auto px-2 md:px-6 relative flex flex-col gap-4'>
 				<div className='xl:hidden'>
 					<Navbar />
 				</div>
-				<main className='pb-4'>{children}</main>
+				<main className='pb-4 xl:pt-8'>{children}</main>
 				<aside className='hidden xl:block'>
 					<nav className='fixed top-0 left-0 h-full bg-base-200 w-[300px] z-50'>
 						<div className='flex flex-col h-full justify-between'>

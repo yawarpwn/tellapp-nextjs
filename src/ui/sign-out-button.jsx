@@ -1,10 +1,8 @@
 'use client'
 
 import { PowerIcon } from '@/icons'
-import { logout } from '@/lib/actions/auth'
 import { createBrowserClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
 
 function SignOutButton() {
 	const router = useRouter()
@@ -23,17 +21,12 @@ function SignOutButton() {
 		logout()
 	}
 
-	// const [isPending, startTransition] = useTransition()
-	//
-	// const handleSubmit = async () => {
-	// 	startTransition(async () => {
-	// 		await logout()
-	// 	})
-	// }
 	return (
 		<form onSubmit={handleSubmit}>
 			<button className='btn btn-sm'>
-				<PowerIcon size={20} />
+				<span className='text-error'>
+					<PowerIcon />
+				</span>
 			</button>
 		</form>
 	)

@@ -14,7 +14,7 @@ async function UpdatePage({ params }) {
 						href: '/agencies',
 					},
 					{
-						label: id,
+						label: 'Id',
 						href: `/agencies/${id}`,
 					},
 					{

@@ -9,7 +9,9 @@ import z from 'zod'
 const AgencieSchema = z.object({
 	id: z.string(),
 	company: z.string(),
-	ruc: z.coerce.number(),
+	ruc: z.coerce.number().positive().min(10000000000, {
+		message: 'Ruc debe ser de 11 digitos',
+	}),
 	address: z.string().nullable(),
 	phone: z.coerce.number().nullable(),
 	destinations: z.string().refine(
@@ -81,14 +83,12 @@ export async function updateAgency(_, formData) {
 		destinations: formData.get('destinations'),
 	}
 
-	console.log({ ...rawData })
-
 	const validatedFields = UpdateAgency.safeParse(rawData)
 
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
-			message: 'Missing Fields. Failed to UPdate Product.',
+			message: 'Error al completar campos requeridos.',
 		}
 	}
 

@@ -13,6 +13,7 @@ export async function fetchFilteredAgencies({ query = '', currentPage = 1 }) {
 			.ilike('company', `%${query}%`)
 			.limit(ITEMS_PER_PAGE)
 			.range(offset, offset + ITEMS_PER_PAGE)
+			.order('created_at', { ascending: true })
 		return data
 	} catch (error) {
 		console.log('Error Database', error)

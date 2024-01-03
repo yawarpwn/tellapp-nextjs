@@ -8,10 +8,11 @@
     "preferSingleLine": false
   },
   "json": {},
-  "includes": ["src/**/*.{ts,tsx,js,jsx,json,css}"],
+  "includes": ["src/**/*.{ts,tsx,js,jsx,json}", "tailwind.config.js"],
   "excludes": ["**/node_modules", "**/*-lock.json"],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.88.7.wasm",
-    "https://plugins.dprint.dev/json-0.19.1.wasm"
+    "https://plugins.dprint.dev/json-0.19.1.wasm",
+    "https://plugins.dprint.dev/disrupted/css-0.2.3.wasm"
   ]
 }

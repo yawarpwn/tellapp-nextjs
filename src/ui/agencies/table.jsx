@@ -10,11 +10,11 @@ async function AgenciesTable({ query, currentPage }) {
 				{/* head */}
 				<thead>
 					<tr>
+						<th>Accciones</th>
 						<th>Empresa</th>
 						<th>Ruc</th>
 						<th>Telefono</th>
 						<th>Destinos</th>
-						<th>Accciones</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -22,6 +22,12 @@ async function AgenciesTable({ query, currentPage }) {
 						const { company, id, ruc, address, destinations, phone } = agency
 						return (
 							<tr key={id}>
+								<td>
+									<div className='flex gap-2'>
+										<EditButton href={`/agencies/${id}/update`} />
+										<DeleteActionForm id={id} deleteAction={deleteAgency} />
+									</div>
+								</td>
 								<td>
 									<div>
 										<p className='w-[300px]'>{company}</p>
@@ -43,12 +49,6 @@ async function AgenciesTable({ query, currentPage }) {
 											))}
 										</select>
 									)}
-								</td>
-								<td>
-									<div className='flex gap-2'>
-										<EditButton href={`/agencies/${id}/update`} />
-										<DeleteActionForm id={id} deleteAction={deleteAgency} />
-									</div>
 								</td>
 							</tr>
 						)

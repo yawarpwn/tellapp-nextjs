@@ -12,16 +12,18 @@ export function createBrowserClient() {
 	return createBrowserClientSupabase(SUPABASE_URL, SUPABASE_KEY)
 }
 
-export function createServerClient(cookieStore) {
+export function createServerClient(cookieStore, isServer = true) {
 	return createServerClientSupabase(SUPABASE_URL, SUPABASE_KEY, {
 		cookies: {
 			get(name) {
 				return cookieStore.get(name)?.value
 			},
 			set(name, value, options) {
+				if (isServer) return
 				cookieStore.set({ name, value, ...options })
 			},
 			remove(name, options) {
+				if (isServer) return
 				cookieStore.set({ name, value: '', ...options })
 			},
 		},

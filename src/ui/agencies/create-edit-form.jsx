@@ -1,4 +1,5 @@
 'use client'
+import { shootCoffeti } from '@/services/confetti'
 import Input from '@/ui/components/input'
 import SubmitActionButton from '@/ui/submit-action-button'
 import Link from 'next/link'
@@ -10,11 +11,14 @@ const initialState = {
 }
 export default function CreateEditAgencyForm({ agency, action }) {
 	const [state, dispatch] = useFormState(action, initialState)
-
 	const destinations = agency?.destinations?.toString() || ''
 
+	console.log(state)
+
 	return (
-		<form action={dispatch}>
+		<form
+			action={dispatch}
+		>
 			<Input
 				name='company'
 				labelText={'Agencia'}
@@ -60,6 +64,11 @@ export default function CreateEditAgencyForm({ agency, action }) {
 				errors={state.errors?.destinations}
 			/>
 			<input name='id' type='hidden' defaultValue={agency?.id} />
+			{state.message && (
+				<div className='text-error mt-1'>
+					{state.message}
+				</div>
+			)}
 
 			<footer className='mt-4 flex justify-between'>
 				<Link href={'/products'} className='btn'>

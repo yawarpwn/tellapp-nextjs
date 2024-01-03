@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export function AddButton({ href }) {
 	return (
-		<Link className='btn' href={href}>
+		<Link className='btn btn-primary' href={href}>
 			<PlusIcon />
 			<span className=''>Crear</span>
 		</Link>

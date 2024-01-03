@@ -6,13 +6,25 @@ function Breadcrumbs({ breadcrumbs }) {
 		<nav className='text-sm  breadcrumbs'>
 			<ol>
 				{breadcrumbs.map(({ label, href, active }, index) => (
-					<li
-						className={clsx({ 'breadcrumbs-active text-primary': active })}
-						aria-current={active}
-						key={href}
-					>
-						<Link href={href}>{label}</Link>
-					</li>
+					active
+						? (
+							<li
+								className='breadcrumbs-active font-bold'
+								key={href}
+								aria-current={active}
+							>
+								<span>
+									{label}
+								</span>
+							</li>
+						)
+						: (
+							<li
+								key={href}
+							>
+								<Link href={href}>{label}</Link>
+							</li>
+						)
 				))}
 			</ol>
 		</nav>
