@@ -21,10 +21,15 @@ export default async function Home() {
 						<aside className='sm:[384px] flex w-[320px] flex-col '>
 							<header className='mb-10 '>
 								<h1 className='mb-2 mt-8 text-2xl lg:text-3xl '>
-									Bienvenido a TellApp
+									<span>
+										Bienvenido a&nbsp;
+									</span>
+									<span className='font-extrabold inline-flex animate-background-shine bg-[linear-gradient(110deg,#b000ff,45%,#1e293b,55%,#b000ff)] bg-[length:250%_100%] bg-clip-text text-transparent'>
+										TELLAPP
+									</span>
 								</h1>
 								<h2 className='text-sm opacity-45'>
-									Identificate para continuar
+									Adminitra cotizaciónes, clientes y más.
 								</h2>
 							</header>
 							<LoginForm />

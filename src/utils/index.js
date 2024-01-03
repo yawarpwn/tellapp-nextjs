@@ -1,3 +1,24 @@
+import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+export function cn(...inputs) {
+	return twMerge(clsx(inputs))
+}
+
+export const formatDateToLocal = (
+	dateStr,
+	locale = 'es-US',
+) => {
+	const date = new Date(dateStr)
+	const options = {
+		day: 'numeric',
+		month: 'short',
+		year: 'numeric',
+	}
+	const formatter = new Intl.DateTimeFormat(locale, options)
+	return formatter.format(date)
+}
+
 export function getIgv(items) {
 	if (!items) {
 		return { total: 0, subTotal: 0, igv: 0 }

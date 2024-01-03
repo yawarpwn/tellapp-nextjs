@@ -1,6 +1,7 @@
 import { NAVIGATION } from '@/constants'
 import { createServerClient } from '@/lib/supabase'
 import Navbar from '@/ui/header/navbar'
+import { Sidebar } from '@/ui/sidebar'
 import SignOutButton from '@/ui/sign-out-button'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
@@ -25,25 +26,9 @@ async function LayoutDashboar({ children }) {
 					<Navbar />
 				</div>
 				<main className='pb-4 xl:pt-8'>{children}</main>
-				<aside className='hidden xl:block'>
-					<nav className='fixed top-0 left-0 h-full bg-base-200 w-[300px] z-50'>
-						<div className='flex flex-col h-full justify-between'>
-							<ul className='p-8 flex flex-col gap-8'>
-								{NAVIGATION.map(({ href, title, icon: Icon }) => (
-									<li key={title}>
-										<Link href={href} legacyBehavior>
-											<a className='flex gap-2 hover:text-primary'>
-												<Icon />
-												<span>{title}</span>
-											</a>
-										</Link>
-									</li>
-								))}
-							</ul>
-							<SignOutButton />
-						</div>
-					</nav>
-				</aside>
+				<div className='hidden xl:block'>
+					<Sidebar />
+				</div>
 			</div>
 		</>
 	)

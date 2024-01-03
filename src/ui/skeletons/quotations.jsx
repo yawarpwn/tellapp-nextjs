@@ -3,7 +3,7 @@ const shimmer =
 
 export function InvoiceSkeleton() {
 	return (
-		<div className='flex flex-row items-center justify-between border-b border-gray-100 py-4'>
+		<div className='flex flex-row items-center justify-between border-b border-gray-800 py-4'>
 			<div className='flex items-center'>
 				<div className='mr-2 h-8 w-8 rounded-full bg-base-200' />
 				<div className='min-w-0'>
@@ -41,7 +41,7 @@ export function LatestInvoicesSkeleton() {
 
 export function TableRowSkeleton() {
 	return (
-		<tr className='w-full border-b border-gray-100 last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'>
+		<tr className='w-full border-b border-neutral-800 last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'>
 			{/* Nro */}
 			<td className='whitespace-nowrap px-3 py-3'>
 				<div className='h-6 w-10 rounded bg-base-100'></div>
@@ -71,7 +71,7 @@ export function TableRowSkeleton() {
 
 export function InvoicesMobileSkeleton() {
 	return (
-		<div className='mb-2 w-full rounded-md bg-white p-4'>
+		<div className='mb-2 w-full rounded-md bg-base-300 p-4'>
 			<div className='flex items-center justify-between border-b border-gray-100 pb-8'>
 				<div className='flex items-center'>
 					<div className='mr-2 h-8 w-8 rounded-full bg-base-100'></div>
