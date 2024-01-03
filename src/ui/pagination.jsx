@@ -17,7 +17,7 @@ function Pagination({ totalPages }) {
 	}
 
 	return (
-		<div className='flex items-center justify-center'>
+		<div className='flex items-center justify-center mt-2'>
 			<PaginationArrow
 				href={createPageURL(currentPage - 1)}
 				direction='left'
@@ -56,16 +56,16 @@ function PaginationArrow({ href, direction, isDisabled }) {
 	const icon = direction === 'left' ? <ArrowLeft /> : <ArrowRight />
 
 	return isDisabled
-		? <div className='btn btn-disabled'>{icon}</div>
+		? <div className='btn btn-sm btn-disabled'>{icon}</div>
 		: (
-			<Link href={href} className='btn'>
+			<Link href={href} className='btn btn-sm'>
 				{icon}
 			</Link>
 		)
 }
 
 function PaginationNumber({ isActive, href, position, page }) {
-	const className = clsx('join-item btn', {
+	const className = clsx('join-item btn btn-sm', {
 		'btn-active': isActive,
 	})
 	return isActive
