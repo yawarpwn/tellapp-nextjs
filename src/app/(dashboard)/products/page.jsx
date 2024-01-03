@@ -3,6 +3,7 @@ import { AddButton } from '@/ui/buttons'
 import Pagination from '@/ui/pagination'
 import ProductTable from '@/ui/products/table'
 import Search from '@/ui/search'
+import { ProductsSkeleton } from '@/ui/skeletons/products'
 import { Suspense } from 'react'
 
 async function ProductsPage({ searchParams }) {
@@ -11,11 +12,11 @@ async function ProductsPage({ searchParams }) {
 	const totalPages = await fetchProductsPages(query)
 	return (
 		<div>
-			<header className='flex items-center justify-between'>
+			<header className='flex items-center gap-2 justify-between'>
 				<Search placeholder='Buscar producto...' />
 				<AddButton href={'/products/create'} />
 			</header>
-			<Suspense fallback='Loading...'>
+			<Suspense fallback={<ProductsSkeleton />}>
 				<ProductTable query={query} currentPage={page} />
 			</Suspense>
 			<Pagination totalPages={totalPages} />

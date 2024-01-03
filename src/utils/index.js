@@ -15,7 +15,7 @@ export const formatDateToLocal = (
 		month: 'short',
 		year: 'numeric',
 	}
-	const formatter = new Intl.DateTimeFormat(locale, options)
+	const formatter = new Intl.DateTimeFormat(locale)
 	return formatter.format(date)
 }
 

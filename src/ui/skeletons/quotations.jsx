@@ -16,53 +16,31 @@ export function InvoiceSkeleton() {
 	)
 }
 
-export function LatestInvoicesSkeleton() {
+function TableSkeletonRow() {
 	return (
-		<div
-			className={`${shimmer} relative flex w-full flex-col overflow-hidden md:col-span-4 lg:col-span-4`}
-		>
-			<div className='mb-4 h-8 w-36 rounded-md bg-base-100' />
-			<div className='flex grow flex-col justify-between rounded-xl bg-base-100 p-4'>
-				<div className='bg-white px-6'>
-					<InvoiceSkeleton />
-					<InvoiceSkeleton />
-					<InvoiceSkeleton />
-					<InvoiceSkeleton />
-					<InvoiceSkeleton />
-					<div className='flex items-center pb-2 pt-6'>
-						<div className='h-5 w-5 rounded-full bg-base-200' />
-						<div className='ml-2 h-4 w-20 rounded-md bg-base-200' />
-					</div>
-				</div>
-			</div>
-		</div>
-	)
-}
-
-export function TableRowSkeleton() {
-	return (
-		<tr className='w-full border-b border-neutral-800 last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'>
-			{/* Nro */}
-			<td className='whitespace-nowrap px-3 py-3'>
-				<div className='h-6 w-10 rounded bg-base-100'></div>
+		<tr>
+			<td>
+				<div className='skeleton w-10 h-5 '></div>
 			</td>
-			{/* Cliente */}
-			<td className='whitespace-nowrap px-3 py-3'>
-				<div className='h-6 w-[300px] rounded bg-base-100'></div>
+			{/* Company */}
+			<td>
+				<div>
+					<div className='skeleton w-[340px] h-5'></div>
+					<div className='skeleton w-24 h-5 mt-1'></div>
+				</div>
 			</td>
 			{/* Fecha */}
-			<td className='whitespace-nowrap px-3 py-3'>
-				<div className='h-6 w-16 rounded bg-base-100'></div>
+			<td>
+				<div className='skeleton w-14 h-5'></div>
 			</td>
 			{/* Total */}
-			<td className='whitespace-nowrap px-3 py-3'>
-				<div className='h-6 w-16 rounded bg-base-100'></div>
+			<td>
+				<div className='skeleton w-14 h-5'></div>
 			</td>
-			{/* Acciones */}
-			<td className='whitespace-nowrap py-3 pl-6 pr-3'>
-				<div className='flex justify-end gap-3'>
-					<div className='h-[38px] w-[38px] rounded bg-base-100'></div>
-					<div className='h-[38px] w-[38px] rounded bg-base-100'></div>
+			<td>
+				<div className='flex items-center gap-x-2'>
+					<div className='skeleton w-6 h-5'></div>
+					<div className='skeleton w-6 h-5'></div>
 				</div>
 			</td>
 		</tr>
@@ -71,22 +49,49 @@ export function TableRowSkeleton() {
 
 export function InvoicesMobileSkeleton() {
 	return (
-		<div className='mb-2 w-full rounded-md bg-base-300 p-4'>
-			<div className='flex items-center justify-between border-b border-gray-100 pb-8'>
-				<div className='flex items-center'>
-					<div className='mr-2 h-8 w-8 rounded-full bg-base-100'></div>
-					<div className='h-6 w-16 rounded bg-base-100'></div>
+		<div className='card card-compact bg-base-200'>
+			<div className='card-body'>
+				<div className=' border-b border-base-content/30 pb-4 pt-2 flex flex-col gap-2'>
+					<div className='flex items-center justify-between'>
+						<div className='skeleton w-16 h-4'></div>
+						<div className='skeleton w-16 h-4'></div>
+					</div>
+					<div className='skeleton w-60 h-4 mx-auto'></div>
 				</div>
-				<div className='h-6 w-16 rounded bg-base-100'></div>
+				<div className='flex w-full items-center justify-between'>
+					<div className='skeleton w-16 h-4'></div>
+					<div className='skeleton w-16 h-4'></div>
+					<div className='flex gap-2'>
+						<div className='skeleton w-6 h-4'></div>
+						<div className='skeleton w-6 h-4'></div>
+					</div>
+				</div>
 			</div>
-			<div className='flex w-full items-center justify-between pt-4'>
-				<div>
-					<div className='h-6 w-16 rounded bg-base-100'></div>
-					<div className='mt-2 h-6 w-24 rounded bg-base-100'></div>
+		</div>
+	)
+}
+
+function SkeletonCard() {
+	return (
+		<div className='card card-compact'>
+			<div className='card-body bg-base-200'>
+				<div className='flex flex-col items-center justify-between border-b border-base-content/10 pb-4 w-full'>
+					<div className='mb-2 flex items-center justify-between w-full'>
+						<div className='skeleton w-14 h-6'>
+						</div>
+						<div className='skeleton w-14 h-6'>
+						</div>
+					</div>
+					<div className='skeleton w-72 h-6'>
+					</div>
 				</div>
-				<div className='flex justify-end gap-2'>
-					<div className='h-10 w-10 rounded bg-base-100'></div>
-					<div className='h-10 w-10 rounded bg-base-100'></div>
+				<div className='flex w-full items-center justify-between'>
+					<div className='skeleton w-16 h-6'></div>
+					<div className='skeleton w-16 h-6'></div>
+					<div className='flex justify-end gap-2'>
+						<div className='skeleton w-6 h-6'></div>
+						<div className='skeleton w-6 h-6'></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -95,50 +100,41 @@ export function InvoicesMobileSkeleton() {
 
 export function QuotationsTableSkeleton() {
 	return (
-		<div className='mt-6 flow-root'>
-			<div className='inline-block min-w-full align-middle'>
-				<div className='rounded-lg bg-black p-2 md:pt-0'>
-					<div className='md:hidden'>
-						<InvoicesMobileSkeleton />
-						<InvoicesMobileSkeleton />
-						<InvoicesMobileSkeleton />
-						<InvoicesMobileSkeleton />
-						<InvoicesMobileSkeleton />
-					</div>
-					<table className='hidden min-w-full text-gray-900 md:table'>
-						<thead className='rounded-lg text-left text-sm font-normal'>
-							<tr>
-								<th scope='col' className='px-4 py-5 font-medium sm:pl-6'>
-									Nro
-								</th>
-								<th scope='col' className='px-3 py-5 font-medium'>
-									Cliente
-								</th>
-								<th scope='col' className='px-3 py-5 font-medium'>
-									Fecha
-								</th>
-								<th scope='col' className='px-3 py-5 font-medium'>
-									Total
-								</th>
-								<th scope='col' className='px-3 py-5 font-medium'>
-									Acciones
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-							<TableRowSkeleton />
-						</tbody>
-					</table>
-				</div>
+		<div className='mt-4'>
+			<div className='lg:hidden flex flex-col gap-2'>
+				<SkeletonCard />
+				<SkeletonCard />
+				<SkeletonCard />
+				<SkeletonCard />
+				<SkeletonCard />
+				<SkeletonCard />
+			</div>
+			<div className='hidden lg:block overflow-x-auto'>
+				<table className='table hidden lg:block'>
+					{/* head */}
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Cliente</th>
+							<th>Fecha</th>
+							<th>Total</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+						<TableSkeletonRow />
+					</tbody>
+				</table>
 			</div>
 		</div>
 	)

@@ -51,7 +51,7 @@ export default function DownloadPDF({ quotation }) {
 		<>
 			<button onClick={handleShare} className='btn'>
 				<ShareIcon />
-				<span className='hidden md:block'>Compartir</span>
+				<span className='hidden lg:block'>Compartir</span>
 			</button>
 			<a
 				href={instance.url}
@@ -59,7 +59,7 @@ export default function DownloadPDF({ quotation }) {
 				className='btn'
 			>
 				<DownloadIcon />
-				<span className='hidden md:block'>Descargar</span>
+				<span className='hidden lg:block'>Descargar</span>
 			</a>
 		</>
 	)

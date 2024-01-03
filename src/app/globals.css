@@ -7,6 +7,12 @@
   padding: 1rem;
 }
 
+@layer components {
+  .sk {
+    @apply animate-background-shine bg-[linear-gradient(110deg,#222,45%,#111,55%,#222)] bg-[length:250%_100%];
+  }
+}
+
 :root {
   color-scheme: dark;
 }

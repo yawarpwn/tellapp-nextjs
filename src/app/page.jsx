@@ -16,7 +16,7 @@ export default async function Home() {
 	return (
 		<>
 			<main className=''>
-				<div className='flex flex-col xl:flex-row '>
+				<div className='flex flex-col lg:flex-row '>
 					<div className='flex min-h-screen flex-1 flex-shrink-0 flex-col justify-center items-center border-r border-primary/50 bg-base-200'>
 						<aside className='sm:[384px] flex w-[320px] flex-col '>
 							<header className='mb-10 '>

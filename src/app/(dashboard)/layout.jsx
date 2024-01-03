@@ -21,12 +21,12 @@ async function LayoutDashboar({ children }) {
 
 	return (
 		<>
-			<div className='max-w-3xl mx-auto px-2 md:px-6 relative flex flex-col gap-4'>
-				<div className='xl:hidden'>
+			<div className='max-w-3xl mx-auto px-2 lg:px-6 relative flex flex-col gap-4'>
+				<div className='lg:hidden'>
 					<Navbar />
 				</div>
-				<main className='pb-4 xl:pt-8'>{children}</main>
-				<div className='hidden xl:block'>
+				<main className='pb-4 lg:pt-8'>{children}</main>
+				<div className='hidden lg:block'>
 					<Sidebar />
 				</div>
 			</div>

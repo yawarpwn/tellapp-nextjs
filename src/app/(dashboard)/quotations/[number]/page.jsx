@@ -36,7 +36,7 @@ async function QuotationPage({ params }) {
 						className='btn btn-primary'
 					>
 						<EditIcon />
-						<span className='hidden md:block'>Editar</span>
+						<span className='hidden lg:block'>Editar</span>
 					</Link>
 					<DownloadPDF quotation={quotation} />
 				</div>

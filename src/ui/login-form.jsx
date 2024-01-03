@@ -44,7 +44,7 @@ export default function LoginForm() {
 						type='email'
 						name='email'
 						id='email'
-						className='input input-bordered'
+						className='input'
 						placeholder='correo@dominio.com'
 						required
 					/>
@@ -57,7 +57,7 @@ export default function LoginForm() {
 						type='password'
 						name='password'
 						id='password'
-						className='input input-bordered'
+						className='input'
 						placeholder='********'
 						required
 					/>

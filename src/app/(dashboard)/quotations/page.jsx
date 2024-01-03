@@ -17,8 +17,12 @@ async function QuotationsPage({ searchParams }) {
 				<AddButton href={'/quotations/create'} />
 			</header>
 			<Suspense fallback={<QuotationsTableSkeleton />}>
-				<QuotationsTable query={query} currentPage={page} />
 				{/* <QuotationsTableSkeleton /> */}
+				<QuotationsTable
+					key={`quotations-${page}`}
+					query={query}
+					currentPage={page}
+				/>
 			</Suspense>
 			<Pagination totalPages={totalPages} />
 		</>
