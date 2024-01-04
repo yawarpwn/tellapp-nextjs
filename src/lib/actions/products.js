@@ -36,8 +36,6 @@ export async function createProduct(_, formData) {
 		unit_size: formData.get('unit_size'),
 	}
 
-	console.log({ rawData })
-
 	const validatedFields = CreateProduct.safeParse(rawData)
 
 	if (!validatedFields.success) {
@@ -53,6 +51,10 @@ export async function createProduct(_, formData) {
 			row: validatedFields.data,
 			client: supabase,
 		})
+
+		console.log('producto creado')
+		// return { message: 'Product Created' }
+		revalidatePath('/products')
 	} catch (error) {
 		console.log('Error inserting Row', error)
 		return {
@@ -60,8 +62,7 @@ export async function createProduct(_, formData) {
 		}
 	}
 
-	revalidatePath('/products')
-	redirect('/products')
+	// redirect('/products')
 }
 
 // Update Product

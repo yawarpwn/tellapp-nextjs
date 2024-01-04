@@ -1,13 +1,39 @@
 'use client'
 import { CATEGORIES } from '@/constants'
 import { PlusIcon } from '@/icons'
+import { createProduct } from '@/lib/actions/products'
 import Input from '@/ui/components/input'
 import Modal from '@/ui/modal'
-import { useState } from 'react'
+import { useOptimistic, useState, useTransition } from 'react'
+// import { useFormState } from 'react-dom'
 
-function UpdateEditProductForm({ product }) {
+const initialState = {
+	message: null,
+	errors: {},
+}
+
+function UpdateEditProductForm({ product, action, closeModal }) {
+	const [isPending, startTransition] = useTransition()
+	const [state, setState] = useState(initialState)
+	const handleSubmit = (event) => {
+		event.preventDefault()
+		const formData = new FormData(event.target)
+		startTransition(async () => {
+			const results = await createProduct(undefined, formData)
+			if (results?.errors) {
+				setState(prev => ({ ...prev, ...results }))
+				return
+			}
+
+			closeModal()
+		})
+	}
+
+	console.log({ isPending, startTransition, state })
+	// const [state, dispatch] = useFormState(createProduct, initialState)
+	// const [optimisticState, addOptimisticState]= useOptimistic(initialState)
 	return (
-		<form>
+		<form onSubmit={handleSubmit}>
 			<Input
 				required
 				name='description'
@@ -16,7 +42,7 @@ function UpdateEditProductForm({ product }) {
 				as='textarea'
 				defaultValue={product?.description}
 				ariaLabelledby={'description-error'}
-				// errors={state.errors?.description}
+				errors={state.errors?.description}
 			/>
 			<Input
 				required
@@ -25,7 +51,7 @@ function UpdateEditProductForm({ product }) {
 				type='text'
 				defaultValue={product?.code}
 				placeholder='Descripcion de producto'
-				// errors={state.errors?.code}
+				errors={state.errors?.code}
 				ariaLabelledby={'code-error'}
 			/>
 			<div className='flex gap-4'>
@@ -37,7 +63,7 @@ function UpdateEditProductForm({ product }) {
 					defaultValue={product?.price}
 					step='0.5'
 					placeholder='100'
-					// errors={state.errors?.price}
+					errors={state.errors?.price}
 					ariaLabelledby={'price-error'}
 				/>
 
@@ -48,7 +74,7 @@ function UpdateEditProductForm({ product }) {
 					type='number'
 					defaultValue={product?.cost}
 					placeholder='10.00'
-					// errors={state.errors?.cost}
+					errors={state.errors?.cost}
 					ariaLabelledby={'cost-error'}
 				/>
 			</div>
@@ -59,7 +85,7 @@ function UpdateEditProductForm({ product }) {
 					labelText='Unidad / Medida'
 					type='text'
 					defaultValue={product?.unit_size}
-					// errors={state.errors?.unit_size}
+					errors={state.errors?.unit_size}
 					placeholder='30x30cm'
 					ariaLabelledby={'unit-size-error'}
 				/>
@@ -68,7 +94,7 @@ function UpdateEditProductForm({ product }) {
 					name='category'
 					className='select mt-2'
 					defaultValue={product?.category || ''}
-					// errors={state.errors?.category}
+					errors={state.errors?.category}
 					required
 				>
 					<option value='' disabled>
@@ -81,12 +107,13 @@ function UpdateEditProductForm({ product }) {
 					))}
 				</select>
 			</div>
+			{state?.message && <div className='mt-2 text-error'>{state.message}</div>}
 
 			<footer className='mt-4 flex justify-between'>
-				<button href={'/products'} className='btn'>
+				<button disabled={isPending} onClick={closeModal} className='btn'>
 					Cancelar
 				</button>
-				<button className='btn'>
+				<button disabled={isPending} type='submit' className='btn'>
 					Aceptar
 				</button>
 			</footer>
@@ -106,7 +133,7 @@ const AddModalButton = () => {
 				<span className=''>Crear</span>
 			</button>
 			<Modal isOpen={isOpenModal} onClose={closeModal}>
-				<UpdateEditProductForm />
+				<UpdateEditProductForm closeModal={closeModal} />
 			</Modal>
 		</>
 	)
