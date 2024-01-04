@@ -17,7 +17,7 @@ function Pagination({ totalPages }) {
 	}
 
 	return (
-		<div className='flex items-center justify-center mt-2'>
+		<div className='flex items-center justify-center h-16'>
 			<PaginationArrow
 				href={createPageURL(currentPage - 1)}
 				direction='left'

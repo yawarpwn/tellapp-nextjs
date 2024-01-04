@@ -21,14 +21,11 @@ async function LayoutDashboar({ children }) {
 
 	return (
 		<>
-			<div className='max-w-3xl mx-auto px-2 lg:px-6 relative flex flex-col gap-4'>
-				<div className='lg:hidden'>
-					<Navbar />
-				</div>
-				<main className='pb-4 lg:pt-8'>{children}</main>
-				<div className='hidden lg:block'>
-					<Sidebar />
-				</div>
+			<div className='max-w-3xl min-h-screen mx-auto px-2 relative flex flex-col'>
+				<Navbar />
+				<main className='pt-[calc(var(--nav-height)_+_1rem)]'>
+					{children}
+				</main>
 			</div>
 		</>
 	)

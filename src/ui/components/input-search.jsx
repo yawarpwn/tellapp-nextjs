@@ -4,7 +4,7 @@ function InputSearch({ searchValue, onSearchChange, placeholder }) {
 	return (
 		<div className='group w-full flex flex-col'>
 			<div className='h-full flex flex-col'>
-				<div className='input input-bordered flex items-center gap-x-2 max-w-xs'>
+				<div className='input input-sm flex items-center gap-x-2 max-w-xs'>
 					<SearchIcon />
 					<input
 						value={searchValue}

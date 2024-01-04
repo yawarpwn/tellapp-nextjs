@@ -33,14 +33,11 @@ function ProductSkeletonRow() {
 	return (
 		<tr>
 			<td>
-				<div className='flex items-center gap-x-2'>
-					<div className='skeleton w-6 h-4'></div>
-					<div className='skeleton w-6 h-4'></div>
-				</div>
-			</td>
-			<td>
-				<div>
-					<p className='skeleton w-[300px] h-8'></p>
+				<div className='flex flex-col gap-1.5'>
+					<p className='skeleton w-[280px] h-2.5'></p>
+					<p className='skeleton w-[280px] h-2.5'></p>
+					<p className='skeleton w-[280px] h-2.5'></p>
+					<p className='skeleton w-40 h-2.5'></p>
 				</div>
 			</td>
 			<td>
@@ -64,6 +61,13 @@ function ProductSkeletonRow() {
 				<p className='skeleton h-4 w-[40px] truncate'>
 				</p>
 			</td>
+			{/* Acciones */}
+			<td>
+				<div className='flex items-center gap-x-2'>
+					<div className='skeleton w-6 h-4'></div>
+					<div className='skeleton w-6 h-4'></div>
+				</div>
+			</td>
 		</tr>
 	)
 }
@@ -76,13 +80,13 @@ export function ProductsSkeleton() {
 					{/* head */}
 					<thead>
 						<tr>
-							<th></th>
 							<th>Descripcion</th>
 							<th>Codigo</th>
 							<th>U/M</th>
 							<th>Costo</th>
 							<th>Precio</th>
 							<th>Categ</th>
+							<th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>

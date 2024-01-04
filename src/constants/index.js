@@ -6,7 +6,7 @@ import {
 	TruckIcon,
 } from '@/icons'
 
-export const ROW_PER_PAGE = 10
+export const ROW_PER_PAGE = 6
 export const CATEGORIES = {
 	CINTAS_SEGURIDAD: 'cintas seguridad',
 	OBRAS: 'obras',
@@ -22,7 +22,7 @@ export const CATEGORIES = {
 	ROPA_SEGURIDAD: 'ropa seguridad',
 }
 
-export const ITEMS_PER_PAGE = 10
+export const ITEMS_PER_PAGE = 8
 
 export const NAVIGATION = [
 	{

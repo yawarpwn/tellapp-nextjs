@@ -1,4 +1,5 @@
-import { ITEMS_PER_PAGE } from '@/constants'
+// import { ITEMS_PER_PAGE } from '@/constants'
+const ITEMS_PER_PAGE = 6
 import { createServerClient } from '@/lib/supabase'
 import { cookies } from 'next/headers'
 
