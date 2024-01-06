@@ -1,7 +1,7 @@
 'use client'
 
 import { createCustomer } from '@/lib/actions/customers'
-import Input from '@/ui/components/input'
+import { Input } from '@/ui/components/input'
 import Link from 'next/link'
 import React from 'react'
 import { useFormState } from 'react-dom'

@@ -1,5 +1,5 @@
 import { CATEGORIES } from '@/constants'
-import Input from '@/ui/components/input'
+import { Input } from '@/ui/components/input'
 import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'
 

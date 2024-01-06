@@ -1,7 +1,6 @@
 import { fetchProductsPages } from '@/lib/products-data'
-import { AddModalButton } from '@/ui/add-modal-button'
-// import { AddButton } from '@/ui/buttons'
 import Pagination from '@/ui/pagination'
+import { AddProductForm } from '@/ui/products'
 import ProductTable from '@/ui/products/table'
 import Search from '@/ui/search'
 import { ProductsSkeleton } from '@/ui/skeletons/products'
@@ -15,7 +14,7 @@ async function ProductsPage({ searchParams }) {
 		<div className='flex flex-col gap-2'>
 			<header className='flex items-center gap-2 justify-between'>
 				<Search placeholder='Buscar producto...' />
-				<AddModalButton />
+				<AddProductForm />
 				{/* <AddButton href={'/products/create'} /> */}
 			</header>
 			<Suspense fallback={<ProductsSkeleton />}>

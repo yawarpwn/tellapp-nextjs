@@ -1,6 +1,6 @@
 'use client'
 import { shootCoffeti } from '@/services/confetti'
-import Input from '@/ui/components/input'
+import { Input } from '@/ui/components/input'
 import SubmitActionButton from '@/ui/submit-action-button'
 import Link from 'next/link'
 import { useFormState } from 'react-dom'

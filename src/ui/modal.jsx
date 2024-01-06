@@ -1,9 +1,8 @@
 'use client'
-
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
-export default function Modal(
+export function Modal(
 	{ isOpen, onClose, title, children, size = 'sm' },
 ) {
 	const modalRef = useRef(null)
@@ -31,7 +30,7 @@ export default function Modal(
 		isOpen
 		&& createPortal(
 			<dialog
-				className='modal'
+				className='modal backdrop:bg-black/80'
 				ref={modalRef}
 				onMouseDown={event => {
 					if (event.target === event.currentTarget) {
@@ -39,7 +38,9 @@ export default function Modal(
 					}
 				}}
 			>
-				<div className={`modal-box max-w-${size}`}>
+				<div
+					className={`modal-box bg-base-300/50 backdrop-blur-md backdrop-saturate-150 max-w-${size} border border-base-300`}
+				>
 					{title && (
 						<header className='py-2'>
 							<p className='text-center mb-2'>{title}</p>

@@ -1,8 +1,8 @@
 import { XIcon } from '@/icons'
 import { createBrowserClient } from '@/lib/supabase'
 import { createSearchInstance } from '@/services/search'
-import Input from '@/ui/components/input'
-import Modal from '@/ui/modal'
+import { Input } from '@/ui/components/input'
+import {Modal} from '@/ui/modal'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 const initialState = {

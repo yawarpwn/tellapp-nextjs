@@ -25,8 +25,7 @@ const ProductSchema = z.object({
 // Create Product
 const CreateProduct = ProductSchema.omit({ id: true })
 export async function createProduct(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
+	// Obtenemos valores del formulario
 	const rawData = {
 		description: formData.get('description'),
 		code: formData.get('code'),
@@ -36,40 +35,51 @@ export async function createProduct(_, formData) {
 		unit_size: formData.get('unit_size'),
 	}
 
+	// Validacion con Zod
 	const validatedFields = CreateProduct.safeParse(rawData)
 
+	// En caso de error
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
-			message: 'Missing Fields. Failed to Create Invoice.',
+			message: 'Campos incorrectos',
 		}
 	}
 
+	// Insert to Database
 	try {
-		await insertRow({
-			table: 'products',
-			row: validatedFields.data,
-			client: supabase,
-		})
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = await supabase.from('products').insert(
+			validatedFields.data,
+		)
 
-		console.log('producto creado')
-		// return { message: 'Product Created' }
+		// if exists error
+		if (error) {
+			// code must be unique
+			if (error.code === '23505') {
+				return {
+					message: 'Error al ingresar el producto',
+					errors: { code: ['Codigo ya existe'] },
+				}
+			}
+
+			// generic error db
+			throw new Error('Error al insertar Proyecto')
+		}
+
 		revalidatePath('/products')
 	} catch (error) {
-		console.log('Error inserting Row', error)
 		return {
-			message: 'Database Error: Failed to create customer',
+			message: 'Error al ingresar producto',
+			errors: true,
 		}
 	}
-
-	// redirect('/products')
 }
 
 // Update Product
 const UpdateProduct = ProductSchema
 export async function updateProduct(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
 	const rawData = {
 		id: formData.get('id'),
 		description: formData.get('description'),
@@ -80,32 +90,47 @@ export async function updateProduct(_, formData) {
 		unit_size: formData.get('unit_size'),
 	}
 
-	console.log({ rawData })
-
 	const validatedFields = UpdateProduct.safeParse(rawData)
 
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
-			message: 'Missing Fields. Failed to UPdate Product.',
+			message: 'Campos incorrecto.',
 		}
 	}
 
 	try {
-		await updateRow({
-			table: 'products',
-			row: validatedFields.data,
-			client: supabase,
-		})
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = await supabase.from('products').update(
+			validatedFields.data,
+		).eq('id', validatedFields.data.id)
+
+		// if exists error
+		if (error) {
+			// code must be unique
+			if (error.code === '23505') {
+				return {
+					message: 'Error al ingresar el producto',
+					errors: { code: ['Codigo ya existe'] },
+				}
+			}
+
+			// generic error db
+			throw new Error('Error al insertar Proyecto')
+		}
+
+		revalidatePath('/products')
 	} catch (error) {
 		console.log('Error inserting Row', error)
 		return {
-			message: 'Database Error: Failed to update product',
+			message: 'Error al Actualizar producto',
+			errors: true,
 		}
 	}
 
-	revalidatePath('/products')
-	redirect('/products')
+	// revalidatePath('/products')
+	// redirect('/products')
 }
 
 export async function deleteProduct(_, formData) {

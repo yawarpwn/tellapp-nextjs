@@ -27,6 +27,7 @@ function SignOutButton() {
 				<span className='text-error'>
 					<PowerIcon />
 				</span>
+				<span>Salir</span>
 			</button>
 		</form>
 	)

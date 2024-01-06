@@ -1,7 +1,7 @@
 'use client'
 
 import { PlusIcon } from '@/icons'
-import Input from '@/ui/components/input'
+import { Input } from '@/ui/components/input'
 import toast from '@/ui/components/toaster'
 import Link from 'next/link'
 import SubmitActionButton from '../submit-action-button'

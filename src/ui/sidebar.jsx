@@ -5,11 +5,18 @@ import { XIcon } from '@/icons'
 import SignOutButton from '@/ui/sign-out-button'
 import { cn } from '@/utils'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 export function Sidebar({ onClose = () => {}, isOpen }) {
+	useEffect(() => {
+		document.body.classList.add('overflow-hidden')
+		return () => {
+			document.body.classList.remove('overflow-hidden')
+		}
+	}, [])
 	return (
 		<aside>
-			<nav className='fixed top-0 left-0 h-screen supports-[height:dvh]:h-dvh  bg-base-300/50 w-[300px] z-50 backdrop-blur'>
+			<nav className='fixed top-0 left-0 h-screen  bg-base-300/50 w-[300px] z-50 backdrop-blur'>
 				<div
 					className={cn(
 						'h-full flex flex-col justify-between p-4',

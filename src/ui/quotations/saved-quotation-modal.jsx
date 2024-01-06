@@ -1,4 +1,4 @@
-import Modal from '../modal'
+import {Modal} from '../modal'
 
 function SavedQuotationModal({ isOpen, onClose, onConfirm }) {
 	return (

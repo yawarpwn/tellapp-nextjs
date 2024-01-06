@@ -1,6 +1,6 @@
 'use client'
 import { getDni, getRuc } from '@/services/sunat'
-import Input from '@/ui/components/input'
+import { Input } from '@/ui/components/input'
 import toast from '@/ui/components/toaster'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'

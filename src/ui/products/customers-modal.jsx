@@ -1,7 +1,7 @@
 'use client'
 
 import FormModal from '@/ui/components/form-modal'
-import InputSearch from '@/ui/components/input-search'
+import { Input }Search from '@/ui/components/input-search'
 import { useMemo, useState } from 'react'
 function CustomersModal(
 	{ isOpenModal, onCloseModal, onCustomerPick, serverCustomers },

@@ -1,4 +1,4 @@
-import Input from '@/ui/components/input'
+import { Input } from '@/ui/components/input'
 import SubmitActionButton from '@/ui/submit-action-button'
 import Link from 'next/link'
 import React from 'react'

@@ -3,6 +3,7 @@ import { fetchFilteredProducts } from '@/lib/products-data'
 import React from 'react'
 import { EditButton } from '../buttons'
 import DeleteActionForm from '../delete-action-form'
+import { EditProductForm } from '.'
 
 async function ProductTable({ query, currentPage }) {
 	const products = await fetchFilteredProducts({ query, currentPage })
@@ -50,7 +51,8 @@ async function ProductTable({ query, currentPage }) {
 									</td>
 									<td>
 										<div className='flex items-center gap-x-2'>
-											<EditButton href={`/products/update/${product.id}`} />
+											{/* <EditButton href={`/products/update/${product.id}`} /> */}
+											<EditProductForm itemToEdit={product} />
 											<DeleteActionForm
 												id={product.id}
 												deleteAction={deleteProduct}

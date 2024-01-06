@@ -1,5 +1,6 @@
-import clsx from 'clsx'
-function Input(
+import { cn } from '@/utils'
+import { useId } from 'react'
+export function Input(
 	{
 		labelText,
 		className,
@@ -12,45 +13,47 @@ function Input(
 		...props
 	},
 ) {
-	const inputClassName = clsx(
-		'w-full placeholder:text-base-content/30',
-		as === 'textarea' ? 'textarea' : 'input ',
-		{
-			'input-error': errors?.length > 0,
-			'resize-none': as === 'textarea',
-			'h-[80px]': as === 'textarea',
-			textarea: as === 'textarea',
-		},
-		className,
-	)
-
 	const Component = as ? as : 'input'
+	const id = useId()
 	return (
-		<div className={`form-control w-full`}>
-			<label className='label'>
-				<span className='label-text'>{labelText}</span>
-			</label>
-			<Component
-				ref={inputRef}
-				aria-labelledby={ariaLabelledby}
-				className={inputClassName}
-				disabled={disabled}
-				{...props}
-			/>
-
-			{/* handle Error */}
-			{errors?.map(error => (
-				<div
-					id={ariaLabelledby}
-					aria-live='polite'
-					className='text-error text-sm ml-1'
-					key={error}
-				>
-					{error}
+		<div className='grid grid-cols-12 gap-2 text-sm'>
+			<div className='flex flex-row justify-between col-span-12'>
+				<label className='block text-base-content/70' htmlFor={id}>
+					{labelText}
+				</label>
+			</div>
+			<div className='col-span-12'>
+				<div>
+					<div className='relative'>
+						<Component
+							id={id}
+							ref={inputRef}
+							aria-labelledby={ariaLabelledby}
+							className={cn(
+								'block w-full rounded-md  bg-base-200 text-sm border border-base-300 placeholder:text-base-content/50  py-3 px-4',
+								{
+									'h-20 resize-none': as == 'textarea',
+									'bg-base-300 border-red-900': errors,
+								},
+							)}
+							disabled={disabled}
+							{...props}
+						/>
+					</div>
 				</div>
-			))}
+
+				{/* handle Error */}
+				{errors?.map(error => (
+					<div
+						id={ariaLabelledby}
+						aria-live='polite'
+						className='text-error text-xs mt-1'
+						key={error}
+					>
+						{error}
+					</div>
+				))}
+			</div>
 		</div>
 	)
 }
-
-export default Input

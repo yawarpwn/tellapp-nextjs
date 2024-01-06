@@ -1,8 +1,9 @@
 'use client'
 
 import InputSearch from '@/ui/components/input-search'
-import Modal from '@/ui/modal'
+import { Modal } from '@/ui/modal'
 import { useMemo, useState } from 'react'
+
 function ItemPickerModal(
 	{ isOpen, onClose, onPick, items, renderLabel, filterProperty },
 ) {
