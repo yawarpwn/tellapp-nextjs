@@ -1,4 +1,5 @@
 import { fetchAgenciesPages } from '@/lib/agencies-data'
+import { AddFormAgency } from '@/ui/agencies'
 import AgenciesTable from '@/ui/agencies/table'
 import { AddButton } from '@/ui/buttons'
 import Pagination from '@/ui/pagination'
@@ -12,7 +13,8 @@ async function AgenciesPage({ searchParams }) {
 		<>
 			<header className='flex itmes-center justify-between'>
 				<Search />
-				<AddButton href='/agencies/create' />
+				<AddFormAgency />
+				{/* <AddButton href='/agencies/create' /> */}
 			</header>
 			<Suspense fallback={'Cargando...'}>
 				<AgenciesTable query={query} currentPage={page} />

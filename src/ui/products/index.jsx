@@ -1,7 +1,7 @@
 'use client'
 
 import { createProduct, updateProduct } from '@/lib/actions/products'
-import { ModalButton } from '../modal-button'
+import { ModalButton } from '@/ui/modal-button'
 import { InputsProduct } from './inputsProduct'
 
 export function AddProductForm() {

@@ -1,5 +1,7 @@
 import { fetchFilteredCustomers } from '@/lib/customers-data'
+import { EditCustomerForm } from '@/ui/customers'
 import DeleteForm from './delete-form'
+
 export default async function CustomersTable({ query, currentPage }) {
 	const customers = await fetchFilteredCustomers({ query, currentPage })
 	return (
@@ -10,8 +12,8 @@ export default async function CustomersTable({ query, currentPage }) {
 					<tr>
 						<th>Nombre</th>
 						<th>Ruc</th>
-						{/* <th>Telefono</th> */}
-						{/* <th>Email</th> */}
+						<th>Telefono</th>
+						<th>Email</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
@@ -23,14 +25,17 @@ export default async function CustomersTable({ query, currentPage }) {
 								<td>
 									<div>
 										<p className='w-[300px] '>{name}</p>
-										<p className='text-xs text-base-content'>{address}</p>
+										<p className='w-[300px] text-[10px]'>
+											{address}
+										</p>
 									</div>
 								</td>
 								<td>{ruc}</td>
-								{/* <td>{phone}</td> */}
-								{/* <td>{email}</td> */}
+								<td>{phone}</td>
+								<td>{email}</td>
 								<td>
 									<div className='flex gap-2'>
+										<EditCustomerForm customer={customer} />
 										<DeleteForm id={id} />
 									</div>
 								</td>

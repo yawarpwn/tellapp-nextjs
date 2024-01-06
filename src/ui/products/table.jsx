@@ -1,7 +1,6 @@
 import { deleteProduct } from '@/lib/actions/products'
 import { fetchFilteredProducts } from '@/lib/products-data'
 import React from 'react'
-import { EditButton } from '../buttons'
 import DeleteActionForm from '../delete-action-form'
 import { EditProductForm } from '.'
 
@@ -11,7 +10,7 @@ async function ProductTable({ query, currentPage }) {
 	return (
 		<>
 			<div className='overflow-x-auto'>
-				<table className='table table-sm h-full'>
+				<table className='table table-sm [&_td]:px-2 [&_*]:text-xs'>
 					{/* head */}
 					<thead>
 						<tr>
@@ -28,19 +27,23 @@ async function ProductTable({ query, currentPage }) {
 						{products?.map(product => {
 							return (
 								<tr key={product.id}>
+									{/* Description */}
 									<td>
 										<div>
-											<p className='w-72'>{product.description}</p>
+											<p className='w-[300px]'>{product.description}</p>
 										</div>
 									</td>
+									{/* Code */}
 									<td>
-										<p className='w-[40px] truncate '>
+										<p>
 											{product.code.toUpperCase()}
 										</p>
 									</td>
 
 									<td>
-										{product.unit_size}
+										<p>
+											{product.unit_size}
+										</p>
 									</td>
 									<td>{product.cost.toFixed(2)}</td>
 									<td>{product.price.toFixed(2)}</td>
@@ -51,7 +54,6 @@ async function ProductTable({ query, currentPage }) {
 									</td>
 									<td>
 										<div className='flex items-center gap-x-2'>
-											{/* <EditButton href={`/products/update/${product.id}`} /> */}
 											<EditProductForm itemToEdit={product} />
 											<DeleteActionForm
 												id={product.id}

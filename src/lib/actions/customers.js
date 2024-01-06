@@ -72,7 +72,7 @@ export async function createCustomer(_, formData) {
 	redirect('/customers')
 }
 
-export async function updateCustomerAction(formData) {
+export async function updateCustomer(formData) {
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
 
