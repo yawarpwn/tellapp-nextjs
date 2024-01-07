@@ -1,10 +1,10 @@
 'use server'
 import { createServerClient } from '@/lib/supabase'
-import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import z from 'zod'
+
+const TABLE = 'agencies'
 
 const AgencieSchema = z.object({
 	id: z.string(),
@@ -29,9 +29,6 @@ const AgencieSchema = z.object({
 // Create Product
 const CreateAgency = AgencieSchema.omit({ id: true })
 export async function createAgency(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
-
 	const rawData = {
 		company: formData.get('company'),
 		ruc: formData.get('ruc'),
@@ -49,31 +46,31 @@ export async function createAgency(_, formData) {
 		}
 	}
 
+	const agencieToInsert = {
+		...validatedFields.data,
+		destinations: validatedFields.data.destinations.split(','),
+	}
+
 	try {
-		await insertRow({
-			table: 'agencies',
-			row: {
-				...validatedFields.data,
-				destinations: validatedFields.data.destinations.split(','),
-			},
-			client: supabase,
-		})
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = await supabase.from(TABLE).insert(agencieToInsert)
+		if (error) {
+			throw new Error('Database Error: Failed to create agency')
+		}
 	} catch (error) {
 		return {
-			message: 'Database Error: Failed to create customer',
+			message: error.message,
+			error: true,
 		}
 	}
 
 	revalidatePath('/agencies')
-	redirect('/agencies')
 }
 
 // Update Product
 const UpdateAgency = AgencieSchema
 export async function updateAgency(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
-
 	const rawData = {
 		id: formData.get('id'),
 		company: formData.get('company'),
@@ -93,35 +90,37 @@ export async function updateAgency(_, formData) {
 	}
 
 	try {
-		await updateRow({
-			table: 'agencies',
-			row: {
-				...validatedFields.data,
-				destinations: validatedFields.data.destinations.split(','),
-			},
-			client: supabase,
-		})
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+
+		const agencieToUpdate = {
+			...validatedFields.data,
+			destinations: validatedFields.data.destinations.split(','),
+		}
+
+		const { error } = await supabase.from(TABLE).update(agencieToUpdate)
+		if (error) {
+			throw new Error('Error al actualizar agencia')
+		}
+		revalidatePath('/agencies')
 	} catch (error) {
-		console.log('Error inserting Row', error)
 		return {
-			message: 'Database Error: Failed to update product',
+			message: error.message,
+			error: true,
 		}
 	}
-
-	revalidatePath('/agencies')
-	redirect('/agencies')
 }
 
 export async function deleteAgency(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
 	const id = formData.get('id')
 	try {
-		await deleteRow({ table: 'agencies', client: supabase, id })
-		revalidatePath('/agencies')
-		return {
-			message: 'Cliente eliminado',
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = supabase.from(TABLE).delete().eq('id', id)
+		if (error) {
+			throw new Error('Error al eliminar agencia')
 		}
+		revalidatePath('/agencies')
 	} catch (error) {
 		return {
 			message: 'Error eliminando cliente',

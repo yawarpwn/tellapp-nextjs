@@ -1,12 +1,12 @@
 'use server'
 
-import z from 'zod'
-// import { createClient } from '@supabase/supabase-js'
 import { createServerClient } from '@/lib/supabase'
-import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import z from 'zod'
+
+const TABLE = 'labels'
 
 const LabelSchema = z.object({
 	id: z.string(),
@@ -22,8 +22,6 @@ const LabelSchema = z.object({
 
 const CreateLabel = LabelSchema.omit({ id: true })
 export async function createLabel(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
 	const rawData = {
 		recipient: formData.get('recipient'),
 		destination: formData.get('destination'),
@@ -32,8 +30,6 @@ export async function createLabel(_, formData) {
 		phone: formData.get('phone') || null,
 		agency_id: formData.get('agency_id') || null,
 	}
-
-	console.log({ rawData })
 
 	const validatedFields = CreateLabel.safeParse(rawData)
 
@@ -45,15 +41,14 @@ export async function createLabel(_, formData) {
 	}
 
 	try {
-		await insertRow({
-			table: 'labels',
-			row: validatedFields.data,
-			client: supabase,
-		})
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = await supabase.from(TABLE).insert(validatedFields.data)
+		if (error) throw new Error('Database Error: no se pudo crear el rotulo')
 	} catch (error) {
-		console.log('Error inserting Row', error)
 		return {
-			message: 'Database Error: Failed to create customer',
+			message: error.message,
+			error: true,
 		}
 	}
 
@@ -64,8 +59,6 @@ export async function createLabel(_, formData) {
 // Update Product
 const UpdateLabel = LabelSchema
 export async function updateLabel(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
 	const rawData = {
 		id: formData.get('id'),
 		recipient: formData.get('recipient'),
@@ -76,8 +69,6 @@ export async function updateLabel(_, formData) {
 		agency_id: formData.get('agency_id') || null,
 	}
 
-	console.log({ rawData })
-
 	const validatedFields = UpdateLabel.safeParse(rawData)
 
 	if (!validatedFields.success) {
@@ -87,16 +78,18 @@ export async function updateLabel(_, formData) {
 		}
 	}
 
+	console.log(validatedFields.data)
+
 	try {
-		await updateRow({
-			table: 'labels',
-			row: validatedFields.data,
-			client: supabase,
-		})
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = await supabase.from(TABLE).update(validatedFields.data)
+			.eq('id', rawData.id)
+		if (error) throw new Error('Database Error: Failed to update product')
 	} catch (error) {
-		console.log('Error inserting Row', error)
 		return {
-			message: 'Database Error: Failed to update product',
+			message: error.message,
+			error: true,
 		}
 	}
 
@@ -105,18 +98,17 @@ export async function updateLabel(_, formData) {
 }
 
 export async function deleteLabel(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
 	const id = formData.get('id')
 	try {
-		await deleteRow({ table: 'labels', client: supabase, id })
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = await supabase.from(TABLE).delete().eq('id', id)
+		if (error) throw new Error('Database Error: Failed to delete product')
 		revalidatePath('/labels')
-		return {
-			message: 'Cliente eliminado',
-		}
 	} catch (error) {
 		return {
-			message: 'Error eliminando cliente',
+			message: error.message,
+			error: true,
 		}
 	}
 }

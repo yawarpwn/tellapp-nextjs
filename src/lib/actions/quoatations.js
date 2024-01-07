@@ -1,12 +1,12 @@
 'use server'
 
-// import { createClient } from '@supabase/supabase-js'
 import { createServerClient } from '@/lib/supabase'
-import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import z from 'zod'
+
+const TABLE = 'quotations'
 
 const QuotationSchema = z.object({
 	number: z.coerce.number(),
@@ -40,8 +40,6 @@ const QuotationSchema = z.object({
 // Create Product
 const CreateQuotation = QuotationSchema.omit({ id: true })
 export async function createQuotation(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
 	const rawData = {
 		number: formData.get('number'),
 		ruc: formData.get('ruc') || null,
@@ -51,12 +49,7 @@ export async function createQuotation(_, formData) {
 		items: JSON.parse(formData.get('items')),
 	}
 
-	console.log('rawData: ', rawData)
-
 	const validatedFields = CreateQuotation.safeParse(rawData)
-
-	console.log('validate Fields', validatedFields.data)
-
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
@@ -65,15 +58,14 @@ export async function createQuotation(_, formData) {
 	}
 
 	try {
-		await insertRow({
-			table: 'quotations',
-			row: validatedFields.data,
-			client: supabase,
-		})
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = await supabase.from(TABLE).insert(validatedFields.data)
+		if (error) throw new Error('DB: Error al ingresar la cotización')
 	} catch (error) {
-		console.log('Error inserting Row', error)
 		return {
-			message: 'Database Error: Failed to create customer',
+			message: error.message,
+			error: true,
 		}
 	}
 
@@ -84,8 +76,6 @@ export async function createQuotation(_, formData) {
 // Update Product
 const UpdateQuotation = QuotationSchema.omit({ number: true })
 export async function updateQuotation(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
 	const quoNumber = formData.get('number')
 	const rawData = {
 		id: formData.get('id'),
@@ -95,8 +85,6 @@ export async function updateQuotation(_, formData) {
 		deadline: formData.get('deadline'),
 		items: JSON.parse(formData.get('items')),
 	}
-
-	console.log('update Raw: ', rawData)
 
 	const validatedFields = UpdateQuotation.safeParse(rawData)
 
@@ -108,15 +96,18 @@ export async function updateQuotation(_, formData) {
 	}
 
 	try {
-		await updateRow({
-			table: 'quotations',
-			row: validatedFields.data,
-			client: supabase,
-		})
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		const { error } = supabase.from(TABLE).update(validatedFields.data).eq(
+			'id',
+			validatedFields.data.id,
+		)
+
+		if (error) throw new Error('DB: Error al actualizar la cotización')
 	} catch (error) {
-		console.log('Error inserting Row', error)
 		return {
-			message: 'Database Error: Failed to update product',
+			message: error.message,
+			error: true,
 		}
 	}
 
@@ -125,15 +116,12 @@ export async function updateQuotation(_, formData) {
 }
 
 export async function deleteQuotation(_, formData) {
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
 	const id = formData.get('id')
 	try {
-		await deleteRow({ table: 'quotations', client: supabase, id })
+		const cookieStore = cookies()
+		const supabase = createServerClient(cookieStore)
+		await supabase.from(TABLE).delete().eq('id', id)
 		revalidatePath('/quotations')
-		return {
-			message: 'Cliente eliminado',
-		}
 	} catch (error) {
 		return {
 			message: 'Error eliminando cliente',

@@ -1,14 +1,13 @@
 'use server'
 
-import z from 'zod'
-// import { createClient } from '@supabase/supabase-js'
 import { CATEGORIES } from '@/constants'
 import { createServerClient } from '@/lib/supabase'
-import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import z from 'zod'
 const categoriesArray = Object.values(CATEGORIES)
+
+const TABLE = 'products'
 
 const ProductSchema = z.object({
 	id: z.string(),
@@ -50,7 +49,7 @@ export async function createProduct(_, formData) {
 	try {
 		const cookieStore = cookies()
 		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from('products').insert(
+		const { error } = await supabase.from(TABLE).insert(
 			validatedFields.data,
 		)
 
@@ -102,7 +101,7 @@ export async function updateProduct(_, formData) {
 	try {
 		const cookieStore = cookies()
 		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from('products').update(
+		const { error } = await supabase.from(TABLE).update(
 			validatedFields.data,
 		).eq('id', validatedFields.data.id)
 
@@ -138,11 +137,8 @@ export async function deleteProduct(_, formData) {
 	const supabase = createServerClient(cookieStore)
 	const id = formData.get('id')
 	try {
-		await deleteRow({ table: 'products', client: supabase, id })
+		const { error } = await supabase.from(TABLE).delete().eq('id', id)
 		revalidatePath('/products')
-		return {
-			message: 'Cliente eliminado',
-		}
 	} catch (error) {
 		return {
 			message: 'Error eliminando cliente',

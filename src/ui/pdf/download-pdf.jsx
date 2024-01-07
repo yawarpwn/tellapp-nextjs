@@ -1,7 +1,6 @@
 'use client'
 import { DownloadIcon, ShareIcon } from '@/icons'
 import { usePDF } from '@react-pdf/renderer'
-import { useEffect } from 'react'
 import PDFGenerator from './pdf-generator'
 
 export default function DownloadPDF({ quotation }) {

@@ -1,12 +1,11 @@
 'use server'
 
-import z from 'zod'
-// import { createClient } from '@supabase/supabase-js'
 import { createServerClient } from '@/lib/supabase'
-import { deleteRow, insertRow, updateRow } from '@/services/supabase'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import z from 'zod'
+
+const TABLE = 'customers'
 
 const CustomerSchema = z.object({
 	name: z.string().min(10, {
@@ -32,6 +31,9 @@ const CustomerSchema = z.object({
 		.nullable(),
 })
 
+const UpdateCustomerSchema = CustomerSchema
+const CreateCustomerSchema = CustomerSchema.omit({ id: true })
+
 export async function createCustomer(_, formData) {
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
@@ -44,9 +46,7 @@ export async function createCustomer(_, formData) {
 		email: formData.get('email') || null,
 	}
 
-	console.log({ rawData })
-
-	const validatedFields = CustomerSchema.safeParse(rawData)
+	const validatedFields = CreateCustomerSchema.safeParse(rawData)
 
 	if (!validatedFields.success) {
 		return {
@@ -56,54 +56,51 @@ export async function createCustomer(_, formData) {
 	}
 
 	try {
-		await insertRow({
-			table: 'customers',
-			row: validatedFields.data,
-			client: supabase,
-		})
+		const { error } = await supabase.from(TABLE).insert(validatedFields.data)
+		if (error) {
+			throw new Error('Database Error: Failed to create customer')
+		}
+
+		revalidatePath('/customers')
 	} catch (error) {
-		console.log('Error inserting Row', error)
 		return {
-			message: 'Database Error: Failed to create customer',
+			message: error.message,
+			error: true,
 		}
 	}
-
-	revalidatePath('/customers')
-	redirect('/customers')
 }
 
 export async function updateCustomer(formData) {
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
+	const rawCustomer = {
+		name: formData.get('name'),
+		ruc: formData.get('ruc'),
+		address: formData.get('address'),
+		id: formData.get('id'),
+		phone: formData.get('phone'),
+		email: formData.get('email'),
+	}
 
-	const name = formData.get('name')
-	const ruc = formData.get('ruc')
-	const address = formData.get('address')
-	const id = formData.get('id')
-	const phone = formData.get('phone')
-	const email = formData.get('email')
+	const validatedFields = UpdateCustomerSchema.safeParse(rawCustomer)
 
-	const customerToUpdate = {
-		id,
-		name,
-		ruc,
-		phone,
-		email,
-		address,
+	if (validatedFields.error) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+		}
 	}
 
 	try {
-		await updateRow({
-			client: supabase,
-			table: 'customers',
-			row: customerToUpdate,
-		})
+		const { error } = await supabase.from(TABLE).update(validatedFields.data)
+			.eq('id', validatedFields.data.id)
+		if (error) {
+			throw new Error('No se puedo actualizar')
+		}
 		revalidatePath('/')
 	} catch (error) {
-		console.log('ERror updating Row', error)
 		return {
-			message: 'Error actualizando agencia',
-			success: false,
+			message: error.message,
+			error: true,
 		}
 	}
 }
@@ -115,14 +112,13 @@ export async function deleteCustomer(_, formData) {
 	const supabase = createServerClient(cookieStore)
 
 	try {
-		await deleteRow({ table: 'customers', client: supabase, id })
+		const { error } = await supabase.from(TABLE).delete().eq('id', id)
+		if (error) throw new Error('Error al eliminar cliente')
 		revalidatePath('/customers')
-		return {
-			message: 'Cliente eliminado',
-		}
 	} catch (error) {
 		return {
-			message: 'Error eliminando cliente',
+			message: error.message,
+			error: true,
 		}
 	}
 }

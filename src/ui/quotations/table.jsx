@@ -46,7 +46,7 @@ function TableRow({ quotation }) {
 async function QuotationsTable({ query, currentPage }) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
 	return (
-		<div>
+		<div className='mt-2'>
 			<div className='lg:hidden flex flex-col gap-2'>
 				{quotations?.map((quotation) => (
 					<div
