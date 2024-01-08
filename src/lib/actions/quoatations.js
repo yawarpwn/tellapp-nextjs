@@ -95,16 +95,25 @@ export async function updateQuotation(_, formData) {
 		}
 	}
 
+	console.log({ validatedFields: validatedFields.data })
+
 	try {
 		const cookieStore = cookies()
 		const supabase = createServerClient(cookieStore)
-		const { error } = supabase.from(TABLE).update(validatedFields.data).eq(
-			'id',
-			validatedFields.data.id,
-		)
+		const { error } = await supabase.from(TABLE).update(validatedFields.data)
+			.eq(
+				'id',
+				validatedFields.data.id,
+			)
 
-		if (error) throw new Error('DB: Error al actualizar la cotización')
+		if (error) {
+			return {
+				message: 'Error actualizando cotización',
+				error: true,
+			}
+		}
 	} catch (error) {
+		console.log('Error DB: Update quotation ', error)
 		return {
 			message: error.message,
 			error: true,
