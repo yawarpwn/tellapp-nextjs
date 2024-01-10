@@ -3,7 +3,6 @@ import { fetchFilteredQuotations } from '@/lib/quotations-data'
 import { getIgv } from '@/utils'
 import { formatDateToLocal } from '@/utils'
 import Link from 'next/link'
-import React from 'react'
 import { EditButton } from '../buttons'
 
 function TableRow({ quotation }) {
@@ -47,7 +46,7 @@ async function QuotationsTable({ query, currentPage }) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
 	return (
 		<div className='mt-2'>
-			<div className='lg:hidden flex flex-col gap-2'>
+			<div className='md:hidden flex flex-col gap-2'>
 				{quotations?.map((quotation) => (
 					<div
 						key={quotation.id}
@@ -89,7 +88,7 @@ async function QuotationsTable({ query, currentPage }) {
 				))}
 			</div>
 			<div className='overflow-x-auto'>
-				<table className='table hidden lg:block'>
+				<table className='table hidden md:block'>
 					{/* head */}
 					<thead>
 						<tr>

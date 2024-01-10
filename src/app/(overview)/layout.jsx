@@ -1,10 +1,6 @@
-import { NAVIGATION } from '@/constants'
 import { createServerClient } from '@/lib/supabase'
 import Navbar from '@/ui/header/navbar'
-import { Sidebar } from '@/ui/sidebar'
-import SignOutButton from '@/ui/sign-out-button'
 import { cookies } from 'next/headers'
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 async function LayoutDashboar({ children }) {
@@ -21,9 +17,9 @@ async function LayoutDashboar({ children }) {
 
 	return (
 		<>
-			<div className='max-w-3xl min-h-screen mx-auto px-2 relative flex flex-col'>
+			<div className='max-w-3xl min-h-screen mx-auto px-2 md:px-4 relative flex flex-col'>
 				<Navbar />
-				<main className='pt-[calc(var(--nav-height)_+_1rem)]'>
+				<main className='pt-[calc(var(--nav-height)_+_1rem)] pb-[3vh]'>
 					{children}
 				</main>
 			</div>

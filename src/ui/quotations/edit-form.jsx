@@ -1,7 +1,6 @@
 'use client'
 
 import useQuotations from '@/hooks/use-quotations'
-import { shootCoffeti } from '@/services/confetti'
 import { useFormState } from 'react-dom'
 import CreateEditInputs from './create-edit-inputs'
 import ItemModal from './item-modal'
@@ -39,10 +38,7 @@ function EditForm({ quotationToUpdate, action }) {
 				updateItem={updateItem}
 			/>
 			<form
-				action={async formData => {
-					await dispatch(formData)
-					shootCoffeti()
-				}}
+				action={dispatch}
 			>
 				<CreateEditInputs
 					onChange={handleInputChange}

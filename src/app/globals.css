@@ -5,6 +5,7 @@
 .modal-box {
   max-height: calc(100vh - 2rem);
   padding: 1rem;
+  border-radius: 0.5rem;
 }
 
 @layer components {

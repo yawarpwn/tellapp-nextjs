@@ -2,7 +2,6 @@
 
 import useAutoSave from '@/hooks/use-autosave'
 import useQuotations from '@/hooks/use-quotations'
-import { shootCoffeti } from '@/services/confetti'
 import ItemPickerModal from '@/ui/components/item-picker-modal'
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
@@ -119,11 +118,7 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
 				</button>
 			</div>
 			<form
-				action={async formData => {
-					await dispatch(formData)
-					localStorage.removeItem('__QUOTATION__')
-					shootCoffeti()
-				}}
+				action={dispatch}
 			>
 				<CreateEditInputs
 					onChange={handleInputChange}

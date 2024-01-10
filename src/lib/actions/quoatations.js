@@ -61,8 +61,20 @@ export async function createQuotation(_, formData) {
 		const cookieStore = cookies()
 		const supabase = createServerClient(cookieStore)
 		const { error } = await supabase.from(TABLE).insert(validatedFields.data)
-		if (error) throw new Error('DB: Error al ingresar la cotización')
+		if (error?.code === '23505') {
+			return {
+				errors: {
+					number: ['Ya existe es cotización '],
+				},
+				error: true,
+			}
+		}
+
+		if (error) {
+			throw new Error('Database Error: Creando quotation')
+		}
 	} catch (error) {
+		console.log('Db Error: Creando quotation', error)
 		return {
 			message: error.message,
 			error: true,

@@ -139,3 +139,86 @@ export function QuotationsTableSkeleton() {
 		</div>
 	)
 }
+
+function Row() {
+	return (
+		<tr>
+			{/* Descripcion */}
+			<td>
+				<div className='skeleton h-10 w-[300px]'></div>
+			</td>
+			{/* U/M */}
+			<td>
+				<div className='skeleton w-12 h-6'></div>
+			</td>
+			{/* Cantidad */}
+			<td>
+				<div className='skeleton w-9 h-6'></div>
+			</td>
+			{/* Sin Igv */}
+			<td>
+				<div className='skeleton w-9 h-6'></div>
+			</td>
+			{/* P unit */}
+			<td>
+				<div className='skeleton w-9 h-6'></div>
+			</td>
+			{/* Total */}
+			<td>
+				<div className='skeleton w-9 h-6'></div>
+			</td>
+		</tr>
+	)
+}
+
+export function QuotationSkeleton() {
+	return (
+		<div>
+			<header className='flex justify-end gap-x-2'>
+				<div className='flex gap-2'>
+					<div className='skeleton w-12 h-11 rounded-md' />
+					<div className='skeleton w-12 h-11 rounded-md' />
+					<div className='skeleton w-12 h-11 rounded-md' />
+				</div>
+			</header>
+			<div className='container mx-auto px-4 py-8'>
+				<div className='rounded-lg shadow overflow-hidden'>
+					<div className='py-4 flex justify-between'>
+						<div>
+							<div className='skeleton mb-2 w-20 h-8'></div>
+							<div className='skeleton mb-2 w-72 h-8'></div>
+							<div className='skeleton w-72 h-4'></div>
+						</div>
+						<div className='skeleton w-20 h-6'>
+						</div>
+					</div>
+					<div className='skeleton w-48 h-4'>
+					</div>
+					<div className='overflow-x-auto'>
+						<table className='table'>
+							<thead>
+								<tr>
+									<th>Descripción</th>
+									<th>U/M</th>
+									<th>Cant</th>
+									<th>Si IGv</th>
+									<th>P.Unit</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<Row />
+								<Row />
+								<Row />
+								<Row />
+								<Row />
+								<Row />
+								<Row />
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+}

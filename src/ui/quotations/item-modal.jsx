@@ -2,7 +2,7 @@ import { XIcon } from '@/icons'
 import { createBrowserClient } from '@/lib/supabase'
 import { createSearchInstance } from '@/services/search'
 import { Input } from '@/ui/components/input'
-import {Modal} from '@/ui/modal'
+import { Modal } from '@/ui/modal'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 const initialState = {
@@ -163,45 +163,53 @@ function ItemModal(
 								.fill(0)
 								.map((_, index) => (
 									<li key={index}>
-										<span className=' h-[30px] bg-base-100 rounded'></span>
+										<span className='skeleton h-[30px]'>
+										</span>
 									</li>
 								))}
 					</ul>
 					<div className='flex gap-2 w-full'>
-						<Input
-							onChange={handleChangeItem}
-							value={item.qty}
-							type='number'
-							labelText='Cantidad'
-							name='qty'
-							required
-						/>
-
-						<Input
-							onChange={handleChangeItem}
-							value={item.unit_size}
-							type='text'
-							labelText='U/M'
-							name='unit_size'
-							required
-						/>
+						<div className='w-full'>
+							<Input
+								onChange={handleChangeItem}
+								value={item.qty}
+								type='number'
+								labelText='Cantidad'
+								name='qty'
+								required
+							/>
+						</div>
+						<div className='w-full'>
+							<Input
+								onChange={handleChangeItem}
+								value={item.unit_size}
+								type='text'
+								labelText='U/M'
+								name='unit_size'
+								required
+							/>
+						</div>
 					</div>
 					<div className='flex gap-2 w-full'>
-						<Input
-							onChange={handleChangeItem}
-							value={item.price}
-							type='number'
-							labelText='Precio'
-							name='price'
-							required
-						/>
-						<Input
-							value={item.cost}
-							type='number'
-							labelText='Costo'
-							name='cost'
-							disabled
-						/>
+						<div className='w-full'>
+							<Input
+								onChange={handleChangeItem}
+								value={item.price}
+								type='number'
+								labelText='Precio'
+								name='price'
+								required
+							/>
+						</div>
+						<div className='w-full'>
+							<Input
+								value={item.cost}
+								type='number'
+								labelText='Costo'
+								name='cost'
+								disabled
+							/>
+						</div>
 					</div>
 				</div>
 				<div className='mt-4 flex items-center justify-between'>

@@ -46,19 +46,21 @@ function CreateEditInputs({
 
 	return (
 		<>
-			<div className='flex flex-col gap-4'>
-				<Input
-					labelText='Ruc'
-					name='ruc'
-					type='number'
-					placeholder='20610555536'
-					value={quotation?.ruc ?? ''}
-					onChange={onChange}
-					errors={state.errors?.ruc}
-					onBlur={handleBlur}
-					disabled={loading}
-				/>
-				<div className='flex gap-2'>
+			<div className='grid grid-cols-12 gap-4'>
+				<div className='col-span-12'>
+					<Input
+						labelText='Ruc'
+						name='ruc'
+						type='number'
+						placeholder='20610555536'
+						value={quotation?.ruc ?? ''}
+						onChange={onChange}
+						errors={state.errors?.ruc}
+						onBlur={handleBlur}
+						disabled={loading}
+					/>
+				</div>
+				<div className='col-span-6'>
 					<Input
 						labelText='Tiempo de entrega'
 						name='deadline'
@@ -70,6 +72,8 @@ function CreateEditInputs({
 						disabled={loading}
 						required
 					/>
+				</div>
+				<div className='col-span-6'>
 					<Input
 						labelText='Número'
 						type='number'
@@ -81,32 +85,36 @@ function CreateEditInputs({
 						required
 					/>
 				</div>
-				<Input
-					labelText='Cliente'
-					name='company'
-					placeholder='Empresa Recaudadora de Impuesto S.A.C.'
-					value={quotation?.company}
-					onChange={onChange}
-					errors={state.errors?.company}
-					disabled={loading}
-				/>
+				<div className='col-span-12'>
+					<Input
+						labelText='Cliente'
+						name='company'
+						placeholder='Empresa Recaudadora de Impuesto S.A.C.'
+						value={quotation?.company}
+						onChange={onChange}
+						errors={state.errors?.company}
+						disabled={loading}
+					/>
+				</div>
 
-				<Input
-					labelText='Dirección'
-					name='address'
-					placeholder='Av. Sinnombre 323 - LLauca - Lima'
-					value={quotation?.address}
-					onChange={onChange}
-					errors={state.errors?.address}
-					disabled={loading}
-				/>
+				<div className='col-span-12'>
+					<Input
+						labelText='Dirección'
+						name='address'
+						placeholder='Av. Sinnombre 323 - LLauca - Lima'
+						value={quotation?.address}
+						onChange={onChange}
+						errors={state.errors?.address}
+						disabled={loading}
+					/>
+				</div>
 				<input type='hidden' name='id' value={quotation?.id} />
 				<input
 					type='hidden'
 					name='items'
 					value={JSON.stringify(quotation?.items)}
 				/>
-				<div className='mt-4 flex items-center gap-4'>
+				<div className='mt-4 col-span-12 flex items-center gap-4'>
 					<input
 						name='customer-checkbox'
 						className='checkbox checkbox-accent'
@@ -118,7 +126,7 @@ function CreateEditInputs({
 					</label>
 				</div>
 
-				<section className='mt-4'>
+				<section className='col-span-12 mt-4'>
 					<header className='flex items-center justify-between'>
 						<h3 className='text-xl font-bold'>Productos:</h3>
 						<button
