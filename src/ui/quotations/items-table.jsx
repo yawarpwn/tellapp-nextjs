@@ -19,7 +19,6 @@ function ItemsTable({ items, onEdit, onDelete }) {
 				<tbody>
 					{items?.map((item, index) => {
 						const even = index % 2 === 0
-						console.log(item)
 						return (
 							<tr key={item.id} className={`${even ? 'bg-black/10' : ''}`}>
 								<td>

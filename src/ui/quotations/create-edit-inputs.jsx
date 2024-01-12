@@ -22,6 +22,8 @@ function CreateEditInputs({
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
 
+	console.log(quotation)
+
 	const handleBlur = useCallback(async () => {
 		if (quotation.ruc && quotation.ruc.length === 11) {
 			setError(null)
@@ -114,15 +116,30 @@ function CreateEditInputs({
 					name='items'
 					value={JSON.stringify(quotation?.items)}
 				/>
-				<div className='mt-4 col-span-12 flex items-center gap-4'>
+				<div className='col-span-6 flex items-center gap-4'>
 					<input
-						name='customer-checkbox'
+						id='frecuently-customer'
+						name='frecuently-customer'
 						className='checkbox checkbox-accent'
-						defaultChecked
+						type='checkbox'
+						defaultChecked={true}
+					/>
+					<label htmlFor='customer-checkbox' className='text-sm'>
+						Cliente frecuente
+					</label>
+				</div>
+
+				<div className='col-span-6 flex items-center gap-4'>
+					<input
+						name='igv'
+						id='igv'
+						defaultChecked={quotation.include_igv ?? true}
+						defaultValue={quotation.include_igv ?? true}
+						className='checkbox checkbox-accent'
 						type='checkbox'
 					/>
-					<label htmlFor='customer-checkbox' className='text-accent'>
-						Guardar como cliente frecuente
+					<label htmlFor='igv' className='text-sm'>
+						Icluir IGV
 					</label>
 				</div>
 

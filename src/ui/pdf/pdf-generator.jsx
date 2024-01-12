@@ -25,8 +25,8 @@ const PDFGenerator = ({ quotation }) => {
 			<Page size='a4' style={styles.page}>
 				<QuoHeader />
 				<QuoCustomer quotation={quotation} />
-				<QuoTable items={quotation.items} />
-				<QuoTotal items={quotation.items} />
+				<QuoTable items={quotation.items} includeIgv={quotation.include_igv} />
+				<QuoTotal items={quotation.items} includeIgv={quotation.include_igv} />
 				<QuoTerms deadline={quotation.deadline} />
 				<QuoBAnkInfo />
 			</Page>

@@ -30,6 +30,7 @@ async function LayoutDashboar({ children }) {
 						<main className='pt-[calc(var(--nav-height)+1rem)] lg:pt-4 px-4'>
 							{children}
 						</main>
+						<footer className='h-4'></footer>
 					</div>
 				</div>
 

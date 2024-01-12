@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 		width: '80%',
 	},
 })
-export default function QuoTotal({ items }) {
+export default function QuoTotal({ items, includeIgv }) {
 	const { total, subTotal, igv } = getIgv(items)
 	return (
 		<View style={styles.container}>
@@ -43,20 +43,25 @@ export default function QuoTotal({ items }) {
 					</View>
 					<Text style={styles.tableCell}>0.00</Text>
 				</View>
-				<View style={styles.row}>
-					<View style={styles.textWrap}>
-						<Text style={styles.tableCell}>Total Ventas Gravadas</Text>
-						<Text>S/</Text>
-					</View>
-					<Text style={styles.tableCell}>{subTotal}</Text>
-				</View>
-				<View style={styles.row}>
-					<View style={styles.textWrap}>
-						<Text style={styles.tableCell}>Total IGV (18%)</Text>
-						<Text>S/</Text>
-					</View>
-					<Text style={styles.tableCell}>{igv}</Text>
-				</View>
+				{includeIgv && (
+					<>
+						<View style={styles.row}>
+							<View style={styles.textWrap}>
+								<Text style={styles.tableCell}>Total Ventas Gravadas</Text>
+								<Text>S/</Text>
+							</View>
+							<Text style={styles.tableCell}>{subTotal}</Text>
+						</View>
+
+						<View style={styles.row}>
+							<View style={styles.textWrap}>
+								<Text style={styles.tableCell}>Total IGV (18%)</Text>
+								<Text>S/</Text>
+							</View>
+							<Text style={styles.tableCell}>{igv}</Text>
+						</View>
+					</>
+				)}
 				<View style={styles.total}>
 					<View style={styles.textWrap}>
 						<Text style={styles.tableCell}>Total</Text>

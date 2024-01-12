@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 		fontSize: 8,
 	},
 	logoContainer: {
-		width: '65%',
+		width: '75%',
 		display: 'flex',
 		flexDirection: 'column',
 		gap: 5,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'extrabold',
 	},
 	info: {
-		width: '35%',
+		width: '25%',
 		borderTop: 2,
 		borderBottom: 2,
 		padding: 5,
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
 export default function QuoHeader() {
 	return (
 		<View style={styles.header}>
+			{/* Logo */}
 			<View style={styles.logoContainer}>
 				<View>
 					<SvgLogo />
@@ -54,6 +55,8 @@ export default function QuoHeader() {
 					<Text>Carmen de la Legua - Reynoso - Callao</Text>
 				</View>
 			</View>
+
+			{/* Info */}
 			<View style={styles.info}>
 				<View style={styles.row}>
 					<Text style={styles.left}>Ruc</Text>

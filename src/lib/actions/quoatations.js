@@ -11,6 +11,7 @@ const TABLE = 'quotations'
 const QuotationSchema = z.object({
 	number: z.coerce.number(),
 	id: z.string(),
+	include_igv: z.coerce.boolean().default(true),
 	ruc: z
 		.string()
 		.length(11, {
@@ -46,6 +47,7 @@ export async function createQuotation(_, formData) {
 		company: formData.get('company') || 'SIN RUC PROPORCIONADO',
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
+		include_igv: formData.get('igv'),
 		items: JSON.parse(formData.get('items')),
 	}
 
@@ -95,6 +97,7 @@ export async function updateQuotation(_, formData) {
 		company: formData.get('company') || 'Sin Ruc Proporcionado',
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
+		include_igv: formData.get('igv'),
 		items: JSON.parse(formData.get('items')),
 	}
 
@@ -106,8 +109,6 @@ export async function updateQuotation(_, formData) {
 			message: 'Missing Fields. Failed to UPdate Product.',
 		}
 	}
-
-	console.log({ validatedFields: validatedFields.data })
 
 	try {
 		const cookieStore = cookies()
