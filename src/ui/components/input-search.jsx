@@ -2,7 +2,7 @@ import { SearchIcon } from '@/icons'
 
 function InputSearch({ searchValue, onSearchChange, placeholder }) {
 	return (
-		<div className='group w-full flex flex-col'>
+		<div className='group w-full flex flex-col border border-base-300 rounded-md'>
 			<div className='h-full flex flex-col'>
 				<div className='input input-sm flex items-center gap-x-2 max-w-xs'>
 					<SearchIcon />

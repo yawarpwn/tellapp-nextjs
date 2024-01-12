@@ -47,6 +47,8 @@ module.exports = {
 					'success': 'hsl(158 100% 50%)',
 					'warning': 'hsl(39 100% 50%)',
 					'error': 'hsl(347 100% 50%)',
+					'--rounded-box': '0.5rem',
+					'--rounded-btn': '0.25rem',
 				},
 			},
 		],

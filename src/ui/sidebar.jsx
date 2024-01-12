@@ -1,64 +1,61 @@
 'use client'
 
 import { NAVIGATION } from '@/constants'
-import { XIcon } from '@/icons'
 import SignOutButton from '@/ui/sign-out-button'
 import { cn } from '@/utils'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
-export function Sidebar({ onClose = () => {}, isOpen }) {
-	useEffect(() => {
-		document.body.classList.add('overflow-hidden')
-		return () => {
-			document.body.classList.remove('overflow-hidden')
+export function Sidebar() {
+	const pathname = usePathname()
+
+	// Close drawer
+	const closeDrawer = () => {
+		const drawerInput = document.querySelector('#drawer')
+		const isChecked = drawerInput.checked
+
+		if (isChecked) {
+			drawerInput.checked = false
+		} else {
+			drawerInput.checked = true
 		}
-	}, [])
+	}
+
+	const handleClick = () => {
+		closeDrawer()
+	}
 	return (
-		<aside>
-			<nav className='fixed top-0 left-0 h-screen  bg-base-300/50 w-[300px] z-50 backdrop-blur'>
-				<div
-					className={cn(
-						'h-full flex flex-col justify-between p-4',
-					)}
-				>
-					<button
-						className='absolute btn btn-circle top-2 right-2'
-						onClick={onClose}
-					>
-						<XIcon />
-					</button>
-					<ul className='flex flex-col gap-8'>
-						{NAVIGATION.map(({ href, title, icon: Icon }) => (
-							<li key={title}>
-								<Link href={href} legacyBehavior>
-									<a
-										onClick={() => onClose()}
-										className='flex gap-2 group'
+		<aside className='min-h-screen h-full w-60 bg-base-200/80 backdrop-blur '>
+			<div
+				className={cn(
+					'h-full flex flex-col justify-between pb-4 ',
+				)}
+			>
+				<ul className='menu flex flex-col gap-8'>
+					{NAVIGATION.map(({ href, title, icon: Icon }) => (
+						<li key={title}>
+							<Link href={href} legacyBehavior>
+								<a
+									onClick={handleClick}
+									className='flex gap-2 group'
+								>
+									<span className='text-primary'>
+										<Icon size={22} />
+									</span>
+									<span
+										className={cn(`group-hover:text-primary-content`, {
+											'text-primary-content': pathname === href,
+										})}
 									>
-										<span className='text-primary'>
-											<Icon />
-										</span>
-										<span className='group-hover:text-primary-content'>
-											{title}
-										</span>
-									</a>
-								</Link>
-							</li>
-						))}
-					</ul>
-					<SignOutButton />
-				</div>
-			</nav>
-			{isOpen && (
-				<div
-					onMouseDown={() => {
-						onClose()
-					}}
-					className='fixed inset-0 bg-black/80 z-40'
-				>
-				</div>
-			)}
+										{title}
+									</span>
+								</a>
+							</Link>
+						</li>
+					))}
+				</ul>
+				<SignOutButton />
+			</div>
 		</aside>
 	)
 }
