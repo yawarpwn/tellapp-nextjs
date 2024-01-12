@@ -222,3 +222,66 @@ export function QuotationSkeleton() {
 		</div>
 	)
 }
+
+export function CreateUpdateQuotationSkeleton({ isEdit }) {
+	return (
+		<>
+			{!isEdit && (
+				<div className='flex justify-between'>
+					<div />
+					<div className='- skeleton w-32 h-6'></div>
+				</div>
+			)}
+			<div className='grid grid-cols-12 gap-4'>
+				<div className='col-span-12'>
+					<div className='skeleton w-20 h-4 mb-2'></div>
+					<div className='skeleton h-10 w-full' />
+				</div>
+				<div className='col-span-6'>
+					<div className='skeleton w-20 h-4 mb-2'></div>
+					<div className='skeleton h-10 w-full' />
+				</div>
+				<div className='col-span-6'>
+					<div className='skeleton w-20 h-4 mb-2'></div>
+					<div className='skeleton h-10 w-full' />
+				</div>
+				<div className='col-span-12'>
+					<div className='skeleton w-20 h-4 mb-2'></div>
+					<div className='skeleton h-10 w-full' />
+				</div>
+
+				<div className='col-span-12'>
+					<div className='skeleton w-20 h-4 mb-2'></div>
+					<div className='skeleton h-10 w-full' />
+				</div>
+				<div className='col-span-6 flex items-center gap-4'>
+					<div className='skeleton rounded-md w-7 h-7 ' />
+					<div className='skeleton w-20 h-4 '>
+					</div>
+				</div>
+
+				<div className='col-span-6 flex items-center gap-4'>
+					<div className='skeleton rounded-md w-7 h-7 ' />
+					<div className='skeleton w-20 h-4 '>
+					</div>
+				</div>
+
+				<section className='col-span-12 mt-4'>
+					<header className='flex items-center justify-between'>
+						<div className='skeleton w-32 h-8'></div>
+						<div className='skeleton w-36 h-8'>
+						</div>
+					</header>
+				</section>
+			</div>
+			<div className='mt-4'>
+				<div className='skeleton w-full h-6'></div>
+				<div className='skeleton w-full h-32 mt-4'></div>
+				<div className='flex justify-between mt-4'>
+					<div className='skeleton w-32 h-8'></div>
+					<div className='skeleton w-32 h-8'></div>
+				</div>
+			</div>
+		</>
+	)
+}

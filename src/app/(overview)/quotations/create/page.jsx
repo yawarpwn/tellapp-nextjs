@@ -3,10 +3,22 @@ import { fetchCustomers } from '@/lib/customers-data'
 import { fetchLastQuotation } from '@/lib/quotations-data'
 import Breadcrumbs from '@/ui/breadcrumbs'
 import AddForm from '@/ui/quotations/add-form'
+import { CreateUpdateQuotationSkeleton } from '@/ui/skeletons/quotations'
+import { Suspense } from 'react'
 
-async function CreateQuotationPage() {
+async function AddFormWrapper() {
 	const customers = await fetchCustomers()
 	const lastQuotation = await fetchLastQuotation()
+	return (
+		<AddForm
+			action={createQuotation}
+			lastQuotationNumber={lastQuotation.number}
+			serverCustomers={customers}
+		/>
+	)
+}
+
+async function CreateQuotationPage() {
 	return (
 		<>
 			<Breadcrumbs
@@ -22,11 +34,9 @@ async function CreateQuotationPage() {
 					},
 				]}
 			/>
-			<AddForm
-				action={createQuotation}
-				lastQuotationNumber={lastQuotation.number}
-				serverCustomers={customers}
-			/>
+			<Suspense fallback={<CreateUpdateQuotationSkeleton />}>
+				<AddFormWrapper />
+			</Suspense>
 		</>
 	)
 }
