@@ -1,7 +1,7 @@
 'use client'
 import { shootCoffeti } from '@/services/confetti'
 import { Input } from '@/ui/components/input'
-import SubmitActionButton from '@/ui/submit-action-button'
+import SubmitButton from '@/ui/submit-action-button'
 import Link from 'next/link'
 import { useFormState } from 'react-dom'
 
@@ -74,7 +74,7 @@ export default function CreateEditAgencyForm({ agency, action }) {
 				<Link href={'/products'} className='btn'>
 					Cancelar
 				</Link>
-				<SubmitActionButton action={action} />
+				<SubmitButton action={action} />
 			</footer>
 		</form>
 	)

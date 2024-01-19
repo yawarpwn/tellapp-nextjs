@@ -1,9 +1,9 @@
 'use client'
 
+import { SubmitButton } from '@/ui/components/submit-button'
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import SubmitActionButton from './submit-action-button'
 
 function ConfirmModalAction(
 	{
@@ -61,7 +61,7 @@ function ConfirmModalAction(
 					</header>
 					{children}
 					<footer className='flex items-center justify-between'>
-						<SubmitActionButton />
+						<SubmitButton />
 						<button onClick={onClose} type='button' className='btn btn-error'>
 							Cancelar
 						</button>

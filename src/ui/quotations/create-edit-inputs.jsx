@@ -4,7 +4,7 @@ import { PlusIcon } from '@/icons'
 import { Input } from '@/ui/components/input'
 import toast from '@/ui/components/toaster'
 import Link from 'next/link'
-import SubmitActionButton from '../submit-action-button'
+import { SubmitButton } from '@/ui/components/submit-button'
 import ItemsTable from './items-table'
 
 import { getRuc } from '@/services/sunat'
@@ -172,7 +172,7 @@ function CreateEditInputs({
 				<Link href={'/quotations'} className='btn'>
 					Cancelar
 				</Link>
-				<SubmitActionButton />
+				<SubmitButton />
 			</footer>
 		</>
 	)

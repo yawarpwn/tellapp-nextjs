@@ -5,7 +5,7 @@ import { Input } from '@/ui/components/input'
 import Link from 'next/link'
 import React from 'react'
 import { useFormState } from 'react-dom'
-import SubmitActionButton from '../submit-action-button'
+import { SubmitButton } from '@/ui/components/submit-button'
 
 const initialState = {
 	message: null,
@@ -58,7 +58,7 @@ function Form() {
 				<Link href={'/customers'} className='btn'>
 					Cancelar
 				</Link>
-				<SubmitActionButton />
+				<SubmitButton />
 			</footer>
 		</form>
 	)

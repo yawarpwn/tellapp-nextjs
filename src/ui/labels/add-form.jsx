@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
 import ItemPickerModal from '../components/item-picker-modal'
-import SubmitActionButton from '../submit-action-button'
+import { SubmitButton } from '@/ui/components/submit-button'
 
 const initialState = {
 	message: null,
@@ -193,7 +193,7 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
 					<Link href={'/customers'} className='btn'>
 						Cancelar
 					</Link>
-					<SubmitActionButton />
+					<SubmitButton />
 				</footer>
 			</form>
 		</>

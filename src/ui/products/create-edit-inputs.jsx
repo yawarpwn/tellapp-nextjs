@@ -1,7 +1,7 @@
 import { CATEGORIES } from '@/constants'
 import { Input } from '@/ui/components/input'
 import Link from 'next/link'
-import SubmitActionButton from '../submit-action-button'
+import { SubmitButton } from '@/ui/components/submit-button'
 
 function CreateEditInputs({ state, product }) {
 	return (
@@ -85,7 +85,7 @@ function CreateEditInputs({ state, product }) {
 				<Link href={'/products'} className='btn'>
 					Cancelar
 				</Link>
-				<SubmitActionButton />
+				<SubmitButton />
 			</footer>
 		</>
 	)

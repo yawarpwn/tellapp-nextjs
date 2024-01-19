@@ -1,5 +1,5 @@
 import { Input } from '@/ui/components/input'
-import SubmitActionButton from '@/ui/submit-action-button'
+import SubmitButton from '@/ui/submit-action-button'
 import Link from 'next/link'
 import React from 'react'
 
@@ -57,7 +57,7 @@ function CreateEditInputs({ agency, state }) {
 				<Link href={'/products'} className='btn'>
 					Cancelar
 				</Link>
-				<SubmitActionButton />
+				<SubmitButton />
 			</footer>
 		</>
 	)
