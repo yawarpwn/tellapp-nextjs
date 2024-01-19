@@ -1,7 +1,7 @@
 import { createServerClient } from '@/lib/supabase'
 import LoginForm from '@/ui/login-form'
 import { cookies } from 'next/headers'
-import { notFound, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 export default async function Home() {
 	const storeCookie = cookies()
 	const supabase = createServerClient(storeCookie)
