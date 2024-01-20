@@ -1,6 +1,5 @@
 import { updateQuotation } from '@/lib/actions/quoatations'
-import { fetchCustomers } from '@/lib/customers-data'
-import { fetchQuotationById } from '@/lib/quotations-data'
+import { fetchQuotationById } from '@/lib/data/quotations'
 import Breadcrumbs from '@/ui/breadcrumbs'
 import EditForm from '@/ui/quotations/edit-form'
 import { CreateUpdateQuotationSkeleton } from '@/ui/skeletons/quotations'
@@ -8,12 +7,10 @@ import { Suspense } from 'react'
 
 async function EditFormWrapper({ number }) {
 	const quotation = await fetchQuotationById({ number })
-	const customers = await fetchCustomers()
 	return (
 		<EditForm
 			action={updateQuotation}
 			quotationToUpdate={quotation}
-			serverCustomers={customers}
 		/>
 	)
 }

@@ -1,6 +1,6 @@
 import { createQuotation } from '@/lib/actions/quoatations'
-import { fetchCustomers } from '@/lib/customers-data'
-import { fetchLastQuotation } from '@/lib/quotations-data'
+import { fetchCustomers } from '@/lib/data/customers'
+import { fetchLastQuotation } from '@/lib/data/quotations'
 import Breadcrumbs from '@/ui/breadcrumbs'
 import AddForm from '@/ui/quotations/add-form'
 import { CreateUpdateQuotationSkeleton } from '@/ui/skeletons/quotations'

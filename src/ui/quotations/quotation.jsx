@@ -1,5 +1,5 @@
 import { EditIcon } from '@/icons'
-import { fetchQuotationById } from '@/lib/quotations-data'
+import { fetchQuotationById } from '@/lib/data/quotations'
 import DownloadPDF from '@/ui/pdf/download-pdf'
 import { getIgv } from '@/utils'
 import Link from 'next/link'

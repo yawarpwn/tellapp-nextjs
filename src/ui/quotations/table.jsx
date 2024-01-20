@@ -1,5 +1,5 @@
 import { EyeIcon } from '@/icons'
-import { fetchFilteredQuotations } from '@/lib/quotations-data'
+import { fetchFilteredQuotations } from '@/lib/data/quotations'
 import { getIgv } from '@/utils'
 import { formatDateToLocal } from '@/utils'
 import Link from 'next/link'

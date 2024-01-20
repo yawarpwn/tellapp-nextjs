@@ -3,7 +3,6 @@ import { Quotation } from '@/ui/quotations/quotation'
 import { QuotationSkeleton } from '@/ui/skeletons/quotations'
 import { Suspense } from 'react'
 
-export const dynamic = 'force-dynamic'
 async function QuotationPage({ params }) {
 	const { number } = params
 
