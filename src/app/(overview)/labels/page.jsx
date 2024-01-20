@@ -1,4 +1,4 @@
-import { fetchFilteredLabels, fetchLabelsPages } from '@/lib/labels-data'
+import { fetchLabelsPages } from '@/lib/data/labels'
 import { AddButton } from '@/ui/buttons'
 import LabelsTable from '@/ui/labels/table'
 import Pagination from '@/ui/pagination'

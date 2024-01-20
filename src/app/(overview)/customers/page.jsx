@@ -1,5 +1,4 @@
-import { fetchCustomersPages } from '@/lib/customers-data'
-import { AddButton } from '@/ui/buttons'
+import { fetchCustomersPages } from '@/lib/data/customers'
 import { AddCustomerForm } from '@/ui/customers'
 import CustomersTable from '@/ui/customers/table'
 import Pagination from '@/ui/pagination'

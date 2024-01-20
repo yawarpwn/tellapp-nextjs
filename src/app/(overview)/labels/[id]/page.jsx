@@ -1,4 +1,4 @@
-import { fetchLabelsById } from '@/lib/labels-data'
+import { fetchLabelsById } from '@/lib/data/labels'
 import PrintLabel from '@/ui/labels/print-label'
 import React from 'react'
 

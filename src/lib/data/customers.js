@@ -1,6 +1,5 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
-import { unstable_noStore as noStore } from 'next/cache'
 import { cookies } from 'next/headers'
 
 export async function fetchCustomers() {
@@ -29,7 +28,7 @@ export async function fetchFilteredCustomers({ query = '', currentPage = 1 }) {
 	// handle error
 	if (error) throw new Error('Error fetching customers')
 
-	return customers[0]
+	return customers
 }
 
 export async function fetchCustomersPages(query) {

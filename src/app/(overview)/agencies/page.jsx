@@ -1,7 +1,6 @@
-import { fetchAgenciesPages } from '@/lib/agencies-data'
+import { fetchAgenciesPages } from '@/lib/data/agencies'
 import { AddFormAgency } from '@/ui/agencies'
 import AgenciesTable from '@/ui/agencies/table'
-import { AddButton } from '@/ui/buttons'
 import Pagination from '@/ui/pagination'
 import Search from '@/ui/search'
 import { Suspense } from 'react'

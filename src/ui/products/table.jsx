@@ -1,5 +1,5 @@
 import { deleteProduct } from '@/lib/actions/products'
-import { fetchFilteredProducts } from '@/lib/products-data'
+import { fetchFilteredProducts } from '@/lib/data/products'
 import React from 'react'
 import DeleteActionForm from '../delete-action-form'
 import { EditProductForm } from '.'

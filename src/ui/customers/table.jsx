@@ -1,4 +1,4 @@
-import { fetchFilteredCustomers } from '@/lib/customers-data'
+import { fetchFilteredCustomers } from '@/lib/data/customers'
 import { EditCustomerForm } from '@/ui/customers'
 import DeleteForm from './delete-form'
 

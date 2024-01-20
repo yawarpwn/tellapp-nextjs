@@ -1,6 +1,6 @@
 import { EyeIcon } from '@/icons'
 import { deleteLabel } from '@/lib/actions/labels'
-import { fetchFilteredLabels } from '@/lib/labels-data'
+import { fetchFilteredLabels } from '@/lib/data/labels'
 import Link from 'next/link'
 import React from 'react'
 import { EditButton } from '../buttons'

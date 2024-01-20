@@ -1,6 +1,6 @@
 import { updateLabel } from '@/lib/actions/labels'
-import { fetchFilteredAgencies } from '@/lib/agencies-data'
-import { fetchLabelsById } from '@/lib/labels-data'
+import { fetchFilteredAgencies } from '@/lib/data/agencies'
+import { fetchLabelsById } from '@/lib/data/labels'
 import AddLabelForm from '@/ui/labels/add-form'
 
 async function UpdateLagelPage({ params }) {

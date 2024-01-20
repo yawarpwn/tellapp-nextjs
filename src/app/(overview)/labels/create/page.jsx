@@ -1,5 +1,5 @@
 import { createLabel } from '@/lib/actions/labels'
-import { fetchFilteredAgencies } from '@/lib/agencies-data'
+import { fetchFilteredAgencies } from '@/lib/data/agencies'
 import AddLabelForm from '@/ui/labels/add-form'
 
 async function CreateLabelPage() {
