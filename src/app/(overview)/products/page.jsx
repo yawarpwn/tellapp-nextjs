@@ -1,4 +1,4 @@
-import { fetchProductsPages } from '@/lib/products-data'
+import { fetchProductsPages } from '@/lib/data/products'
 import Pagination from '@/ui/pagination'
 import { AddProductForm } from '@/ui/products'
 import ProductTable from '@/ui/products/table'
@@ -15,10 +15,8 @@ async function ProductsPage({ searchParams }) {
 			<header className='flex items-center gap-2 justify-between'>
 				<Search placeholder='Buscar producto...' />
 				<AddProductForm />
-				{/* <AddButton href={'/products/create'} /> */}
 			</header>
 			<Suspense fallback={<ProductsSkeleton />}>
-				{/* <ProductsSkeleton /> */}
 				<ProductTable query={query} currentPage={page} />
 			</Suspense>
 			<Pagination totalPages={totalPages} />

@@ -1,9 +1,23 @@
 'use client'
 
-import { SubmitButton } from '@/ui/components/submit-button'
+// import { SubmitButton } from '@/ui/components/submit-button'
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
-import { createPortal } from 'react-dom'
+import { createPortal, useFormStatus } from 'react-dom'
+
+function SubmitButton() {
+	const { pending } = useFormStatus()
+	return (
+		<>
+			<button disabled={pending} className='btn btn-success'>
+				{pending
+					? <span className='loading loading-spinner'></span>
+					: 'Aceptar'}
+			</button>
+			<button disabled={pending} className='btn btn-error'>Cancelar</button>
+		</>
+	)
+}
 
 function ConfirmModalAction(
 	{
@@ -62,9 +76,6 @@ function ConfirmModalAction(
 					{children}
 					<footer className='flex items-center justify-between'>
 						<SubmitButton />
-						<button onClick={onClose} type='button' className='btn btn-error'>
-							Cancelar
-						</button>
 					</footer>
 				</form>
 			</dialog>,

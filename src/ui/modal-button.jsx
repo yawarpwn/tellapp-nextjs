@@ -47,6 +47,7 @@ function UpdateEditForm(
 					Cancelar
 				</button>
 				<button disabled={isPending} type='submit' className='btn'>
+					{isPending && <span className='loading loading-spinner'></span>}
 					Aceptar
 				</button>
 			</footer>
