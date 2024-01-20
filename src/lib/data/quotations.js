@@ -52,13 +52,12 @@ export async function fetchQuotationById({ number }) {
 	// create supabase Client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
-
 	const { data: quotations, error } = await supabase.from('quotations').select()
 		.eq(
 			'number',
 			Number(number),
 		)
-	if (error) throw new Error('Failed to fetch product by id ')
+	if (error) throw new Error('Failed to fetch quotation by id ')
 
 	return quotations[0]
 }

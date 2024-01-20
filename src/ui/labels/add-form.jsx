@@ -1,12 +1,12 @@
 'use client'
 import { getDni, getRuc } from '@/services/sunat'
 import { Input } from '@/ui/components/input'
+import { SubmitButton } from '@/ui/components/submit-button'
 import toast from '@/ui/components/toaster'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
 import ItemPickerModal from '../components/item-picker-modal'
-import { SubmitButton } from '@/ui/components/submit-button'
 
 const initialState = {
 	message: null,
@@ -32,8 +32,6 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
 		const { value, name } = event.target
 		setLabel({ ...label, [name]: value })
 	}
-
-	console.log({ labelToEdit })
 
 	const handleSearch = async () => {
 		const isRuc = label.dni_ruc.length === 11

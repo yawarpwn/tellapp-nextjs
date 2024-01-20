@@ -35,6 +35,7 @@ const UpdateCustomerSchema = CustomerSchema
 const CreateCustomerSchema = CustomerSchema.omit({ id: true })
 
 export async function createCustomer(_, formData) {
+	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
 
@@ -55,19 +56,14 @@ export async function createCustomer(_, formData) {
 		}
 	}
 
-	try {
-		const { error } = await supabase.from(TABLE).insert(validatedFields.data)
-		if (error) {
-			throw new Error('Database Error: Failed to create customer')
-		}
-
-		revalidatePath('/customers')
-	} catch (error) {
+	const { error } = await supabase.from(TABLE).insert(validatedFields.data)
+	if (error) {
 		return {
-			message: error.message,
-			error: true,
+			message: 'Database Error: Failed to create customer',
 		}
 	}
+
+	revalidatePath('/customers')
 }
 
 export async function updateCustomer(formData) {
@@ -90,19 +86,14 @@ export async function updateCustomer(formData) {
 		}
 	}
 
-	try {
-		const { error } = await supabase.from(TABLE).update(validatedFields.data)
-			.eq('id', validatedFields.data.id)
-		if (error) {
-			throw new Error('No se puedo actualizar')
-		}
-		revalidatePath('/')
-	} catch (error) {
+	const { error } = await supabase.from(TABLE).update(validatedFields.data)
+		.eq('id', validatedFields.data.id)
+	if (error) {
 		return {
-			message: error.message,
-			error: true,
+			messge: 'Database Error: Failed to update customer',
 		}
 	}
+	revalidatePath('/')
 }
 
 export async function deleteCustomer(_, formData) {
@@ -111,14 +102,11 @@ export async function deleteCustomer(_, formData) {
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
 
-	try {
-		const { error } = await supabase.from(TABLE).delete().eq('id', id)
-		if (error) throw new Error('Error al eliminar cliente')
-		revalidatePath('/customers')
-	} catch (error) {
+	const { error } = await supabase.from(TABLE).delete().eq('id', id)
+	if (error) {
 		return {
-			message: error.message,
-			error: true,
+			message: 'Database Error: Failed to delete customer',
 		}
 	}
+	revalidatePath('/customers')
 }

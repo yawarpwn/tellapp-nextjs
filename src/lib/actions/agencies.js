@@ -37,8 +37,10 @@ export async function createAgency(_, formData) {
 		destinations: formData.get('destinations'),
 	}
 
+	// validated fields
 	const validatedFields = CreateAgency.safeParse(rawData)
 
+	// if error
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
@@ -46,22 +48,23 @@ export async function createAgency(_, formData) {
 		}
 	}
 
+	// prepare data to insert
 	const agencieToInsert = {
 		...validatedFields.data,
 		destinations: validatedFields.data.destinations.split(','),
 	}
 
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLE).insert(agencieToInsert)
-		if (error) {
-			throw new Error('Database Error: Failed to create agency')
-		}
-	} catch (error) {
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
+
+	// insert data to db
+	const { error } = await supabase.from(TABLE).insert(agencieToInsert)
+
+	// handle error
+	if (error) {
 		return {
-			message: error.message,
-			error: true,
+			message: 'Database Error: no se pudo crear la agencia',
 		}
 	}
 
@@ -80,8 +83,10 @@ export async function updateAgency(_, formData) {
 		destinations: formData.get('destinations'),
 	}
 
+	// validated fields
 	const validatedFields = UpdateAgency.safeParse(rawData)
 
+	// if error
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
@@ -89,41 +94,36 @@ export async function updateAgency(_, formData) {
 		}
 	}
 
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
 
-		const agencieToUpdate = {
-			...validatedFields.data,
-			destinations: validatedFields.data.destinations.split(','),
-		}
+	// prepare data to update
+	const agencieToUpdate = {
+		...validatedFields.data,
+		destinations: validatedFields.data.destinations.split(','),
+	}
 
-		const { error } = await supabase.from(TABLE).update(agencieToUpdate)
-		if (error) {
-			throw new Error('Error al actualizar agencia')
-		}
-		revalidatePath('/agencies')
-	} catch (error) {
+	// update data in db
+	const { error } = await supabase.from(TABLE).update(agencieToUpdate)
+
+	// handle error
+	if (error) {
 		return {
-			message: error.message,
-			error: true,
+			message: 'Error actualizando agencia',
 		}
 	}
+
+	revalidatePath('/agencies')
 }
 
 export async function deleteAgency(_, formData) {
 	const id = formData.get('id')
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = supabase.from(TABLE).delete().eq('id', id)
-		if (error) {
-			throw new Error('Error al eliminar agencia')
-		}
-		revalidatePath('/agencies')
-	} catch (error) {
-		return {
-			message: 'Error eliminando cliente',
-		}
-	}
+
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
+	await supabase.from(TABLE).delete().eq('id', id)
+
+	revalidatePath('/agencies')
 }

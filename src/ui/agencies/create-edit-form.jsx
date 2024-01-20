@@ -13,8 +13,6 @@ export default function CreateEditAgencyForm({ agency, action }) {
 	const [state, dispatch] = useFormState(action, initialState)
 	const destinations = agency?.destinations?.toString() || ''
 
-	console.log(state)
-
 	return (
 		<form
 			action={dispatch}

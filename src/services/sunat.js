@@ -7,8 +7,6 @@ export async function getRuc(ruc) {
 	const res = await fetch(query)
 	const data = await res.json()
 
-	console.log('data', data)
-
 	if (data.success === false) {
 		throw new Error('Ruc no encotrado')
 	}

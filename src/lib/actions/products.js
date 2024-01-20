@@ -46,34 +46,24 @@ export async function createProduct(_, formData) {
 	}
 
 	// Insert to Database
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLE).insert(
-			validatedFields.data,
-		)
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
+	const { error } = await supabase.from(TABLE).insert(
+		validatedFields.data,
+	)
 
-		// if exists error
-		if (error) {
-			// code must be unique
-			if (error.code === '23505') {
-				return {
-					message: 'Error al ingresar el producto',
-					errors: { code: ['Codigo ya existe'] },
-				}
+	// if exists error
+	if (error) {
+		// code must be unique
+		if (error.code === '23505') {
+			return {
+				message: 'Error al ingresar el producto',
+				errors: { code: ['Codigo ya existe'] },
 			}
-
-			// generic error db
-			throw new Error('Error al insertar Proyecto')
-		}
-
-		revalidatePath('/products')
-	} catch (error) {
-		return {
-			message: 'Error al ingresar producto',
-			errors: true,
 		}
 	}
+
+	revalidatePath('/products')
 }
 
 // Update Product
@@ -98,50 +88,48 @@ export async function updateProduct(_, formData) {
 		}
 	}
 
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLE).update(
-			validatedFields.data,
-		).eq('id', validatedFields.data.id)
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
 
-		// if exists error
-		if (error) {
-			// code must be unique
-			if (error.code === '23505') {
-				return {
-					message: 'Error al ingresar el producto',
-					errors: { code: ['Codigo ya existe'] },
-				}
+	// update data in database
+	const { error } = await supabase.from(TABLE).update(
+		validatedFields.data,
+	).eq('id', validatedFields.data.id)
+
+	// if exists error
+	if (error) {
+		// code must be unique
+		if (error.code === '23505') {
+			return {
+				message: 'Error al ingresar el producto',
+				errors: { code: ['Codigo ya existe'] },
 			}
-
-			// generic error db
-			throw new Error('Error al insertar Proyecto')
-		}
-
-		revalidatePath('/products')
-	} catch (error) {
-		console.log('Error inserting Row', error)
-		return {
-			message: 'Error al Actualizar producto',
-			errors: true,
 		}
 	}
 
-	// revalidatePath('/products')
-	// redirect('/products')
+	revalidatePath('/products')
 }
 
 export async function deleteProduct(_, formData) {
+	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
 	const id = formData.get('id')
-	try {
-		const { error } = await supabase.from(TABLE).delete().eq('id', id)
-		revalidatePath('/products')
-	} catch (error) {
+
+	// delete data in database
+	const { error } = await supabase.from(TABLE).delete().eq('id', id)
+
+	// handle error
+	if (error) {
 		return {
 			message: 'Error eliminando cliente',
 		}
+	}
+
+	revalidatePath('/products')
+
+	return {
+		message: 'Error eliminando cliente',
 	}
 }

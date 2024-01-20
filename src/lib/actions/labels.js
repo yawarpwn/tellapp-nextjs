@@ -31,8 +31,10 @@ export async function createLabel(_, formData) {
 		agency_id: formData.get('agency_id') || null,
 	}
 
+	// validate fields
 	const validatedFields = CreateLabel.safeParse(rawData)
 
+	// if error
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
@@ -40,15 +42,15 @@ export async function createLabel(_, formData) {
 		}
 	}
 
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLE).insert(validatedFields.data)
-		if (error) throw new Error('Database Error: no se pudo crear el rotulo')
-	} catch (error) {
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
+	const { error } = await supabase.from(TABLE).insert(validatedFields.data)
+
+	// handle error
+	if (error) {
 		return {
-			message: error.message,
-			error: true,
+			message: 'Database Error: no se pudo crear el rotulo',
 		}
 	}
 
@@ -69,8 +71,10 @@ export async function updateLabel(_, formData) {
 		agency_id: formData.get('agency_id') || null,
 	}
 
+	// validated fields
 	const validatedFields = UpdateLabel.safeParse(rawData)
 
+	// if error
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
@@ -78,18 +82,20 @@ export async function updateLabel(_, formData) {
 		}
 	}
 
-	console.log(validatedFields.data)
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
 
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLE).update(validatedFields.data)
-			.eq('id', rawData.id)
-		if (error) throw new Error('Database Error: Failed to update product')
-	} catch (error) {
+	const { id } = validatedFields.data
+
+	// update in db
+	const { error } = await supabase.from(TABLE).update(validatedFields.data)
+		.eq('id', id)
+
+	// handle error
+	if (error) {
 		return {
-			message: error.message,
-			error: true,
+			message: 'Database Error: Failed to update product',
 		}
 	}
 
@@ -99,16 +105,11 @@ export async function updateLabel(_, formData) {
 
 export async function deleteLabel(_, formData) {
 	const id = formData.get('id')
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLE).delete().eq('id', id)
-		if (error) throw new Error('Database Error: Failed to delete product')
-		revalidatePath('/labels')
-	} catch (error) {
-		return {
-			message: error.message,
-			error: true,
-		}
-	}
+
+	// createa supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
+	await supabase.from(TABLE).delete().eq('id', id)
+
+	revalidatePath('/labels')
 }

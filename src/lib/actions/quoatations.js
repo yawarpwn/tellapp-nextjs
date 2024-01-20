@@ -51,7 +51,10 @@ export async function createQuotation(_, formData) {
 		items: JSON.parse(formData.get('items')),
 	}
 
+	// validated fields with zod
 	const validatedFields = CreateQuotation.safeParse(rawData)
+
+	// if error
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
@@ -59,27 +62,23 @@ export async function createQuotation(_, formData) {
 		}
 	}
 
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLE).insert(validatedFields.data)
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
+	const { error } = await supabase.from(TABLE).insert(validatedFields.data)
+
+	// handle error
+	if (error) {
 		if (error?.code === '23505') {
 			return {
 				errors: {
 					number: ['Ya existe es cotización '],
 				},
-				error: true,
 			}
 		}
 
-		if (error) {
-			throw new Error('Database Error: Creando quotation')
-		}
-	} catch (error) {
-		console.log('Db Error: Creando quotation', error)
 		return {
-			message: error.message,
-			error: true,
+			message: 'Database Error: Creando quotation',
 		}
 	}
 
@@ -88,9 +87,8 @@ export async function createQuotation(_, formData) {
 }
 
 // Update Product
-const UpdateQuotation = QuotationSchema.omit({ number: true })
+const UpdateQuotation = QuotationSchema
 export async function updateQuotation(_, formData) {
-	const quoNumber = formData.get('number')
 	const rawData = {
 		id: formData.get('id'),
 		ruc: formData.get('ruc') || null,
@@ -98,11 +96,14 @@ export async function updateQuotation(_, formData) {
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
 		include_igv: formData.get('igv'),
+		number: formData.get('number'),
 		items: JSON.parse(formData.get('items')),
 	}
 
+	// validated fields
 	const validatedFields = UpdateQuotation.safeParse(rawData)
 
+	// if have error
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
@@ -110,43 +111,36 @@ export async function updateQuotation(_, formData) {
 		}
 	}
 
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLE).update(validatedFields.data)
-			.eq(
-				'id',
-				validatedFields.data.id,
-			)
+	const { number, id } = validatedFields.data
 
-		if (error) {
-			return {
-				message: 'Error actualizando cotización',
-				error: true,
-			}
-		}
-	} catch (error) {
-		console.log('Error DB: Update quotation ', error)
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
+	const { error } = await supabase.from(TABLE).update(validatedFields.data)
+		.eq(
+			'id',
+			id,
+		)
+
+	// handle error
+	if (error) {
 		return {
-			message: error.message,
+			message: 'Error actualizando cotización',
 			error: true,
 		}
 	}
 
 	revalidatePath('/quotations')
-	redirect(`/quotations/${quoNumber}`)
+	redirect(`/quotations/${number}`)
 }
 
 export async function deleteQuotation(_, formData) {
 	const id = formData.get('id')
-	try {
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		await supabase.from(TABLE).delete().eq('id', id)
-		revalidatePath('/quotations')
-	} catch (error) {
-		return {
-			message: 'Error eliminando cliente',
-		}
-	}
+
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createServerClient(cookieStore)
+
+	await supabase.from(TABLE).delete().eq('id', id)
+	revalidatePath('/quotations')
 }
