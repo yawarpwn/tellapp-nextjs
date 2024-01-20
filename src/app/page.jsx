@@ -2,7 +2,7 @@ import { createServerClient } from '@/lib/supabase'
 import LoginForm from '@/ui/login-form'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-export default async function Home() {
+export default async function Home({ searchParams }) {
 	const storeCookie = cookies()
 	const supabase = createServerClient(storeCookie)
 	const {
@@ -32,7 +32,7 @@ export default async function Home() {
 									Adminitra cotizaciónes, clientes y más.
 								</h2>
 							</header>
-							<LoginForm />
+							<LoginForm message={searchParams?.message} />
 							<footer className='mt-10 text-center text-sm'>
 								<a href='#'>Olvidaste tu contraseña?</a>
 							</footer>

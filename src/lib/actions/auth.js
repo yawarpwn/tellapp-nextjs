@@ -1,24 +1,44 @@
 'use server'
 
-import { createServerClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { z } from 'zod'
+const AuthSchema = z.object({
+	password: z.string(),
+	email: z.string().email(),
+})
+export async function signIn(_, formData) {
+	const entries = Object.fromEntries(formData)
+	const validateFields = AuthSchema.safeParse(entries)
 
-export async function loginWithEmailAndPassword({ email, password }) {
+	if (!validateFields.success) {
+		return {
+			message: 'Faltan completar campos',
+			errors: validateFields.error.flatten().fieldErrors,
+		}
+	}
+
+	const { email, password } = validateFields.data
+
 	const storeCookie = cookies()
-	const supabase = createServerClient(storeCookie)
+	const supabase = createClient(storeCookie)
 
-	const result = await supabase.auth.signInWithPassword({
+	const { error } = await supabase.auth.signInWithPassword({
 		email,
 		password,
 	})
 
-	return JSON.stringify(result)
+	if (error) {
+		redirect('/?message=Password or Email invalido')
+	}
+
+	redirect('/quotations')
 }
 
-export async function logout() {
-	const storedCookie = cookies()
-	const supabase = createServerClient(storedCookie)
+export async function signOut() {
+	const storeCookie = cookies()
+	const supabase = createClient(storeCookie)
 	await supabase.auth.signOut()
 	redirect('/')
 }

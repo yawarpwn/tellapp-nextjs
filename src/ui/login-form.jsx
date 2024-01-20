@@ -1,80 +1,52 @@
 'use client'
 
-import { createBrowserClient } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { signIn } from '@/lib/actions/auth'
+import { useFormState } from 'react-dom'
+import { SubmitButton } from './components/submit-button'
 
-export default function LoginForm() {
-	const [isPending, setIsPending] = useState(false)
-	const [error, setError] = useState()
-	const router = useRouter()
-	const signInWithEmail = async ({ password, email }) => {
-		const supabase = createBrowserClient()
-		setIsPending(true)
-		try {
-			const { error } = await supabase.auth.signInWithPassword({
-				password,
-				email,
-			})
-
-			if (error) throw new Error(error)
-			router.push('/quotations')
-		} catch (error) {
-			setError('Credenciales invalidas')
-		} finally {
-			setIsPending(false)
-		}
-	}
-	const handleSubmit = e => {
-		e.preventDefault()
-		const formData = new FormData(e.target)
-		const email = formData.get('email')
-		const password = formData.get('password')
-		signInWithEmail({ password, email })
-	}
+export default function LoginForm({ message }) {
+	const [state, dispatch] = useFormState(signIn, { message: '', errors: {} })
 
 	return (
 		<>
-			<form onSubmit={handleSubmit}>
-				<div className='form-control'>
-					<label htmlFor='email' className='label'>
-						<span className='label-text'>Correo</span>
-					</label>
-					<input
-						type='email'
-						name='email'
-						id='email'
-						className='input'
-						placeholder='correo@dominio.com'
-						required
-					/>
-				</div>
-				<div className='form-control'>
-					<label htmlFor='password' className='label'>
-						<span className='label-text'>Constraseña</span>
-					</label>
-					<input
-						type='password'
-						name='password'
-						id='password'
-						className='input'
-						placeholder='********'
-						required
-					/>
-				</div>
-				{error && (
-					<div className='text-error mt-2'>
-						<p>{error}</p>
+			<form action={dispatch}>
+				<div className='flex flex-col gap-2'>
+					<div className='form-control'>
+						<label htmlFor='email' className='label'>
+							<span className='label-text'>Correo</span>
+						</label>
+						<input
+							type='email'
+							name='email'
+							id='email'
+							className='input'
+							placeholder='correo@dominio.com'
+							required
+						/>
+						{state.errors?.email && (
+							<p className='text-error mt-1'>{state.errors.email[0]}</p>
+						)}
 					</div>
-				)}
-				<button
-					disabled={isPending}
-					type='submit'
-					className='btn btn-primary mt-4 w-full'
-				>
-					<span>Iniciar Session</span>
-					{isPending && <span className='loading loading-dots'></span>}
-				</button>
+					<div className='form-control'>
+						<label htmlFor='password' className='label'>
+							<span className='label-text'>Constraseña</span>
+						</label>
+						<input
+							type='password'
+							name='password'
+							id='password'
+							className='input'
+							placeholder='********'
+							required
+						/>
+
+						{state.errors?.email && (
+							<p className='text-error mt-1'>{state.errors.password[0]}</p>
+						)}
+					</div>
+					<SubmitButton className='w-full btn-primary' />
+					{message && <p className='text-error'>{message}</p>}
+				</div>
 			</form>
 		</>
 	)
