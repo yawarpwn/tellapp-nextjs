@@ -11,9 +11,8 @@ export function SubmitButton({ text = 'Aceptar', className }) {
 				'btn-disabled': pending,
 			}, className)}
 		>
-			{pending
-				? <span className='loading loading-dots'></span>
-				: <span>{text}</span>}
+			{pending && <span className='loading loading-spinner'></span>}
+			<span>{text}</span>
 		</button>
 	)
 }
