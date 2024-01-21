@@ -38,6 +38,10 @@ function UpdateEditForm(
 				<div className='col-span-12 mt-2 text-error'>{state.message}</div>
 			)}
 			<footer className='col-span-12 flex justify-between mt-2'>
+				<button disabled={isPending} type='submit' className='btn'>
+					{isPending && <span className='loading loading-spinner'></span>}
+					Aceptar
+				</button>
 				<button
 					disabled={isPending}
 					onClick={closeModal}
@@ -45,10 +49,6 @@ function UpdateEditForm(
 					className='btn'
 				>
 					Cancelar
-				</button>
-				<button disabled={isPending} type='submit' className='btn'>
-					{isPending && <span className='loading loading-spinner'></span>}
-					Aceptar
 				</button>
 			</footer>
 		</form>

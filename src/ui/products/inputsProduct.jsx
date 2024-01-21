@@ -48,6 +48,7 @@ export function InputsProduct({ state, product }) {
 					type='number'
 					defaultValue={product?.cost}
 					placeholder='10.00'
+					step='0.1'
 					errors={state.errors?.cost}
 					ariaLabelledby={'cost-error'}
 				/>

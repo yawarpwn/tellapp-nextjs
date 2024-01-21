@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { EditButton } from '../buttons'
 
 function TableRow({ quotation }) {
+	const { formatedTotal } = getIgv(quotation.items)
+
 	return (
 		<tr>
 			<td>
@@ -16,7 +18,7 @@ function TableRow({ quotation }) {
 			</td>
 			<td>
 				<div>
-					<p className='w-[340px]'>{quotation.company}</p>
+					<p className='w-[360px]'>{quotation.company}</p>
 					<p>{quotation.ruc}</p>
 				</div>
 			</td>
@@ -26,7 +28,9 @@ function TableRow({ quotation }) {
 				</span>
 			</td>
 			<td>
-				{getIgv(quotation.items).total}
+				<div className='text-xs'>
+					{formatedTotal}
+				</div>
 			</td>
 			<td>
 				<div className='flex items-center gap-x-2'>
@@ -42,49 +46,57 @@ function TableRow({ quotation }) {
 	)
 }
 
+function QuotationCard({ quotation }) {
+	const { formatedTotal } = getIgv(quotation.items)
+
+	return (
+		<div
+			key={quotation.id}
+			className='card card-compact'
+		>
+			<div className='card-body bg-base-200'>
+				<div className='flex flex-col items-center justify-between border-b border-base-content/10 pb-4 w-full'>
+					<div className='mb-2 flex items-center justify-between w-full'>
+						<p>
+							<span className='text-primary '>#</span>
+							<span>
+								{quotation.number}
+							</span>
+						</p>
+						<div>
+							{quotation.ruc ?? 'xxxxxxxxxxx'}
+						</div>
+					</div>
+					<p className='text-xs text-base-content/70'>
+						{quotation.company ?? 'Sin RUC'}
+					</p>
+				</div>
+				<div className='flex w-full items-center justify-between'>
+					<p>
+						{formatedTotal}
+					</p>
+					<p>{formatDateToLocal(quotation.created_at)}</p>
+					<div className='flex justify-end gap-2'>
+						<EditButton
+							href={`/quotations/${quotation.number}/update`}
+						/>
+						<Link href={`/quotations/${quotation.number}`}>
+							<EyeIcon />
+						</Link>
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+}
+
 async function QuotationsTable({ query, currentPage }) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
 	return (
 		<div className='mt-2'>
 			<div className='md:hidden flex flex-col gap-2'>
-				{quotations?.map((quotation) => (
-					<div
-						key={quotation.id}
-						className='card card-compact'
-					>
-						<div className='card-body bg-base-200'>
-							<div className='flex flex-col items-center justify-between border-b border-base-content/10 pb-4 w-full'>
-								<div className='mb-2 flex items-center justify-between w-full'>
-									<p>
-										<span className='text-primary '>#</span>
-										<span>
-											{quotation.number}
-										</span>
-									</p>
-									<div>
-										{quotation.ruc}
-									</div>
-								</div>
-								<p className='text-xs text-base-content/70'>
-									{quotation.company}
-								</p>
-							</div>
-							<div className='flex w-full items-center justify-between'>
-								<p>
-									S/ {getIgv(quotation.items).total}
-								</p>
-								<p>{formatDateToLocal(quotation.created_at)}</p>
-								<div className='flex justify-end gap-2'>
-									<EditButton
-										href={`/quotations/${quotation.number}/update`}
-									/>
-									<Link href={`/quotations/${quotation.number}`}>
-										<EyeIcon />
-									</Link>
-								</div>
-							</div>
-						</div>
-					</div>
+				{quotations?.map(quotation => (
+					<QuotationCard key={quotation.id} quotation={quotation} />
 				))}
 			</div>
 			<div className='overflow-x-auto'>

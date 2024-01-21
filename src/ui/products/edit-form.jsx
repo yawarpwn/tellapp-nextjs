@@ -10,7 +10,6 @@ const initialState = {
 }
 function EditForm({ product }) {
 	const [state, dispatch] = useFormState(updateProduct, initialState)
-	console.log({ state })
 	return (
 		<form action={dispatch}>
 			<CreateEditInputs product={product} state={state} />

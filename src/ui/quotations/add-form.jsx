@@ -2,8 +2,9 @@
 
 import useAutoSave from '@/hooks/use-autosave'
 import useQuotations from '@/hooks/use-quotations'
+import { createClient } from '@/lib/supabase/client'
 import ItemPickerModal from '@/ui/components/item-picker-modal'
-import _ from 'lodash'
+import compare from 'just-compare'
 import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
 import CreateEditInputs from './create-edit-inputs'
@@ -28,6 +29,7 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
 	const [state, dispatch] = useFormState(action, initialState)
 	const [savedQuotation, setSavedQuotation] = useState(null)
 	const [isCustomersModalOpen, setIsCustomersModalOpen] = useState(false)
+	const [customers, setCustomer] = useState([])
 
 	const closeSavedQuotationModal = () => {
 		setSavedQuotation(null)
@@ -59,8 +61,18 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
 		}
 	}, [])
 
+	useEffect(() => {
+		const getCustomers = async () => {
+			const supabase = createClient()
+			const { data: customers } = await supabase.from('customers').select()
+			setCustomer(customers)
+		}
+
+		getCustomers()
+	}, [])
+
 	const saveInLocalStoreage = () => {
-		const isEmpety = _.isEqual(quotation, initialQuotationState)
+		const isEmpety = compare(quotation, initialQuotationState)
 		if (!isEmpety) {
 			localStorage.setItem('__QUOTATION__', JSON.stringify(quotation))
 		}
@@ -107,7 +119,7 @@ function AddForm({ action, serverCustomers, lastQuotationNumber }) {
 				isOpen={isCustomersModalOpen}
 				onClose={closeCustomersModal}
 				onPick={handlePick}
-				items={serverCustomers}
+				items={customers}
 				renderLabel={item => <p className='text-sm'>{item.name}</p>}
 				filterProperty='name'
 			/>

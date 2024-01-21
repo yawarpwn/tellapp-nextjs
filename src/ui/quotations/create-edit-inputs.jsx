@@ -2,9 +2,9 @@
 
 import { PlusIcon } from '@/icons'
 import { Input } from '@/ui/components/input'
+import { SubmitButton } from '@/ui/components/submit-button'
 import toast from '@/ui/components/toaster'
 import Link from 'next/link'
-import { SubmitButton } from '@/ui/components/submit-button'
 import ItemsTable from './items-table'
 
 import { getRuc } from '@/services/sunat'
@@ -21,8 +21,6 @@ function CreateEditInputs({
 }) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
-
-	console.log(quotation)
 
 	const handleBlur = useCallback(async () => {
 		if (quotation.ruc && quotation.ruc.length === 11) {

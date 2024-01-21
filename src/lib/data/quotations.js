@@ -1,30 +1,38 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
+import { isValidNumber } from '@/utils'
 import { cookies } from 'next/headers'
 
+const TABLE = 'quotations'
+
 export async function fetchFilteredQuotations({ query = '', currentPage = 1 }) {
+	query.trim()
+
 	// Create supabaseClient
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
-	let queryBuilder = supabase.from('quotations').select('*')
-	if (query === '') {
-		queryBuilder = queryBuilder.or(`company.ilike.%${query}%`)
-	} else if (!isNaN(query)) {
-		queryBuilder = queryBuilder.or(`number.eq.${Number(query)}`)
-	} else {
-		queryBuilder = queryBuilder.or(`company.ilike.%${query}%`)
-	}
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE
-	const { data: quotations, error } = await queryBuilder.range(
-		offset,
-		offset + ITEMS_PER_PAGE,
-	)
-		.order('number', { ascending: false })
 
-	// handle error
-	if (error) throw new Error('Error fetching quotations')
+	// Build query
+	let queryBuilder = supabase.from(TABLE).select('*')
+		.range(offset, offset + ITEMS_PER_PAGE)
+		.order('number', {
+			ascending: false,
+		})
 
+	// case is valid number
+	if (isValidNumber(query)) {
+		queryBuilder = queryBuilder.eq('number', query)
+	} else {
+		queryBuilder.ilike('company', `%${query}%`)
+	}
+
+	const { data: quotations, error } = await queryBuilder
+
+	if (error) {
+		throw new Error('Error fetching quotations')
+	}
 	return quotations
 }
 
@@ -32,10 +40,10 @@ export async function fetchQuotationsPages({ query = '' }) {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
-	// WARN: noStore()
+
 	const { count, error } = await supabase.from('quotations').select('*', {
 		count: 'exact',
-	}).ilike('company', `%${query}%`)
+	}).ilike('company', `%${query}%`).limit(1)
 
 	// handle error
 	if (error) throw new Error('Failed to fetch total number of customers')
@@ -72,7 +80,7 @@ export async function fetchLastQuotation() {
 	).order(
 		'number',
 		{ ascending: false },
-	).limit(1)
+	)
 
 	// handle error
 	if (error) throw new Error('Failed to fetch last quotation')

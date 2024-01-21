@@ -1,15 +1,13 @@
 'use client'
 
 import FormModal from '@/ui/components/form-modal'
-import { Input }Search from '@/ui/components/input-search'
+import InputSearch from '@/ui/components/input-search'
 import { useMemo, useState } from 'react'
 function CustomersModal(
 	{ isOpenModal, onCloseModal, onCustomerPick, serverCustomers },
 ) {
 	const [filter, setFilter] = useState('')
 	const [selectedCustomer, setSelectedCustomer] = useState(null)
-
-	console.log({ selectedCustomer })
 
 	const handleSubmit = event => {
 		event.preventDefault()
