@@ -1,6 +1,19 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
+
+export async function fetchAgencies() {
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	// fetch all agencieso
+	const { data: agencies, error } = await supabase.from('agencies').select('*')
+
+	if (error) throw new Error('Error fetching agencies')
+
+	return agencies
+}
 export async function fetchFilteredAgencies({ query = '', currentPage = 1 }) {
 	// create supabase client
 	const cookieStore = cookies()
