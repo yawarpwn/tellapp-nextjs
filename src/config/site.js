@@ -1,9 +1,9 @@
 export const siteConfig = {
-	name: 'TellApp - Features to help you',
-	description: 'Tellsenales.com app help',
+	name: 'TellApp - Administración',
+	description: 'Tellsenales.com Cotizaciones y  Administración',
 	ogImage: 'https://nextui.org/twitter-cards/nextui.jpeg',
 	author: 'tellsenales.com',
 	email: 'tellsenales@gmail.com',
-	siteUrl: 'https://tellapp.vercel.app',
+	siteUrl: 'https://tellsenales.vercel.app',
 	creator: '@tellapp',
 }

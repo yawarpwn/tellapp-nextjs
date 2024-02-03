@@ -1,5 +1,6 @@
 import {
 	CustomersIcon,
+	GalleryIcon,
 	PrinterIcon,
 	ProductsIcon,
 	QuotationIcon,
@@ -50,5 +51,11 @@ export const NAVIGATION = [
 		title: 'Agencias',
 		href: '/agencies',
 		icon: TruckIcon,
+	},
+
+	{
+		title: 'Galeria',
+		href: '/galeria',
+		icon: GalleryIcon,
 	},
 ]

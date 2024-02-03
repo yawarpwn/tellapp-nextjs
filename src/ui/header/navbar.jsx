@@ -1,16 +1,9 @@
 'use client'
 
 import { ArrowLeft, BarsIcon } from '@/icons'
-import { Sidebar } from '@/ui/sidebar'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
 
 function Navbar() {
-	// const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-	// const openMenuMobile = () => setIsMobileMenuOpen(true)
-	// const closeMobileMenu = () => setIsMobileMenuOpen(false)
 	const router = useRouter()
 
 	return (

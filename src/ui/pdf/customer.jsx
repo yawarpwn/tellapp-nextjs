@@ -8,12 +8,12 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	rowLeft: {
-		width: '85%',
+		width: '80%',
 		paddingRight: '80px',
 	},
 
 	rowRight: {
-		width: '15%',
+		width: '20%',
 	},
 	row: {
 		display: 'flex',

@@ -12,11 +12,6 @@ export const metadata = {
 		template: `%s | ${siteConfig.name}`,
 	},
 	description: siteConfig.description,
-	links: [
-		{
-			rel: '',
-		},
-	],
 }
 
 export default async function RootLayout({ children }) {
