@@ -36,6 +36,7 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
+    "@types/react": "18.2.55",
     "autoprefixer": "latest",
     "daisyui": "^4.6.0",
     "eslint": "latest",

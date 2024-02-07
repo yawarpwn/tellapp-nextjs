@@ -16,7 +16,7 @@ const initialState = {
 	errors: {},
 }
 
-function AddForm({ action, serverCustomers, lastQuotationNumber }) {
+function AddForm({ action, lastQuotationNumber }) {
 	const initialQuotationState = {
 		number: lastQuotationNumber + 1,
 		company: '',
