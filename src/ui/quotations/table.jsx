@@ -1,4 +1,4 @@
-import { EyeIcon } from '@/icons'
+import { EyeIcon, StartIcon } from '@/icons'
 import { fetchFilteredQuotations } from '@/lib/data/quotations'
 import { getIgv } from '@/utils'
 import { formatDateToLocal } from '@/utils'
@@ -7,7 +7,6 @@ import { EditButton } from '../buttons'
 
 function TableRow({ quotation }) {
 	const { formatedTotal } = getIgv(quotation.items)
-
 	return (
 		<tr>
 			<td>
@@ -40,6 +39,15 @@ function TableRow({ quotation }) {
 					<Link href={`/quotations/${quotation.number}`}>
 						<EyeIcon />
 					</Link>
+					<button
+						className={quotation.is_regular_customer
+							? 'text-primary'
+							: 'text-base-300'}
+					>
+						{quotation.is_regular_customer
+							? <StartIcon filled />
+							: <StartIcon />}
+					</button>
 				</div>
 			</td>
 		</tr>
@@ -113,7 +121,10 @@ async function QuotationsTable({ query, currentPage }) {
 					</thead>
 					<tbody>
 						{quotations?.map(quotation => (
-							<TableRow key={quotation.id} quotation={quotation} />
+							<TableRow
+								key={quotation.id}
+								quotation={quotation}
+							/>
 						))}
 					</tbody>
 				</table>

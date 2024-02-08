@@ -65,6 +65,7 @@ export async function createQuotation(_, formData) {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
+
 	const { error } = await supabase.from(TABLE).insert(validatedFields.data)
 
 	// handle error
