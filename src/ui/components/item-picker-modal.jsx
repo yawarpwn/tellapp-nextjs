@@ -8,12 +8,14 @@ function ItemPickerModal(
 	{ isOpen, onClose, onPick, items, renderLabel, filterProperty },
 ) {
 	const [filter, setFilter] = useState('')
-	const [selectedItem, setSelectedItem] = useState(null)
+	const [selectedItemId, setSelectedItemId] = useState(null)
+
+	const selectedItem = items.find(item => item.id === selectedItemId)
 
 	const handleSubmit = event => {
 		event.preventDefault()
 
-		if (!selectedItem) return
+		if (!selectedItemId) return
 
 		onPick(selectedItem)
 		setFilter('')
@@ -40,14 +42,14 @@ function ItemPickerModal(
 
 	const handleCloseModal = () => {
 		setFilter('')
-		setSelectedItem(null)
+		setSelectedItemId(null)
 		onClose()
 	}
 
 	const hasItems = items && items.length > 0
 
 	return (
-		<Modal isOpen={isOpen} onClose={handleCloseModal}>
+		<Modal size='xl' isOpen={isOpen} onClose={handleCloseModal}>
 			<form onSubmit={handleSubmit}>
 				<div className='mt-4'>
 					<InputSearch
@@ -55,7 +57,7 @@ function ItemPickerModal(
 						onSearchChange={handleSearchCustomer}
 					/>
 				</div>
-				<div className='overflow-y-auto h-[300px] mt-4'>
+				<div className='overflow-y-auto h-[500px] mt-4'>
 					{hasItems
 						&& ItemsToRender.map(item => {
 							return (
@@ -66,11 +68,11 @@ function ItemPickerModal(
 									<div className='flex items-center gap-2'>
 										<input
 											onChange={() => {
-												setSelectedItem(item)
+												setSelectedItemId(item.id)
 											}}
 											type='checkbox'
-											className='checkbox'
-											checked={selectedItem?.id === item.id}
+											className='checkbox checkbox-xs'
+											checked={selectedItemId === item.id}
 										/>
 										{renderLabel(item)}
 									</div>

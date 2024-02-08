@@ -65,8 +65,6 @@ export default function useQuotations({ initialData }) {
 		})
 	}
 
-	console.log({ quotation })
-
 	return {
 		addItem,
 		deleteItem,

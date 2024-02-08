@@ -36,8 +36,6 @@ function AddForm({ action, lastQuotationNumber }) {
 		setSavedQuotation(null)
 	}
 
-	console.log({ initialState })
-
 	const openCustomersModal = () => setIsCustomersModalOpen(true)
 	const closeCustomersModal = () => setIsCustomersModalOpen(false)
 	const {
@@ -95,6 +93,7 @@ function AddForm({ action, lastQuotationNumber }) {
 			company: customer.name,
 			ruc: customer.ruc,
 			address: customer.address,
+			is_regular_customer: true,
 		})
 	}
 

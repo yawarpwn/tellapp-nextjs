@@ -67,7 +67,7 @@ function CustomersModal(
 											setSelectedCustomer(customer)
 										}}
 										type='checkbox'
-										className='checkbox'
+										className='checkbox checkbox-xs'
 										checked={selectedCustomer?.id === customer.id}
 									/>
 									<p className='py-2 text-sm'>{customer.name}</p>
