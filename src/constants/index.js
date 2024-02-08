@@ -55,7 +55,7 @@ export const NAVIGATION = [
 
 	{
 		title: 'Galeria',
-		href: '/galeria',
+		href: '/gallery',
 		icon: GalleryIcon,
 	},
 ]

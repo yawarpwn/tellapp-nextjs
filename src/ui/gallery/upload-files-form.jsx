@@ -1,24 +1,27 @@
 'use client'
 import { uploadFile } from '@/lib/actions/gallery'
-import { useState } from 'react'
+import { useDropzone } from 'react-dropzone'
+// import { useState } from 'react'
 export function UploadFilesForm() {
-	const [files, setFiles] = useState([])
-
-	const handleSubmit = (event) => {
-		event.preventDefault()
-		uploadFile(files)
+	const onDrop = (acceptedFiles) => {
+		console.log(acceptedFiles)
+		uploadFile.bind(null, acceptedFiles)
 	}
-
-	const handleChange = (event) => {
-		for (const file of event.target.files) {
-			setFiles(prevFiles => [...prevFiles, file])
-		}
-	}
-
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+		onDrop,
+	})
 	return (
-		<form onSubmit={handleSubmit}>
-			<input onChange={handleChange} name='file' type='file' multiple />
-			<button>Enviar</button>
-		</form>
+		<>
+			<div {...getRootProps()}>
+				<input {...getInputProps()} />
+				{isDragActive
+					? <p>Drop the files here</p>
+					: <p>Dran n some files or click to select files</p>}
+			</div>
+			{/* <form action={uploadFile}> */}
+			{/* 	<input name='file' type='file' multiple /> */}
+			{/* 	<button>Enviar</button> */}
+			{/* </form> */}
+		</>
 	)
 }

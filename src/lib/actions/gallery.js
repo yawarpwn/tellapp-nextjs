@@ -54,9 +54,9 @@ async function uploadFileServer(bucketName, fileName, file) {
 	})
 }
 
-export async function uploadFile(formData) {
-	const file = formData.get('file')
-	console.log(file)
+export async function uploadFile(files, formData) {
+	console.log('server---')
+	console.log({ files, formData })
 	//
 	// const cookieStored = cookies()
 	// const supabase = createClient(cookieStored)

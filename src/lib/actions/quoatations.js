@@ -11,8 +11,8 @@ const TABLE = 'quotations'
 const QuotationSchema = z.object({
 	number: z.coerce.number(),
 	id: z.string(),
-	include_igv: z.custom((value) => value === 'on' ? true : false),
-	is_regular_customer: z.custom((value) => value === 'on' ? true : false),
+	include_igv: z.coerce.boolean(),
+	is_regular_customer: z.coerce.boolean(),
 	ruc: z
 		.string()
 		.length(11, {
@@ -53,6 +53,8 @@ export async function createQuotation(_, formData) {
 		is_regular_customer: formData.get('is_regular_customer'),
 	}
 
+	console.log(rawData)
+
 	// validated fields with zod
 	const validatedFields = CreateQuotation.safeParse(rawData)
 
@@ -63,6 +65,8 @@ export async function createQuotation(_, formData) {
 			message: 'Missing Fields. Failed to Create Invoice.',
 		}
 	}
+
+	console.log('aca no llega')
 
 	// create supabase client
 	const cookieStore = cookies()
