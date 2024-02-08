@@ -51,6 +51,10 @@ export default function useQuotations({ initialData }) {
 	const handleInputChange = event => {
 		let { name, value } = event.target
 
+		if (name == 'is_regular_customer' || name == 'include_igv') {
+			value = event.target.checked
+		}
+
 		if (name === 'price' || name === 'qty') {
 			value = parseInt(value)
 		}
@@ -60,6 +64,8 @@ export default function useQuotations({ initialData }) {
 			[name]: value,
 		})
 	}
+
+	console.log({ quotation })
 
 	return {
 		addItem,

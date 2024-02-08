@@ -24,8 +24,9 @@ function AddForm({ action, lastQuotationNumber }) {
 		address: '',
 		deadline: '',
 		items: [],
+		is_regular_customer: false,
+		include_igv: true,
 	}
-
 	const [state, dispatch] = useFormState(action, initialState)
 	const [savedQuotation, setSavedQuotation] = useState(null)
 	const [isCustomersModalOpen, setIsCustomersModalOpen] = useState(false)
@@ -34,6 +35,8 @@ function AddForm({ action, lastQuotationNumber }) {
 	const closeSavedQuotationModal = () => {
 		setSavedQuotation(null)
 	}
+
+	console.log({ initialState })
 
 	const openCustomersModal = () => setIsCustomersModalOpen(true)
 	const closeCustomersModal = () => setIsCustomersModalOpen(false)

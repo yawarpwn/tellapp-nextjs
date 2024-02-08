@@ -1,6 +1,6 @@
 'use server'
 
-import { createServerClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -11,7 +11,8 @@ const TABLE = 'quotations'
 const QuotationSchema = z.object({
 	number: z.coerce.number(),
 	id: z.string(),
-	include_igv: z.coerce.boolean().default(true),
+	include_igv: z.custom((value) => value === 'on' ? true : false),
+	is_regular_customer: z.custom((value) => value === 'on' ? true : false),
 	ruc: z
 		.string()
 		.length(11, {
@@ -47,8 +48,9 @@ export async function createQuotation(_, formData) {
 		company: formData.get('company') || 'SIN RUC PROPORCIONADO',
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
-		include_igv: formData.get('igv'),
 		items: JSON.parse(formData.get('items')),
+		include_igv: formData.get('include_igv'),
+		is_regular_customer: formData.get('is_regular_customer'),
 	}
 
 	// validated fields with zod
@@ -64,7 +66,33 @@ export async function createQuotation(_, formData) {
 
 	// create supabase client
 	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
+	const supabase = createClient(cookieStore)
+
+	const {
+		ruc,
+		company,
+		address,
+		phone,
+		is_regular_customer,
+	} = validatedFields.data
+
+	// Si esta marco como cliente regular agregamos a la DB
+	if (is_regular_customer) {
+		const { error, data: customers } = await supabase.from('customers').insert({
+			ruc,
+			name: company,
+			address,
+			phone,
+		})
+
+		if (error) {
+			return {
+				message: 'Database Error: Creando quotation',
+			}
+		}
+
+		console.log('customer added', customers)
+	}
 
 	const { error } = await supabase.from(TABLE).insert(validatedFields.data)
 
@@ -96,9 +124,10 @@ export async function updateQuotation(_, formData) {
 		company: formData.get('company') || 'Sin Ruc Proporcionado',
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
-		include_igv: formData.get('igv'),
 		number: formData.get('number'),
 		items: JSON.parse(formData.get('items')),
+		include_igv: formData.get('include_igv'),
+		is_regular_customer: formData.get('is_regular_customer'),
 	}
 
 	// validated fields
@@ -116,7 +145,7 @@ export async function updateQuotation(_, formData) {
 
 	// create supabase client
 	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
+	const supabase = createClient(cookieStore)
 	const { error } = await supabase.from(TABLE).update(validatedFields.data)
 		.eq(
 			'id',
@@ -140,7 +169,7 @@ export async function deleteQuotation(_, formData) {
 
 	// create supabase client
 	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
+	const supabase = createClient(cookieStore)
 
 	await supabase.from(TABLE).delete().eq('id', id)
 	revalidatePath('/quotations')

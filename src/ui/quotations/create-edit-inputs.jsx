@@ -116,27 +116,31 @@ function CreateEditInputs({
 				/>
 				<div className='col-span-6 flex items-center gap-4'>
 					<input
-						id='frecuently-customer'
-						name='frecuently-customer'
+						id='is_regular_customer'
+						name='is_regular_customer'
 						className='checkbox checkbox-accent'
 						type='checkbox'
-						defaultChecked={true}
+						onChange={onChange}
+						checked={quotation.is_regular_customer}
+						// defaultChecked={quotation.is_regular_customer}
 					/>
-					<label htmlFor='customer-checkbox' className='text-sm'>
+					<label htmlFor='is_regular_customer' className='text-sm'>
 						Cliente frecuente
 					</label>
 				</div>
 
 				<div className='col-span-6 flex items-center gap-4'>
 					<input
-						name='igv'
-						id='igv'
-						defaultChecked={quotation.include_igv ?? true}
-						defaultValue={quotation.include_igv ?? true}
+						name='include_igv'
+						id='include_igv'
+						checked={quotation.include_igv}
+						onChange={onChange}
+						// defaultChecked={quotation.include_igv ?? true}
+						// defaultValue={quotation.include_igv ?? true}
 						className='checkbox checkbox-accent'
 						type='checkbox'
 					/>
-					<label htmlFor='igv' className='text-sm'>
+					<label htmlFor='include_igv' className='text-sm'>
 						Icluir IGV
 					</label>
 				</div>
