@@ -1,9 +1,10 @@
-import { EyeIcon, StartIcon } from '@/icons'
+import { EyeIcon } from '@/icons'
 import { fetchFilteredQuotations } from '@/lib/data/quotations'
 import { getIgv } from '@/utils'
 import { formatDateToLocal } from '@/utils'
 import Link from 'next/link'
 import { EditButton } from '../buttons'
+import { RegularCustomerToggle } from '../quotations/regular-customer-toggle'
 
 function TableRow({ quotation }) {
 	const { formatedTotal } = getIgv(quotation.items)
@@ -39,15 +40,7 @@ function TableRow({ quotation }) {
 					<Link href={`/quotations/${quotation.number}`}>
 						<EyeIcon />
 					</Link>
-					<button
-						className={quotation.is_regular_customer
-							? 'text-primary'
-							: 'text-base-300'}
-					>
-						{quotation.is_regular_customer
-							? <StartIcon filled />
-							: <StartIcon />}
-					</button>
+					<RegularCustomerToggle active={quotation.is_regular_customer} />
 				</div>
 			</td>
 		</tr>
@@ -85,6 +78,7 @@ function QuotationCard({ quotation }) {
 					</p>
 					<p>{formatDateToLocal(quotation.created_at)}</p>
 					<div className='flex justify-end gap-2'>
+						<RegularCustomerToggle active={quotation.is_regular_customer} />
 						<EditButton
 							href={`/quotations/${quotation.number}/update`}
 						/>
