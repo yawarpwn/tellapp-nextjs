@@ -8,18 +8,41 @@ cloudinary.config({
 	secure: true,
 })
 
+// cloudinary.uploader.upload('pepepe', {
+//   tags:
+// })
+
 export async function uploadStream(buffer, { title, category }) {
 	return new Promise((resolve, reject) => {
 		const kebabTitle = toKebabCase(title)
 		cloudinary.uploader.upload_stream({
-			folder: 'gallery' + '/' + category,
+			tags: [category],
+			folder: 'gallery',
 			public_id: kebabTitle,
+			format: 'webp',
+			overwrite: true,
+			transformation: [{
+				width: 'auto',
+				height: 1000,
+				crop: 'scale',
+				quality: 'auto',
+			}],
 		}, (error, result) => {
 			if (error) reject(error)
 			resolve(result)
 		})
 			.end(buffer)
 	})
+}
+
+export async function getResources() {
+	const { resources } = await cloudinary.api.resources({
+		'type': 'upload',
+		prefix: 'gallery',
+		max_results: 100,
+	})
+
+	return resources
 }
 
 export {

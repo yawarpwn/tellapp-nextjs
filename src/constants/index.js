@@ -64,8 +64,9 @@ export const GALLERY_CATEGORIES = {
 	'senales-viales': 'Señales Viales',
 	'senales-obras': 'Señales Obras',
 	'senales-convencionales': 'Señales Convencionales',
-	laminas: 'Láminas',
-	stickers: 'Stickers',
+	'laminas-reflectivas': 'Láminas reflectivas',
+	'rotulos/stickers': 'Rótulos y stickers',
 	'senales-fotoluminiscentes': 'Señales fotoluminiscentes',
 	'senales-decorativas': 'Señales Decorativas',
+	'plantillas': 'Plantillas',
 }

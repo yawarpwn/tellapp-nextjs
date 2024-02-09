@@ -1,23 +1,24 @@
-import { cloudinary } from '@/lib/cloudinary'
-import { UploadFilesForm } from '@/ui/gallery/upload-files-form'
+import { createClient } from '@/lib/supabase/server'
+import { GalleryAddButton } from '@/ui/gallery/gallery-add-button'
+import { GalleryImagesList } from '@/ui/gallery/gallery-images-list'
+import { cookies } from 'next/headers'
 
 export default async function Page() {
-	const { resources } = await cloudinary.api.resources({
-		'type': 'upload',
-		prefix: 'gallery',
-		max_results: 100,
-	})
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+	const { data: resources } = await supabase.from('gallery').select('*')
+
+	const categories = Object.groupBy(resources, ({ category }) => category)
 
 	return (
 		<div>
-			<UploadFilesForm />
-			<ul className='grid grid-cols-4 '>
-				{resources.map((resource) => (
-					<div key={resource.public_id} className='w-[72px] h-[72px]'>
-						<img src={resource.secure_url} />
-					</div>
-				))}
-			</ul>
+			<header className='flex justify-between'>
+				<h2 className='font-bold text-2xl '>Nuestra Galeria</h2>
+				<GalleryAddButton />
+			</header>
+			{Object.entries(categories).map(([title, images]) => {
+				return <GalleryImagesList key={title} title={title} images={images} />
+			})}
 		</div>
 	)
 }

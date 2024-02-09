@@ -4,16 +4,23 @@ import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 import { createPortal, useFormStatus } from 'react-dom'
 
-function SubmitButton() {
+function SubmitButton({ onClose }) {
 	const { pending } = useFormStatus()
 	return (
 		<>
-			<button disabled={pending} className='btn btn-success'>
+			<button type='submit' disabled={pending} className='btn btn-success'>
 				{pending
 					? <span className='loading loading-spinner'></span>
 					: 'Aceptar'}
 			</button>
-			<button disabled={pending} className='btn btn-error'>Cancelar</button>
+			<button
+				type='button'
+				disabled={pending}
+				onClick={onClose}
+				className='btn btn-error'
+			>
+				Cancelar
+			</button>
 		</>
 	)
 }
@@ -74,7 +81,7 @@ function ConfirmModalAction(
 					</header>
 					{children}
 					<footer className='flex items-center justify-between'>
-						<SubmitButton />
+						<SubmitButton onClose={onClose} />
 					</footer>
 				</form>
 			</dialog>,
