@@ -101,3 +101,21 @@ export function createActionClient(cookieStore) {
 		},
 	})
 }
+
+const uploadImage = async (file, path) => {
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+	const { data, error } = await supabase.storage.from('gallery').upload(
+		'obras',
+		file,
+		{
+			upsert: true,
+		},
+	)
+
+	if (error) {
+		console.log(error)
+	}
+
+	console.log(data)
+}

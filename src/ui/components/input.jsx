@@ -3,8 +3,6 @@ import { useId } from 'react'
 export function Input(
 	{
 		labelText,
-		className,
-		classContainer,
 		inputRef,
 		errors,
 		ariaLabelledby,

@@ -59,3 +59,13 @@ export const NAVIGATION = [
 		icon: GalleryIcon,
 	},
 ]
+
+export const GALLERY_CATEGORIES = {
+	'senales-viales': 'Señales Viales',
+	'senales-obras': 'Señales Obras',
+	'senales-convencionales': 'Señales Convencionales',
+	laminas: 'Láminas',
+	stickers: 'Stickers',
+	'senales-fotoluminiscentes': 'Señales fotoluminiscentes',
+	'senales-decorativas': 'Señales Decorativas',
+}
