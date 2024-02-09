@@ -16,11 +16,12 @@ export async function uploadStream(buffer, { title, category }) {
 	return new Promise((resolve, reject) => {
 		const kebabTitle = toKebabCase(title)
 		cloudinary.uploader.upload_stream({
-			tags: [category],
+			tagstitle: [category],
 			folder: 'gallery',
 			public_id: kebabTitle,
 			format: 'webp',
 			overwrite: true,
+			allowed_formats: ['jpg', 'png', 'webp'],
 			transformation: [{
 				width: 'auto',
 				height: 1000,
