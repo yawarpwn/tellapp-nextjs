@@ -90,6 +90,50 @@ export function UploadFileForm({ closeModal }) {
 	return (
 		<form onSubmit={handleSubmit}>
 			<section className='flex flex-col gap-4'>
+				{files.length === 0
+					? (
+						<div
+							{...getRootProps()}
+						>
+							<label
+								className={cn(
+									`mb-2 text-sm font-medium h-64 w-full flex items-center 
+                  justify-center bg-base-200  border-2 border-base-300 
+                  border-dashed cursor-pointer hover:bg-base-300 hover:border-zinc-600`,
+									{
+										'border-success': isDragAccept,
+										'border-error': isDragReject,
+									},
+								)}
+								htmlFor='file_input'
+							>
+								<div className='flex flex-col items-center text-zinc-600 p-8'>
+									<ImageIcon className='w-14 h-14' />
+									<p className='mb-2 text-sm text-center '>
+										<span className='font-semibold'>
+											{isDragActive
+												? 'Suelta la imagen aqui ...'
+												: 'Arrastra y suelta aqui, o click para seleccionar archivos'}
+										</span>
+										{' '}
+									</p>
+									<p className='text-xs '>
+										SVG, PNG, JPG or GIF
+									</p>
+								</div>
+								<input
+									{...getInputProps({})}
+									disabled={isPending}
+									required
+									className='block w-full text-sm text-base-content border border-base-300 rounded-lg cursor-pointer bg-base-200  focus:outline-none '
+									aria-describedby='file_input_help'
+									id='file_input'
+									type='file'
+								/>
+							</label>
+						</div>
+					)
+					: <ImagesPreview />}
 				<Input
 					required
 					name='title'
@@ -108,50 +152,6 @@ export function UploadFileForm({ closeModal }) {
 						return <option key={key} value={key}>{value}</option>
 					})}
 				</select>
-				{files.length === 0
-					? (
-						<div
-							{...getRootProps()}
-						>
-							<label
-								className={cn(
-									`mb-2 text-sm font-medium h-64 w-full flex items-center 
-                  justify-center bg-base-200  border-2 border-base-300 
-                  border-dashed cursor-pointer hover:bg-base-300 hover:border-zinc-600`,
-									{
-										'border-success': isDragAccept,
-										'border-error': isDragReject,
-									},
-								)}
-								htmlFor='file_input'
-							>
-								<div className='flex flex-col items-center text-zinc-600'>
-									<ImageIcon className='w-14 h-14' />
-									<p className='mb-2 text-sm '>
-										<span className='font-semibold'>
-											{isDragActive
-												? 'Drop the files here ...'
-												: 'Drag and drop some files here, or click to select files'}
-										</span>
-										{' '}
-									</p>
-									<p className='text-xs '>
-										SVG, PNG, JPG or GIF (MAX. 800x400px)
-									</p>
-								</div>
-								<input
-									{...getInputProps({})}
-									disabled={isPending}
-									required
-									className='block w-full text-sm text-base-content border border-base-300 rounded-lg cursor-pointer bg-base-200  focus:outline-none '
-									aria-describedby='file_input_help'
-									id='file_input'
-									type='file'
-								/>
-							</label>
-						</div>
-					)
-					: <ImagesPreview />}
 				<button disabled={isPending} className='btn btn-primary w-full'>
 					{isPending && <span className='loading loading-spinner' />}
 					Agregar foto
