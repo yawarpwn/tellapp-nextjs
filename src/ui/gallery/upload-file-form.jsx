@@ -2,34 +2,50 @@
 import { GALLERY_CATEGORIES } from '@/constants'
 import { uploadFile } from '@/lib/actions/gallery'
 import { Input } from '@/ui/components/input'
+import { cn } from '@/utils'
 import { ImageIcon } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTransition } from 'react'
 import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
 
 export function UploadFileForm({ closeModal }) {
-	const [imagePreview, setImagePreview] = useState(null)
-	const [loading, setLoading] = useState(false)
+	const [files, setFiles] = useState([])
 	const [isPending, startTransition] = useTransition()
 
-	console.log('render component')
-
 	const onDrop = useCallback((acceptedFiles) => {
-		acceptedFiles.forEach(file => {
-			const reader = new FileReader()
-
-			reader.onabort = () => console.log(' abort')
-			reader.onabort = () => console.log('file reading was aborted')
-			reader.onerror = () => console.log('file reading has failed')
-			reader.onload = () => {
-				// Do whatever you want with the file contents
-				const binaryStr = reader.result
-				console.log(binaryStr)
-			}
-			reader.readAsArrayBuffer(file)
-		})
+		setFiles(acceptedFiles.map(file =>
+			Object.assign(file, {
+				preview: URL.createObjectURL(file),
+			})
+		))
+		// acceptedFiles.forEach(file => {
+		// 	const reader = new FileReader()
+		//
+		// 	reader.onabort = () => console.log(' abort')
+		// 	reader.onabort = () => console.log('file reading was aborted')
+		// 	reader.onerror = () => console.log('file reading has failed')
+		// 	reader.onload = () => {
+		// 		// Do whatever you want with the file contents
+		// 		const binaryStr = reader.result
+		// 		console.log(binaryStr)
+		// 	}
+		// 	reader.readAsArrayBuffer(file)
+		// })
 	}, [])
+
+	const ImagesPreview = () => {
+		return files.map(file => (
+			<div key={file.name} className='w-full h-64 rounded-md overflow-hidden'>
+				<img
+					className='w-full h-full object-cover'
+					src={file.preview}
+					// onLoad={() =>
+					// 	URL.revokeObjectURL(file.preview)}
+				/>
+			</div>
+		))
+	}
 
 	const {
 		getRootProps,
@@ -38,13 +54,15 @@ export function UploadFileForm({ closeModal }) {
 		acceptedFiles,
 		isDragReject,
 		isDragAccept,
+		open,
 	} = useDropzone({
 		onDrop,
 		disabled: false,
+		noClick: true,
 		noKeyboard: false,
 		noDrag: false,
 		accept: {
-			'image/*': ['.jpg', '.png'],
+			'image/*': [],
 		},
 		maxFiles: 1,
 	})
@@ -69,20 +87,6 @@ export function UploadFileForm({ closeModal }) {
 		})
 	}
 
-	const onChange = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			const file = event.target.files[0]
-			setLoading(true)
-			const reader = new FileReader()
-			reader.onload = () => {
-				setImagePreview(
-					reader.result,
-					setLoading(false),
-				)
-			}
-			reader.readAsDataURL(file)
-		}
-	}
 	return (
 		<form onSubmit={handleSubmit}>
 			<section className='flex flex-col gap-4'>
@@ -93,6 +97,7 @@ export function UploadFileForm({ closeModal }) {
 					placeholder='Senal de seguridad preventiva ...'
 				/>
 				<select
+					defaultValue=''
 					disabled={isPending}
 					required
 					name='category'
@@ -103,50 +108,50 @@ export function UploadFileForm({ closeModal }) {
 						return <option key={key} value={key}>{value}</option>
 					})}
 				</select>
-
-				<div {...getRootProps()}>
-					<label
-						className={`mb-2 text-sm font-medium h-64 w-full flex items-center 
-justify-center bg-base-200 hover:bg-base-300 border-2 border-base-300 border-dashed cursor-pointer`}
-						htmlFor='file_input'
-					>
-						<div className='flex flex-col items-center text-zinc-600'>
-							<ImageIcon className='w-14 h-14' />
-							<p class='mb-2 text-sm '>
-								<span class='font-semibold'>
-									{isDragActive
-										? 'Drop the files here ...'
-										: 'Drag and drop some files here, or click to select files'}
-								</span>
-								{' '}
-							</p>
-							<p class='text-xs '>
-								SVG, PNG, JPG or GIF (MAX. 800x400px)
-							</p>
-						</div>
-						<input
-							{...getInputProps()}
-							disabled={isPending}
-							required
-							className='block w-full text-sm text-base-content border border-base-300 rounded-lg cursor-pointer bg-base-200  focus:outline-none '
-							aria-describedby='file_input_help'
-							id='file_input'
-							type='file'
-						/>
-					</label>
-				</div>
-				<aside className='flex flex-col items-center'>
-					{acceptedFiles.length > 0
-						&& (
-							<div className='w-full h-64 rounded-md overflow-hidden'>
-								<img
-									className='w-full h-full object-cover'
-									src={URL.createObjectURL(acceptedFiles[0])}
+				{files.length === 0
+					? (
+						<div
+							{...getRootProps()}
+						>
+							<label
+								className={cn(
+									`mb-2 text-sm font-medium h-64 w-full flex items-center 
+                  justify-center bg-base-200  border-2 border-base-300 
+                  border-dashed cursor-pointer hover:bg-base-300 hover:border-zinc-600`,
+									{
+										'border-success': isDragAccept,
+										'border-error': isDragReject,
+									},
+								)}
+								htmlFor='file_input'
+							>
+								<div className='flex flex-col items-center text-zinc-600'>
+									<ImageIcon className='w-14 h-14' />
+									<p className='mb-2 text-sm '>
+										<span className='font-semibold'>
+											{isDragActive
+												? 'Drop the files here ...'
+												: 'Drag and drop some files here, or click to select files'}
+										</span>
+										{' '}
+									</p>
+									<p className='text-xs '>
+										SVG, PNG, JPG or GIF (MAX. 800x400px)
+									</p>
+								</div>
+								<input
+									{...getInputProps({})}
+									disabled={isPending}
+									required
+									className='block w-full text-sm text-base-content border border-base-300 rounded-lg cursor-pointer bg-base-200  focus:outline-none '
+									aria-describedby='file_input_help'
+									id='file_input'
+									type='file'
 								/>
-							</div>
-						)}
-					{loading && <span className='loading loading-lg loading-spinner' />}
-				</aside>
+							</label>
+						</div>
+					)
+					: <ImagesPreview />}
 				<button disabled={isPending} className='btn btn-primary w-full'>
 					{isPending && <span className='loading loading-spinner' />}
 					Agregar foto
