@@ -1,20 +1,22 @@
 'use server'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
-import { cloudinary, uploadStream } from '../cloudinary'
+import { cloudinary, upload, uploadStream } from '../cloudinary'
 import { createClient } from '../supabase/server'
 
-export async function uploadFile(formData) {
-	const entries = Object.fromEntries(formData)
-
-	const { title, category, imageFile } = entries
-	const arrayBuffer = await imageFile.arrayBuffer()
-	const uit8Array = new Uint8Array(arrayBuffer)
-
-	const baseUrl = 'http://res.cloudinary.com/tellsenales-cloud/image/upload'
+export async function uploadFile(formData: FormData) {
+	const imageFile = formData.get('imageFile') as File
+	const category = formData.get('category') as string
+	const title = formData.get('title') as string
 
 	try {
-		// const result = await uploadStream(uit8Array, { title, category })
+		const arrayBuffer = await imageFile.arrayBuffer()
+		const mime = imageFile.type
+		const encoding = 'base64'
+		const base64Data = Buffer.from(arrayBuffer).toString('base64')
+		const fileUri = `data:${mime};${encoding},${base64Data}`
+
+		const baseUrl = 'http://res.cloudinary.com/tellsenales-cloud/image/upload'
 
 		// Insert image to cloudinary
 		const {
@@ -26,8 +28,8 @@ export async function uploadFile(formData) {
 			public_id,
 			version,
 			tags,
-		} = await uploadStream(uit8Array, { title, category })
-
+		} = await upload(fileUri, { category })
+		console.log('image inserted on cloudinary')
 		// prepared data  to insert in database
 		const dataToInsert = {
 			id: asset_id,
@@ -59,8 +61,11 @@ export async function uploadFile(formData) {
 			message: 'Imagen agregada con exito',
 		}
 	} catch (error) {
-		console.log(error)
-		throw new Error('Error al subir imagen')
+		console.log('ERRor uploadsteram::::', error)
+		return {
+			success: false,
+			message: 'Error al insertar imagen a la base de datos',
+		}
 	}
 }
 

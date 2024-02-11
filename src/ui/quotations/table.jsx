@@ -18,7 +18,7 @@ function TableRow({ quotation }) {
 			</td>
 			<td>
 				<div>
-					<p className='w-[360px]'>{quotation.company}</p>
+					<p className='w-[320px]'>{quotation.company}</p>
 					<p>{quotation.ruc}</p>
 				</div>
 			</td>

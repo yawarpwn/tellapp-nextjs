@@ -72,18 +72,18 @@ export function UploadFileForm({ closeModal }) {
 		const form = event.currentTarget
 		const formData = new FormData()
 		formData.append('title', form.title.value)
-		formData.append('imageFile', acceptedFiles[0])
+		formData.set('imageFile', acceptedFiles[0])
 		formData.append('category', form.category.value)
 
 		startTransition(async () => {
-			try {
-				const result = await uploadFile(formData)
-				toast.success(result.message)
-				form.reset()
-				closeModal()
-			} catch (error) {
-				toast.error(error)
+			const { success, message } = await uploadFile(formData)
+			if (!success) {
+				toast.error(message)
+				return
 			}
+			toast.success(message)
+			form.reset()
+			closeModal()
 		})
 	}
 
