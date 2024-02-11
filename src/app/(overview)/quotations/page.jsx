@@ -9,7 +9,6 @@ async function QuotationsPage({ searchParams }) {
 	const page = Number(searchParams?.page) || 1
 	const query = searchParams?.query || ''
 	const totalPages = await fetchQuotationsPages({ query })
-
 	return (
 		<>
 			<header className='flex items-center justify-between gap-2'>

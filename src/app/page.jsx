@@ -3,9 +3,9 @@ import LoginForm from '@/ui/login-form'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 export default async function Home({ searchParams }) {
-	console.log(process.version)
 	const storeCookie = cookies()
 	const supabase = createServerClient(storeCookie)
+
 	const {
 		data: { session },
 	} = await supabase.auth.getSession()
