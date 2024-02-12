@@ -1,10 +1,11 @@
 'use client'
 import { GALLERY_CATEGORIES } from '@/constants'
 import { XIcon } from '@/icons'
+import { uploadFiles } from '@/lib/actions/gallery'
 import { cn } from '@/utils'
 import { ImageIcon } from 'lucide-react'
 import React from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useTransition } from 'react'
 import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
 
@@ -16,7 +17,8 @@ interface Props {
 }
 export function UploadFileForm({ closeModal }: Props) {
 	const [files, setFiles] = useState<FileType[]>([])
-	const [loading, setLoading] = useState(false)
+	// const [isPending, setLoading] = useState(false)
+	const [isPending, startTransition] = useTransition()
 
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 		setFiles(acceptedFiles.map(file =>
@@ -72,7 +74,7 @@ export function UploadFileForm({ closeModal }: Props) {
 		maxFiles: 10,
 	})
 
-	const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
 		event.preventDefault()
 
 		// const formData = new FormData()
@@ -82,26 +84,17 @@ export function UploadFileForm({ closeModal }: Props) {
 			formData.append('files', file)
 		})
 
-		const pathname = window.location.pathname
-		setLoading(true)
-		try {
-			const res = await fetch(`/api/upload?path=${pathname}`, {
-				method: 'POST',
-				body: formData,
-			})
+		startTransition(async () => {
+			const { success, message } = await uploadFiles(formData)
 
-			if (!res.ok) throw new Error('Error al subir imagen')
+			if (!success) {
+				toast.error(message)
+				return
+			}
 
-			const data = await res.json()
-			if (!data.success) throw new Error('Error al subir imagen')
-			toast.success(data.message)
+			toast.success(message)
 			closeModal()
-		} catch (error) {
-			toast.error(error.message)
-		} finally {
-			setLoading(false)
-		}
-		// await uploadTest(formData)
+		})
 	}
 
 	return (
@@ -152,7 +145,7 @@ export function UploadFileForm({ closeModal }: Props) {
 					: <ImagesPreview />}
 				<select
 					defaultValue=''
-					disabled={loading}
+					disabled={isPending}
 					required
 					name='category'
 					className='select select-bordered'
@@ -166,15 +159,15 @@ export function UploadFileForm({ closeModal }: Props) {
 					className='select select-bordered'
 					defaultValue=''
 					required
-					disabled={loading}
+					disabled={isPending}
 					name='folder'
 				>
 					<option value='' disabled>Selecciona una carpeta</option>
 					<option value='gallery'>Galeria</option>
 					<option value='signals'>Señales</option>
 				</select>
-				<button disabled={loading} className='btn btn-primary w-full'>
-					{loading && <span className='loading loading-spinner' />}
+				<button disabled={isPending} className='btn btn-primary w-full'>
+					{isPending && <span className='loading loading-spinner' />}
 					Agregar foto
 				</button>
 			</section>
