@@ -91,3 +91,8 @@ export async function deleteFile(_, formData) {
 		console.log('errror deleting iamge', error)
 	}
 }
+
+export async function uploadTest(formdata: FormData) {
+	const files = formdata.get('files')
+	console.log(files)
+}

@@ -1,6 +1,6 @@
 'use client'
-
 import { deleteFile } from '@/lib/actions/gallery'
+import { type GalleryImage } from '@/types'
 import { GalleryDeleteForm } from '@/ui/gallery/galley-delete-form'
 import { cn } from '@/utils'
 import { EditIcon, MoreVertical, TrashIcon } from 'lucide-react'
@@ -8,8 +8,11 @@ import { EditIcon, MoreVertical, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import DeleteActionForm from '../delete-action-form'
 
-export function GalleryImageCard({ image }) {
-	const { thumb_url, id, public_id } = image
+interface Props {
+	image: GalleryImage
+}
+export function GalleryImageCard({ image }: Props) {
+	const { thumb } = image
 	const [active, setActive] = useState(false)
 
 	return (
@@ -28,13 +31,13 @@ export function GalleryImageCard({ image }) {
 					<button>
 						<EditIcon />
 					</button>
-					<DeleteActionForm
-						deleteAction={deleteFile}
-						id={id}
-						public_id={public_id}
-					/>
+					{/* <DeleteActionForm */}
+					{/* 	deleteAction={deleteFile} */}
+					{/* 	id={id} */}
+					{/* 	public_id={public_id} */}
+					{/* /> */}
 				</div>
-				<img src={thumb_url} className='w-full h-full object-contain' />
+				<img src={thumb} className='w-full h-full object-contain' />
 			</div>
 		</div>
 	)

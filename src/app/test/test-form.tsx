@@ -1,47 +1,37 @@
-// import { cloudinary } from '@/lib/cloudinary'
-// async function updateFile(formData) {
-// 	'use server'
-//
-// 	const file = formData.get('file')
-// 	const arrayBuffer = await file.arrayBuffer()
-// 	const buffer = new Uint8Array(arrayBuffer)
-//
-// 	console.log('cloud-name', cloudinary.config().cloud_name)
-//
-// 	try {
-// 		const result = await new Promise((resolve, reject) => {
-// 			cloudinary.uploader.upload_stream({}, (error, result) => {
-// 				if (error) reject(error)
-// 				resolve(result)
-// 			}).end(buffer)
-// 		})
-// 		console.log(result)
-// 	} catch (error) {
-// 		console.log(error)
-// 	}
-// }
-'use client'
+import { cloudinary } from '@/lib/cloudinary'
 import React from 'react'
 
-const handlesubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-	event.preventDefault()
-	const formData = new FormData(event.currentTarget)
-	try {
-		const res = await fetch('/api/upload', {
-			method: 'POST',
-			body: formData,
-		})
+async function uploadImageFile(file: File) {
+	const arrayBuffer = await file.arrayBuffer()
+	const buffer = Buffer.from(arrayBuffer)
 
-		if (!res.ok) throw new Error('Error en la peticion')
-		const data = await res.json()
-		console.log(data)
-	} catch (error) {
-		console.log('error', error)
-	}
+	return new Promise(async (resolve, reject) => {
+		await cloudinary.uploader.upload_stream(
+			{ folder: 'demo', resource_type: 'auto' },
+			async (error, result) => {
+				if (error) {
+					return reject(error)
+				}
+
+				return resolve(result)
+			},
+		).end(buffer)
+	})
 }
+
 export function TestForm() {
+	async function uploadImage(formData: FormData) {
+		'use server'
+		const imageFile = formData.get('imageFile') as File
+		try {
+			const result = await uploadImageFile(imageFile)
+			console.log(result)
+		} catch (error) {
+			console.log(error)
+		}
+	}
 	return (
-		<form onSubmit={handlesubmit}>
+		<form action={uploadImage}>
 			<input required type='file' name='imageFile' />
 			<button type='submit'>enviar</button>
 		</form>

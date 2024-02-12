@@ -1,4 +1,10 @@
-import { type UploadApiOptions, v2 as cloudinary } from 'cloudinary'
+import {
+	type ResourceApiResponse,
+	type UploadApiOptions,
+	v2 as cloudinary,
+} from 'cloudinary'
+
+import { type GalleryImage } from '@/types'
 
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -6,6 +12,38 @@ cloudinary.config({
 	api_secret: process.env.CLOUDINARY_API_SECRET,
 	secure: true,
 })
+
+function getThumbUrl(publicId: string) {
+	const thumbsUrl = cloudinary.url(publicId, {
+		width: 150,
+		height: 150,
+		crop: 'fill',
+	})
+	return thumbsUrl
+}
+
+export async function getResources(): Promise<ResourceApiResponse> {
+	return cloudinary.api.resources({
+		'type': 'upload',
+		prefix: 'gallery',
+		max_results: 100,
+	})
+}
+
+export async function fetchGalleryImages() {
+	const { resources } = await getResources()
+	const galleryImagesMapped = resources.map(image => ({
+		url: image.secure_url,
+		publicId: image.public_id,
+		thumb: getThumbUrl(image.public_id),
+	}))
+
+	return galleryImagesMapped
+}
+
+export async function deleteSource(publicId: string) {
+	return cloudinary.uploader.destroy(publicId)
+}
 
 export async function uploadStream(
 	buffer: Uint8Array | Buffer,
@@ -39,10 +77,19 @@ export async function uploadStream(
 	})
 }
 
-export async function upload(file: string, { category }: { category: string }) {
+export async function upload(
+	file: File,
+	{ category, folder }: { category: string; folder: string },
+) {
+	const mime = file.type
+	const arrayBuffer = await file.arrayBuffer()
+	const encoding = 'base64'
+	const base64Data = Buffer.from(arrayBuffer).toString('base64')
+	const fileUri = `data:${mime};${encoding},${base64Data}`
+
 	const options = {
-		tagstitle: [category],
-		folder: 'gallery',
+		tags: [category, folder],
+		folder,
 		format: 'webp',
 		overwrite: true,
 		allowed_formats: ['jpg', 'png', 'webp'],
@@ -54,17 +101,7 @@ export async function upload(file: string, { category }: { category: string }) {
 		}],
 	}
 
-	return cloudinary.uploader.upload(file, options)
-}
-
-export async function getResources() {
-	const { resources } = await cloudinary.api.resources({
-		'type': 'upload',
-		prefix: 'gallery',
-		max_results: 100,
-	})
-
-	return resources
+	return cloudinary.uploader.upload(fileUri, options)
 }
 
 export {

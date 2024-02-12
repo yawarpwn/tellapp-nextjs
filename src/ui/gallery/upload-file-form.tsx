@@ -1,50 +1,56 @@
 'use client'
 import { GALLERY_CATEGORIES } from '@/constants'
-import { uploadFile } from '@/lib/actions/gallery'
-import { Input } from '@/ui/components/input'
+import { XIcon } from '@/icons'
 import { cn } from '@/utils'
 import { ImageIcon } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
-import { useTransition } from 'react'
+import React from 'react'
+import { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
 
-export function UploadFileForm({ closeModal }) {
-	const [files, setFiles] = useState([])
-	const [isPending, startTransition] = useTransition()
+interface FileType extends File {
+	preview: string
+}
+interface Props {
+	closeModal: () => void
+}
+export function UploadFileForm({ closeModal }: Props) {
+	const [files, setFiles] = useState<FileType[]>([])
+	const [loading, setLoading] = useState(false)
 
-	const onDrop = useCallback((acceptedFiles) => {
+	const onDrop = useCallback((acceptedFiles: File[]) => {
 		setFiles(acceptedFiles.map(file =>
 			Object.assign(file, {
 				preview: URL.createObjectURL(file),
 			})
 		))
-		// acceptedFiles.forEach(file => {
-		// 	const reader = new FileReader()
-		//
-		// 	reader.onabort = () => console.log(' abort')
-		// 	reader.onabort = () => console.log('file reading was aborted')
-		// 	reader.onerror = () => console.log('file reading has failed')
-		// 	reader.onload = () => {
-		// 		// Do whatever you want with the file contents
-		// 		const binaryStr = reader.result
-		// 		console.log(binaryStr)
-		// 	}
-		// 	reader.readAsArrayBuffer(file)
-		// })
 	}, [])
 
 	const ImagesPreview = () => {
-		return files.map(file => (
-			<div key={file.name} className='w-full h-64 rounded-md overflow-hidden'>
-				<img
-					className='w-full h-full object-cover'
-					src={file.preview}
-					// onLoad={() =>
-					// 	URL.revokeObjectURL(file.preview)}
-				/>
+		return (
+			<div className='w-full h-64 rounded-md overflow-hidden grid grid-cols-5'>
+				{files.map(file => {
+					return (
+						<div className='relative ' key={file.name}>
+							<button
+								className='absolute top-2 right-1 btn btn-primary text-white btn-circle btn-xs '
+								onClick={() => {
+									setFiles(files.filter(f => f.name !== file.name))
+								}}
+							>
+								<XIcon size={16} />
+							</button>
+							<img
+								className='w-full h-full object-contain'
+								src={file.preview}
+								// onLoad={() =>
+								// 	URL.revokeObjectURL(file.preview)}
+							/>
+						</div>
+					)
+				})}
 			</div>
-		))
+		)
 	}
 
 	const {
@@ -54,7 +60,6 @@ export function UploadFileForm({ closeModal }) {
 		acceptedFiles,
 		isDragReject,
 		isDragAccept,
-		open,
 	} = useDropzone({
 		onDrop,
 		disabled: false,
@@ -64,27 +69,39 @@ export function UploadFileForm({ closeModal }) {
 		accept: {
 			'image/*': [],
 		},
-		maxFiles: 1,
+		maxFiles: 10,
 	})
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
 		event.preventDefault()
-		const form = event.currentTarget
-		const formData = new FormData()
-		formData.append('title', form.title.value)
-		formData.set('imageFile', acceptedFiles[0])
-		formData.append('category', form.category.value)
 
-		startTransition(async () => {
-			const { success, message } = await uploadFile(formData)
-			if (!success) {
-				toast.error(message)
-				return
-			}
-			toast.success(message)
-			form.reset()
-			closeModal()
+		// const formData = new FormData()
+		const formData = new FormData(event.target)
+
+		files.forEach(file => {
+			formData.append('files', file)
 		})
+
+		const pathname = window.location.pathname
+		setLoading(true)
+		try {
+			const res = await fetch(`/api/upload?path=${pathname}`, {
+				method: 'POST',
+				body: formData,
+			})
+
+			if (!res.ok) throw new Error('Error al subir imagen')
+
+			const data = await res.json()
+			if (!data.success) throw new Error('Error al subir imagen')
+			toast.success(data.message)
+			closeModal()
+		} catch (error) {
+			toast.error(error.message)
+		} finally {
+			setLoading(false)
+		}
+		// await uploadTest(formData)
 	}
 
 	return (
@@ -123,7 +140,6 @@ export function UploadFileForm({ closeModal }) {
 								</div>
 								<input
 									{...getInputProps({})}
-									disabled={isPending}
 									required
 									className='block w-full text-sm text-base-content border border-base-300 rounded-lg cursor-pointer bg-base-200  focus:outline-none '
 									aria-describedby='file_input_help'
@@ -134,15 +150,9 @@ export function UploadFileForm({ closeModal }) {
 						</div>
 					)
 					: <ImagesPreview />}
-				<Input
-					required
-					name='title'
-					labelText='Titulo'
-					placeholder='Senal de seguridad preventiva ...'
-				/>
 				<select
 					defaultValue=''
-					disabled={isPending}
+					disabled={loading}
 					required
 					name='category'
 					className='select select-bordered'
@@ -152,8 +162,19 @@ export function UploadFileForm({ closeModal }) {
 						return <option key={key} value={key}>{value}</option>
 					})}
 				</select>
-				<button disabled={isPending} className='btn btn-primary w-full'>
-					{isPending && <span className='loading loading-spinner' />}
+				<select
+					className='select select-bordered'
+					defaultValue=''
+					required
+					disabled={loading}
+					name='folder'
+				>
+					<option value='' disabled>Selecciona una carpeta</option>
+					<option value='gallery'>Galeria</option>
+					<option value='signals'>Señales</option>
+				</select>
+				<button disabled={loading} className='btn btn-primary w-full'>
+					{loading && <span className='loading loading-spinner' />}
 					Agregar foto
 				</button>
 			</section>
