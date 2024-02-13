@@ -22,13 +22,10 @@ export function GalleryImageCard({ image }: Props) {
 			<div className='block w-[100px] h-[100px] relative'>
 				<div
 					className={cn(
-						'flex justify-evenly absolute bottom-0 left-0 bg-base-200/50 backdrop-blur w-full h-8 translate-y-12 transition',
+						'flex justify-evenly absolute top-1 right-1 -translate-y-8 transition',
 						{ 'translate-y-0': active },
 					)}
 				>
-					<button>
-						<EditIcon />
-					</button>
 					<GalleryDeleteForm publicId={publicId} />
 				</div>
 				<img src={thumb} className='w-full h-full object-contain' />

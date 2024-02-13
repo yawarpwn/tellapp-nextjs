@@ -1,4 +1,4 @@
-import { upload } from '@/lib/cloudinary'
+import { uploadImageFile } from '@/lib/cloudinary'
 import { revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 		const folder = formData.get('folder') as string
 
 		const promises = files.map(async file => {
-			return upload(file, { category, folder })
+			return uploadImageFile(file, { category, folder })
 		})
 
 		await Promise.all(promises)

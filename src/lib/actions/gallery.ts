@@ -1,8 +1,6 @@
 'use server'
 import { revalidatePath } from 'next/cache'
-import { cookies } from 'next/headers'
-import { cloudinary, deleteSource, upload } from '../cloudinary'
-import { createClient } from '../supabase/server'
+import { deleteSource, uploadImageFile } from '../cloudinary'
 
 export async function uploadFiles(
 	formData: FormData,
@@ -12,7 +10,7 @@ export async function uploadFiles(
 	const folder = formData.get('folder') as string
 
 	const promises = imagesFiles.map(async file => {
-		return upload(file, { category, folder })
+		return uploadImageFile(file, { category, folder })
 	})
 
 	try {

@@ -1,5 +1,6 @@
 import {
 	type ResourceApiResponse,
+	type TransformationOptions,
 	type UploadApiOptions,
 	v2 as cloudinary,
 } from 'cloudinary'
@@ -15,9 +16,10 @@ cloudinary.config({
 
 function getThumbUrl(publicId: string) {
 	const thumbsUrl = cloudinary.url(publicId, {
-		width: 150,
+		width: 'auto',
 		height: 150,
 		crop: 'fill',
+		format: 'webp',
 	})
 	return thumbsUrl
 }
@@ -52,7 +54,6 @@ export async function uploadStream(
 	const options: UploadApiOptions = {
 		tagstitle: [category],
 		folder: 'gallery',
-		format: 'webp',
 		overwrite: true,
 		allowed_formats: ['jpg', 'png', 'webp'],
 		transformation: [{
@@ -60,6 +61,7 @@ export async function uploadStream(
 			height: 1000,
 			crop: 'scale',
 			quality: 'auto',
+			format: 'webp',
 		}],
 	}
 
@@ -77,7 +79,7 @@ export async function uploadStream(
 	})
 }
 
-export async function upload(
+export async function uploadImageFile(
 	file: File,
 	{ category, folder }: { category: string; folder: string },
 ) {
@@ -87,18 +89,21 @@ export async function upload(
 	const base64Data = Buffer.from(arrayBuffer).toString('base64')
 	const fileUri = `data:${mime};${encoding},${base64Data}`
 
-	const options = {
+	const options: UploadApiOptions = {
 		tags: [category, folder],
 		folder,
-		format: 'webp',
 		overwrite: true,
-		allowed_formats: ['jpg', 'png', 'webp'],
-		transformation: [{
-			width: 'auto',
-			height: 1000,
-			crop: 'scale',
-			quality: 'auto',
-		}],
+		format: 'jpeg',
+		allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+		transformation: [
+			{
+				width: 'auto',
+				height: 1000,
+				crop: 'scale',
+				quality: 'auto',
+				format: 'webp',
+			},
+		],
 	}
 
 	return cloudinary.uploader.upload(fileUri, options)
