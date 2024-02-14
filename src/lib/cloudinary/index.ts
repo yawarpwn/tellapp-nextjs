@@ -28,7 +28,7 @@ export async function getResources(): Promise<ResourceApiResponse> {
 	return cloudinary.api.resources({
 		'type': 'upload',
 		prefix: 'gallery',
-		max_results: 100,
+		max_results: 200,
 	})
 }
 
@@ -48,12 +48,14 @@ export async function deleteSource(publicId: string) {
 }
 
 export async function uploadStream(
-	buffer: Uint8Array | Buffer,
-	{ category }: { category: string },
+	file: File,
+	{ category, folder }: { category: string; folder: string },
 ) {
+	const arrayBuffer = await file.arrayBuffer()
+	const bytes = Buffer.from(arrayBuffer)
 	const options: UploadApiOptions = {
-		tagstitle: [category],
-		folder: 'gallery',
+		tags: [folder, category],
+		folder: folder,
 		overwrite: true,
 		allowed_formats: ['jpg', 'png', 'webp'],
 		transformation: [{
@@ -75,7 +77,7 @@ export async function uploadStream(
 				}
 				resolve(result)
 			},
-		).end(buffer)
+		).end(bytes)
 	})
 }
 
@@ -93,7 +95,6 @@ export async function uploadImageFile(
 		tags: [category, folder],
 		folder,
 		overwrite: true,
-		format: 'jpeg',
 		allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
 		transformation: [
 			{

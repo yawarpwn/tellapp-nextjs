@@ -1,6 +1,6 @@
 'use server'
 import { revalidatePath } from 'next/cache'
-import { deleteSource, uploadImageFile } from '../cloudinary'
+import { deleteSource, uploadImageFile, uploadStream } from '../cloudinary'
 
 export async function uploadFiles(
 	formData: FormData,
@@ -10,7 +10,7 @@ export async function uploadFiles(
 	const folder = formData.get('folder') as string
 
 	const promises = imagesFiles.map(async file => {
-		return uploadImageFile(file, { category, folder })
+		return uploadStream(file, { category, folder })
 	})
 
 	try {

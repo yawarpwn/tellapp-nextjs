@@ -53,8 +53,6 @@ export async function createQuotation(_, formData) {
 		is_regular_customer: formData.get('is_regular_customer'),
 	}
 
-	console.log(rawData)
-
 	// validated fields with zod
 	const validatedFields = CreateQuotation.safeParse(rawData)
 
@@ -65,8 +63,6 @@ export async function createQuotation(_, formData) {
 			message: 'Missing Fields. Failed to Create Invoice.',
 		}
 	}
-
-	console.log('aca no llega')
 
 	// create supabase client
 	const cookieStore = cookies()
@@ -82,20 +78,30 @@ export async function createQuotation(_, formData) {
 
 	// Si esta marco como cliente regular agregamos a la DB
 	if (is_regular_customer) {
-		const { error, data: customers } = await supabase.from('customers').insert({
+		// buscar si existe el ruc en customers
+		const { data: customers } = await supabase.from('customer').select().eq(
+			'ruc',
 			ruc,
-			name: company,
-			address,
-			phone,
-		})
+		)
 
-		if (error) {
-			return {
-				message: 'Database Error: Creando quotation',
+		// si no existe el ruc en customers agregamos
+		if (customers?.length === 0) {
+			const { error, data: customers } = await supabase.from('customers')
+				.insert({
+					ruc,
+					name: company,
+					address,
+					phone,
+				})
+
+			console.log('customer added', customers)
+
+			if (error) {
+				return {
+					message: 'Database Error: Creando quotation',
+				}
 			}
 		}
-
-		console.log('customer added', customers)
 	}
 
 	const { error } = await supabase.from(TABLE).insert(validatedFields.data)
