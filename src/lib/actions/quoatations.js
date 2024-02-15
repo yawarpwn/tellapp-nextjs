@@ -6,7 +6,8 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import z from 'zod'
 
-const TABLE = 'quotations'
+const QUOTATIONS_TABLE = 'quotations'
+const CUSTOMERS_TABLE = 'customers'
 
 const QuotationSchema = z.object({
 	number: z.coerce.number(),
@@ -69,24 +70,37 @@ export async function createQuotation(_, formData) {
 	const supabase = createClient(cookieStore)
 
 	const {
-		ruc,
+		number,
 		company,
+		ruc,
 		address,
-		phone,
+		deadline,
+		items,
+		include_igv,
 		is_regular_customer,
+		phone,
 	} = validatedFields.data
 
 	// Si esta marco como cliente regular agregamos a la DB
 	if (is_regular_customer) {
 		// buscar si existe el ruc en customers
-		const { data: customers } = await supabase.from('customer').select().eq(
+		const { data: customers, error: customersError } = await supabase.from(
+			CUSTOMERS_TABLE,
+		).select().eq(
 			'ruc',
 			ruc,
 		)
 
+		if (customersError) {
+			console.log({ customersError })
+			return {
+				message: 'Database Error: Creando quotation',
+			}
+		}
+
 		// si no existe el ruc en customers agregamos
 		if (customers?.length === 0) {
-			const { error, data: customers } = await supabase.from('customers')
+			const { error, data: customers } = await supabase.from(CUSTOMERS_TABLE)
 				.insert({
 					ruc,
 					name: company,
@@ -94,9 +108,8 @@ export async function createQuotation(_, formData) {
 					phone,
 				})
 
-			console.log('customer added', customers)
-
 			if (error) {
+				console.log(error)
 				return {
 					message: 'Database Error: Creando quotation',
 				}
@@ -104,7 +117,22 @@ export async function createQuotation(_, formData) {
 		}
 	}
 
-	const { error } = await supabase.from(TABLE).insert(validatedFields.data)
+	// prepare data to insert
+	//
+	const quotationToInsert = {
+		number,
+		company,
+		ruc,
+		address,
+		deadline,
+		items,
+		include_igv,
+		phone,
+	}
+
+	const { error } = await supabase.from(QUOTATIONS_TABLE).insert(
+		quotationToInsert,
+	)
 
 	// handle error
 	if (error) {
@@ -156,7 +184,9 @@ export async function updateQuotation(_, formData) {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
-	const { error } = await supabase.from(TABLE).update(validatedFields.data)
+	const { error } = await supabase.from(QUOTATIONS_TABLE).update(
+		validatedFields.data,
+	)
 		.eq(
 			'id',
 			id,
@@ -181,6 +211,6 @@ export async function deleteQuotation(_, formData) {
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
-	await supabase.from(TABLE).delete().eq('id', id)
+	await supabase.from(QUOTATIONS_TABLE).delete().eq('id', id)
 	revalidatePath('/quotations')
 }

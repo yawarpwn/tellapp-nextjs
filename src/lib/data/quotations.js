@@ -1,4 +1,5 @@
 import { ITEMS_PER_PAGE } from '@/constants'
+import { fetchCustomers } from '@/lib/data/customers'
 import { createClient } from '@/lib/supabase/server'
 import { isValidNumber } from '@/utils'
 import { cookies } from 'next/headers'
@@ -33,7 +34,18 @@ export async function fetchFilteredQuotations({ query = '', currentPage = 1 }) {
 	if (error) {
 		throw new Error('Error fetching quotations')
 	}
-	return quotations
+
+	const customers = await fetchCustomers()
+
+	const isRegularCustomer = (ruc) =>
+		customers.some(customer => customer.ruc === ruc)
+
+	const mappedQuotations = quotations.map(quo => ({
+		...quo,
+		is_regular_customer: isRegularCustomer(quo.ruc),
+	}))
+
+	return mappedQuotations
 }
 
 export async function fetchQuotationsPages({ query = '' }) {
@@ -67,7 +79,13 @@ export async function fetchQuotationById({ number }) {
 		)
 	if (error) throw new Error('Failed to fetch quotation by id ')
 
-	return quotations[0]
+	const quotation = quotations[0]
+	const customers = await fetchCustomers()
+	const isRegularCustomer = customers.some(c => c.ruc === quotation.ruc)
+	return {
+		...quotation,
+		is_regular_customer: isRegularCustomer,
+	}
 }
 
 export async function fetchLastQuotation() {
