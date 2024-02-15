@@ -179,13 +179,34 @@ export async function updateQuotation(_, formData) {
 		}
 	}
 
-	const { number, id } = validatedFields.data
+	const {
+		number,
+		id,
+		company,
+		ruc,
+		address,
+		deadline,
+		items,
+		include_igv,
+		phone,
+	} = validatedFields.data
+
+	const quotationToUpdate = {
+		number,
+		company,
+		ruc,
+		address,
+		deadline,
+		items,
+		include_igv,
+		phone,
+	}
 
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 	const { error } = await supabase.from(QUOTATIONS_TABLE).update(
-		validatedFields.data,
+		quotationToUpdate,
 	)
 		.eq(
 			'id',
