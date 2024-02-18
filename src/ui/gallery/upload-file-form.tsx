@@ -3,7 +3,7 @@ import { GALLERY_CATEGORIES } from '@/constants'
 import { XIcon } from '@/icons'
 import { uploadFiles } from '@/lib/actions/gallery'
 import { cn } from '@/utils'
-import { ImageIcon } from 'lucide-react'
+import { ImageIcon, PlusIcon } from 'lucide-react'
 import React from 'react'
 import { useCallback, useState, useTransition } from 'react'
 import { useDropzone } from 'react-dropzone'
@@ -105,41 +105,52 @@ export function UploadFileForm({ closeModal }: Props) {
 						<div
 							{...getRootProps()}
 						>
-							<label
-								className={cn(
-									`mb-2 text-sm font-medium h-64 w-full flex items-center 
-                  justify-center bg-base-200  border-2 border-base-300 
-                  border-dashed cursor-pointer hover:bg-base-300 hover:border-zinc-600`,
-									{
-										'border-success': isDragAccept,
-										'border-error': isDragReject,
-									},
-								)}
-								htmlFor='file_input'
-							>
-								<div className='flex flex-col items-center text-zinc-600 p-8'>
-									<ImageIcon className='w-14 h-14' />
-									<p className='mb-2 text-sm text-center '>
-										<span className='font-semibold'>
-											{isDragActive
-												? 'Suelta la imagen aqui ...'
-												: 'Arrastra y suelta aqui, o click para seleccionar archivos'}
-										</span>
-										{' '}
-									</p>
-									<p className='text-xs '>
-										SVG, PNG, JPG or GIF
-									</p>
-								</div>
-								<input
-									{...getInputProps({})}
-									required
-									className='block w-full text-sm text-base-content border border-base-300 rounded-lg cursor-pointer bg-base-200  focus:outline-none '
-									aria-describedby='file_input_help'
-									id='file_input'
-									type='file'
-								/>
-							</label>
+							<div className='bg-base-200 range-500 p-4'>
+								<label
+									className={cn(
+										`mb-2 text-sm font-medium h-64 w-full flex items-center 
+                    justify-center bg-base-200  border-4 border-base-300 rounded-[1.5rem] 
+                    border-dashed cursor-pointer hover:bg-base-300 hover:border-zinc-600`,
+										{
+											'border-success': isDragAccept,
+											'border-error': isDragReject,
+										},
+									)}
+									htmlFor='file_input'
+								>
+									<div className='flex flex-col items-center text-zinc-600 p-8'>
+										<div className='relative'>
+											<span className='absolute -top-1 -left-1 w-8 h-8 rounded-full bg-white flex items-center justify-center'>
+												<PlusIcon className='text-primary' />
+											</span>
+											<ImageIcon className='w-14 h-14' />
+										</div>
+										{isDragActive
+											? (
+												<h4 className='text-xl font-bold mt-4'>
+													Suelta tu archivo de imagen aqui ...
+												</h4>
+											)
+											: (
+												<h4 className='text-xl font-bold mt-4'>
+													Arrastra y suelta las imagenes o{' '}
+													<span className='text-primary'>explora</span>
+												</h4>
+											)}
+										<p className='text-xs mt-2 text-center'>
+											La imagen debe estar en formato JPEG, JPG, PNG
+										</p>
+									</div>
+									<input
+										{...getInputProps({})}
+										required
+										className='block w-full text-sm text-base-content border border-base-300 rounded-lg cursor-pointer bg-base-200  focus:outline-none '
+										aria-describedby='file_input_help'
+										id='file_input'
+										type='file'
+									/>
+								</label>
+							</div>
 						</div>
 					)
 					: <ImagesPreview />}
