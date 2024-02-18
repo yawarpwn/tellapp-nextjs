@@ -10,7 +10,8 @@ export async function uploadFiles(
 	const folder = formData.get('folder') as string
 
 	const promises = imagesFiles.map(async file => {
-		return uploadStream(file, { category, folder })
+		// return uploadStream(file, { category, folder })
+		uploadImageFile(file, { category, folder })
 	})
 
 	try {
