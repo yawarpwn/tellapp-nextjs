@@ -3,8 +3,9 @@ import Navbar from '@/ui/header/navbar'
 import { Sidebar } from '@/ui/sidebar'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import React from 'react'
 
-async function LayoutDashboar({ children }) {
+async function LayoutDashboar({ children }: { children: React.ReactNode }) {
 	const cookieStore = cookies()
 
 	const supabase = createServerClient(cookieStore)

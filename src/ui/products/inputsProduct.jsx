@@ -1,4 +1,4 @@
-import { CATEGORIES } from '@/constants'
+import { PRODUCT_CATEGORIES } from '@/constants'
 import { Input } from '@/ui/components/input'
 
 export function InputsProduct({ state, product }) {
@@ -82,7 +82,7 @@ export function InputsProduct({ state, product }) {
 					<option value='' disabled>
 						Categoria
 					</option>
-					{Object.values(CATEGORIES).map(value => (
+					{Object.values(PRODUCT_CATEGORIES).map(value => (
 						<option value={value} key={value}>
 							{value}
 						</option>

@@ -31,7 +31,7 @@ export async function fetchFilteredCustomers({ query = '', currentPage = 1 }) {
 	return customers
 }
 
-export async function fetchCustomersPages(query) {
+export async function fetchCustomersPages(query = '') {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)

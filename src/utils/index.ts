@@ -1,17 +1,18 @@
+import { type Items } from '@/types'
 import { clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { type ClassNameValue, twMerge } from 'tailwind-merge'
 
-export function cn(...inputs) {
+export function cn(...inputs: ClassNameValue[]) {
 	return twMerge(clsx(inputs))
 }
 
 export const formatDateToLocal = (
-	dateStr,
+	dateStr: string,
 	locale = 'es-US',
 ) => {
 	const date = new Date(dateStr)
 
-	const options = {
+	const options: Intl.DateTimeFormatOptions = {
 		day: 'numeric',
 		month: 'numeric',
 		year: 'numeric',
@@ -20,14 +21,14 @@ export const formatDateToLocal = (
 	return formatter.format(date)
 }
 
-export function formatNumberToLocal(price) {
+export function formatNumberToLocal(price: number) {
 	return new Intl.NumberFormat('es-PE', {
 		style: 'currency',
 		currency: 'PEN',
 	}).format(price)
 }
 
-export function getIgv(items) {
+export function getIgv(items: Items[]) {
 	if (!items) {
 		return { total: 0, subTotal: 0, igv: 0 }
 	}
@@ -37,19 +38,19 @@ export function getIgv(items) {
 		return result
 	}, 0)
 
-	const total = calcTotal.toFixed(2)
-	const subTotal = (total / 1.18).toFixed(2)
-	const igv = (subTotal * 0.18).toFixed(2)
+	const total = calcTotal
+	const subTotal = total / 1.18
+	const igv = subTotal * 0.18
 
 	return {
-		total,
-		subTotal,
-		igv,
+		total: total.toFixed(2),
+		subTotal: subTotal.toFixed(2),
+		igv: igv.toFixed(2),
 		formatedTotal: formatNumberToLocal(total),
 	}
 }
 
-export const getFormatedDate = date => {
+export const getFormatedDate = (date: string) => {
 	const currentDate = date ? new Date(date) : new Date()
 	const year = currentDate.getFullYear()
 	let month = currentDate.getMonth() + 1
@@ -61,7 +62,7 @@ export const getFormatedDate = date => {
 	return formatedDate
 }
 
-export function isValidNumber(str) {
+export function isValidNumber(str: string) {
 	// Si es null o undefined
 	if (!str) return false
 

@@ -1,29 +1,13 @@
 'use server'
 
-import { CATEGORIES } from '@/constants'
 import { createServerClient } from '@/lib/supabase'
+import { CreateProductSchema, UpdateProductSchema } from '@/schemas'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
-import z from 'zod'
-const categoriesArray = Object.values(CATEGORIES)
 
 const TABLE = 'products'
 
-const ProductSchema = z.object({
-	id: z.string(),
-	description: z.string().min(10, { message: 'Mínimo 10 caracteres' }),
-	code: z.string().min(2, { message: 'Mínimo 3 caracteres' }).max(10, {
-		message: 'Máximo 60 caracteres',
-	}),
-	price: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
-	cost: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
-	category: z.enum(categoriesArray),
-	unit_size: z.string().min(3, { message: 'Mínimo 3 caracteres' }),
-})
-
-// Create Product
-const CreateProduct = ProductSchema.omit({ id: true })
-export async function createProduct(_, formData) {
+export async function createProduct(_: undefined, formData: FormData) {
 	// Obtenemos valores del formulario
 	const rawData = {
 		description: formData.get('description'),
@@ -35,7 +19,7 @@ export async function createProduct(_, formData) {
 	}
 
 	// Validacion con Zod
-	const validatedFields = CreateProduct.safeParse(rawData)
+	const validatedFields = CreateProductSchema.safeParse(rawData)
 
 	// En caso de error
 	if (!validatedFields.success) {
@@ -45,12 +29,12 @@ export async function createProduct(_, formData) {
 		}
 	}
 
+	const productToInsert = validatedFields.data
+
 	// Insert to Database
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)
-	const { error } = await supabase.from(TABLE).insert(
-		validatedFields.data,
-	)
+	const { error } = await supabase.from(TABLE).insert(productToInsert)
 
 	// if exists error
 	if (error) {
@@ -66,9 +50,7 @@ export async function createProduct(_, formData) {
 	revalidatePath('/products')
 }
 
-// Update Product
-const UpdateProduct = ProductSchema
-export async function updateProduct(_, formData) {
+export async function updateProduct(_: undefined, formData: FormData) {
 	const rawData = {
 		id: formData.get('id'),
 		description: formData.get('description'),
@@ -79,7 +61,7 @@ export async function updateProduct(_, formData) {
 		unit_size: formData.get('unit_size'),
 	}
 
-	const validatedFields = UpdateProduct.safeParse(rawData)
+	const validatedFields = UpdateProductSchema.safeParse(rawData)
 
 	if (!validatedFields.success) {
 		return {
@@ -111,7 +93,7 @@ export async function updateProduct(_, formData) {
 	revalidatePath('/products')
 }
 
-export async function deleteProduct(_, formData) {
+export async function deleteProduct(_: undefined, formData: FormData) {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createServerClient(cookieStore)

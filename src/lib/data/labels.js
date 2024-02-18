@@ -1,7 +1,6 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
-
 export async function fetchFilteredLabels({ query = '', currentPage = 1 }) {
 	// create supbase client
 	const cookieStore = cookies()

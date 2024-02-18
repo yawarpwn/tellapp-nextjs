@@ -8,7 +8,8 @@ import {
 } from '@/icons'
 
 export const ROW_PER_PAGE = 6
-export const CATEGORIES = {
+
+export const PRODUCT_CATEGORIES = {
 	CINTAS_SEGURIDAD: 'cintas seguridad',
 	OBRAS: 'obras',
 	PROTECCION_VIAL: 'proteccion vial',

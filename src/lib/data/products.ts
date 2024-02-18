@@ -1,9 +1,12 @@
 // import { ITEMS_PER_PAGE } from '@/constants'
+import { type Product } from '@/types'
 const ITEMS_PER_PAGE = 8
 import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 
-export async function fetchFilteredProducts({ query = '', currentPage = 1 }) {
+export async function fetchFilteredProducts(
+	{ query = '', currentPage = 1 },
+): Promise<Product[]> {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
