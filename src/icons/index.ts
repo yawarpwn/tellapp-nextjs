@@ -1,3 +1,7 @@
+export interface IconProps {
+	size?: number
+}
+
 export { default as ArrowLeft } from './arrow-left'
 export { default as ArrowRight } from './arrow-right'
 export { default as BarsIcon } from './bars'

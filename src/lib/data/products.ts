@@ -46,7 +46,9 @@ export async function fetchProductsPages(query = '') {
 	}
 }
 
-export async function fetchProductById({ id }) {
+export async function fetchProductById(
+	{ id }: { id: string },
+): Promise<Product> {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)

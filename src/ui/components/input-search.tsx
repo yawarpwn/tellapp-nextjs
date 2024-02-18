@@ -1,6 +1,13 @@
 import { SearchIcon } from '@/icons'
+import React from 'react'
 
-function InputSearch({ searchValue, onSearchChange, placeholder }) {
+interface Props {
+	searchValue?: string
+	onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+	placeholder: string
+}
+
+function InputSearch({ searchValue, onSearchChange, placeholder }: Props) {
 	return (
 		<div className='group w-full flex flex-col border border-base-300 rounded-md'>
 			<div className='h-full flex flex-col'>

@@ -1,4 +1,6 @@
-export default function Icon({ size }) {
+import { type IconProps } from '@/icons'
+
+export default function Icon({ size }: IconProps) {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
