@@ -1,3 +1,4 @@
+import { SIGNALS_CATEGORIES } from '@/constants'
 export { Product } from '@/schemas'
 export interface GalleryImage {
 	publicId: string
@@ -24,4 +25,18 @@ export interface Quotation {
 	created_at: string
 	items: Items[]
 	is_regular_customer: boolean
+}
+
+export type SignalCategory = keyof typeof SIGNALS_CATEGORIES
+
+export interface Signal {
+	name: string
+	id: string
+	code: string
+	category: SignalCategory
+	url: string
+	public_id: string
+	width: number
+	height: number
+	format: string
 }

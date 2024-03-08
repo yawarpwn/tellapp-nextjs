@@ -4,6 +4,7 @@ import {
 	PrinterIcon,
 	ProductsIcon,
 	QuotationIcon,
+	SignalIcon,
 	TruckIcon,
 } from '@/icons'
 
@@ -59,6 +60,11 @@ export const NAVIGATION = [
 		href: '/gallery',
 		icon: GalleryIcon,
 	},
+	{
+		title: 'Señales',
+		href: '/signals',
+		icon: SignalIcon,
+	},
 ]
 
 export const GALLERY_CATEGORIES = {
@@ -73,4 +79,12 @@ export const GALLERY_CATEGORIES = {
 	'laminas-reflectivas': 'Láminas reflectivas',
 	'rotulos/stickers': 'Rótulos y stickers',
 	'plantillas': 'Plantillas',
+}
+
+export const SIGNALS_CATEGORIES = {
+	viales: 'Viales',
+	seguridad: 'Seguridad',
+	decorativas: 'Decorativas',
+	obras: 'Obras',
+	fotoluminiscentes: 'Fotoluminicentes',
 }
