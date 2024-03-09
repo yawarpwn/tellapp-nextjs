@@ -19,6 +19,9 @@ export function SignalFormModal(
 		>
 			<form>
 				<div className='grid grid-cols-12 gap-4'>
+					<div className='col-span-12 flex justify-center '>
+						<img src={signal.url} alt={signal.name} />
+					</div>
 					<div className='col-span-12'>
 						<Input
 							labelText='Nombre'
@@ -41,7 +44,7 @@ export function SignalFormModal(
 						/>
 					</div>
 					<div className='col-span-6 flex justify-between items-center'>
-						<label htmlFor='category' className='text-base-content/70 block'>
+						<label htmlFor='category' className='text-base-content/70'>
 							Selecionar:
 						</label>
 						<select
@@ -61,6 +64,10 @@ export function SignalFormModal(
 							))}
 						</select>
 					</div>
+				</div>
+				<div className='mt-4 flex gap-2 justify-between'>
+					<button className='btn '>Aceptar</button>
+					<button onClick={onCloseModal} className='btn '>Cancelar</button>
 				</div>
 			</form>
 		</Modal>
