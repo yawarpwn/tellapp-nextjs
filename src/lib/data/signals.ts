@@ -54,3 +54,20 @@ export async function fetchFilteredSignals(query: string, currentPage: number) {
 
 	return signals
 }
+
+export async function fetchSignalById(id: string) {
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	const { data: signals, error } = await supabase
+		.from(SIGNALS_TABLE)
+		.select('*')
+		.eq('id', id)
+
+	if (error) {
+		console.log(error)
+	}
+
+	return signals[0]
+}

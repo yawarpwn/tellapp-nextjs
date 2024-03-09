@@ -1,16 +1,26 @@
 import { cn } from '@/utils'
 import { useId } from 'react'
-export function Input(
-	{
+import React from 'react'
+
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+	labelText: string
+	inputRef?: any
+	errors?: any
+	ariaLabelledby?: string
+	disabled?: boolean
+	as?: 'input' | 'textarea'
+}
+export function Input(props: Props) {
+	const {
 		labelText,
 		inputRef,
 		errors,
 		ariaLabelledby,
 		disabled,
 		as,
-		...props
-	},
-) {
+		...restProps
+	} = props
+
 	const Component = as ? as : 'input'
 	const id = useId()
 	return (
@@ -35,7 +45,7 @@ export function Input(
 								},
 							)}
 							disabled={disabled}
-							{...props}
+							{...restProps}
 						/>
 					</div>
 				</div>

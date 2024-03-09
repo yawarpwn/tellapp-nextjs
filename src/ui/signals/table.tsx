@@ -1,7 +1,6 @@
-import { fetchSignals } from '@/lib/data/signals'
 import { fetchFilteredSignals } from '@/lib/data/signals'
-import { Signal } from '@/types'
-import { EditIcon, TrashIcon } from 'lucide-react'
+import { SignalEditForm } from '@/ui/signals/signal-edit-form'
+import { TrashIcon } from 'lucide-react'
 
 export interface Props {
 	currentPage: number
@@ -45,9 +44,7 @@ export async function SignalsTable({
 						<td>{signal.format}</td>
 						<td>
 							<div className='flex gap-2 items-center'>
-								<button>
-									<EditIcon />
-								</button>
+								<SignalEditForm signal={signal} />
 								<button>
 									<TrashIcon />
 								</button>
