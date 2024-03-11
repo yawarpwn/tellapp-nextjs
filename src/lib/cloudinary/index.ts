@@ -81,7 +81,7 @@ export async function uploadStream(
 
 export async function uploadImageFile(
 	file: File,
-	{ category, folder }: { category: string; folder: string },
+	options: UploadApiOptions,
 ) {
 	const mime = file.type
 	const arrayBuffer = await file.arrayBuffer()
@@ -89,23 +89,27 @@ export async function uploadImageFile(
 	const base64Data = Buffer.from(arrayBuffer).toString('base64')
 	const fileUri = `data:${mime};${encoding},${base64Data}`
 
-	const options: UploadApiOptions = {
-		tags: [category, folder],
-		folder,
-		overwrite: true,
-		allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-		transformation: [
-			{
-				width: 'auto',
-				height: 1000,
-				crop: 'scale',
-				quality: 'auto',
-				format: 'webp',
-			},
-		],
-	}
+	// const options: UploadApiOptions = {
+	// 	tags: [category, folder],
+	// 	folder,
+	// 	overwrite: true,
+	// 	allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+	// 	transformation: [
+	// 		{
+	// 			width: 'auto',
+	// 			height: 1000,
+	// 			crop: 'scale',
+	// 			quality: 'auto',
+	// 			format: 'webp',
+	// 		},
+	// 	],
+	// }
 
 	return cloudinary.uploader.upload(fileUri, options)
+}
+
+export async function destroyResource(publicId: string) {
+	return cloudinary.uploader.destroy(publicId)
 }
 
 export {

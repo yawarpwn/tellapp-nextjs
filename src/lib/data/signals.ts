@@ -47,6 +47,7 @@ export async function fetchFilteredSignals(query: string, currentPage: number) {
 		.select()
 		.or(`name.ilike.%${query}%, code.ilike.%${query}%`)
 		.range(offset, offset + ITEMS_PER_PAGE)
+		.order('updated_at', { ascending: false })
 
 	if (error) {
 		console.log(error)

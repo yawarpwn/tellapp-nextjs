@@ -1,6 +1,5 @@
 import { PRODUCT_CATEGORIES } from '@/constants'
 import { z } from 'zod'
-const categoriesArray = Object.values(PRODUCT_CATEGORIES)
 
 // Products
 export const ProductSchema = z.object({
@@ -11,12 +10,13 @@ export const ProductSchema = z.object({
 	}),
 	price: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
 	cost: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
-	category: z.enum(categoriesArray),
+	category: z.nativeEnum(PRODUCT_CATEGORIES),
 	unit_size: z.string().min(3, { message: 'Mínimo 3 caracteres' }),
 })
 
 export const CreateProductSchema = ProductSchema.omit({ id: true })
 
-export const UpdateProductSchema = ProductSchema
+export const UpdateProductSchema = ProductSchema.optional()
 
 export type Product = z.infer<typeof ProductSchema>
+export type ProductUpdate = z.infer<typeof UpdateProductSchema>

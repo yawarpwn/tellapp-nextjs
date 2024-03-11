@@ -1,5 +1,6 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 export { Product } from '@/schemas'
+export { Signal, SignalUpdate } from '@/schemas/signal'
 export interface GalleryImage {
 	publicId: string
 	url: string
@@ -28,15 +29,3 @@ export interface Quotation {
 }
 
 export type SignalCategory = keyof typeof SIGNALS_CATEGORIES
-
-export interface Signal {
-	name: string
-	id: string
-	code: string
-	category: SignalCategory
-	url: string
-	public_id: string
-	width: number
-	height: number
-	format: string
-}

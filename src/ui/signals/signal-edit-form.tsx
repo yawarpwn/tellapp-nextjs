@@ -16,24 +16,18 @@ export function SignalEditForm({ signal }: Props) {
 	const openModal = () => setIsOpenModal(true)
 	const closeModal = () => setIsOpenModal(false)
 
-	const handleEditSignal = async () => {
-		openModal()
-	}
-
-	const handleCloseModal = () => {
-		closeModal()
-	}
-
 	return (
 		<>
 			<button onClick={openModal}>
 				<EditIcon />
 			</button>
-			<SignalFormModal
-				signal={signalToEdit}
-				onCloseModal={closeModal}
-				isOpenModal={isOpenModal}
-			/>
+			{isOpenModal && (
+				<SignalFormModal
+					signal={signalToEdit}
+					onCloseModal={closeModal}
+					isOpenModal={isOpenModal}
+				/>
+			)}
 		</>
 	)
 }

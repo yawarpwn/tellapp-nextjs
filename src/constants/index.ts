@@ -8,6 +8,13 @@ import {
 	TruckIcon,
 } from '@/icons'
 
+export const TABLES = {
+	Quotations: 'quotations',
+	Products: 'products',
+	Signals: 'signals',
+	Customers: 'customers',
+}
+
 export const ROW_PER_PAGE = 6
 
 export const PRODUCT_CATEGORIES = {
@@ -23,7 +30,7 @@ export const PRODUCT_CATEGORIES = {
 	EPP: 'epp',
 	SERVICIO: 'servicio',
 	ROPA_SEGURIDAD: 'ropa seguridad',
-}
+} as const
 
 export const ITEMS_PER_PAGE = 8
 
@@ -87,4 +94,4 @@ export const SIGNALS_CATEGORIES = {
 	decorativas: 'Decorativas',
 	obras: 'Obras',
 	fotoluminiscentes: 'Fotoluminicentes',
-}
+} as const
