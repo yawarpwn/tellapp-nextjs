@@ -47,35 +47,8 @@ export async function updateSignal(signal: SignalUpdate, formData: FormData) {
 
 		if (error) throw error
 
-		console.log(dataToUpdate)
+		revalidatePath(`/signals/`)
 	} catch (error) {
 		console.log(error)
 	}
-
-	// const validatedFields = UpdateSignalSchema.safeParse(data)
-	// console.log(validatedFields)
-
-	// if (!validatedFields.success) {
-	// 	// console.log(validatedFields.error)
-	// }
-
-	//
-	// // Prepare data to update
-	// const signalToUpdate = {
-	// 	name: rawData.name,
-	// 	updated_at: new Date().toISOString(),
-	// }
-	//
-	// const { error } = await supabase
-	// 	.from(TABLES.Signals)
-	// 	.update(signalToUpdate)
-	// 	.eq('id', rawData.id)
-	//
-	// if (error) {
-	// 	return {
-	// 		error: 'Failed to update signal',
-	// 	}
-	// }
-	//
-	// revalidatePath('/signals')
 }

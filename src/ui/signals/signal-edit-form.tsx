@@ -11,7 +11,6 @@ interface Props {
 }
 export function SignalEditForm({ signal }: Props) {
 	const [isOpenModal, setIsOpenModal] = useState(false)
-	const [signalToEdit, setSignalToEdit] = useState(signal)
 
 	const openModal = () => setIsOpenModal(true)
 	const closeModal = () => setIsOpenModal(false)
@@ -23,7 +22,7 @@ export function SignalEditForm({ signal }: Props) {
 			</button>
 			{isOpenModal && (
 				<SignalFormModal
-					signal={signalToEdit}
+					signal={signal}
 					onCloseModal={closeModal}
 					isOpenModal={isOpenModal}
 				/>
