@@ -10,7 +10,7 @@ async function ProductTable({ query, currentPage }) {
 	return (
 		<>
 			<div className='overflow-x-auto'>
-				<table className='table table-sm [&_td]:px-2 [&_*]:text-xs'>
+				<table className='table table-sm'>
 					{/* head */}
 					<thead>
 						<tr>

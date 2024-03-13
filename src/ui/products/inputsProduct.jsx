@@ -68,19 +68,16 @@ export function InputsProduct({ state, product }) {
 			</div>
 			<input type='hidden' name='id' defaultValue={product?.id} />
 			<div className='col-span-12 flex justify-between items-center'>
-				<label htmlFor='category' className='text-base-content/70'>
-					Selecionar:
-				</label>
 				<select
 					id='category'
 					name='category'
-					className='select'
+					className='select w-full'
 					defaultValue={product?.category || ''}
 					errors={state.errors?.category}
 					required
 				>
 					<option value='' disabled>
-						Categoria
+						Seleccionar Categoria
 					</option>
 					{Object.values(PRODUCT_CATEGORIES).map(value => (
 						<option value={value} key={value}>

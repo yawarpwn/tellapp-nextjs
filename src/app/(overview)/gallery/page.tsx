@@ -1,9 +1,17 @@
-import { fetchGalleryImages } from '@/lib/cloudinary'
+import { fetchGalleryPages } from '@/lib/data/gallery'
 import { GalleryAddButton } from '@/ui/gallery/gallery-add-button'
-import { GalleryImagesList } from '@/ui/gallery/gallery-images-list'
+import { GalleryTable } from '@/ui/gallery/gallery-table'
+import { Pagination } from '@/ui/pagination'
+import { Suspense } from 'react'
 
-export default async function Page() {
-	const galleryImages = await fetchGalleryImages()
+export default async function Page(
+	{ searchParams }: { searchParams?: { page?: string; query?: string } },
+) {
+	const page = Number(searchParams.page) || 1
+	const query = searchParams.query || ''
+	const totalPages = await fetchGalleryPages(query)
+
+	console.log(totalPages)
 
 	return (
 		<div>
@@ -13,11 +21,11 @@ export default async function Page() {
 				</div>
 				<GalleryAddButton />
 			</header>
-
-			<GalleryImagesList title={'Galeria'} images={galleryImages} />
-			{/* {Object.entries(categories).map(([title, images]) => { */}
-			{/* 	return <GalleryImagesList key={title} title={title} images={images} /> */}
-			{/* })} */}
+			<Suspense fallback={<div>Cargando...</div>}>
+				<GalleryTable currentPage={page} query={query} />
+			</Suspense>
+			{/* <GalleryImagesList title={'Galeria'} images={galleryImages} /> */}
+			<Pagination totalPages={totalPages} />
 		</div>
 	)
 }

@@ -12,16 +12,6 @@ cloudinary.config({
 	secure: true,
 })
 
-function getThumbUrl(publicId: string) {
-	const thumbsUrl = cloudinary.url(publicId, {
-		width: 'auto',
-		height: 150,
-		crop: 'fill',
-		format: 'webp',
-	})
-	return thumbsUrl
-}
-
 export async function getResources(): Promise<ResourceApiResponse> {
 	return cloudinary.api.resources({
 		'type': 'upload',
@@ -110,6 +100,27 @@ export async function uploadImageFile(
 
 export async function destroyResource(publicId: string) {
 	return cloudinary.uploader.destroy(publicId)
+}
+
+export function transform(publicId: string, options: TransformationOptions) {
+	return cloudinary.url(publicId, options)
+}
+
+export function getThumbUrl(publicId: string) {
+	return transform(publicId, {
+		width: 200,
+		crop: 'thumb',
+		format: 'webp',
+	})
+}
+
+export function getLargeUrl(publicId: string) {
+	return transform(publicId, {
+		color: '#FFFFFF4D',
+		overlay: 'n6rplobnplhmm8qoojb5',
+		flags: 'layer_apply',
+		format: 'webp',
+	})
 }
 
 export {

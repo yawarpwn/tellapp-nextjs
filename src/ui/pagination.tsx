@@ -4,7 +4,8 @@ import { generatePagination } from '@/utils'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
-function Pagination({ totalPages }) {
+
+export function Pagination({ totalPages }) {
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 	const currentPage = Number(searchParams.get('page') || 1)

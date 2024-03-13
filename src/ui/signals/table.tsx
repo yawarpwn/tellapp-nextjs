@@ -1,5 +1,8 @@
 import { fetchFilteredSignals } from '@/lib/data/signals'
-import { SignalEditForm } from '@/ui/signals/signal-edit-form'
+import {
+	SignalDeleteFormButton,
+	SignalEditFormButton,
+} from '@/ui/signals/signal-button'
 import { TrashIcon } from 'lucide-react'
 
 export interface Props {
@@ -32,7 +35,7 @@ export async function SignalsTable({
 							<td>
 								<div className='w-12 h-12 '>
 									<img
-										alt={signal.name}
+										alt={signal.title}
 										className='w-full h-full object-contain'
 										src={`https://res.cloudinary.com/tellsenales-cloud/image/upload/c_scale,w_40/${signal.public_id}.${signal.format}`}
 									/>
@@ -40,7 +43,7 @@ export async function SignalsTable({
 							</td>
 							<td>
 								<div className='w-[200px]'>
-									{signal.name}
+									{signal.title}
 								</div>
 							</td>
 							<td>{signal.code.toUpperCase()}</td>
@@ -49,10 +52,8 @@ export async function SignalsTable({
 							<td>{signal.format}</td>
 							<td>
 								<div className='flex gap-2 items-center'>
-									<SignalEditForm signal={signal} />
-									<button>
-										<TrashIcon />
-									</button>
+									<SignalEditFormButton item={signal} />
+									<SignalDeleteFormButton id={signal.id} />
 								</div>
 							</td>
 						</tr>

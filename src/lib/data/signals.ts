@@ -1,4 +1,5 @@
 const ITEMS_PER_PAGE = 8
+import { type Signal } from '@/types'
 
 import { cookies } from 'next/headers'
 import { createClient } from '../supabase/server'
@@ -26,16 +27,21 @@ export async function fetchSignalsPages(query = '') {
 	const { count, error } = await supabase
 		.from(SIGNALS_TABLE)
 		.select('*', { count: 'exact' })
-		.or(`name.ilike.%${query}%, code.ilike.%${query}%`)
+		.or(`title.ilike.%${query}%, code.ilike.%${query}%`)
 
 	if (error) {
 		console.log(error)
 	}
 
+	if (!count) return 0
+
 	return Math.ceil(count / ITEMS_PER_PAGE)
 }
 
-export async function fetchFilteredSignals(query: string, currentPage: number) {
+export async function fetchFilteredSignals(
+	query: string,
+	currentPage: number,
+) {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
@@ -45,9 +51,10 @@ export async function fetchFilteredSignals(query: string, currentPage: number) {
 	const { data: signals, error } = await supabase
 		.from(SIGNALS_TABLE)
 		.select()
-		.or(`name.ilike.%${query}%, code.ilike.%${query}%`)
+		.or(`title.ilike.%${query}%, code.ilike.%${query}%`)
 		.range(offset, offset + ITEMS_PER_PAGE)
 		.order('updated_at', { ascending: false })
+		.returns<Signal[]>()
 
 	if (error) {
 		console.log(error)

@@ -1,11 +1,7 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 export { Product } from '@/schemas'
-export { Signal, SignalUpdate } from '@/schemas/signal'
-export interface GalleryImage {
-	publicId: string
-	url: string
-	thumb: string
-}
+export { GalleryImage } from '@/schemas/gallery'
+export { Signal, SignalCreate, SignalUpdate } from '@/schemas/signal'
 
 export interface Items {
 	id: string

@@ -9,7 +9,11 @@ const initialState = {
 	errors: {},
 }
 
-function DeleteActionForm({ id, public_id, deleteAction }) {
+function DeleteActionForm({ id, deleteAction }: {
+	id: string
+	deleteAction: (formData: FormData) => Promise<void>
+}) {
+	console.log('id', id)
 	const [isOpenModal, setIsOpenModal] = useState(false)
 	const openModal = () => setIsOpenModal(true)
 	const closeModal = () => setIsOpenModal(false)
@@ -22,12 +26,6 @@ function DeleteActionForm({ id, public_id, deleteAction }) {
 				onClose={closeModal}
 			>
 				<input name='id' value={id} type='hidden' className='sr-only' />
-				<input
-					name='public_id'
-					value={public_id}
-					type='hidden'
-					className='sr-only'
-				/>
 			</ConfirmModalAction>
 			<button className='text-error' onClick={openModal}>
 				<DeleteIcon />

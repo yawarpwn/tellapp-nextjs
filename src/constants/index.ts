@@ -13,7 +13,8 @@ export const TABLES = {
 	Products: 'products',
 	Signals: 'signals',
 	Customers: 'customers',
-}
+	Gallery: 'gallery',
+} as const
 
 export const ROW_PER_PAGE = 6
 
@@ -75,18 +76,18 @@ export const NAVIGATION = [
 ]
 
 export const GALLERY_CATEGORIES = {
-	'senales-viales': 'Señales Viales',
-	'senales-obras': 'Señales Obras',
-	'senales-convencionales': 'Señales Convencionales',
-	'senales-fotoluminiscentes': 'Señales fotoluminiscentes',
-	'senales-decorativas': 'Señales Decorativas',
-	'senales-reflectivas': 'Señales Reflectivas',
-	'senales-mineria': 'Señales Minería',
-	'senales-acrilico': 'Senales Acrilico',
-	'laminas-reflectivas': 'Láminas reflectivas',
-	'rotulos/stickers': 'Rótulos y stickers',
-	'plantillas': 'Plantillas',
-}
+	SenalesViales: 'Señales Viales',
+	SenalesObras: 'Señales Obras',
+	SenalesConvencionales: 'Señales Convencionales',
+	SenalesFotoluminiscentes: 'Señales fotoluminiscentes',
+	SenalesDecorativas: 'Señales Decorativas',
+	SenalesReflectivas: 'Señales Reflectivas',
+	SenalesMineria: 'Señales Minería',
+	SenalesAcrilico: 'Señales Acrílico',
+	LaminasReflectivas: 'Láminas reflectivas',
+	RotulosStickers: 'Rótulos y stickers',
+	Plantillas: 'Plantillas',
+} as const
 
 export const SIGNALS_CATEGORIES = {
 	viales: 'Viales',
