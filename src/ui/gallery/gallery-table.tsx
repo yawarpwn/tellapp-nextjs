@@ -1,5 +1,9 @@
 import { fetchFilteredGallery } from '@/lib/data/gallery'
 import { TrashIcon } from 'lucide-react'
+import {
+	GalleryDeleteFormButton,
+	GalleryEditFormButton,
+} from './gallery-buttons'
 
 export async function GalleryTable({ query, currentPage }: {
 	query: string
@@ -13,6 +17,7 @@ export async function GalleryTable({ query, currentPage }: {
 					<tr>
 						<th></th>
 						<th>Nombre</th>
+						<th>Categoria</th>
 						<th>Ancho</th>
 						<th>Alto</th>
 						<th>Formato</th>
@@ -36,15 +41,17 @@ export async function GalleryTable({ query, currentPage }: {
 									{photo.title}
 								</div>
 							</td>
+							<td>{photo.category}</td>
 							<td>{photo.width}</td>
 							<td>{photo.height}</td>
 							<td>{photo.format}</td>
 							<td>
 								<div className='flex gap-2 items-center'>
-									{/* <SignalEditForm signal={photo} /> */}
-									<button>
-										<TrashIcon />
-									</button>
+									<GalleryEditFormButton galleryImage={photo} />
+									<GalleryDeleteFormButton
+										id={photo.id}
+										publicId={photo.public_id}
+									/>
 								</div>
 							</td>
 						</tr>

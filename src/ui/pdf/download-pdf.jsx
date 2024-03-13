@@ -18,7 +18,7 @@ export default function DownloadPDF({ quotation }) {
 				// Usar la API navigator.share para compartir el Blob del PDF
 				await navigator.share({
 					files: [
-						new File([pdfBlob], `COT-2023-00${quotation.number}.pdf`, {
+						new File([pdfBlob], `COT-2024-00${quotation.number}.pdf`, {
 							type: 'application/pdf',
 						}),
 					],

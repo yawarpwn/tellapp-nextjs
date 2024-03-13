@@ -23,6 +23,7 @@ export async function SignalsTable({
 						<th></th>
 						<th>Nombre</th>
 						<th>Codigo</th>
+						<th>Categoria</th>
 						<th>Ancho</th>
 						<th>Alto</th>
 						<th>Formato</th>
@@ -46,6 +47,7 @@ export async function SignalsTable({
 									{signal.title}
 								</div>
 							</td>
+							<td>{signal.category}</td>
 							<td>{signal.code.toUpperCase()}</td>
 							<td>{signal.width}</td>
 							<td>{signal.height}</td>

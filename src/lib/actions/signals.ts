@@ -101,11 +101,15 @@ export async function createSignal(formData: FormData) {
 }
 
 export async function deleteSignal(_: undefined, formData: FormData) {
-	console.log(formData)
-	const id = formData.get('id')
+	const id = formData.get('id') as string
+	const publicId = formData.get('publicId') as string
 
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
+
+	// destroy image in cloudinary
+	await destroyResource(publicId)
+	console.log('destroy image with public_id', publicId)
 
 	const { error } = await supabase.from(TABLES.Signals).delete().eq('id', id)
 	if (error) {
