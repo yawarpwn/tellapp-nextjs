@@ -2,7 +2,6 @@
 import { TABLES } from '@/constants'
 import { destroyResource, uploadImageFile } from '@/lib/cloudinary'
 import { type SignalUpdate } from '@/schemas/signal'
-import type { SignalCreate } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { createClient } from '../supabase/server'
@@ -17,6 +16,7 @@ export async function updateSignal(formData: FormData) {
 			title: title as string,
 			code: code as string,
 			category: category as SignalUpdate['category'],
+			updated_at: new Date().toISOString(),
 		}
 
 		if (fileImage && publicId) {

@@ -1,18 +1,18 @@
 'use client'
-import { ArrowLeft, ArrowRight } from '@/icons'
 import { generatePagination } from '@/utils'
 import clsx from 'clsx'
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
-export function Pagination({ totalPages }) {
+export function Pagination({ totalPages }: { totalPages: number }) {
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 	const currentPage = Number(searchParams.get('page') || 1)
 	const allPages = generatePagination(currentPage, totalPages)
 
-	const createPageURL = (pageNumber: number) => {
-		const params = new URLSearchParams(pathname)
+	const createPageURL = (pageNumber: number | string) => {
+		const params = new URLSearchParams(searchParams)
 		params.set('page', pageNumber.toString())
 		return `${pathname}?${params.toString()}`
 	}
@@ -53,8 +53,12 @@ export function Pagination({ totalPages }) {
 	)
 }
 
-function PaginationArrow({ href, direction, isDisabled }) {
-	const icon = direction === 'left' ? <ArrowLeft /> : <ArrowRight />
+function PaginationArrow({ href, direction, isDisabled }: {
+	href: string
+	direction: 'left' | 'right'
+	isDisabled: boolean
+}) {
+	const icon = direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />
 
 	return isDisabled
 		? <div className='btn btn-sm btn-disabled'>{icon}</div>
@@ -65,11 +69,16 @@ function PaginationArrow({ href, direction, isDisabled }) {
 		)
 }
 
-function PaginationNumber({ isActive, href, position, page }) {
+function PaginationNumber({ isActive, href, position, page }: {
+	isActive: boolean
+	href: string
+	position?: 'first' | 'last' | 'middle' | 'single'
+	page: number | string
+}) {
 	const className = clsx('join-item btn btn-sm', {
 		'btn-active': isActive,
 	})
-	return isActive
+	return isActive || position === 'middle'
 		? <div className={className}>{page}</div>
 		: (
 			<Link className={className} href={href}>

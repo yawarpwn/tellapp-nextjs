@@ -79,7 +79,7 @@ export function isValidNumber(str: string) {
 	return true
 }
 
-export function generatePagination(currentPage, totalPages) {
+export function generatePagination(currentPage: number, totalPages: number) {
 	// Si el total de paginas es menor o igual a 7
 	// muestra todas las paginas sin saltos de pagina.
 	if (totalPages <= 7) {
