@@ -2,6 +2,7 @@ import { fetchGalleryPages } from '@/lib/data/gallery'
 import { GalleryAddFormButton } from '@/ui/gallery/gallery-buttons'
 import { GalleryTable } from '@/ui/gallery/gallery-table'
 import { Pagination } from '@/ui/pagination'
+import Search from '@/ui/search'
 import { Suspense } from 'react'
 
 export default async function Page(
@@ -13,9 +14,8 @@ export default async function Page(
 
 	return (
 		<div>
-			<header className='flex justify-between gap-2'>
-				<div className='border border-dashed border-primary w-full pl-2 rounded-sm'>
-				</div>
+			<header className='flex items-center justify-between gap-2'>
+				<Search placeholder='Buscar foto...' />
 				<GalleryAddFormButton />
 			</header>
 			<Suspense fallback={<div>Cargando...</div>}>

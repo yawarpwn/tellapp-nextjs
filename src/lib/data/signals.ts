@@ -1,16 +1,15 @@
-const ITEMS_PER_PAGE = 8
+const ITEMS_PER_PAGE = 9
 import { type Signal } from '@/types'
 
+import { TABLES } from '@/constants'
 import { cookies } from 'next/headers'
 import { createClient } from '../supabase/server'
-
-const SIGNALS_TABLE = 'signals'
 
 export async function fetchSignals() {
 	const cookiesStore = cookies()
 	const supabase = createClient(cookiesStore)
 
-	const { data: signals, error } = await supabase.from(SIGNALS_TABLE).select()
+	const { data: signals, error } = await supabase.from(TABLES.Signals).select()
 
 	if (error) {
 		throw error
@@ -25,7 +24,7 @@ export async function fetchSignalsPages(query = '') {
 	const supabase = createClient(cookieStore)
 
 	const { count, error } = await supabase
-		.from(SIGNALS_TABLE)
+		.from(TABLES.Signals)
 		.select('*', { count: 'exact' })
 		.or(`title.ilike.%${query}%, code.ilike.%${query}%`)
 
@@ -49,7 +48,7 @@ export async function fetchFilteredSignals(
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
 	const { data: signals, error } = await supabase
-		.from(SIGNALS_TABLE)
+		.from(TABLES.Signals)
 		.select()
 		.or(`title.ilike.%${query}%, code.ilike.%${query}%`)
 		.range(offset, offset + ITEMS_PER_PAGE)
@@ -69,7 +68,7 @@ export async function fetchSignalById(id: string) {
 	const supabase = createClient(cookieStore)
 
 	const { data: signals, error } = await supabase
-		.from(SIGNALS_TABLE)
+		.from(TABLES.Signals)
 		.select('*')
 		.eq('id', id)
 

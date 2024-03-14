@@ -12,9 +12,20 @@ interface Props {
 	action: (formData: FormData) => Promise<void>
 	categories: string[]
 	isEditMode: boolean
+	type?: 'signal' | 'gallery'
+	modalTitle?: string
 }
 export function CreateUpdateImageModal(
-	{ item, onCloseModal, isOpenModal, action, categories, isEditMode }: Props,
+	{
+		item,
+		onCloseModal,
+		isOpenModal,
+		action,
+		categories,
+		isEditMode,
+		modalTitle,
+		type = 'signal',
+	}: Props,
 ) {
 	const [isPending, startTransition] = useTransition()
 	const [imageUrl, setImageUrl] = useState<string | null>(item?.url ?? null)
@@ -29,7 +40,13 @@ export function CreateUpdateImageModal(
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		const formData = new FormData(event.currentTarget)
-		console.log(Object.fromEntries(formData.entries()))
+
+		const file = formData.get('fileImage') as File
+
+		if (file && !file.name) {
+			formData.delete('fileImage')
+		}
+
 		startTransition(async () => {
 			await action(formData)
 			onCloseModal()
@@ -56,7 +73,7 @@ export function CreateUpdateImageModal(
 
 	return (
 		<Modal
-			title='Actualizar Señal'
+			title={modalTitle}
 			isOpen={isOpenModal}
 			onClose={onCloseModal}
 		>
@@ -136,19 +153,19 @@ export function CreateUpdateImageModal(
 							ariaLabelledby={'description-error'}
 						/>
 					</div>
-					{isSignal || !isEditMode && (
-								<div className='col-span-12'>
-									<Input
-										required
-										name='code'
-										labelText='Codigo'
-										type='text'
-										defaultValue={item?.code?.toUpperCase() ?? ''}
-										placeholder='XVX60'
-										ariaLabelledby={'code-error'}
-									/>
-								</div>
-							)}
+					{type === 'signal' && (
+						<div className='col-span-12'>
+							<Input
+								required
+								name='code'
+								labelText='Codigo'
+								type='text'
+								defaultValue={item?.code ?? ''}
+								placeholder='XVX60'
+								ariaLabelledby={'code-error'}
+							/>
+						</div>
+					)}
 					<div className='col-span-12 flex justify-between items-center'>
 						<select
 							id='category'
@@ -169,7 +186,11 @@ export function CreateUpdateImageModal(
 					</div>
 				</div>
 				<div className='mt-4 flex gap-2 justify-between'>
-					<button disabled={isPending} type='submit' className='btn '>
+					<button
+						disabled={isPending}
+						type='submit'
+						className='btn btn-outline '
+					>
 						<span>
 							Aceptar
 						</span>
@@ -179,7 +200,7 @@ export function CreateUpdateImageModal(
 						disabled={isPending}
 						type='button'
 						onClick={onCloseModal}
-						className='btn '
+						className='btn  btn-outline '
 					>
 						Cancelar
 					</button>

@@ -16,14 +16,14 @@ export async function SignalsTable({
 }: Props) {
 	const signals = await fetchFilteredSignals(query, currentPage)
 	return (
-		<div className='overflow-x-auto'>
+		<div className='overflow-x-auto mt-4'>
 			<table className='table table-sm'>
 				<thead>
 					<tr>
 						<th></th>
 						<th>Nombre</th>
-						<th>Codigo</th>
 						<th>Categoria</th>
+						<th>Codigo</th>
 						<th>Ancho</th>
 						<th>Alto</th>
 						<th>Formato</th>

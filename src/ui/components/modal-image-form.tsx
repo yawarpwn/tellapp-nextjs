@@ -7,11 +7,11 @@ interface Props {
 	item?: Signal | GalleryImage
 	action: (formData: FormData) => Promise<void>
 	categories: string[]
-	// type?: 'add' | 'edit'
+	type?: 'gallery' | 'signal'
 }
 
 export function CreateUpdateImageButton(
-	{ item, action, categories }: Props,
+	{ item, action, categories, type }: Props,
 ) {
 	const [isOpenModal, setIsOpenModal] = useState(false)
 
@@ -38,6 +38,8 @@ export function CreateUpdateImageButton(
 				)}
 			{isOpenModal && (
 				<CreateUpdateImageModal
+					modalTitle={isEditMode ? 'Editar imagen' : 'Agregar imagen'}
+					type={type}
 					item={item}
 					isEditMode={isEditMode}
 					action={action}

@@ -13,6 +13,7 @@ export function GalleryAddFormButton() {
 	return (
 		<>
 			<CreateUpdateImageButton
+				type='gallery'
 				action={createGalleryImage}
 				categories={Object.values(GALLERY_CATEGORIES)}
 			/>
@@ -28,6 +29,7 @@ export function GalleryEditFormButton({
 			<CreateUpdateImageButton
 				item={galleryImage}
 				action={updateGalleryImage}
+				type='gallery'
 				categories={Object.values(GALLERY_CATEGORIES)}
 			/>
 		</>

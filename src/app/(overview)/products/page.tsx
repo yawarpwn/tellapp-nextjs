@@ -6,7 +6,9 @@ import Search from '@/ui/search'
 import { ProductsSkeleton } from '@/ui/skeletons/products'
 import { Suspense } from 'react'
 
-async function ProductsPage({ searchParams }) {
+async function ProductsPage({ searchParams }: {
+	searchParams?: { page?: string; query?: string }
+}) {
 	const page = Number(searchParams?.page) || 1
 	const query = searchParams?.query || ''
 	const totalPages = await fetchProductsPages(query)
