@@ -1,12 +1,15 @@
 import { ITEMS_PER_PAGE } from '@/constants'
+import { TABLES } from '@/constants'
 import { fetchCustomers } from '@/lib/data/customers'
 import { createClient } from '@/lib/supabase/server'
+import type { Quotation } from '@/types'
 import { isValidNumber } from '@/utils'
 import { cookies } from 'next/headers'
 
-const TABLE = 'quotations'
-
-export async function fetchFilteredQuotations({ query = '', currentPage = 1 }) {
+export async function fetchFilteredQuotations({ query, currentPage }: {
+	query: string
+	currentPage: number
+}): Promise<Quotation[]> {
 	query.trim()
 
 	// Create supabaseClient
@@ -16,7 +19,7 @@ export async function fetchFilteredQuotations({ query = '', currentPage = 1 }) {
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
 	// Build query
-	let queryBuilder = supabase.from(TABLE).select('*')
+	let queryBuilder = supabase.from(TABLES.Quotations).select('*')
 		.range(offset, offset + ITEMS_PER_PAGE)
 		.order('number', {
 			ascending: false,
@@ -37,7 +40,7 @@ export async function fetchFilteredQuotations({ query = '', currentPage = 1 }) {
 
 	const customers = await fetchCustomers()
 
-	const isRegularCustomer = (ruc) =>
+	const isRegularCustomer = (ruc: string) =>
 		customers.some(customer => customer.ruc === ruc)
 
 	const mappedQuotations = quotations.map(quo => ({
@@ -48,12 +51,12 @@ export async function fetchFilteredQuotations({ query = '', currentPage = 1 }) {
 	return mappedQuotations
 }
 
-export async function fetchQuotationsPages({ query = '' }) {
+export async function fetchQuotationsPages({ query }: { query: string }) {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
-	const { count, error } = await supabase.from('quotations').select('*', {
+	const { count, error } = await supabase.from(TABLES.Quotations).select('*', {
 		count: 'exact',
 	}).ilike('company', `%${query}%`).limit(1)
 
@@ -68,11 +71,14 @@ export async function fetchQuotationsPages({ query = '' }) {
 	}
 }
 
-export async function fetchQuotationById({ number }) {
+export async function fetchQuotationById(
+	{ number }: { number: number },
+): Promise<Quotation> {
 	// create supabase Client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
-	const { data: quotations, error } = await supabase.from('quotations').select()
+	const { data: quotations, error } = await supabase.from(TABLES.Quotations)
+		.select()
 		.eq(
 			'number',
 			Number(number),
@@ -93,12 +99,13 @@ export async function fetchLastQuotation() {
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
-	const { data: quotations, error } = await supabase.from('quotations').select(
-		'number',
-	).order(
-		'number',
-		{ ascending: false },
-	)
+	const { data: quotations, error } = await supabase.from(TABLES.Quotations)
+		.select(
+			'number',
+		).order(
+			'number',
+			{ ascending: false },
+		)
 
 	// handle error
 	if (error) throw new Error('Failed to fetch last quotation')

@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowLeft, BarsIcon } from '@/icons'
+import { ArrowLeftIcon, MenuIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 function Navbar() {
@@ -14,7 +14,7 @@ function Navbar() {
 						onClick={() => router.back()}
 						className='btn btn-sm btn-ghost'
 					>
-						<ArrowLeft />
+						<ArrowLeftIcon />
 					</button>
 				</div>
 				<label
@@ -22,7 +22,7 @@ function Navbar() {
 					// onClick={openMenuMobile}
 					className='btn btn-sm btn-ghost'
 				>
-					<BarsIcon />
+					<MenuIcon />
 				</label>
 			</div>
 		</header>

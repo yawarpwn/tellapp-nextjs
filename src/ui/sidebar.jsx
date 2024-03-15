@@ -31,7 +31,7 @@ export function Sidebar() {
 					'h-full flex flex-col justify-between pb-4 ',
 				)}
 			>
-				<ul className='menu flex flex-col gap-8'>
+				<ul className='menu flex flex-col gap-8  mt-[var(--nav-height)]'>
 					{NAVIGATION.map(({ href, title, icon: Icon }) => (
 						<li key={title}>
 							<Link href={href} legacyBehavior>

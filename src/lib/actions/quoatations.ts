@@ -1,55 +1,21 @@
 'use server'
 
+import { TABLES } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
+import { CreateQuotation, UpdateQuotation } from '@/schemas/quotations'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import z from 'zod'
-
-const QUOTATIONS_TABLE = 'quotations'
-const CUSTOMERS_TABLE = 'customers'
-
-const QuotationSchema = z.object({
-	number: z.coerce.number(),
-	id: z.string(),
-	include_igv: z.coerce.boolean(),
-	is_regular_customer: z.coerce.boolean(),
-	ruc: z
-		.string()
-		.length(11, {
-			message: 'Ruc debe tener 11 caracteres',
-		})
-		.nullable(),
-	company: z.string().default('SIN RUC PROPORCIONADO'),
-	address: z.string(),
-	deadline: z.coerce.number().gt(0, {
-		message: 'Debe ser mayor a 0',
-	}),
-	items: z
-		.array(
-			z.object({
-				id: z.string(),
-				price: z.number(),
-				qty: z.number(),
-				unit_size: z.string(),
-				description: z.string(),
-			}),
-		)
-		.nonempty({
-			message: 'Debe tener al menos un Producto',
-		}),
-})
 
 // Create Product
-const CreateQuotation = QuotationSchema.omit({ id: true })
-export async function createQuotation(_, formData) {
+export async function createQuotation(_: undefined, formData: FormData) {
 	const rawData = {
 		number: formData.get('number'),
 		ruc: formData.get('ruc') || null,
 		company: formData.get('company') || 'SIN RUC PROPORCIONADO',
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
-		items: JSON.parse(formData.get('items')),
+		items: JSON.parse(formData.get('items') as string),
 		include_igv: formData.get('include_igv'),
 		is_regular_customer: formData.get('is_regular_customer'),
 	}
@@ -78,14 +44,13 @@ export async function createQuotation(_, formData) {
 		items,
 		include_igv,
 		is_regular_customer,
-		phone,
 	} = validatedFields.data
 
 	// Si esta marco como cliente regular agregamos a la DB
 	if (is_regular_customer) {
 		// buscar si existe el ruc en customers
 		const { data: customers, error: customersError } = await supabase.from(
-			CUSTOMERS_TABLE,
+			TABLES.Quotations,
 		).select().eq(
 			'ruc',
 			ruc,
@@ -100,12 +65,11 @@ export async function createQuotation(_, formData) {
 
 		// si no existe el ruc en customers agregamos
 		if (customers?.length === 0) {
-			const { error, data: customers } = await supabase.from(CUSTOMERS_TABLE)
+			const { error } = await supabase.from(TABLES.Customers)
 				.insert({
 					ruc,
 					name: company,
 					address,
-					phone,
 				})
 
 			if (error) {
@@ -127,10 +91,9 @@ export async function createQuotation(_, formData) {
 		deadline,
 		items,
 		include_igv,
-		phone,
 	}
 
-	const { error } = await supabase.from(QUOTATIONS_TABLE).insert(
+	const { error } = await supabase.from(TABLES.Quotations).insert(
 		quotationToInsert,
 	)
 
@@ -154,8 +117,7 @@ export async function createQuotation(_, formData) {
 }
 
 // Update Product
-const UpdateQuotation = QuotationSchema
-export async function updateQuotation(_, formData) {
+export async function updateQuotation(_: undefined, formData: FormData) {
 	const rawData = {
 		id: formData.get('id'),
 		ruc: formData.get('ruc') || null,
@@ -163,7 +125,7 @@ export async function updateQuotation(_, formData) {
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
 		number: formData.get('number'),
-		items: JSON.parse(formData.get('items')),
+		items: JSON.parse(formData.get('items') as string),
 		include_igv: formData.get('include_igv'),
 		is_regular_customer: formData.get('is_regular_customer'),
 	}
@@ -188,7 +150,6 @@ export async function updateQuotation(_, formData) {
 		deadline,
 		items,
 		include_igv,
-		phone,
 	} = validatedFields.data
 
 	const quotationToUpdate = {
@@ -199,13 +160,12 @@ export async function updateQuotation(_, formData) {
 		deadline,
 		items,
 		include_igv,
-		phone,
 	}
 
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
-	const { error } = await supabase.from(QUOTATIONS_TABLE).update(
+	const { error } = await supabase.from(TABLES.Quotations).update(
 		quotationToUpdate,
 	)
 		.eq(
@@ -225,13 +185,13 @@ export async function updateQuotation(_, formData) {
 	redirect(`/quotations/${number}`)
 }
 
-export async function deleteQuotation(_, formData) {
+export async function deleteQuotation(_: undefined, formData: FormData) {
 	const id = formData.get('id')
 
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
-	await supabase.from(QUOTATIONS_TABLE).delete().eq('id', id)
+	await supabase.from(TABLES.Quotations).delete().eq('id', id)
 	revalidatePath('/quotations')
 }

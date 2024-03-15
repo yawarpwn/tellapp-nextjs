@@ -1,6 +1,7 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 export { Product } from '@/schemas'
 export { GalleryImage } from '@/schemas/gallery'
+export { Quotation, QuotationItem, QuotationUpdate } from '@/schemas/quotations'
 export { Signal, SignalCreate, SignalUpdate } from '@/schemas/signal'
 
 export interface Items {

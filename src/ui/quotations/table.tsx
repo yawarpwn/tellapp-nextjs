@@ -1,12 +1,16 @@
-import { EyeIcon } from '@/icons'
+// import { EyeIcon } from '@/icons'
 import { fetchFilteredQuotations } from '@/lib/data/quotations'
+import type { Quotation } from '@/types'
 import { getIgv } from '@/utils'
 import { formatDateToLocal } from '@/utils'
+import { EyeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { EditButton } from '../buttons'
-import { RegularCustomerToggle } from '../quotations/regular-customer-toggle'
+import { RegularCustomerToggle } from './regular-customer-toggle'
 
-function TableRow({ quotation }) {
+function TableRow({ quotation }: {
+	quotation: Quotation
+}) {
 	const { formatedTotal } = getIgv(quotation.items)
 	return (
 		<tr>
@@ -47,7 +51,9 @@ function TableRow({ quotation }) {
 	)
 }
 
-function QuotationCard({ quotation }) {
+function QuotationCard({ quotation }: {
+	quotation: Quotation
+}) {
 	const { formatedTotal } = getIgv(quotation.items)
 
 	return (
@@ -92,7 +98,10 @@ function QuotationCard({ quotation }) {
 	)
 }
 
-async function QuotationsTable({ query, currentPage }) {
+async function QuotationsTable({ query, currentPage }: {
+	query: string
+	currentPage: number
+}) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
 	return (
 		<div className='mt-2'>

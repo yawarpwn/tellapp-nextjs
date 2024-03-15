@@ -2,9 +2,6 @@ export interface IconProps {
 	size?: number
 }
 
-export { default as ArrowLeft } from './arrow-left'
-export { default as ArrowRight } from './arrow-right'
-export { default as BarsIcon } from './bars'
 export { default as ChevronDobleRightIcon } from './chevron-doble-right-icon'
 export { default as ChevronDownIcon } from './chevron-down-icon'
 export { default as CustomersIcon } from './cutomers-icon'
