@@ -6,11 +6,11 @@ import { signOut } from '@/lib/actions/auth'
 function SignOutButton() {
 	return (
 		<form action={signOut}>
-			<button className='btn btn-sm'>
-				<span className='text-error'>
+			<button className='inline-block w-full my-2'>
+				<div className='w-full flex gap-4 py-3 pl-5 hover:text-white hover:bg-[rgb(27,28,32)] rounded-md'>
 					<PowerIcon />
-				</span>
-				<span>Salir</span>
+					<span>Salir</span>
+				</div>
 			</button>
 		</form>
 	)

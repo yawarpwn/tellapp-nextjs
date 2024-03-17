@@ -1,4 +1,3 @@
-import { Icons } from '@/icons/icons'
 import PrinterIcon from '@/icons/printer-icon'
 import { cookies } from 'next/headers'
 import { createClient } from '../../lib/supabase/server'
