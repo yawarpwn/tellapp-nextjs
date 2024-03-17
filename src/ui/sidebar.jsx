@@ -31,28 +31,35 @@ export function Sidebar() {
 					'h-full flex flex-col justify-between pb-4 ',
 				)}
 			>
-				<ul className='menu flex flex-col gap-8  mt-[var(--nav-height)]'>
-					{NAVIGATION.map(({ href, title, icon: Icon }) => (
-						<li key={title}>
-							<Link href={href} legacyBehavior>
-								<a
-									onClick={handleClick}
-									className='flex gap-2 group'
-								>
-									<span className='text-primary'>
-										<Icon size={22} />
-									</span>
-									<span
-										className={cn(`group-hover:text-primary-content`, {
-											'text-primary-content': pathname === href,
-										})}
+				<ul className='flex flex-col pt-2 mb-1 '>
+					{NAVIGATION.map(({ href, title, icon: Icon }) => {
+						const isAtive = pathname === href
+						return (
+							<li key={title}>
+								<Link href={href} legacyBehavior>
+									<a
+										onClick={handleClick}
+										className='flex group my-2'
 									>
-										{title}
-									</span>
-								</a>
-							</Link>
-						</li>
-					))}
+										<div
+											role='group'
+											className={cn(
+												'group flex w-full items-center py-3 pl-5 gap-4 rounded-md hover:bg-[rgb(27,28,32)] hover:text-white',
+												{
+													'bg-[rgb(27,28,32)] text-white': isAtive,
+												},
+											)}
+										>
+											<Icon size={22} hasGradient={isAtive} />
+											<span>
+												{title}
+											</span>
+										</div>
+									</a>
+								</Link>
+							</li>
+						)
+					})}
 				</ul>
 				<SignOutButton />
 			</div>

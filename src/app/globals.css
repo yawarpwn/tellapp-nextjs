@@ -17,3 +17,13 @@
   color-scheme: dark;
   --nav-height: 3rem;
 }
+
+.btn-primary {
+  border: none;
+  background: linear-gradient(
+    122deg,
+    rgb(250, 85, 96) 0.01%,
+    rgb(177, 75, 244) 49.9%,
+    rgb(77, 145, 255) 100%
+  );
+}

@@ -1,5 +1,8 @@
-export interface IconProps {
+import React from 'react'
+
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
 	size?: number
+	hasGradient: boolean
 }
 
 export { default as ChevronDobleRightIcon } from './chevron-doble-right-icon'
@@ -10,6 +13,7 @@ export { default as DownloadIcon } from './download-icon'
 export { default as EditIcon } from './edit-icon'
 export { default as EyeIcon } from './eye-icon'
 export { default as GalleryIcon } from './gallery-icon'
+export { GradientIcons } from './gradient-icons'
 export { default as HomeIcon } from './home-icon'
 export { default as MoonIcon } from './moon-icon'
 export { default as PlusIcon } from './plus-icon'
