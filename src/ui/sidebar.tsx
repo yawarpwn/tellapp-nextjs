@@ -11,7 +11,7 @@ export function Sidebar() {
 
 	// Close drawer
 	const closeDrawer = () => {
-		const drawerInput = document.querySelector('#drawer')
+		const drawerInput = document.querySelector('#drawer') as HTMLInputElement
 		const isChecked = drawerInput.checked
 
 		if (isChecked) {
@@ -25,10 +25,10 @@ export function Sidebar() {
 		closeDrawer()
 	}
 	return (
-		<aside className='min-h-screen h-full w-60 bg-base-200/80 backdrop-blur '>
+		<aside className='min-h-screen h-full w-60 bg-base-100 backdrop-blur '>
 			<div
 				className={cn(
-					'h-full flex flex-col justify-between pb-4 ',
+					'',
 				)}
 			>
 				<ul className='flex flex-col pt-2 mb-1 '>
@@ -61,6 +61,7 @@ export function Sidebar() {
 						)
 					})}
 				</ul>
+				<div className='separator'></div>
 				<SignOutButton />
 			</div>
 		</aside>

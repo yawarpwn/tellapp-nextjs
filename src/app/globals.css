@@ -7,6 +7,20 @@
   padding: 1rem;
 }
 
+.separator {
+  height: 1px;
+  background: linear-gradient(
+    81.02deg,
+    rgb(250, 85, 96) -23.49%,
+    rgb(177, 75, 244) 45.66%,
+    rgb(77, 145, 255) 114.8%
+  );
+  min-height: 1px;
+  margin-bottom: 1.5rem;
+  margin-inline-start: 1rem;
+  margin-inline-end: 1rem;
+}
+
 @layer components {
   .sk {
     @apply animate-background-shine bg-[linear-gradient(110deg,#222,45%,#111,55%,#222)] bg-[length:250%_100%];
