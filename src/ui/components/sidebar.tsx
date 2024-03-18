@@ -35,7 +35,7 @@ export function Sidebar(props: Props) {
 					return (
 						<li key={title}>
 							<Link href={href} legacyBehavior>
-								<a className='flex group my-2'>
+								<a onClick={onClose} className='flex group my-2'>
 									<div
 										role='group'
 										className={cn(

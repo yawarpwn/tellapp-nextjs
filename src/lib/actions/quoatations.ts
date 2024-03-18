@@ -25,14 +25,11 @@ export async function createQuotation(_: undefined, formData: FormData) {
 
 	// if error
 	if (!validatedFields.success) {
-		console.log('error', validatedFields.error.flatten().fieldErrors)
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
 			message: 'Missing Fields. Failed to Create Invoice.',
 		}
 	}
-
-	console.log('', validatedFields.data)
 
 	// create supabase client
 	const cookieStore = cookies()
