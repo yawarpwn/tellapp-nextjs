@@ -1,6 +1,7 @@
 // import { ITEMS_PER_PAGE } from '@/constants'
+import { ITEMS_PER_PAGE } from '@/constants'
 import { type Product } from '@/types'
-const ITEMS_PER_PAGE = 8
+// const ITEMS_PER_PAGE = 8
 import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 

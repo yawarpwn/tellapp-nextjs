@@ -43,7 +43,7 @@ export async function SignalsTable({
 								</div>
 							</td>
 							<td>
-								<div className='w-[200px]'>
+								<div className='min-w-[250px]'>
 									{signal.title}
 								</div>
 							</td>

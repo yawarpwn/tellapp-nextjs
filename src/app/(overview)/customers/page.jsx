@@ -3,6 +3,7 @@ import { AddCustomerForm } from '@/ui/customers'
 import CustomersTable from '@/ui/customers/table'
 import Pagination from '@/ui/pagination'
 import Search from '@/ui/search'
+import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
 import { Suspense } from 'react'
 
 export default async function CustomersPage({ searchParams }) {
@@ -16,7 +17,7 @@ export default async function CustomersPage({ searchParams }) {
 				<Search />
 				<AddCustomerForm />
 			</header>
-			<Suspense fallback={'Loading...'}>
+			<Suspense fallback={<TableSkeleton />}>
 				<CustomersTable query={query} currentPage={currentPage} />
 			</Suspense>
 			<Pagination totalPages={totalPage} />

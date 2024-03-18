@@ -1,3 +1,5 @@
+import { TableSkeleton } from './table-skeleton'
+
 const shimmer =
 	'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent'
 
@@ -20,27 +22,26 @@ function TableSkeletonRow() {
 	return (
 		<tr>
 			<td>
-				<div className='skeleton w-10 h-5 '></div>
+				<div className='skeleton w-8 h-8'></div>
 			</td>
 			{/* Company */}
 			<td>
-				<div>
-					<div className='skeleton w-[340px] h-5'></div>
-					<div className='skeleton w-24 h-5 mt-1'></div>
-				</div>
+				<div className='skeleton min-w-[250px] h-6'></div>
 			</td>
 			{/* Fecha */}
 			<td>
-				<div className='skeleton w-14 h-5'></div>
+				<div className='skeleton min-w-14 h-6'></div>
 			</td>
 			{/* Total */}
 			<td>
-				<div className='skeleton w-14 h-5'></div>
+				<div className='skeleton min-w-14 h-6'></div>
 			</td>
 			<td>
-				<div className='flex items-center gap-x-2'>
-					<div className='skeleton w-6 h-5'></div>
-					<div className='skeleton w-6 h-5'></div>
+				<div className='flex items-center justify-center gap-x-2'>
+					<div className='flex gap-4'>
+						<div className='skeleton w-8 h-6'></div>
+						<div className='skeleton w-8 h-6'></div>
+					</div>
 				</div>
 			</td>
 		</tr>
@@ -109,32 +110,8 @@ export function QuotationsTableSkeleton() {
 				<SkeletonCard />
 				<SkeletonCard />
 			</div>
-			<div className='hidden lg:block overflow-x-auto'>
-				<table className='table hidden lg:block'>
-					{/* head */}
-					<thead>
-						<tr>
-							<th>No</th>
-							<th>Cliente</th>
-							<th>Fecha</th>
-							<th>Total</th>
-							<th>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-						<TableSkeletonRow />
-					</tbody>
-				</table>
+			<div className='hidden lg:block'>
+				<TableSkeleton />
 			</div>
 		</div>
 	)

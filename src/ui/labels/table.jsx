@@ -15,7 +15,9 @@ async function LabelsTable({ query, currentPage }) {
 				<thead>
 					<tr>
 						<th>Destinatario</th>
+						<th>Ruc/Dni</th>
 						<th>Destino</th>
+						<th>Agencia</th>
 						<th>Teléfono</th>
 					</tr>
 				</thead>
@@ -24,14 +26,16 @@ async function LabelsTable({ query, currentPage }) {
 						return (
 							<tr key={label.id}>
 								<td>
-									<div>
-										<p className='w-[300px]'>{label.recipient}</p>
-										<p>{label.dni_ruc}</p>
-									</div>
+									<p className='min-w-[250px]'>{label.recipient}</p>
+								</td>
+								<td>
+									<p>{label.dni_ruc}</p>
 								</td>
 								<td>
 									<p>{label.address}</p>
-									<p style={{ width: '200px' }}>{label.destination}</p>
+									<p>{label.destination}</p>
+								</td>
+								<td>
 									<p className='text-xs'>{label?.agencies?.company}</p>
 								</td>
 								<td>{label.phone}</td>

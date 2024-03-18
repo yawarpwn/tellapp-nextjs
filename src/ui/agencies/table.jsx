@@ -12,6 +12,7 @@ async function AgenciesTable({ query, currentPage }) {
 					<tr>
 						<th>Empresa</th>
 						<th>Ruc</th>
+						<th>Dirección</th>
 						<th>Telefono</th>
 						<th>Destinos</th>
 						<th>Accciones</th>
@@ -24,11 +25,13 @@ async function AgenciesTable({ query, currentPage }) {
 							<tr key={id}>
 								<td>
 									<div>
-										<p className='w-[300px]'>{company}</p>
-										<p className='text-xs'>{address ?? 'Sin dirección'}</p>
+										<p className='min-w-[250px]'>{company}</p>
 									</div>
 								</td>
 								<td>{ruc}</td>
+								<td>
+									<p className='text-xs'>{address ?? 'Sin dirección'}</p>
+								</td>
 								<td>{phone ?? 'Desconocido'}</td>
 								<td>
 									{destinations?.length > 0 && (

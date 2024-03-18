@@ -3,7 +3,7 @@ import Pagination from '@/ui/pagination'
 import { AddProductForm } from '@/ui/products'
 import ProductTable from '@/ui/products/table'
 import Search from '@/ui/search'
-import { ProductsSkeleton } from '@/ui/skeletons/products'
+import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
 import { Suspense } from 'react'
 
 async function ProductsPage({ searchParams }: {
@@ -18,7 +18,7 @@ async function ProductsPage({ searchParams }: {
 				<Search placeholder='Buscar producto...' />
 				<AddProductForm />
 			</header>
-			<Suspense fallback={<ProductsSkeleton />}>
+			<Suspense fallback={<TableSkeleton />}>
 				<ProductTable query={query} currentPage={page} />
 			</Suspense>
 			<Pagination totalPages={totalPages} />

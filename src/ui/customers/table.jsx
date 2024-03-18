@@ -12,8 +12,8 @@ export default async function CustomersTable({ query, currentPage }) {
 					<tr>
 						<th>Nombre</th>
 						<th>Ruc</th>
+						<th>Dirección</th>
 						<th>Telefono</th>
-						<th>Email</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
@@ -24,15 +24,16 @@ export default async function CustomersTable({ query, currentPage }) {
 							<tr key={id}>
 								<td>
 									<div>
-										<p className='w-[300px] '>{name}</p>
-										<p className='w-[300px] text-[10px]'>
-											{address}
-										</p>
+										<p className='min-w-[250px] '>{name}</p>
 									</div>
 								</td>
 								<td>{ruc}</td>
+								<td>
+									<p className='min-w-[250px] text-[10px]'>
+										{address}
+									</p>
+								</td>
 								<td>{phone}</td>
-								<td>{email}</td>
 								<td>
 									<div className='flex gap-2'>
 										<EditCustomerForm customer={customer} />

@@ -33,7 +33,7 @@ export const PRODUCT_CATEGORIES = {
 	ROPA_SEGURIDAD: 'ropa seguridad',
 } as const
 
-export const ITEMS_PER_PAGE = 8
+export const ITEMS_PER_PAGE = 12
 
 export const NAVIGATION = [
 	{

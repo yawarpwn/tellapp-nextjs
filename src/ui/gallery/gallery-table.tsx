@@ -37,7 +37,7 @@ export async function GalleryTable({ query, currentPage }: {
 								</div>
 							</td>
 							<td>
-								<div className='w-[200px]'>
+								<div className='min-w-[250px]'>
 									{photo.title}
 								</div>
 							</td>

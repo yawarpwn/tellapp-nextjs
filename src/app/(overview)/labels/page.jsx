@@ -3,6 +3,7 @@ import { AddButton } from '@/ui/buttons'
 import LabelsTable from '@/ui/labels/table'
 import Pagination from '@/ui/pagination'
 import Search from '@/ui/search'
+import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
 import { Suspense } from 'react'
 async function LabelsPage({ searchParams }) {
 	const totalPages = await fetchLabelsPages()
@@ -14,7 +15,7 @@ async function LabelsPage({ searchParams }) {
 				<Search placeholder='Buscar destinatario' />
 				<AddButton href='/labels/create' />
 			</header>
-			<Suspense fallback={'Loading...'}>
+			<Suspense fallback={<TableSkeleton />}>
 				<LabelsTable currentPage={currentPage} query={query} />
 			</Suspense>
 			<Pagination totalPages={totalPages} />

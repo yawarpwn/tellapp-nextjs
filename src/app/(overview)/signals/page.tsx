@@ -3,6 +3,7 @@ import Pagination from '@/ui/pagination'
 import Search from '@/ui/search'
 import { SignalAddFormButton } from '@/ui/signals/signal-button'
 import { SignalsTable } from '@/ui/signals/table'
+import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
 import { Suspense } from 'react'
 
 export default async function Page({ searchParams }: {
@@ -21,7 +22,7 @@ export default async function Page({ searchParams }: {
 				<Search placeholder='Buscar Señal...' />
 				<SignalAddFormButton />
 			</header>
-			<Suspense>
+			<Suspense fallback={<TableSkeleton />}>
 				<SignalsTable currentPage={page} query={query} />
 			</Suspense>
 			<Pagination totalPages={totalPages} />

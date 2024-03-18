@@ -3,6 +3,7 @@ import { AddFormAgency } from '@/ui/agencies'
 import AgenciesTable from '@/ui/agencies/table'
 import Pagination from '@/ui/pagination'
 import Search from '@/ui/search'
+import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
 import { Suspense } from 'react'
 async function AgenciesPage({ searchParams }) {
 	const page = Number(searchParams?.page) || 1
@@ -15,7 +16,7 @@ async function AgenciesPage({ searchParams }) {
 				<AddFormAgency />
 				{/* <AddButton href='/agencies/create' /> */}
 			</header>
-			<Suspense fallback={'Cargando...'}>
+			<Suspense fallback={<TableSkeleton />}>
 				<AgenciesTable query={query} currentPage={page} />
 			</Suspense>
 			<Pagination currentPage={page} totalPages={totalPages} />

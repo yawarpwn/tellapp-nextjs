@@ -3,6 +3,7 @@ import { GalleryAddFormButton } from '@/ui/gallery/gallery-buttons'
 import { GalleryTable } from '@/ui/gallery/gallery-table'
 import { Pagination } from '@/ui/pagination'
 import Search from '@/ui/search'
+import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
 import { Suspense } from 'react'
 
 export default async function Page(
@@ -18,7 +19,7 @@ export default async function Page(
 				<Search placeholder='Buscar foto...' />
 				<GalleryAddFormButton />
 			</header>
-			<Suspense fallback={<div>Cargando...</div>}>
+			<Suspense fallback={<TableSkeleton />}>
 				<GalleryTable currentPage={page} query={query} />
 			</Suspense>
 			{/* <GalleryImagesList title={'Galeria'} images={galleryImages} /> */}

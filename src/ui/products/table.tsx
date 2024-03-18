@@ -30,25 +30,24 @@ async function ProductTable({ query, currentPage }) {
 									{/* Description */}
 									<td>
 										<div>
-											<p className='w-[300px]'>{product.description}</p>
+											<p className='min-w-[250px]'>{product.description}</p>
 										</div>
 									</td>
-									{/* Code */}
 									<td>
-										<p>
+										<p className='text-xs'>
 											{product.code.toUpperCase()}
 										</p>
 									</td>
 
 									<td>
-										<p>
+										<p className='text-xs'>
 											{product.unit_size}
 										</p>
 									</td>
-									<td>{product.cost.toFixed(2)}</td>
-									<td>{product.price.toFixed(2)}</td>
+									<td className='text-xs'>{product.cost.toFixed(2)}</td>
+									<td className='text-xs'>{product.price.toFixed(2)}</td>
 									<td>
-										<p className='w-[40px] truncate'>
+										<p className='w-[40px] truncate text-xs'>
 											{product.category}
 										</p>
 									</td>
