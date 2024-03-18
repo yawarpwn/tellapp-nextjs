@@ -6,6 +6,7 @@ import { formatDateToLocal } from '@/utils'
 import { EyeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { EditButton } from '../buttons'
+import { TextGradient } from '../components/text-gradient'
 import { RegularCustomerToggle } from './regular-customer-toggle'
 
 function TableRow({ quotation }: {
@@ -16,7 +17,7 @@ function TableRow({ quotation }: {
 		<tr>
 			<td>
 				<Link href={`/quotations/${quotation.number}`}>
-					<span className='text-primary font-bold'>#</span>
+					<TextGradient className='font-bold text-lg' as='span'>#</TextGradient>
 					{quotation.number}
 				</Link>
 			</td>

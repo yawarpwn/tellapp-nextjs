@@ -1,9 +1,9 @@
-export function GradientIcons() {
+export function GradientIcons({ id }: { id: string }) {
 	return (
 		<>
 			<defs>
 				<linearGradient
-					id='iconHover'
+					id={id}
 					x1='-9.46'
 					y1='-2.14614e-06'
 					x2='22.5723'

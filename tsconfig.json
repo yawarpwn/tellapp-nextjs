@@ -27,7 +27,8 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/ui/gallery/gallery-form-modal"
+    "src/ui/gallery/gallery-form-modal",
+    "src/ui/components/text-gradient"
   ],
   "exclude": ["node_modules"]
 }
