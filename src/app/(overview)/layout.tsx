@@ -27,7 +27,7 @@ async function LayoutDashboar({ children }: { children: React.ReactNode }) {
 					<div className='h-screen [position:unset] md:sticky top-0'>
 						<header
 							id='sidebar-mobile'
-							className='absolute bg-base-100 flex justify-between  w-full h-auto z-10 py-4 px-6 md:hidden'
+							className='absolute bg-base-100 flex justify-between  w-full h-auto z-10 py-4 px-6 md:hidden '
 						>
 							<Logo />
 							<MobileMenu />
@@ -39,12 +39,10 @@ async function LayoutDashboar({ children }: { children: React.ReactNode }) {
 				</div>
 				{/* Main Content */}
 				<div className='min-w-full max-w-[100vw] mt-4'>
-					<div>
-						<main className='pt-[calc(var(--nav-height)+1rem)] lg:pt-4 px-4'>
-							{children}
-						</main>
-						<footer className='h-4'></footer>
-					</div>
+					<main className='px-4 md:px-8'>
+						{children}
+					</main>
+					<footer className='h-4'></footer>
 				</div>
 				{/* Main Content */}
 			</div>

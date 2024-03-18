@@ -11,7 +11,7 @@ export function MobileMenu() {
 
 	return (
 		<>
-			<button className='btn btn-sm' onClick={openMobileMenu}>
+			<button className='btn btn-sm text-white' onClick={openMobileMenu}>
 				<MenuIcon />
 			</button>
 			{showMobileMenu && createPortal(

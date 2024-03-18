@@ -104,14 +104,14 @@ async function QuotationsTable({ query, currentPage }: {
 }) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
 	return (
-		<div className='mt-2'>
+		<div className='mt-2 w-full'>
 			<div className='md:hidden flex flex-col gap-2'>
 				{quotations?.map(quotation => (
 					<QuotationCard key={quotation.id} quotation={quotation} />
 				))}
 			</div>
 			<div className='overflow-x-auto'>
-				<table className='table hidden md:block'>
+				<table className='table hidden md:table'>
 					{/* head */}
 					<thead>
 						<tr>
