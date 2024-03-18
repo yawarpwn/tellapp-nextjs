@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .sk {
+    @apply animate-background-shine bg-[linear-gradient(110deg,#222,45%,#111,55%,#222)] bg-[length:250%_100%];
+  }
+}
+
 .modal-box {
   max-height: calc(100vh - 2rem);
   padding: 1rem;
@@ -19,12 +25,6 @@
   margin-bottom: 1.5rem;
   margin-inline-start: 1rem;
   margin-inline-end: 1rem;
-}
-
-@layer components {
-  .sk {
-    @apply animate-background-shine bg-[linear-gradient(110deg,#222,45%,#111,55%,#222)] bg-[length:250%_100%];
-  }
 }
 
 :root {

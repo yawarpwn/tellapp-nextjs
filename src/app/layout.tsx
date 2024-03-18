@@ -23,7 +23,7 @@ export default async function RootLayout(
 		<html data-theme='dark' lang='en'>
 			<body
 				suppressHydrationWarning={true}
-				className={`${inter.className} min-h-screen font-sans antialiased`}
+				className={`${inter.className} min-h-screen relative font-sans antialiased`}
 			>
 				<NextTopLoader showSpinner={false} color='oklch(var(--p))' />
 				<Toaster position='bottom-right' />

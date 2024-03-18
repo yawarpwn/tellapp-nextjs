@@ -1,44 +1,41 @@
 'use client'
 
 import { NAVIGATION } from '@/constants'
+import { MenuIcon } from '@/icons'
 import SignOutButton from '@/ui/sign-out-button'
 import { cn } from '@/utils'
+import { XIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Logo } from './logo'
+interface Props {
+	isOpen?: boolean
+	onClose?: () => void
+	onOpen?: () => void
+}
 
-export function Sidebar() {
+export function Sidebar(props: Props) {
+	const { isOpen = false, onClose } = props
 	const pathname = usePathname()
 
-	// Close drawer
-	const closeDrawer = () => {
-		const drawerInput = document.querySelector('#drawer') as HTMLInputElement
-		const isChecked = drawerInput.checked
-
-		if (isChecked) {
-			drawerInput.checked = false
-		} else {
-			drawerInput.checked = true
-		}
-	}
-
-	const handleClick = () => {
-		closeDrawer()
-	}
 	return (
 		<aside
 			style={{ scrollbarWidth: 'thin' }}
-			className='fixed w-60 bg-base-100 flex flex-col h-dvh border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto'
+			className='flex w-full md:w-[16.875rem] bg-base-100 flex-col h-dvh border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto'
 		>
+			<header className='mt-4 flex justify-between px-4 md:hidden'>
+				<Logo />
+				<button onClick={onClose} className='btn btn-sm text-white'>
+					<XIcon />
+				</button>
+			</header>
 			<ul className='flex flex-col pt-2 mb-1 '>
 				{NAVIGATION.map(({ href, title, icon: Icon }) => {
 					const isAtive = pathname === href
 					return (
 						<li key={title}>
 							<Link href={href} legacyBehavior>
-								<a
-									onClick={handleClick}
-									className='flex group my-2'
-								>
+								<a className='flex group my-2'>
 									<div
 										role='group'
 										className={cn(
