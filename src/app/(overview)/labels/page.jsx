@@ -11,7 +11,7 @@ async function LabelsPage({ searchParams }) {
 	const currentPage = Number(searchParams?.page || 1)
 	return (
 		<>
-			<header className='flex items-center justify-between'>
+			<header className='flex items-center justify-between mb-4'>
 				<Search placeholder='Buscar destinatario' />
 				<AddButton href='/labels/create' />
 			</header>

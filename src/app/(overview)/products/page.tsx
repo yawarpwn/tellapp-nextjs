@@ -14,7 +14,7 @@ async function ProductsPage({ searchParams }: {
 	const totalPages = await fetchProductsPages(query)
 	return (
 		<div className='flex flex-col gap-2'>
-			<header className='flex items-center gap-2 justify-between'>
+			<header className='flex items-center gap-2 justify-between mb-4'>
 				<Search placeholder='Buscar producto...' />
 				<AddProductForm />
 			</header>

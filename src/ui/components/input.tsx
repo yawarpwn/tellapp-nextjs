@@ -38,7 +38,11 @@ export function Input(props: Props) {
 							ref={inputRef}
 							aria-labelledby={ariaLabelledby}
 							className={cn(
-								'block w-full rounded-md  bg-base-200 text-sm border border-base-300 placeholder:text-base-content/50  py-3 px-4',
+								`block w-full rounded-md  bg-base-200 text-sm border border-base-300 outline-none 
+placeholder:text-base-content/50  py-3 px-4 
+focus-visible:border-primary
+input-form
+`,
 								{
 									'h-20 resize-none': as == 'textarea',
 									'bg-base-300 border-red-900': errors,

@@ -32,13 +32,17 @@ function UpdateEditForm(
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form className='modal-form ' onSubmit={handleSubmit}>
 			{renderInputs(state, itemToEdit)}
 			{state?.message && (
 				<div className='col-span-12 mt-2 text-error'>{state.message}</div>
 			)}
-			<footer className='col-span-12 flex justify-between mt-2'>
-				<button disabled={isPending} type='submit' className='btn'>
+			<footer className='col-span-12 flex gap-4 justify-between mt-2'>
+				<button
+					disabled={isPending}
+					type='submit'
+					className='btn btn-secondary flex-1'
+				>
 					{isPending && <span className='loading loading-spinner'></span>}
 					Aceptar
 				</button>
@@ -46,7 +50,7 @@ function UpdateEditForm(
 					disabled={isPending}
 					onClick={closeModal}
 					type='button'
-					className='btn'
+					className='btn flex-1'
 				>
 					Cancelar
 				</button>

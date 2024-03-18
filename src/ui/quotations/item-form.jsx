@@ -203,11 +203,15 @@ export function ItemForm({
 					</div>
 				</div>
 			</div>
-			<div className='mt-4 flex items-center justify-between'>
-				<button type='submit' className='btn'>
+			<div className='mt-4 flex items-center gap-4 justify-between'>
+				<button type='submit' className='btn btn-secondary flex-1'>
 					Aceptar
 				</button>
-				<button onClick={onCloseModal} type='button' className='btn'>
+				<button
+					onClick={onCloseModal}
+					type='button'
+					className='btn btn-secondary flex-1'
+				>
 					Cancelar
 				</button>
 			</div>

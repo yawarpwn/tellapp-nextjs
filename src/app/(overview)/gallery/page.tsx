@@ -15,7 +15,7 @@ export default async function Page(
 
 	return (
 		<div>
-			<header className='flex items-center justify-between gap-2'>
+			<header className='flex items-center justify-between gap-2 mb-4'>
 				<Search placeholder='Buscar foto...' />
 				<GalleryAddFormButton />
 			</header>

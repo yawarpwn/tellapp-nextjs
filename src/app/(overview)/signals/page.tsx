@@ -18,7 +18,7 @@ export default async function Page({ searchParams }: {
 	const totalPages = await fetchSignalsPages(query)
 	return (
 		<div>
-			<header className='flex items-center gap-2 justify-between'>
+			<header className='flex items-center gap-2 justify-between mb-4'>
 				<Search placeholder='Buscar Señal...' />
 				<SignalAddFormButton />
 			</header>

@@ -41,3 +41,36 @@
     rgb(77, 145, 255) 100%
   );
 }
+
+.btn-secondary {
+  border-color: transparent;
+  color: #ddd;
+  outline-offset: 2px;
+  background:
+    linear-gradient(rgb(32, 33, 37), rgb(32, 33, 37)) no-repeat padding-box,
+    linear-gradient(
+        81.02deg,
+        rgb(250, 85, 96) -23.47%,
+        rgb(177, 75, 244) 45.52%,
+        rgb(77, 145, 255) 114.8%
+      )
+      border-box;
+}
+
+.btn-secondary:hover {
+  border-color: transparent;
+  color: #fff;
+  background:
+    linear-gradient(rgb(38, 39, 44), rgb(38, 39, 44)) no-repeat padding-box,
+    linear-gradient(
+        81.02deg,
+        rgb(250, 85, 96) -23.47%,
+        rgb(177, 75, 244) 45.52%,
+        rgb(77, 145, 255) 114.8%
+      )
+      border-box;
+}
+
+.input-form:invalid + .btn {
+  border: 1px solid lime;
+}

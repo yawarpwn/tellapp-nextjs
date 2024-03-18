@@ -1,0 +1,17 @@
+.modal-form input:invalid {
+  border: 1px solid red; /* Opcional: Estilo visual para campos inválidos */
+}
+
+.modal-form input:valid {
+  border: 1px solid green; /* Opcional: Estilo visual para campos válidos */
+}
+
+.modal-form input:invalid ~ button[type='submit'] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.modal-form input:valid ~ button[type='submit'] {
+  opacity: 1;
+  pointer-events: auto;
+}

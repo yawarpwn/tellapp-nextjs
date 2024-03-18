@@ -11,7 +11,7 @@ async function AgenciesPage({ searchParams }) {
 	const totalPages = await fetchAgenciesPages(query)
 	return (
 		<>
-			<header className='flex itmes-center justify-between'>
+			<header className='flex itmes-center justify-between mb-4'>
 				<Search />
 				<AddFormAgency />
 				{/* <AddButton href='/agencies/create' /> */}

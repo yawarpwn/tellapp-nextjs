@@ -156,7 +156,11 @@ export function SignalFormModal(
 					</div>
 				</div>
 				<div className='mt-4 flex gap-2 justify-between'>
-					<button disabled={isPending} type='submit' className='btn '>
+					<button
+						disabled={isPending}
+						type='submit'
+						className='btn btn-secondary'
+					>
 						<span>
 							Aceptar
 						</span>

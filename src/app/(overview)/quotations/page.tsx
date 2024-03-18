@@ -16,7 +16,7 @@ async function QuotationsPage({ searchParams }: {
 	const totalPages = await fetchQuotationsPages({ query })
 	return (
 		<>
-			<header className='flex items-center justify-between gap-2'>
+			<header className='flex items-center justify-between gap-2 mb-4'>
 				<Search />
 				<AddButton href={'/quotations/create'} />
 			</header>

@@ -13,7 +13,7 @@ export default async function CustomersPage({ searchParams }) {
 
 	return (
 		<>
-			<header className='flex gap-2 items-center justify-between'>
+			<header className='flex gap-2 items-center justify-between mb-4'>
 				<Search />
 				<AddCustomerForm />
 			</header>
