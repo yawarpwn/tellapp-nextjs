@@ -2,6 +2,7 @@ import { XIcon } from '@/icons'
 import { createBrowserClient } from '@/lib/supabase'
 import { createSearchInstance } from '@/services/search'
 import { Input } from '@/ui/components/input'
+import { Textarea } from '@/ui/components/textarea'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 const initialState = {
@@ -121,9 +122,9 @@ export function ItemForm({
 					<label className='label'>
 						<span className='label-text'>Descripción</span>
 					</label>
-					<textarea
+					<Textarea
 						autoFocus
-						className='textarea textarea-primary h-[120px]  w-full resize-none'
+						className='h-[120px]  w-full'
 						placeholder='Buscar producto'
 						// type="search"
 						onChange={handleChangeItem}

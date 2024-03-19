@@ -2,20 +2,19 @@ import { cn } from '@/utils'
 import { useId } from 'react'
 import React from 'react'
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props extends React.InputHTMLAttributes<HTMLTextAreaElement> {
 	labelText: string
-	inputRef?: any
 	errors?: any
 	ariaLabelledby?: string
 	disabled?: boolean
 }
-export function Input(props: Props) {
+export function Textarea(props: Props) {
 	const {
 		labelText,
-		inputRef,
 		errors,
 		ariaLabelledby,
 		disabled,
+		className,
 		...restProps
 	} = props
 
@@ -30,17 +29,17 @@ export function Input(props: Props) {
 			<div className='col-span-12'>
 				<div>
 					<div className='relative'>
-						<input
+						<textarea
 							id={id}
-							ref={inputRef}
 							aria-labelledby={ariaLabelledby}
 							className={cn(
 								`block w-full rounded-md  bg-base-200 text-sm border border-base-300 outline-none 
 placeholder:text-base-content/50  py-3 px-4 
 focus-visible:border-primary
-input-form
+input-form resize-none
 `,
 								errors && 'bg-base-300 border-red-900',
+								className,
 							)}
 							disabled={disabled}
 							{...restProps}

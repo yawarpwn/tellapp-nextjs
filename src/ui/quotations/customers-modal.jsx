@@ -2,6 +2,7 @@
 
 import { Input }Search from '@/ui/components/input-search'
 import {Modal} from '@/ui/modal'
+import './modal-button.css'
 import { useMemo, useState } from 'react'
 function CustomersModal(
 	{ isOpenModal, onCloseModal, onCustomerPick, serverCustomers },
@@ -51,7 +52,7 @@ function CustomersModal(
 
 	return (
 		<Modal isOpen={isOpenModal} onClose={handleCloseModal}>
-			<form onSubmit={handleSubmit}>
+			<form className='modal-form' onSubmit={handleSubmit}>
 				<div className='mt-4'>
 					<InputSearch
 						placeholder={'Buscar cliente...'}

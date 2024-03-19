@@ -1,4 +1,5 @@
 import { createServerClient } from '@/lib/supabase'
+import { Logo } from '@/ui/components/logo'
 import LoginForm from '@/ui/login-form'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -27,9 +28,7 @@ export default async function Home(
 									<span>
 										Bienvenido a&nbsp;
 									</span>
-									<span className='font-extrabold inline-flex animate-background-shine bg-[linear-gradient(110deg,#b000ff,45%,#1e293b,55%,#b000ff)] bg-[length:250%_100%] bg-clip-text text-transparent'>
-										TELLAPP
-									</span>
+									<Logo />
 								</h1>
 								<h2 className='text-sm opacity-45'>
 									Adminitra cotizaciónes, clientes y más.

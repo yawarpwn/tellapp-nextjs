@@ -71,6 +71,14 @@
       border-box;
 }
 
-.input-form:invalid + .btn {
-  border: 1px solid lime;
+form:has(input:invalid, textarea:invalid, select:invalid)
+  button[type='submit'] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+form:not(:has(input:invalid, textarea:invalid, select:invalid))
+  button[type='submit'] {
+  opacity: 1;
+  pointer-events: auto;
 }

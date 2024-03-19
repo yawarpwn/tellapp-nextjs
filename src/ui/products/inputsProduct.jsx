@@ -1,11 +1,12 @@
 import { PRODUCT_CATEGORIES } from '@/constants'
 import { Input } from '@/ui/components/input'
+import { Textarea } from '@/ui/components/textarea'
 
 export function InputsProduct({ state, product }) {
 	return (
 		<div className='grid grid-cols-12 gap-4'>
 			<div className='col-span-12'>
-				<Input
+				<Textarea
 					required
 					name='description'
 					placeholder='Descripcion de producto'
