@@ -23,7 +23,7 @@ export function Sidebar(props: Props) {
 			className={cn(
 				`
 flex w-full md:w-[16.875rem] bg-base-100 flex-col h-dvh 
-border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto `,
+border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto text-sm`,
 			)}
 		>
 			<header className='mt-4 flex justify-between px-4 md:hidden'>
@@ -32,6 +32,11 @@ border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto `,
 					<XIcon />
 				</button>
 			</header>
+
+			<div className='hidden md:block mt-4 pl-5'>
+				<Logo />
+				<span className='badge badge-xs badge-ghost'>2.0</span>
+			</div>
 			<ul className='flex flex-col pt-2 mb-1 '>
 				{NAVIGATION.map(({ href, title, icon: Icon }) => {
 					const isAtive = pathname === href
