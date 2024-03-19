@@ -1,7 +1,6 @@
 'use client'
 
 import { NAVIGATION } from '@/constants'
-import { MenuIcon } from '@/icons'
 import SignOutButton from '@/ui/sign-out-button'
 import { cn } from '@/utils'
 import { XIcon } from 'lucide-react'
@@ -21,7 +20,11 @@ export function Sidebar(props: Props) {
 	return (
 		<aside
 			style={{ scrollbarWidth: 'thin' }}
-			className='flex w-full md:w-[16.875rem] bg-base-100 flex-col h-dvh border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto'
+			className={cn(
+				`
+flex w-full md:w-[16.875rem] bg-base-100 flex-col h-dvh 
+border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto `,
+			)}
 		>
 			<header className='mt-4 flex justify-between px-4 md:hidden'>
 				<Logo />
