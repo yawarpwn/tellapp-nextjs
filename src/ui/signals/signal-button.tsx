@@ -33,10 +33,13 @@ export function SignalAddFormButton() {
 	)
 }
 
-export function SignalDeleteFormButton({ id }: { id: string }) {
+export function SignalDeleteFormButton(
+	{ id, publicId }: { id: string; publicId: string },
+) {
 	return (
 		<DeleteActionForm
 			id={id}
+			publicId={publicId}
 			deleteAction={deleteSignal}
 		/>
 	)

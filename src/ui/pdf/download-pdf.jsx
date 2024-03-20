@@ -8,6 +8,8 @@ export default function DownloadPDF({ quotation }) {
 		document: <PDFGenerator quotation={quotation} />,
 	})
 
+	const ruc = `-${quotation?.ruc}` || ''
+
 	const handleShare = async () => {
 		try {
 			// Generar el Blob desde el PDF generado
@@ -18,7 +20,7 @@ export default function DownloadPDF({ quotation }) {
 				// Usar la API navigator.share para compartir el Blob del PDF
 				await navigator.share({
 					files: [
-						new File([pdfBlob], `COT-2024-00${quotation.number}.pdf`, {
+						new File([pdfBlob], `COT-2024-${quotation.number}${ruc}.pdf`, {
 							type: 'application/pdf',
 						}),
 					],
@@ -54,7 +56,7 @@ export default function DownloadPDF({ quotation }) {
 			</button>
 			<a
 				href={instance.url}
-				download={`COT-2023-00${quotation.number}.pdf`}
+				download={`COT-2024-${quotation.number}${ruc}.pdf`}
 				className='btn btn-secondary'
 			>
 				<DownloadIcon size={20} />

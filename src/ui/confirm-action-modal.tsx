@@ -1,10 +1,10 @@
 'use client'
 
 import clsx from 'clsx'
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { createPortal, useFormStatus } from 'react-dom'
 
-function SubmitButton({ onClose }) {
+function SubmitButton({ onClose }: { onClose: () => void }) {
 	const { pending } = useFormStatus()
 	return (
 		<>
@@ -25,17 +25,27 @@ function SubmitButton({ onClose }) {
 	)
 }
 
+interface Props {
+	isOpen: boolean
+	onClose: () => void
+	onAction: () => void
+	title?: string
+	children?: React.ReactNode
+	size?: 'xs' | 'sm' | 'md' | 'lg'
+}
+
 function ConfirmModalAction(
-	{
+	props: Props,
+) {
+	const {
 		isOpen,
 		onClose,
 		onAction,
 		title = '¿ Estás seguro ?',
 		children,
 		size = 'sm',
-	},
-) {
-	const modalRef = useRef(null)
+	} = props
+	const modalRef = useRef<HTMLDialogElement | null>(null)
 
 	useEffect(() => {
 		if (isOpen) {
@@ -46,7 +56,7 @@ function ConfirmModalAction(
 	}, [isOpen])
 
 	useEffect(() => {
-		const handleKeyEscape = event => {
+		const handleKeyEscape = (event: KeyboardEvent) => {
 			if (event.key === 'Escape') {
 				onClose()
 			}
@@ -57,11 +67,6 @@ function ConfirmModalAction(
 	}, [onClose])
 
 	const modalBoxClass = clsx('modal-box', `max-w-${size}`)
-
-	const handleAction = async formData => {
-		await onAction(formData)
-		// onClose()
-	}
 
 	return (
 		isOpen
@@ -75,7 +80,7 @@ function ConfirmModalAction(
 					}
 				}}
 			>
-				<form className={modalBoxClass} action={handleAction}>
+				<form className={modalBoxClass} action={onAction}>
 					<header className='py-2'>
 						<p className='text-center mb-2'>{title}</p>
 					</header>

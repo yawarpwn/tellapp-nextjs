@@ -55,7 +55,10 @@ export async function SignalsTable({
 							<td>
 								<div className='flex gap-2 items-center'>
 									<SignalEditFormButton item={signal} />
-									<SignalDeleteFormButton id={signal.id} />
+									<SignalDeleteFormButton
+										id={signal.id}
+										publicId={signal.public_id}
+									/>
 								</div>
 							</td>
 						</tr>

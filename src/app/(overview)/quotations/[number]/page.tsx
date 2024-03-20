@@ -3,9 +3,8 @@ import { Quotation } from '@/ui/quotations/quotation'
 import { QuotationSkeleton } from '@/ui/skeletons/quotations'
 import { Suspense } from 'react'
 
-async function QuotationPage({ params }) {
-	const { number } = params
-
+async function QuotationPage({ params }: { params: { number: string } }) {
+	const number = Number(params.number)
 	return (
 		<>
 			<Breadcrumbs

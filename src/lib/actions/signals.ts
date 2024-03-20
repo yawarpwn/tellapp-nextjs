@@ -104,6 +104,8 @@ export async function deleteSignal(_: undefined, formData: FormData) {
 	const id = formData.get('id') as string
 	const publicId = formData.get('publicId') as string
 
+	console.log({ id, publicId })
+
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 

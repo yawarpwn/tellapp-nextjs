@@ -3,12 +3,15 @@ import { fetchQuotationById } from '@/lib/data/quotations'
 import DownloadPDF from '@/ui/pdf/download-pdf'
 import { getIgv } from '@/utils'
 import Link from 'next/link'
+import { DuplicateQuotation } from './duplicate-quotation'
+import { QuotationDeleteForm } from './quotation-delete-form'
 
-export async function Quotation({ number }) {
+export async function Quotation({ number }: { number: number }) {
 	const quotation = await fetchQuotationById({ number })
 	const { create_at, items, include_igv } = quotation
 	const formatedDate = new Intl.DateTimeFormat('es').format(create_at)
 	const { total, subTotal, igv } = getIgv(quotation.items)
+
 	return (
 		<>
 			<header className='flex justify-end gap-x-2'>
@@ -21,6 +24,8 @@ export async function Quotation({ number }) {
 						<span className='hidden lg:block'>Editar</span>
 					</Link>
 					<DownloadPDF quotation={quotation} />
+					<DuplicateQuotation number={number} />
+					<QuotationDeleteForm number={number} />
 				</div>
 			</header>
 
@@ -85,7 +90,7 @@ export async function Quotation({ number }) {
 								>
 									Subtotal:
 								</td>
-								<td colSpan='' className='text-left py-3 px-4'>
+								<td className='text-left py-3 px-4'>
 									{subTotal}
 								</td>
 							</tr>
@@ -96,7 +101,7 @@ export async function Quotation({ number }) {
 								>
 									IGV:
 								</td>
-								<td colSpan='' className='text-left py-3 px-4'>
+								<td className='text-left py-3 px-4'>
 									{igv}
 								</td>
 							</tr>
@@ -107,7 +112,7 @@ export async function Quotation({ number }) {
 								>
 									Total :
 								</td>
-								<td colSpan='' className='text-left py-3 px-4'>
+								<td className='text-left py-3 px-4'>
 									{total}
 								</td>
 							</tr>

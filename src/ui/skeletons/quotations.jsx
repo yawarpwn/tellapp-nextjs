@@ -156,6 +156,8 @@ export function QuotationSkeleton() {
 					<div className='skeleton w-12 h-11 rounded-md' />
 					<div className='skeleton w-12 h-11 rounded-md' />
 					<div className='skeleton w-12 h-11 rounded-md' />
+					<div className='skeleton w-12 h-11 rounded-md' />
+					<div className='skeleton w-12 h-11 rounded-md' />
 				</div>
 			</header>
 			<div className='container mx-auto px-4 py-8'>

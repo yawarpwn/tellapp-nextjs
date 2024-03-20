@@ -3,9 +3,11 @@
 import { TABLES } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
 import { CreateQuotation, UpdateQuotation } from '@/schemas/quotations'
+import Table from '@/ui/pdf/table'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { fetchLastQuotation, fetchQuotationById } from '../data/quotations'
 
 // Create Product
 export async function createQuotation(_: undefined, formData: FormData) {
@@ -186,12 +188,45 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 }
 
 export async function deleteQuotation(_: undefined, formData: FormData) {
-	const id = formData.get('id')
+	const number = Number(formData.get('number'))
 
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
-	await supabase.from(TABLES.Quotations).delete().eq('id', id)
-	revalidatePath('/quotations')
+	await supabase.from(TABLES.Quotations).delete().eq('number', number)
+	redirect('/quotations')
+}
+
+export async function duplicateQuotation(_: undefined, formData: FormData) {
+	const number = Number(formData.get('number'))
+
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	const quotation = await fetchQuotationById({ number })
+	const { number: lastQuotation } = await fetchLastQuotation()
+
+	const dataToDuplicate = {
+		number: lastQuotation + 1,
+		company: quotation.company,
+		ruc: quotation.ruc,
+		address: quotation.address,
+		deadline: quotation.deadline,
+		phone: quotation.phone,
+		items: quotation.items,
+		include_igv: quotation.include_igv,
+	}
+
+	const { data, error } = await supabase
+		.from(TABLES.Quotations)
+		.insert(dataToDuplicate)
+
+	if (error) {
+		console.log(error)
+	}
+
+	console.log(data)
+	redirect('/quotations')
 }
