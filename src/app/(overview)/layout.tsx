@@ -39,7 +39,7 @@ async function LayoutDashboar({ children }: { children: React.ReactNode }) {
 				</div>
 				{/* Main Content */}
 				<div className='min-w-full max-w-[100vw] mt-4'>
-					<main className='px-4 md:px-8'>
+					<main className='px-4 xl:px-28'>
 						{children}
 					</main>
 					<footer className='h-4'></footer>

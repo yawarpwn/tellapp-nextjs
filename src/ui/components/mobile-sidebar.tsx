@@ -32,7 +32,7 @@ export function MobileSidebar(props: Props) {
 				role='dialog'
 				id='modal-mobile '
 				className={cn(
-					'fixed top-0 left-0 bottom-0 w-full duration-300 transition-transform ease-in-out border translate-x-0 ',
+					'fixed top-0 left-0 bottom-0 w-full duration-300 transition-transform ease-in-out translate-x-0 ',
 					visible ? 'translate-x-0' : 'translate-x-[-100%]',
 				)}
 			>

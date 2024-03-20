@@ -83,10 +83,10 @@ function CustomersModal(
 						})}
 				</div>
 				<footer className='flex mt-4 items-center justify-between'>
-					<button type='submit' className='btn'>
+					<button type='submit' className='btn btn-secondary'>
 						Aceptar
 					</button>
-					<button type='button' onClick={handleCloseModal} className='btn'>
+					<button type='button' onClick={handleCloseModal} className='btn btn-secondary'>
 						Cancelar
 					</button>
 				</footer>

@@ -1,10 +1,10 @@
 'use client'
 
 import { signIn } from '@/lib/actions/auth'
+import { SubmitButton } from '@/ui/components/submit-button'
 import { useFormState } from 'react-dom'
-import { SubmitButton } from './components/submit-button'
 
-export default function LoginForm({ message }) {
+export function LoginForm({ message }: { message: string }) {
 	const [state, dispatch] = useFormState(signIn, { message: '', errors: {} })
 
 	return (

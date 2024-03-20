@@ -127,7 +127,7 @@ function AddForm({ action, lastQuotationNumber }) {
 			/>
 			<div className='flex justify-between'>
 				<div />
-				<button onClick={openCustomersModal} className='btn'>
+				<button onClick={openCustomersModal} className='btn btn-secondary'>
 					Cliente frecuentes
 				</button>
 			</div>

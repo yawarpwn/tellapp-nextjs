@@ -8,8 +8,8 @@ export function RegularCustomerToggle({ active }) {
 				: 'text-base-300'}
 		>
 			{active
-				? <StartIcon filled />
-				: <StartIcon />}
+				? <StartIcon size={20} filled />
+				: <StartIcon size={20} />}
 		</button>
 	)
 }

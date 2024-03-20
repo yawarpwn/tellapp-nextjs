@@ -5,7 +5,7 @@ function ItemsTable({ items, onEdit, onDelete }) {
 	const { total } = getIgv(items)
 	return (
 		<div className='overflow-x-auto'>
-			<table className='table'>
+			<table className='table '>
 				<thead>
 					<tr>
 						<th>Descripción</th>
@@ -22,7 +22,9 @@ function ItemsTable({ items, onEdit, onDelete }) {
 						return (
 							<tr key={item.id} className={`${even ? 'bg-black/10' : ''}`}>
 								<td>
-									<p className='w-[300px]'>{item.description}</p>
+									<p className='min-w-[300px]'>
+										{item.description}
+									</p>
 								</td>
 								<td>{item.unit_size}</td>
 								<td>{item.qty}</td>
@@ -35,7 +37,7 @@ function ItemsTable({ items, onEdit, onDelete }) {
 											type='button'
 											className='btn'
 										>
-											<EditIcon />
+											<EditIcon size={20} />
 										</button>
 
 										<button
@@ -43,7 +45,7 @@ function ItemsTable({ items, onEdit, onDelete }) {
 											className='btn'
 											onClick={() => onDelete(item.id)}
 										>
-											<DeleteIcon />
+											<DeleteIcon size={20} />
 										</button>
 									</div>
 								</td>
@@ -52,12 +54,12 @@ function ItemsTable({ items, onEdit, onDelete }) {
 					})}
 					<tr className='bg-black/20'>
 						<td
-							colSpan={3}
+							colSpan={4}
 							className='text-right py-3 px-4 uppercase font-semibold text-sm'
 						>
 							Total :
 						</td>
-						<td colSpan={3} className='text-left py-3 px-4'>
+						<td colSpan={4} className='text-left py-3 px-4'>
 							{total}
 						</td>
 					</tr>

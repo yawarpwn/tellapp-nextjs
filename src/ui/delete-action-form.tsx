@@ -37,8 +37,8 @@ function DeleteActionForm({ id, publicId, deleteAction }: Props) {
 					/>
 				)}
 			</ConfirmModalAction>
-			<button className='text-error' onClick={openModal}>
-				<DeleteIcon />
+			<button className='btn btn-sm' onClick={openModal}>
+				<DeleteIcon size={20} />
 			</button>
 		</>
 	)

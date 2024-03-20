@@ -15,9 +15,9 @@ export async function Quotation({ number }) {
 				<div className='flex gap-2'>
 					<Link
 						href={`/quotations/${number}/update`}
-						className='btn btn-primary'
+						className='btn btn-secondary'
 					>
-						<EditIcon />
+						<EditIcon size={20} />
 						<span className='hidden lg:block'>Editar</span>
 					</Link>
 					<DownloadPDF quotation={quotation} />
@@ -28,7 +28,7 @@ export async function Quotation({ number }) {
 			<div className='rounded-lg shadow overflow-hidden flex flex-col gap-4 mt-4'>
 				<div className='flex items-center justify-between'>
 					<div className='flex items-center gap-2'>
-						<h2 className='text-2xl font-bold'>#{number}</h2>
+						<h2 className='text-3xl text-secondary font-bold'>#{number}</h2>
 						{!include_igv && (
 							<span className='badge inline-block badge-sm  badge-warning'>
 								Sin IGV
@@ -80,7 +80,7 @@ export async function Quotation({ number }) {
 							})}
 							<tr>
 								<td
-									colSpan={4}
+									colSpan={5}
 									className='text-right py-3 px-4 uppercase font-semibold text-sm text-primary'
 								>
 									Subtotal:
@@ -91,7 +91,7 @@ export async function Quotation({ number }) {
 							</tr>
 							<tr>
 								<td
-									colSpan={4}
+									colSpan={5}
 									className='text-right py-3 px-4 uppercase font-semibold text-sm text-primary'
 								>
 									IGV:
@@ -102,7 +102,7 @@ export async function Quotation({ number }) {
 							</tr>
 							<tr>
 								<td
-									colSpan={4}
+									colSpan={5}
 									className='text-right py-3 px-4 uppercase font-semibold text-sm text-primary'
 								>
 									Total :

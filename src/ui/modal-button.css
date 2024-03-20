@@ -1,9 +1,0 @@
-.modal-form:has(input:invalid, textarea:invalid) button[type='submit'] {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.modal-form:not(:has(input:invalid, textarea:invalid)) button[type='submit'] {
-  opacity: 1;
-  pointer-events: auto;
-}

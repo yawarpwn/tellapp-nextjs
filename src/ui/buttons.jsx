@@ -12,8 +12,8 @@ export function AddButton({ href }) {
 
 export function EditButton({ href }) {
 	return (
-		<Link href={href}>
-			<EditIcon />
+		<Link href={href} className='btn btn-sm'>
+			<EditIcon size={20} />
 		</Link>
 	)
 }

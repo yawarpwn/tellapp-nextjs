@@ -30,45 +30,73 @@
 :root {
   color-scheme: dark;
   --nav-height: 3rem;
+  --border-gradient: linear-gradient(rgb(32, 33, 37), rgb(32, 33, 37)) no-repeat
+      padding-box,
+    linear-gradient(
+        81.02deg,
+        oklch(var(--s)) -23.47%,
+        oklch(var(--p)) 45.52%,
+        oklch(var(--a)) 114.8%
+      )
+      border-box;
+  --border-gradient-hover: linear-gradient(rgb(38, 39, 44), rgb(38, 39, 44))
+      no-repeat padding-box,
+    linear-gradient(
+        81.02deg,
+        oklch(var(--s)) -23.47%,
+        oklch(var(--p)) 45.52%,
+        oklch(var(--a)) 114.8%
+      )
+      border-box;
+}
+
+.btn-accent {
+  border: 1px solid transparent;
+  background: oklch(var(--b2));
+  color: inherit;
+}
+
+.btn-accent:hover {
+  border: 1px solid transparent;
+  color: #fff;
+  background: var(--border-gradient) !important;
 }
 
 .btn-primary {
   border: none;
   background: linear-gradient(
     122deg,
-    rgb(250, 85, 96) 0.01%,
-    rgb(177, 75, 244) 49.9%,
-    rgb(77, 145, 255) 100%
+    oklch(var(--s)) 0.01%,
+    /*#fa5560*/ oklch(var(--p)) 49.9%,
+    /*#b14bf4*/ oklch(var(--a)) 100% /*#4d91ff */
   );
+}
+
+.btn-primary:hover {
+  box-shadow: rgba(161 128 255 /0.6) 0px 0px 1rem 0px;
+  color: #fff;
 }
 
 .btn-secondary {
   border-color: transparent;
-  color: #ddd;
-  outline-offset: 2px;
-  background:
-    linear-gradient(rgb(32, 33, 37), rgb(32, 33, 37)) no-repeat padding-box,
-    linear-gradient(
-        81.02deg,
-        rgb(250, 85, 96) -23.47%,
-        rgb(177, 75, 244) 45.52%,
-        rgb(77, 145, 255) 114.8%
-      )
-      border-box;
+  color: inherit;
+  border: 1px solid transparent;
+  background: var(--border-gradient);
 }
 
 .btn-secondary:hover {
   border-color: transparent;
   color: #fff;
-  background:
-    linear-gradient(rgb(38, 39, 44), rgb(38, 39, 44)) no-repeat padding-box,
-    linear-gradient(
-        81.02deg,
-        rgb(250, 85, 96) -23.47%,
-        rgb(177, 75, 244) 45.52%,
-        rgb(77, 145, 255) 114.8%
-      )
-      border-box;
+  background: var(--border-gradient-hover);
+}
+
+/* .btn-neutral { */
+/*   background: orange; */
+/* } */
+/**/
+
+.btn-neutral::hover {
+  background: lime;
 }
 
 form:has(input:invalid, textarea:invalid, select:invalid)

@@ -33,10 +33,10 @@ module.exports = {
 		themes: [
 			{
 				myTheme: {
-					'primary': 'oklch(50% 0.4 300)',
+					'primary': 'oklch(62.37% 0.244 308.5)',
 					'primary-content': 'oklch(90% 0 0)',
-					'secondary': 'hsl(18 90% 50%)',
-					'accent': 'oklch(70% 0.25 42)',
+					'secondary': 'oklch(67.61% 0.2 20.57)',
+					'accent': 'oklch(66.65% 0.177 249.59)',
 					'accent-content': 'oklch(100% 0 0)',
 					'neutral': '#222222',
 					'base-100': 'oklch(15% 0 0)',

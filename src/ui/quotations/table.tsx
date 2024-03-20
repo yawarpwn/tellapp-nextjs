@@ -42,8 +42,11 @@ function TableRow({ quotation }: {
 					<EditButton
 						href={`/quotations/${quotation.number}/update`}
 					/>
-					<Link href={`/quotations/${quotation.number}`}>
-						<EyeIcon />
+					<Link
+						href={`/quotations/${quotation.number}`}
+						className='btn btn-sm'
+					>
+						<EyeIcon size={20} />
 					</Link>
 					<RegularCustomerToggle active={quotation.is_regular_customer} />
 				</div>
@@ -89,8 +92,11 @@ function QuotationCard({ quotation }: {
 						<EditButton
 							href={`/quotations/${quotation.number}/update`}
 						/>
-						<Link href={`/quotations/${quotation.number}`}>
-							<EyeIcon />
+						<Link
+							href={`/quotations/${quotation.number}`}
+							className='btn btn-sm'
+						>
+							<EyeIcon size={20} />
 						</Link>
 					</div>
 				</div>

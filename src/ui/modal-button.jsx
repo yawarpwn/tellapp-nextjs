@@ -50,7 +50,7 @@ function UpdateEditForm(
 					disabled={isPending}
 					onClick={closeModal}
 					type='button'
-					className='btn flex-1'
+					className='btn btn-secondary flex-1'
 				>
 					Cancelar
 				</button>
@@ -74,8 +74,8 @@ export function ModalButton({ action, itemToEdit, renderInputs }) {
 					</button>
 				)
 				: (
-					<button onClick={openModal}>
-						<EditIcon />
+					<button className='btn btn-sm' onClick={openModal}>
+						<EditIcon size={20} />
 					</button>
 				)}
 

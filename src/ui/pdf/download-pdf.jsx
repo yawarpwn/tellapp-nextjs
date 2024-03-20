@@ -48,16 +48,16 @@ export default function DownloadPDF({ quotation }) {
 
 	return (
 		<>
-			<button onClick={handleShare} className='btn'>
-				<ShareIcon />
+			<button onClick={handleShare} className='btn btn-secondary'>
+				<ShareIcon size={20} />
 				<span className='hidden lg:block'>Compartir</span>
 			</button>
 			<a
 				href={instance.url}
 				download={`COT-2023-00${quotation.number}.pdf`}
-				className='btn'
+				className='btn btn-secondary'
 			>
-				<DownloadIcon />
+				<DownloadIcon size={20} />
 				<span className='hidden lg:block'>Descargar</span>
 			</a>
 		</>

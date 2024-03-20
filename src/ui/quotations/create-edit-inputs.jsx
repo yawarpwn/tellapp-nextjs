@@ -118,7 +118,7 @@ function CreateEditInputs({
 					<input
 						id='is_regular_customer'
 						name='is_regular_customer'
-						className='checkbox checkbox-accent'
+						className='checkbox checkbox-primary'
 						type='checkbox'
 						onChange={onChange}
 						checked={quotation.is_regular_customer}
@@ -137,7 +137,7 @@ function CreateEditInputs({
 						onChange={onChange}
 						// defaultChecked={quotation.include_igv ?? true}
 						// defaultValue={quotation.include_igv ?? true}
-						className='checkbox checkbox-accent'
+						className='checkbox checkbox-primary'
 						type='checkbox'
 					/>
 					<label htmlFor='include_igv' className='text-sm'>
