@@ -104,14 +104,8 @@ export async function deleteProduct(_: undefined, formData: FormData) {
 
 	// handle error
 	if (error) {
-		return {
-			message: 'Error eliminando cliente',
-		}
+		console.log(error)
 	}
 
 	revalidatePath('/products')
-
-	return {
-		message: 'Error eliminando cliente',
-	}
 }

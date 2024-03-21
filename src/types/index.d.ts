@@ -12,17 +12,4 @@ export interface Items {
 	description: string
 }
 
-export interface Quotation {
-	id: string
-	number: number
-	company?: string
-	ruc?: string
-	address?: string
-	deadline: number
-	phone?: string
-	created_at: string
-	items: Items[]
-	is_regular_customer: boolean
-}
-
 export type SignalCategory = keyof typeof SIGNALS_CATEGORIES

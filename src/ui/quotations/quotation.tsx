@@ -3,8 +3,10 @@ import { fetchQuotationById } from '@/lib/data/quotations'
 import DownloadPDF from '@/ui/pdf/download-pdf'
 import { getIgv } from '@/utils'
 import Link from 'next/link'
-import { DuplicateQuotation } from './duplicate-quotation'
-import { QuotationDeleteForm } from './quotation-delete-form'
+import {
+	QuotationDeleteButton,
+	QuotationDuplicateButton,
+} from './buttons'
 
 export async function Quotation({ number }: { number: number }) {
 	const quotation = await fetchQuotationById({ number })
@@ -24,8 +26,9 @@ export async function Quotation({ number }: { number: number }) {
 						<span className='hidden lg:block'>Editar</span>
 					</Link>
 					<DownloadPDF quotation={quotation} />
-					<DuplicateQuotation number={number} />
-					<QuotationDeleteForm number={number} />
+					{/* <DuplicateQuotation number={number} /> */}
+					<QuotationDuplicateButton number={number} />
+					<QuotationDeleteButton number={number} />
 				</div>
 			</header>
 
