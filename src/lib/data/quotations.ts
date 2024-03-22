@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import type { Quotation } from '@/types'
 import { isValidNumber } from '@/utils'
 import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation'
 
 export async function fetchFilteredQuotations({ query, currentPage }: {
 	query: string
@@ -33,8 +34,6 @@ export async function fetchFilteredQuotations({ query, currentPage }: {
 	}
 
 	const { data: quotations, error } = await queryBuilder.returns<Quotation[]>()
-
-	console.log(quotations)
 
 	if (error) {
 		throw new Error('Error fetching quotations')
@@ -81,11 +80,16 @@ export async function fetchQuotationById(
 	const supabase = createClient(cookieStore)
 	const { data: quotations, error } = await supabase.from(TABLES.Quotations)
 		.select()
-		.eq(
-			'number',
-			Number(number),
-		)
-	if (error) throw new Error('Failed to fetch quotation by id ')
+		.eq('number', number)
+	if (error) {
+		// throw new Error('Failed to fetch quotation by id ')
+		console.log(error)
+		notFound()
+	}
+
+	if (quotations.length === 0) {
+		notFound()
+	}
 
 	const quotation = quotations[0]
 	const customers = await fetchCustomers()
