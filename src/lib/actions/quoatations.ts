@@ -3,7 +3,6 @@
 import { TABLES } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
 import { CreateQuotation, UpdateQuotation } from '@/schemas/quotations'
-import Table from '@/ui/pdf/table'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -52,7 +51,7 @@ export async function createQuotation(_: undefined, formData: FormData) {
 	if (is_regular_customer) {
 		// buscar si existe el ruc en customers
 		const { data: customers, error: customersError } = await supabase.from(
-			TABLES.Quotations,
+			TABLES.Customers,
 		).select().eq(
 			'ruc',
 			ruc,
@@ -152,7 +151,46 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 		deadline,
 		items,
 		include_igv,
+		is_regular_customer,
 	} = validatedFields.data
+
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	if (is_regular_customer) {
+		// buscar si existe el ruc en customers
+		const { data: customers, error: customersError } = await supabase.from(
+			TABLES.Customers,
+		).select().eq(
+			'ruc',
+			ruc,
+		)
+
+		if (customersError) {
+			console.log({ customersError })
+			return {
+				message: 'Database Error: Creando quotation',
+			}
+		}
+
+		// si no existe el ruc en customers agregamos
+		if (customers?.length === 0) {
+			const { error } = await supabase.from(TABLES.Customers)
+				.insert({
+					ruc,
+					name: company,
+					address,
+				})
+
+			if (error) {
+				console.log(error)
+				return {
+					message: 'Database Error: Creando quotation',
+				}
+			}
+		}
+	}
 
 	const quotationToUpdate = {
 		number,
@@ -162,11 +200,9 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 		deadline,
 		items,
 		include_igv,
+		// is_regular_customer
 	}
 
-	// create supabase client
-	const cookieStore = cookies()
-	const supabase = createClient(cookieStore)
 	const { error } = await supabase.from(TABLES.Quotations).update(
 		quotationToUpdate,
 	)

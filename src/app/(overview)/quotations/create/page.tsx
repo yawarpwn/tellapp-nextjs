@@ -7,8 +7,12 @@ import { CreateUpdateQuotationSkeleton } from '@/ui/skeletons/quotations'
 import { Suspense } from 'react'
 
 async function AddFormWrapper() {
-	const customers = await fetchCustomers()
-	const lastQuotation = await fetchLastQuotation()
+	const [customers, lastQuotation] = await Promise.all([
+		fetchCustomers(),
+		fetchLastQuotation(),
+	])
+	// const customers = await fetchCustomers()
+	// const lastQuotation = await fetchLastQuotation()
 	return (
 		<AddForm
 			action={createQuotation}

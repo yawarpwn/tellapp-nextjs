@@ -97,6 +97,9 @@ function AddForm({ action, lastQuotationNumber }) {
 		})
 	}
 
+	const handleSubmit = () => {
+	}
+
 	return (
 		<>
 			<SavedQuotationModal

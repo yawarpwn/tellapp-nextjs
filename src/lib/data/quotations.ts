@@ -74,7 +74,7 @@ export async function fetchQuotationsPages({ query }: { query: string }) {
 
 export async function fetchQuotationById(
 	{ number }: { number: number },
-): Promise<Quotation> {
+) {
 	// create supabase Client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
