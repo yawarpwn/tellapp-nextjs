@@ -2,7 +2,12 @@
 import InputSearch from '@/ui/components/input-search'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
-function Search({ placeholder = 'Buscar..' }) {
+
+interface Props {
+	placeholder?: string
+	searchValue: string
+}
+function Search({ placeholder, searchValue }: Props) {
 	const searchParams = useSearchParams()
 	const pathname = usePathname()
 	const { replace } = useRouter()
@@ -23,6 +28,7 @@ function Search({ placeholder = 'Buscar..' }) {
 			<InputSearch
 				onSearchChange={event => handleSearch(event.target.value)}
 				placeholder={placeholder}
+				searchValue={searchValue}
 			/>
 		</div>
 	)

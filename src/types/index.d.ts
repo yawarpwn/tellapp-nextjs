@@ -13,3 +13,9 @@ export interface Items {
 }
 
 export type SignalCategory = keyof typeof SIGNALS_CATEGORIES
+
+export interface PageProps {
+	searchParams?: {
+		[key: string]: string | undefined
+	}
+}

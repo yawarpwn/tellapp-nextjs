@@ -1,13 +1,12 @@
 // import { ITEMS_PER_PAGE } from '@/constants'
 import { ITEMS_PER_PAGE } from '@/constants'
-import { type Product } from '@/types'
-// const ITEMS_PER_PAGE = 8
 import { createClient } from '@/lib/supabase/server'
+import { type Product } from '@/types'
 import { cookies } from 'next/headers'
 
 export async function fetchFilteredProducts(
-	{ query = '', currentPage = 1 },
-): Promise<Product[]> {
+	{ query, currentPage }: { query: string; currentPage: number },
+) {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
@@ -19,6 +18,7 @@ export async function fetchFilteredProducts(
 		.or(`description.ilike.%${query}%, code.ilike.${query}`)
 		.range(offset, offset + ITEMS_PER_PAGE)
 		.order('inserted_at', { ascending: false })
+		.returns<Product[]>()
 
 	// handle error
 	if (error) throw new Error('Error fetching customers')
@@ -26,7 +26,7 @@ export async function fetchFilteredProducts(
 	return products
 }
 
-export async function fetchProductsPages(query = '') {
+export async function fetchProductsPages(query: string) {
 	// crate supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
@@ -49,7 +49,7 @@ export async function fetchProductsPages(query = '') {
 
 export async function fetchProductById(
 	{ id }: { id: string },
-): Promise<Product> {
+) {
 	// create supabase client
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
@@ -57,6 +57,7 @@ export async function fetchProductById(
 	// get product from DB by id
 	const { data: products, error } = await supabase.from('products').select('*')
 		.eq('id', id)
+		.returns<Product[]>()
 
 	// handle error
 	if (error) throw new Error('Failed to fetch product by id ')

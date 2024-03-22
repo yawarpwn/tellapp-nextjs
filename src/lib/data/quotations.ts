@@ -9,7 +9,7 @@ import { cookies } from 'next/headers'
 export async function fetchFilteredQuotations({ query, currentPage }: {
 	query: string
 	currentPage: number
-}): Promise<Quotation[]> {
+}) {
 	query.trim()
 
 	// Create supabaseClient
@@ -32,7 +32,9 @@ export async function fetchFilteredQuotations({ query, currentPage }: {
 		queryBuilder.ilike('company', `%${query}%`)
 	}
 
-	const { data: quotations, error } = await queryBuilder
+	const { data: quotations, error } = await queryBuilder.returns<Quotation[]>()
+
+	console.log(quotations)
 
 	if (error) {
 		throw new Error('Error fetching quotations')

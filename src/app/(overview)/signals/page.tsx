@@ -1,4 +1,5 @@
 import { fetchSignalsPages } from '@/lib/data/signals'
+import { PageProps } from '@/types'
 import Pagination from '@/ui/pagination'
 import Search from '@/ui/search'
 import { SignalAddFormButton } from '@/ui/signals/signal-button'
@@ -6,12 +7,7 @@ import { SignalsTable } from '@/ui/signals/table'
 import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
 import { Suspense } from 'react'
 
-export default async function Page({ searchParams }: {
-	searchParams?: {
-		query?: string
-		page?: string
-	}
-}) {
+export default async function Page({ searchParams }: PageProps) {
 	const page = Number(searchParams?.page) || 1
 	const query = searchParams?.query || ''
 
@@ -19,10 +15,10 @@ export default async function Page({ searchParams }: {
 	return (
 		<div>
 			<header className='flex items-center gap-2 justify-between mb-4'>
-				<Search placeholder='Buscar Señal...' />
+				<Search searchValue={query} placeholder='Buscar Señal...' />
 				<SignalAddFormButton />
 			</header>
-			<Suspense fallback={<TableSkeleton />}>
+			<Suspense key={query} fallback={<TableSkeleton />}>
 				<SignalsTable currentPage={page} query={query} />
 			</Suspense>
 			<Pagination totalPages={totalPages} />

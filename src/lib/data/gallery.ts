@@ -1,6 +1,7 @@
 const ITEMS_PER_PAGE = 8
 
 import { TABLES } from '@/constants'
+import { GalleryImage } from '@/types'
 import { cookies } from 'next/headers'
 import { createClient } from '../supabase/server'
 
@@ -49,6 +50,7 @@ export async function fetchFilteredGallery(query: string, currentPage: number) {
 		.ilike('title', '%' + query + '%')
 		.range(offset, offset + ITEMS_PER_PAGE)
 		.order('updated_at', { ascending: false })
+		.returns<GalleryImage[]>()
 
 	if (error) {
 		console.log(error)

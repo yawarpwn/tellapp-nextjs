@@ -15,10 +15,10 @@ async function ProductsPage({ searchParams }: {
 	return (
 		<div className='flex flex-col gap-2'>
 			<header className='flex items-center gap-2 justify-between mb-4'>
-				<Search placeholder='Buscar producto...' />
+				<Search placeholder='Buscar producto...' searchValue={query} />
 				<AddProductForm />
 			</header>
-			<Suspense fallback={<TableSkeleton />}>
+			<Suspense key={query} fallback={<TableSkeleton />}>
 				<ProductTable query={query} currentPage={page} />
 			</Suspense>
 			<Pagination totalPages={totalPages} />

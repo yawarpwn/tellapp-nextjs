@@ -6,7 +6,9 @@ import Search from '@/ui/search'
 import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
 import { Suspense } from 'react'
 
-export default async function CustomersPage({ searchParams }) {
+export default async function CustomersPage(
+	{ searchParams }: { searchParams?: { page?: string; query?: string } },
+) {
 	const currentPage = Number(searchParams?.page) || 1
 	const query = searchParams?.query || ''
 	const totalPage = await fetchCustomersPages(query)
@@ -14,10 +16,10 @@ export default async function CustomersPage({ searchParams }) {
 	return (
 		<>
 			<header className='flex gap-2 items-center justify-between mb-4'>
-				<Search />
+				<Search placeholder='Buscar Cliente...' searchValue={query} />
 				<AddCustomerForm />
 			</header>
-			<Suspense fallback={<TableSkeleton />}>
+			<Suspense key={query} fallback={<TableSkeleton />}>
 				<CustomersTable query={query} currentPage={currentPage} />
 			</Suspense>
 			<Pagination totalPages={totalPage} />

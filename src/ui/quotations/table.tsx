@@ -6,6 +6,7 @@ import { formatDateToLocal } from '@/utils'
 import { EyeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { EditButton } from '../buttons'
+import { NoResultRow } from '../components/no-result-row'
 import { TextGradient } from '../components/text-gradient'
 import { RegularCustomerToggle } from './regular-customer-toggle'
 
@@ -53,6 +54,15 @@ function TableRow({ quotation }: {
 			</td>
 		</tr>
 	)
+}
+
+function QuotationRows({ quotations }: { quotations: Quotation[] }) {
+	return quotations.map(quotation => (
+		<TableRow
+			key={quotation.id}
+			quotation={quotation}
+		/>
+	))
 }
 
 function QuotationCard({ quotation }: {
@@ -110,36 +120,45 @@ async function QuotationsTable({ query, currentPage }: {
 	currentPage: number
 }) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
+
+	const hasQuotations = quotations.length > 0
 	return (
 		<div className='mt-2 w-full'>
-			<div className='md:hidden flex flex-col gap-2'>
-				{quotations?.map(quotation => (
-					<QuotationCard key={quotation.id} quotation={quotation} />
-				))}
-			</div>
-			<div className='overflow-x-auto'>
-				<table className='table hidden md:table'>
-					{/* head */}
-					<thead>
-						<tr>
-							<th>No</th>
-							<th>Cliente</th>
-							<th>Ruc</th>
-							<th>Fecha</th>
-							<th>Total</th>
-							<th>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						{quotations?.map(quotation => (
-							<TableRow
-								key={quotation.id}
-								quotation={quotation}
-							/>
-						))}
-					</tbody>
-				</table>
-			</div>
+			<>
+				<div className='md:hidden flex flex-col gap-2'>
+					{hasQuotations
+						? quotations?.map(quotation => (
+							<QuotationCard key={quotation.id} quotation={quotation} />
+						))
+						: (
+							<div className='h-[650px] flex items-center justify-center'>
+								<p>
+									No se encontraro resultados para <strong>{query}</strong>
+								</p>
+							</div>
+						)}
+				</div>
+				<div className='overflow-x-auto'>
+					<table className='table hidden md:table'>
+						{/* head */}
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Cliente</th>
+								<th>Ruc</th>
+								<th>Fecha</th>
+								<th>Total</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							{hasQuotations
+								? <QuotationRows quotations={quotations} />
+								: <NoResultRow query={query} colSpan={6} />}
+						</tbody>
+					</table>
+				</div>
+			</>
 		</div>
 	)
 }

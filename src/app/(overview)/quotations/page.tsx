@@ -17,12 +17,14 @@ async function QuotationsPage({ searchParams }: {
 	return (
 		<>
 			<header className='flex items-center justify-between gap-2 mb-4'>
-				<Search />
+				<Search placeholder='Buscar Cotización' searchValue={query} />
 				<AddButton href={'/quotations/create'} />
 			</header>
-			<Suspense fallback={<QuotationsTableSkeleton />}>
+			<Suspense
+				key={query}
+				fallback={<QuotationsTableSkeleton />}
+			>
 				<QuotationsTable
-					key={`quotations-${page}`}
 					query={query}
 					currentPage={page}
 				/>
