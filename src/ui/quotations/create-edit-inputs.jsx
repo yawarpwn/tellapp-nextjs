@@ -2,47 +2,43 @@
 
 import { PlusIcon } from '@/icons'
 import { Input } from '@/ui/components/input'
-import { SubmitButton } from '@/ui/components/submit-button'
-import toast from '@/ui/components/toaster'
 import Link from 'next/link'
 import ItemsTable from './items-table'
 
+import { useToast } from '@/hooks/use-toast'
 import { getRuc } from '@/services/sunat'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 function CreateEditInputs({
-	state,
+	state = { errors: null },
 	quotation,
 	onChange,
 	openEditItemModal,
 	updateQuotation,
 	deleteItem,
 	openItemModal,
+	pending,
 }) {
 	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState(null)
+	const { toast } = useToast()
 
 	const handleBlur = useCallback(async () => {
 		if (quotation.ruc && quotation.ruc.length === 11) {
-			setError(null)
 			setLoading(true)
 			try {
 				const { ruc, company, address } = await getRuc(quotation.ruc)
 				updateQuotation({ ruc, company, address })
 			} catch (error) {
-				setError(error.message)
+				toast({
+					title: 'Error',
+					description: `No se pudo encontrar el ruc: ${quotation?.ruc}`,
+					variant: 'destructive',
+				})
 			} finally {
 				setLoading(false)
 			}
 		}
-	}, [quotation.ruc, updateQuotation])
-
-	useEffect(() => {
-		if (error) {
-			const notify = () => toast.error(error)
-			notify()
-		}
-	}, [error])
+	}, [quotation.ruc, toast, updateQuotation])
 
 	return (
 		<>
@@ -57,7 +53,7 @@ function CreateEditInputs({
 						onChange={onChange}
 						errors={state.errors?.ruc}
 						onBlur={handleBlur}
-						disabled={loading}
+						disabled={loading || pending}
 					/>
 				</div>
 				<div className='col-span-6'>
@@ -69,7 +65,7 @@ function CreateEditInputs({
 						value={quotation?.deadline}
 						onChange={onChange}
 						errors={state.errors?.deadline}
-						disabled={loading}
+						disabled={loading || pending}
 						required
 					/>
 				</div>
@@ -81,7 +77,7 @@ function CreateEditInputs({
 						onChange={onChange}
 						value={quotation?.number}
 						errors={state.errors?.number}
-						disabled={loading}
+						disabled={loading || pending}
 						required
 					/>
 				</div>
@@ -93,7 +89,7 @@ function CreateEditInputs({
 						value={quotation?.company}
 						onChange={onChange}
 						errors={state.errors?.company}
-						disabled={loading}
+						disabled={loading || pending}
 					/>
 				</div>
 
@@ -105,7 +101,7 @@ function CreateEditInputs({
 						value={quotation?.address}
 						onChange={onChange}
 						errors={state.errors?.address}
-						disabled={loading}
+						disabled={loading || pending}
 					/>
 				</div>
 				<input type='hidden' name='id' value={quotation?.id} />
@@ -122,6 +118,7 @@ function CreateEditInputs({
 						type='checkbox'
 						onChange={onChange}
 						checked={quotation.is_regular_customer}
+						disabled={loading || pending}
 						// defaultChecked={quotation.is_regular_customer}
 					/>
 					<label htmlFor='is_regular_customer' className='text-sm'>
@@ -135,6 +132,7 @@ function CreateEditInputs({
 						id='include_igv'
 						checked={quotation.include_igv}
 						onChange={onChange}
+						disabled={loading || pending}
 						// defaultChecked={quotation.include_igv ?? true}
 						// defaultValue={quotation.include_igv ?? true}
 						className='checkbox checkbox-primary'
@@ -170,11 +168,20 @@ function CreateEditInputs({
 						))}
 				</section>
 			</div>
-			<footer className='mt-4 flex justify-between'>
-				<Link href={'/quotations'} className='btn'>
+			<footer className='mt-4 flex justify-between gap-8 mb-8'>
+				<Link
+					href={'/quotations'}
+					aria-disabled={pending}
+					className='btn btn-secondary  flex-1'
+				>
 					Cancelar
 				</Link>
-				<SubmitButton />
+				<button disabled={pending} className='btn btn-primary  flex-1'>
+					<span>Crear</span>
+					{pending
+						&& <span className='loading loading-spinner'></span>}
+				</button>
+				{/* <SubmitButton /> */}
 			</footer>
 		</>
 	)

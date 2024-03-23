@@ -3,7 +3,7 @@
 import { TABLES } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
 import { CreateQuotation, UpdateQuotation } from '@/schemas/quotations'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { fetchLastQuotation, fetchQuotationById } from '../data/quotations'
@@ -58,9 +58,8 @@ export async function createQuotation(_: undefined, formData: FormData) {
 		)
 
 		if (customersError) {
-			console.log({ customersError })
 			return {
-				message: 'Database Error: Creando quotation',
+				errors: customersError,
 			}
 		}
 
@@ -74,9 +73,8 @@ export async function createQuotation(_: undefined, formData: FormData) {
 				})
 
 			if (error) {
-				console.log(error)
 				return {
-					message: 'Database Error: Creando quotation',
+					errors: error,
 				}
 			}
 		}
@@ -109,12 +107,16 @@ export async function createQuotation(_: undefined, formData: FormData) {
 		}
 
 		return {
-			message: 'Database Error: Creando quotation',
+			erros: error,
 		}
 	}
 
 	revalidatePath('/quotations')
-	redirect('/quotations')
+
+	return {
+		errors: null,
+		message: `Se ha creado la cotización ${number}`,
+	}
 }
 
 // Update Product
@@ -158,6 +160,7 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
+	// Si esta marco como cliente regular agregamos a la DB
 	if (is_regular_customer) {
 		// buscar si existe el ruc en customers
 		const { data: customers, error: customersError } = await supabase.from(
@@ -168,9 +171,8 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 		)
 
 		if (customersError) {
-			console.log({ customersError })
 			return {
-				message: 'Database Error: Creando quotation',
+				errors: customersError,
 			}
 		}
 
@@ -184,9 +186,8 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 				})
 
 			if (error) {
-				console.log(error)
 				return {
-					message: 'Database Error: Creando quotation',
+					errors: error,
 				}
 			}
 		}
@@ -214,13 +215,15 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 	// handle error
 	if (error) {
 		return {
-			message: 'Error actualizando cotización',
-			error: true,
+			errors: error,
 		}
 	}
 
 	revalidatePath('/quotations')
-	redirect(`/quotations/${number}`)
+	return {
+		errors: null,
+		message: `Cotización ${number} actualizada correctamente`,
+	}
 }
 
 export async function deleteQuotation(_: undefined, formData: FormData) {

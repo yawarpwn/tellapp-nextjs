@@ -1,12 +1,14 @@
 'use client'
-
 import useAutoSave from '@/hooks/use-autosave'
 import useQuotations from '@/hooks/use-quotations'
+import { useToast } from '@/hooks/use-toast'
+import { shootCoffeti } from '@/lib/confetti'
 import { createClient } from '@/lib/supabase/client'
 import ItemPickerModal from '@/ui/components/item-picker-modal'
 import compare from 'just-compare'
-import { useEffect, useState } from 'react'
-import { useFormState } from 'react-dom'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { useTransition } from 'react'
 import CreateEditInputs from './create-edit-inputs'
 import ItemModal from './item-modal'
 import SavedQuotationModal from './saved-quotation-modal'
@@ -16,7 +18,11 @@ const initialState = {
 	errors: {},
 }
 
-function AddForm({ action, lastQuotationNumber }) {
+interface Props {
+	action: (_: undefined, formData: FormData) => Promise<{ errors: any }>
+	lastQuotationNumber: number
+}
+function AddForm({ action, lastQuotationNumber }: Props) {
 	const initialQuotationState = {
 		number: lastQuotationNumber + 1,
 		company: '',
@@ -27,10 +33,14 @@ function AddForm({ action, lastQuotationNumber }) {
 		is_regular_customer: false,
 		include_igv: true,
 	}
-	const [state, dispatch] = useFormState(action, initialState)
+
+	const [state, setState] = useState(initialState)
 	const [savedQuotation, setSavedQuotation] = useState(null)
 	const [isCustomersModalOpen, setIsCustomersModalOpen] = useState(false)
 	const [customers, setCustomer] = useState([])
+	const router = useRouter()
+	const { toast } = useToast()
+	const [pending, startTransition] = useTransition()
 
 	const closeSavedQuotationModal = () => {
 		setSavedQuotation(null)
@@ -87,7 +97,9 @@ function AddForm({ action, lastQuotationNumber }) {
 		closeSavedQuotationModal()
 	}
 
-	const handlePick = customer => {
+	const handlePick = (
+		customer: { name: string; ruc: string; address: string },
+	) => {
 		updateQuotation({
 			...quotation,
 			company: customer.name,
@@ -97,7 +109,35 @@ function AddForm({ action, lastQuotationNumber }) {
 		})
 	}
 
-	const handleSubmit = () => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		startTransition(async () => {
+			const formData = new FormData(event.currentTarget)
+			const { errors, message } = await action(undefined, formData)
+
+			const quoNumber = formData.get('number') as string
+
+			if (errors) {
+				const JSonError = JSON.stringify(errors, null, 2)
+				toast({
+					title: 'Error',
+					description: <pre>{JSonError}</pre>,
+					variant: 'destructive',
+				})
+
+				setState({ ...state, errors })
+
+				return
+			}
+
+			toast({
+				title: 'Creado',
+				description: message,
+				duration: 1000,
+			})
+			shootCoffeti()
+			router.push(`/quotations/${quoNumber}`)
+		})
 	}
 
 	return (
@@ -135,18 +175,20 @@ function AddForm({ action, lastQuotationNumber }) {
 				</button>
 			</div>
 			<form
-				action={dispatch}
+				onSubmit={handleSubmit}
+				// action={dispatch}
 			>
 				<CreateEditInputs
+					state={state}
 					onChange={handleInputChange}
 					quotation={quotation}
-					state={state}
 					onDeleteItem={deleteItem}
 					onAddItem={addItem}
 					updateQuotation={updateQuotation}
 					openEditItemModal={openEditItemModal}
 					openItemModal={openItemModal}
 					deleteItem={deleteItem}
+					pending={pending}
 				/>
 			</form>
 		</>

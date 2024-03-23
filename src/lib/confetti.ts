@@ -1,4 +1,5 @@
 import confetti from 'canvas-confetti'
+
 const defaults = {
 	spread: 360,
 	ticks: 70,

@@ -8,10 +8,13 @@ export function SubmitButton({ onClose }: { onClose: () => void }) {
 	const { pending } = useFormStatus()
 	return (
 		<>
-			<button type='submit' disabled={pending} className='btn btn-primary'>
-				{pending
-					? <span className='loading loading-spinner'></span>
-					: 'Aceptar'}
+			<button
+				type='submit'
+				disabled={pending}
+				className='btn btn-primary'
+			>
+				<span>Aceptar</span>
+				{pending && <span className='loading loading-spinner'></span>}
 			</button>
 			<button
 				type='button'

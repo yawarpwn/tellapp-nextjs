@@ -26,7 +26,7 @@ export default async function RootLayout(
 				className={`${inter.className} min-h-screen relative font-sans antialiased`}
 			>
 				<NextTopLoader showSpinner={false} color='oklch(var(--p))' />
-				<Toaster position='bottom-right' />
+				<Toaster />
 				{children}
 			</body>
 		</html>
