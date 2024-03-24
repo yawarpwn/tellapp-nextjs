@@ -130,11 +130,6 @@ function AddForm({ action, lastQuotationNumber }: Props) {
 				return
 			}
 
-			toast({
-				title: 'Creado',
-				description: message,
-				duration: 1000,
-			})
 			shootCoffeti()
 			router.push(`/quotations/${quoNumber}`)
 		})
