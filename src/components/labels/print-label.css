@@ -1,0 +1,32 @@
+/* .container-print:first-child() { */
+/*   border: 3px solid cyan; */
+/* } */
+
+.shipping-label:nth-child(2),
+.shipping-label:last-child {
+	display: none;
+}
+
+@media print {
+	html,
+	body {
+		height: 98%; /* Use 100% here to support printing more than a single page*/
+		overflow: hidden;
+		margin: 1rem;
+	}
+}
+
+@media print {
+	.container-print {
+		height: 100%;
+	}
+
+	.shipping-label {
+		border: 1px dashed #ccc;
+	}
+
+	.shipping-label:nth-child(2),
+	.shipping-label:last-child {
+		display: block;
+	}
+}
