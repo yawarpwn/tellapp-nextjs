@@ -1,8 +1,8 @@
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { XIcon } from '@/icons'
 import { createBrowserClient } from '@/lib/supabase'
 import { createSearchInstance } from '@/services/search'
-import { Input } from '@/components/input'
-import { Textarea } from '@/components/textarea'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 const initialState = {

@@ -1,9 +1,9 @@
 import { fetchQuotationsPages } from '@/lib/data/quotations'
-import { AddButton } from '@/ui/buttons'
-import Pagination from '@/ui/pagination'
-import QuotationsTable from '@/ui/quotations/table'
-import Search from '@/ui/search'
-import { QuotationsTableSkeleton } from '@/ui/skeletons/quotations'
+import { AddButton } from '@/components/buttons'
+import Pagination from '@/components/pagination'
+import QuotationsTable from '@/components/quotations/table'
+import Search from '@/components/search'
+import { QuotationsTableSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
 async function QuotationsPage({ searchParams }: {
 	searchParams?: {

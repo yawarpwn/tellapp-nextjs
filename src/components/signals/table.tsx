@@ -1,9 +1,9 @@
-import { fetchFilteredSignals } from '@/lib/data/signals'
 import {
 	SignalDeleteFormButton,
 	SignalEditFormButton,
-} from ../ui/signals/signal-button'
-import { NoResultRow } from '@/ui/no-result-row'
+} from '@/components/signals/signal-button'
+import { NoResultRow } from '@/components/ui/no-result-row'
+import { fetchFilteredSignals } from '@/lib/data/signals'
 
 export interface Props {
 	currentPage: number

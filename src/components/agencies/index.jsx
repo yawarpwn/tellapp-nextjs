@@ -1,6 +1,6 @@
 'use client'
+import { InputsAgency } from '@/components/agencies/inputs-agency'
 import { createAgency, updateAgency } from '@/lib/actions/agencies'
-import { InputsAgency } from ../ui/agencies/inputs-agency'
 import { ModalButton } from '../modal-button'
 
 export function AddFormAgency() {

@@ -1,8 +1,8 @@
 import { updateQuotation } from '@/lib/actions/quoatations'
 import { fetchQuotationById } from '@/lib/data/quotations'
-import Breadcrumbs from '@/ui/breadcrumbs'
-import EditForm from '@/ui/quotations/edit-form'
-import { CreateUpdateQuotationSkeleton } from '@/ui/skeletons/quotations'
+import Breadcrumbs from '@/components/breadcrumbs'
+import EditForm from '@/components/quotations/edit-form'
+import { CreateUpdateQuotationSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
 
 async function EditFormWrapper({ number }) {

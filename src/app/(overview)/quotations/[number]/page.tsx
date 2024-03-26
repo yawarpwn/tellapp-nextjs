@@ -1,6 +1,6 @@
-import Breadcrumbs from '@/ui/breadcrumbs'
-import { Quotation } from '@/ui/quotations/quotation'
-import { QuotationSkeleton } from '@/ui/skeletons/quotations'
+import Breadcrumbs from '@/components/breadcrumbs'
+import { Quotation } from '@/components/quotations/quotation'
+import { QuotationSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
 
 async function QuotationPage({ params }: { params: { number: string } }) {

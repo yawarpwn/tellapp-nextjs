@@ -1,6 +1,6 @@
 import './globals.css'
 import { siteConfig } from '@/config/site'
-import { Toaster } from '@/ui/components/toaster'
+import { Toaster } from '@/components/ui/toaster'
 import { type Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'

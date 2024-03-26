@@ -1,10 +1,10 @@
 import { fetchSignalsPages } from '@/lib/data/signals'
 import { PageProps } from '@/types'
-import Pagination from '@/ui/pagination'
-import Search from '@/ui/search'
-import { SignalAddFormButton } from '@/ui/signals/signal-button'
-import { SignalsTable } from '@/ui/signals/table'
-import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
+import Pagination from '@/components/pagination'
+import Search from '@/components/search'
+import { SignalAddFormButton } from '@/components/signals/signal-button'
+import { SignalsTable } from '@/components/signals/table'
+import { TableSkeleton } from '@/components/skeletons/table-skeleton'
 import { Suspense } from 'react'
 
 export default async function Page({ searchParams }: PageProps) {

@@ -1,3 +1,5 @@
+import { NoResultRow } from '@/components/ui/no-result-row'
+import { TextGradient } from '@/components/ui/text-gradient'
 import { EyeIcon } from '@/icons'
 import { fetchFilteredQuotations } from '@/lib/data/quotations'
 import type { Quotation } from '@/types'
@@ -5,8 +7,6 @@ import { getIgv } from '@/utils'
 import { formatDateToLocal } from '@/utils'
 import Link from 'next/link'
 import { EditButton } from '../buttons'
-import { NoResultRow } from '@/ui/no-result-row'
-import { TextGradient } from '@/ui/text-gradient'
 import { RegularCustomerToggle } from './regular-customer-toggle'
 
 function TableRow({ quotation }: {

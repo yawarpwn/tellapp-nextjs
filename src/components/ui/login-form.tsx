@@ -1,7 +1,7 @@
 'use client'
 
 import { signIn } from '@/lib/actions/auth'
-import { SubmitButton } from '@/components/submit-button'
+import { SubmitButton } from '@/components/ui/submit-button'
 import { useFormState } from 'react-dom'
 
 export function LoginForm({ message }: { message: string }) {

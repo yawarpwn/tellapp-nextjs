@@ -1,6 +1,6 @@
 'use client'
+import ConfirmModalAction from '@/components/confirm-action-modal'
 import { DeleteIcon } from '@/icons'
-import ConfirmModalAction from ../ui/confirm-action-modal'
 import { useState } from 'react'
 import { useFormState } from 'react-dom'
 

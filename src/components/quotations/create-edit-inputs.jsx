@@ -1,7 +1,7 @@
 'use client'
 
 import { PlusIcon } from '@/icons'
-import { Input } from '@/components/input'
+import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import ItemsTable from './items-table'
 

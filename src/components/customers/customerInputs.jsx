@@ -1,4 +1,4 @@
-import { Input } from '@/components/input'
+import { Input } from '@/components/ui/input'
 
 export function CustomerInputs({ state, customer }) {
 	return (

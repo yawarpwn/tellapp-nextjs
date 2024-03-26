@@ -1,6 +1,6 @@
+import { ActionForm } from '@/components/ui/action-button'
 import { DocumentDuplicateIcon } from '@/icons'
 import { deleteQuotation, duplicateQuotation } from '@/lib/actions/quoatations'
-import { ActionForm } from '@/components/action-button'
 import { TrashIcon } from 'lucide-react'
 
 export function QuotationDuplicateButton({ number }: { number: number }) {

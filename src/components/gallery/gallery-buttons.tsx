@@ -1,4 +1,6 @@
 'use client'
+import DeleteActionForm from '@/components/delete-action-form'
+import { CreateUpdateImageButton } from '@/components/ui/modal-image-form'
 import { GALLERY_CATEGORIES } from '@/constants'
 import {
 	createGalleryImage,
@@ -6,8 +8,6 @@ import {
 	updateGalleryImage,
 } from '@/lib/actions/gallery'
 import type { GalleryImage } from '@/types'
-import DeleteActionForm from ../ui/delete-action-form'
-import { CreateUpdateImageButton } from '@/ui/modal-image-form'
 
 export function GalleryAddFormButton() {
 	return (

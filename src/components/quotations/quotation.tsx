@@ -1,6 +1,6 @@
+import DownloadPDF from '@/components/pdf/download-pdf'
 import { EditIcon } from '@/icons'
 import { fetchQuotationById } from '@/lib/data/quotations'
-import DownloadPDF from ../ui/pdf/download-pdf'
 import { getIgv } from '@/utils'
 import Link from 'next/link'
 import {

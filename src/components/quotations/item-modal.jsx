@@ -1,4 +1,4 @@
-import { Modal } from ../ui/modal'
+import { Modal } from '@/components/modal'
 import { ItemForm } from './item-form'
 
 function ItemModal(

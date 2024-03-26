@@ -1,7 +1,7 @@
 import { CATEGORIES } from '@/constants'
-import { Input } from '@/components/input'
+import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import { SubmitButton } from '@/components/submit-button'
+import { SubmitButton } from '@/components/ui/submit-button'
 
 function CreateEditInputs({ state, product }) {
 	return (

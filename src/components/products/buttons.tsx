@@ -1,6 +1,6 @@
+import { ActionForm } from '@/components/ui/action-button'
 import { TrashIcon } from '@/icons'
 import { deleteProduct } from '@/lib/actions/products'
-import { ActionForm } from '@/components/action-button'
 
 export function ProductDeleteButton({ id }: { id: string }) {
 	return (

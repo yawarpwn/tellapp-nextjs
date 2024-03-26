@@ -1,6 +1,6 @@
 'use client'
+import { ModalButton } from '@/components/modal-button'
 import { createCustomer, updateCustomer } from '@/lib/actions/customers'
-import { ModalButton } from ../ui/modal-button'
 import { CustomerInputs } from './customerInputs'
 
 export function AddCustomerForm() {

@@ -1,9 +1,9 @@
 import { fetchCustomersPages } from '@/lib/data/customers'
-import { AddCustomerForm } from '@/ui/customers'
-import CustomersTable from '@/ui/customers/table'
-import Pagination from '@/ui/pagination'
-import Search from '@/ui/search'
-import { TableSkeleton } from '@/ui/skeletons/table-skeleton'
+import { AddCustomerForm } from '@/components/customers'
+import CustomersTable from '@/components/customers/table'
+import Pagination from '@/components/pagination'
+import Search from '@/components/search'
+import { TableSkeleton } from '@/components/skeletons/table-skeleton'
 import { Suspense } from 'react'
 
 export default async function CustomersPage(

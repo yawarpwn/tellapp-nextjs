@@ -1,6 +1,6 @@
+import { EditCustomerForm } from '@/components/customers'
+import { NoResultRow } from '@/components/ui/no-result-row'
 import { fetchFilteredCustomers } from '@/lib/data/customers'
-import { EditCustomerForm } from ../ui/customers'
-import { NoResultRow } from '@/ui/no-result-row'
 import DeleteForm from './delete-form'
 
 interface Props {

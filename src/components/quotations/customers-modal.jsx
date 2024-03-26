@@ -1,6 +1,6 @@
 'use client'
 
-import { Input }Search from '@/components/input-search'
+import { Input }Search from '@/components/ui/input-search'
 import {Modal} from ../ui/modal'
 import './modal-button.css'
 import { useMemo, useState } from 'react'

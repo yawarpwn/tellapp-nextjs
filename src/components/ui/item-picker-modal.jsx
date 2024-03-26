@@ -1,7 +1,7 @@
 'use client'
 
-import InputSearch from '@/components/input-search'
-import { Modal } from ../ui/modal'
+import { Modal } from '@/components/modal'
+import InputSearch from '@/components/ui/input-search'
 import { useMemo, useState } from 'react'
 
 function ItemPickerModal(

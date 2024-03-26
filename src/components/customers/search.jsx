@@ -1,5 +1,5 @@
 'use client'
-import { Input }Search from '@/components/input-search'
+import { Input }Search from '@/components/ui/input-search'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 function SearchCustomers() {

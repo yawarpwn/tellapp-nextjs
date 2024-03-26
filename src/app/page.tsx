@@ -1,6 +1,6 @@
 import { createServerClient } from '@/lib/supabase'
-import { LoginForm } from '@/ui/components/login-form'
-import { Logo } from '@/ui/components/logo'
+import { LoginForm } from '@/components/ui/login-form'
+import { Logo } from '@/components/ui/logo'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 

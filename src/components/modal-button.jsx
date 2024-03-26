@@ -1,7 +1,7 @@
 'use client'
+import { Modal } from '@/components/modal'
 import { PlusIcon } from '@/icons'
 import { EditIcon } from '@/icons'
-import { Modal } from ../ui/modal'
 import { useState, useTransition } from 'react'
 
 const initialState = {

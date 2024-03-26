@@ -3,7 +3,7 @@ import './print-label.css'
 import Link from 'next/link'
 import { useReactToPrint } from 'react-to-print'
 
-import TellLogo from '@/components/tell-logo'
+import TellLogo from '@/components/ui/tell-logo'
 import { useRef } from 'react'
 const PrintLabel = ({ label }) => {
 	const containerRef = useRef()

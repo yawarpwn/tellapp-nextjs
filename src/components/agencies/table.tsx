@@ -1,7 +1,7 @@
+import { EditFormAgency } from '@/components/agencies'
+import { NoResultRow } from '@/components/ui/no-result-row'
 import { deleteAgency } from '@/lib/actions/agencies'
 import { fetchFilteredAgencies } from '@/lib/data/agencies'
-import { EditFormAgency } from ../ui/agencies'
-import { NoResultRow } from '@/components/no-result-row'
 import DeleteActionForm from '../delete-action-form'
 interface Props {
 	query: string

@@ -1,5 +1,5 @@
 'use client'
-import { ConfirmActionModal } from '@/components/confirm-action-modal'
+import { ConfirmActionModal } from '@/components/ui/confirm-action-modal'
 import React, { useState } from 'react'
 import { useFormState } from 'react-dom'
 
