@@ -1,5 +1,5 @@
 import { DeleteIcon, EditIcon } from '@/icons'
-import { getIgv } from '@/utils'
+import { getIgv } from '@/lib/utils'
 
 function ItemsTable({ items, onEdit, onDelete }) {
 	const { total } = getIgv(items)

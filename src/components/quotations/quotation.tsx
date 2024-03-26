@@ -1,7 +1,7 @@
 import DownloadPDF from '@/components/pdf/download-pdf'
 import { EditIcon } from '@/icons'
 import { fetchQuotationById } from '@/lib/data/quotations'
-import { getIgv } from '@/utils'
+import { getIgv } from '@/lib/utils'
 import Link from 'next/link'
 import {
 	QuotationDeleteButton,

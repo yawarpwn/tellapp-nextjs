@@ -2,7 +2,7 @@
 
 import SignOutButton from '@/components/sign-out-button'
 import { NAVIGATION } from '@/constants'
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 import { XIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

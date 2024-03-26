@@ -1,5 +1,5 @@
 'use client'
-import { generatePagination } from '@/utils'
+import { generatePagination } from '@/lib/utils'
 import clsx from 'clsx'
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'

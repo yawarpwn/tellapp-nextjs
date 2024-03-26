@@ -3,7 +3,7 @@ import { TABLES } from '@/constants'
 import { fetchCustomers } from '@/lib/data/customers'
 import { createClient } from '@/lib/supabase/server'
 import type { Quotation } from '@/types'
-import { isValidNumber } from '@/utils'
+import { isValidNumber } from '@/lib/utils'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 

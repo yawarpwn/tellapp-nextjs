@@ -2,7 +2,7 @@
 import { GALLERY_CATEGORIES } from '@/constants'
 import { XIcon } from '@/icons'
 import { uploadFiles } from '@/lib/actions/gallery'
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 import { ImageIcon, PlusIcon } from 'lucide-react'
 import React from 'react'
 import { useCallback, useState, useTransition } from 'react'

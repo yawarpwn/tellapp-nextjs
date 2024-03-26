@@ -1,5 +1,5 @@
 import { Sidebar } from '@/components/ui/sidebar'
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 interface Props {
 	showMobileMenu: boolean

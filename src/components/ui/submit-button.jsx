@@ -1,4 +1,4 @@
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 import { useFormStatus } from 'react-dom'
 
 export function SubmitButton({ text = 'Aceptar', className }) {

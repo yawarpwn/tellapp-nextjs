@@ -1,7 +1,7 @@
 'use client'
 import { type GalleryImage } from '@/types'
 import { GalleryDeleteForm } from ../ui/gallery/galley-delete-form'
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 import { EditIcon, MoreVertical, TrashIcon } from 'lucide-react'
 
 import { useState } from 'react'

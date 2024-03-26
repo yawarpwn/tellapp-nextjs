@@ -1,7 +1,7 @@
 import { Modal } from '@/components/modal'
 import { Input } from '@/components/ui/input'
 import type { GalleryImage, Signal } from '@/types'
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 import { ImageIcon, PlusIcon } from 'lucide-react'
 import React, { useState, useTransition } from 'react'
 
