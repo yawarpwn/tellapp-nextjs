@@ -18,6 +18,7 @@ function CreateEditInputs({
 	deleteItem,
 	openItemModal,
 	pending,
+	confirmButtonText = 'Aceptar',
 }) {
 	const [loading, setLoading] = useState(false)
 	const { toast } = useToast()
@@ -177,7 +178,7 @@ function CreateEditInputs({
 					Cancelar
 				</Link>
 				<button disabled={pending} className='btn btn-primary  flex-1'>
-					<span>Crear</span>
+					<span>{confirmButtonText}</span>
 					{pending
 						&& <span className='loading loading-spinner'></span>}
 				</button>
