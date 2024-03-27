@@ -1,9 +1,9 @@
-import { fetchProductsPages } from '@/lib/data/products'
 import Pagination from '@/components/pagination'
 import { AddProductForm } from '@/components/products'
 import ProductTable from '@/components/products/table'
 import Search from '@/components/search'
 import { TableSkeleton } from '@/components/skeletons/table-skeleton'
+import { fetchProductsPages } from '@/lib/data/products'
 import { Suspense } from 'react'
 
 async function ProductsPage({ searchParams }: {

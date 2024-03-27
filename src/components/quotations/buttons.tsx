@@ -7,7 +7,8 @@ export function QuotationDuplicateButton({ number }: { number: number }) {
 	return (
 		<ActionForm
 			action={duplicateQuotation}
-			modalTitle={`Duplicar cotización #${number}`}
+			dialogTitle='Duplicar'
+			dialogDescription={` ¿Seguro de duplicar Cotización #${number}?`}
 			buttonComponent={
 				<button className='btn btn-secondary'>
 					<DocumentDuplicateIcon size={20} />
@@ -29,7 +30,8 @@ export function QuotationDeleteButton({ number }: { number: number }) {
 	return (
 		<ActionForm
 			action={deleteQuotation}
-			modalTitle={`Eliminar cotización #${number}`}
+			dialogTitle='Eliminar'
+			dialogDescription={`¿Seguro de eliminar Cotización #${number}?`}
 			buttonComponent={
 				<button className='btn btn-secondary'>
 					<TrashIcon size={20} />

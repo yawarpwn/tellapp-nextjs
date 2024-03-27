@@ -1,7 +1,7 @@
 'use client'
 
-import { PlusIcon } from '@/icons'
 import { Input } from '@/components/ui/input'
+import { PlusIcon } from '@/icons'
 import Link from 'next/link'
 import ItemsTable from './items-table'
 
@@ -147,6 +147,7 @@ function CreateEditInputs({
 				<section className='col-span-12 mt-4'>
 					<header className='flex items-center justify-between'>
 						<h3 className='text-xl font-bold'>Productos:</h3>
+
 						<button
 							type='button'
 							onClick={openItemModal}
