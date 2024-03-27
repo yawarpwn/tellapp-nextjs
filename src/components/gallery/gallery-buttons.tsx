@@ -1,6 +1,6 @@
 'use client'
 import DeleteActionForm from '@/components/delete-action-form'
-import { CreateUpdateImageButton } from '@/components/ui/modal-image-form'
+import { CreateUpdateImageButton } from '@/components/modal-image-form'
 import { GALLERY_CATEGORIES } from '@/constants'
 import {
 	createGalleryImage,

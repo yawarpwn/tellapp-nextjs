@@ -1,5 +1,5 @@
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/input'
+import { Textarea } from '@/components/textarea'
 import { XIcon } from '@/icons'
 import { createBrowserClient } from '@/lib/supabase'
 import { createSearchInstance } from '@/services/search'

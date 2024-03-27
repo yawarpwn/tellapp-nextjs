@@ -1,5 +1,5 @@
 'use client'
-import ItemPickerModal from '@/components/ui/item-picker-modal'
+import ItemPickerModal from '@/components/item-picker-modal'
 import useAutoSave from '@/hooks/use-autosave'
 import useQuotations from '@/hooks/use-quotations'
 import { useToast } from '@/hooks/use-toast'

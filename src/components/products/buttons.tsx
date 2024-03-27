@@ -1,4 +1,4 @@
-import { ActionForm } from '@/components/ui/action-button'
+import { ActionForm } from '@/components/action-button'
 import { TrashIcon } from '@/icons'
 import { deleteProduct } from '@/lib/actions/products'
 

@@ -1,6 +1,6 @@
 import { fetchFilteredGallery } from '@/lib/data/gallery'
 import { TrashIcon } from 'lucide-react'
-import { NoResultRow } from '@/components/ui/no-result-row'
+import { NoResultRow } from '@/components/no-result-row'
 import {
 	GalleryDeleteFormButton,
 	GalleryEditFormButton,

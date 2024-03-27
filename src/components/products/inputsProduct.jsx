@@ -1,5 +1,5 @@
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/input'
+import { Textarea } from '@/components/textarea'
 import { PRODUCT_CATEGORIES } from '@/constants'
 
 export function InputsProduct({ state, product }) {

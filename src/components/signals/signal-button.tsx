@@ -1,6 +1,6 @@
 'use client'
 
-import { CreateUpdateImageButton } from '@/components/ui/modal-image-form'
+import { CreateUpdateImageButton } from '@/components/modal-image-form'
 import { SIGNALS_CATEGORIES } from '@/constants'
 import { createSignal, deleteSignal, updateSignal } from '@/lib/actions/signals'
 import { type Signal } from '@/types'

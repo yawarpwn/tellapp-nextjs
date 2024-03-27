@@ -1,5 +1,5 @@
 'use client'
-import InputSearch from '@/components/ui/input-search'
+import InputSearch from '@/components/input-search'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 

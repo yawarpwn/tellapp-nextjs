@@ -1,7 +1,7 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 import { updateSignal } from '@/lib/actions/signals'
 import type { Signal } from '@/types'
-import { Input } from '@/components/ui/input'
+import { Input } from '@/components/input'
 import { Modal } from ../ui/modal'
 import { ImageIcon, PlusIcon } from 'lucide-react'
 import React, { useState, useTransition } from 'react'

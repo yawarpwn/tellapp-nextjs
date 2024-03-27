@@ -1,4 +1,4 @@
-import { CreateUpdateImageModal } from '@/components/ui/create-update-image-modal'
+import { CreateUpdateImageModal } from '@/components/create-update-image-modal'
 import type { GalleryImage, Signal } from '@/types'
 import { EditIcon, PlusIcon } from 'lucide-react'
 import { useState } from 'react'

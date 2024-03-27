@@ -1,4 +1,4 @@
-import { TextGradient } from '@/components/ui/text-gradient'
+import { TextGradient } from '@/components/text-gradient'
 import Link from 'next/link'
 export default function NotFoundPage() {
 	return (

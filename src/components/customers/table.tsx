@@ -1,5 +1,5 @@
 import { EditCustomerForm } from '@/components/customers'
-import { NoResultRow } from '@/components/ui/no-result-row'
+import { NoResultRow } from '@/components/no-result-row'
 import { fetchFilteredCustomers } from '@/lib/data/customers'
 import DeleteForm from './delete-form'
 

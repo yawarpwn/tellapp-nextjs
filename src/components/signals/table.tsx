@@ -2,7 +2,7 @@ import {
 	SignalDeleteFormButton,
 	SignalEditFormButton,
 } from '@/components/signals/signal-button'
-import { NoResultRow } from '@/components/ui/no-result-row'
+import { NoResultRow } from '@/components/no-result-row'
 import { fetchFilteredSignals } from '@/lib/data/signals'
 
 export interface Props {

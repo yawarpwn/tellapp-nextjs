@@ -4,7 +4,7 @@ import { fetchFilteredLabels } from '@/lib/data/labels'
 import Link from 'next/link'
 import React from 'react'
 import { EditButton } from '../buttons'
-import { NoResultRow } from '@/components/ui/no-result-row'
+import { NoResultRow } from '@/components/no-result-row'
 import DeleteActionForm from '../delete-action-form'
 
 interface Props {

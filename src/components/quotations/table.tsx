@@ -1,5 +1,5 @@
-import { NoResultRow } from '@/components/ui/no-result-row'
-import { TextGradient } from '@/components/ui/text-gradient'
+import { NoResultRow } from '@/components/no-result-row'
+import { TextGradient } from '@/components/text-gradient'
 import { EyeIcon } from '@/icons'
 import { fetchFilteredQuotations } from '@/lib/data/quotations'
 import type { Quotation } from '@/types'

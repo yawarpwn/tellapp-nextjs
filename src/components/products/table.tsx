@@ -1,7 +1,7 @@
 import { deleteProduct } from '@/lib/actions/products'
 import { fetchFilteredProducts } from '@/lib/data/products'
 import React from 'react'
-import { NoResultRow } from '@/components/ui/no-result-row'
+import { NoResultRow } from '@/components/no-result-row'
 import { EditProductForm } from '.'
 import { ProductDeleteButton } from './buttons'
 
