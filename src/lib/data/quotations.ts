@@ -2,10 +2,26 @@ import { ITEMS_PER_PAGE } from '@/constants'
 import { TABLES } from '@/constants'
 import { fetchCustomers } from '@/lib/data/customers'
 import { createClient } from '@/lib/supabase/server'
-import type { Quotation } from '@/types'
 import { isValidNumber } from '@/lib/utils'
+import type { Quotation } from '@/types'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
+
+export async function fetchQuotations() {
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	const { data: quotations, error } = await supabase.from(TABLES.Quotations)
+		.select()
+		.order('number', { ascending: false })
+		.returns<Quotation[]>()
+
+	if (error) {
+		throw new Error('Error fetching quotations')
+	}
+
+	return quotations
+}
 
 export async function fetchFilteredQuotations({ query, currentPage }: {
 	query: string
