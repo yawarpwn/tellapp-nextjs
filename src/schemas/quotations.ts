@@ -39,7 +39,6 @@ export const CreateQuotation = QuotationSchema.omit({
 	updated_at: true,
 })
 export const UpdateQuotation = QuotationSchema.partial()
-
 export type Quotation = z.infer<typeof QuotationSchema>
 export type QuotationUpdate = z.infer<typeof UpdateQuotation>
 export type QuotationItem = z.infer<typeof QuotationSchema>['items'][0]

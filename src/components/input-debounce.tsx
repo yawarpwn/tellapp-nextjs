@@ -1,3 +1,4 @@
+import { Input } from '@/components/ui/input'
 import React from 'react'
 
 export function DebouncedInput({
@@ -25,10 +26,11 @@ export function DebouncedInput({
 	}, [value, onChange, debounce])
 
 	return (
-		<input
+		<Input
 			{...props}
 			value={value}
 			onChange={e => setValue(e.target.value)}
+			className='max-w-xs'
 		/>
 	)
 }

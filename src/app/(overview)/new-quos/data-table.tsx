@@ -1,5 +1,7 @@
 'use client'
 
+import { DataTablePagination } from '@/components/data-table-pagination'
+import { buttonVariants } from '@/components/ui/button'
 import {
 	flexRender,
 	getCoreRowModel,
@@ -20,8 +22,11 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 
+import { PlusIcon } from '@/icons'
+
 import { DebouncedInput } from '@/components/input-debounce'
 import type { Quotation } from '@/types'
+import Link from 'next/link'
 
 interface Props {
 	data: Quotation[]
@@ -61,8 +66,13 @@ export function DataTable(props: Props) {
 					onChange={(value) => setGlobalFilter(String(value))}
 					placeholder='Filtrar...'
 				/>
-				<div>
-					<button className='btn btn-primary'>Crear</button>
+				<div className='flex gap-4'>
+					<Link className={buttonVariants()} href='/new-quos/create'>
+						<PlusIcon size={20} />
+						<span className='ml-2'>
+							Crear
+						</span>
+					</Link>
 				</div>
 			</div>
 			<Table>
@@ -107,22 +117,7 @@ export function DataTable(props: Props) {
 						)}
 				</TableBody>
 			</Table>
-			<div className='pyt-4'>
-				<button
-					className='btn btn-secondary'
-					onClick={() => table.previousPage()}
-					disabled={!table.getCanPreviousPage()}
-				>
-					prev
-				</button>
-				<button
-					className='btn btn-secondary'
-					onClick={() => table.nextPage()}
-					disabled={!table.getCanNextPage()}
-				>
-					next
-				</button>
-			</div>
+			<DataTablePagination table={table} />
 		</div>
 	)
 }

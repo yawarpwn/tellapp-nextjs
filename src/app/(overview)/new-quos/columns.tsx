@@ -1,4 +1,5 @@
 'use client'
+
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -7,9 +8,9 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+
 import { MoreHorizontal } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 import { getFormatedDate, getIgv } from '@/lib/utils'
 import { type Quotation } from '@/types'
@@ -24,7 +25,7 @@ export const columns = [
 	}),
 	columnHelper.accessor('company', {
 		header: 'Cliente',
-		cell: props => <span>{props.getValue()}</span>,
+		cell: props => <p className='min-w-[250px]'>{props.getValue()}</p>,
 	}),
 	columnHelper.accessor('ruc', {
 		header: 'Ruc',
@@ -54,6 +55,7 @@ export const columns = [
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
 						<DropdownMenuLabel>Acciones</DropdownMenuLabel>
+						<DropdownMenuSeparator />
 						<DropdownMenuItem asChild>
 							<Link href={`/quotations/${row.original.number}`}>Ver</Link>
 						</DropdownMenuItem>
@@ -62,8 +64,6 @@ export const columns = [
 								Editar
 							</Link>
 						</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem>Eliminar</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			)

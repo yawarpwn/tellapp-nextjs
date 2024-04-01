@@ -5,8 +5,21 @@ import * as PrimitiveDialog from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 import React from 'react'
 
-const Dialog = PrimitiveDialog.Root
+// const Dialog = PrimitiveDialog.Root
 const DialogTrigger = PrimitiveDialog.Trigger
+
+const Dialog = React.forwardRef<
+	React.ElementRef<typeof PrimitiveDialog.Root>,
+	React.ComponentPropsWithRef<typeof PrimitiveDialog.Root>
+>(({ children, ...props }, ref) => (
+	<PrimitiveDialog.Root
+		{...props}
+	>
+		{children}
+	</PrimitiveDialog.Root>
+))
+
+Dialog.displayName = PrimitiveDialog.Root.displayName
 
 const DialogOverlay = React.forwardRef<
 	React.ElementRef<typeof PrimitiveDialog.Overlay>,

@@ -15,7 +15,7 @@ import { SubmitButton } from './submit-button'
 interface Props {
 	action: (_: undefined, formData: FormData) => Promise<void>
 	buttonComponent: React.JSX.Element
-	children: React.ReactNode
+	children?: React.ReactNode
 	// modalTitle?: string
 	dialogTitle: string
 	dialogDescription: string
