@@ -33,12 +33,9 @@ export const QuotationSchema = z.object({
 	updated_at: z.string(),
 })
 
-export const CreateQuotation = QuotationSchema.omit({
+export const QuotationCreateSchema = QuotationSchema.omit({
 	id: true,
 	created_at: true,
 	updated_at: true,
 })
-export const UpdateQuotation = QuotationSchema.partial()
-export type Quotation = z.infer<typeof QuotationSchema>
-export type QuotationUpdate = z.infer<typeof UpdateQuotation>
-export type QuotationItem = z.infer<typeof QuotationSchema>['items'][0]
+export const QuotationUpdateSchema = QuotationSchema.partial()

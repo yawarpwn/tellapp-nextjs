@@ -8,7 +8,7 @@ import {
 	QuotationDuplicateButton,
 } from './buttons'
 
-export async function Quotation({ number }: { number: number }) {
+export async function QuotationPageByNumber({ number }: { number: number }) {
 	const quotation = await fetchQuotationById({ number })
 	const { create_at, items, include_igv } = quotation
 	const formatedDate = new Intl.DateTimeFormat('es').format(create_at)

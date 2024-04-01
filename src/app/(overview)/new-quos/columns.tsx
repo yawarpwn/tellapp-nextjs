@@ -13,10 +13,10 @@ import { MoreHorizontal } from 'lucide-react'
 import Link from 'next/link'
 
 import { getFormatedDate, getIgv } from '@/lib/utils'
-import { type Quotation } from '@/types'
+import { type QuotationType } from '@/types'
 import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
 
-const columnHelper = createColumnHelper<Quotation>()
+const columnHelper = createColumnHelper<QuotationType>()
 
 export const columns = [
 	columnHelper.accessor('number', {

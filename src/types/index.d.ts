@@ -1,9 +1,12 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 export { Product } from '@/schemas'
 export { GalleryImage } from '@/schemas/gallery'
-export { Quotation, QuotationItem, QuotationUpdate } from '@/schemas/quotations'
+import {
+	QuotationCreateSchema,
+	QuotationSchema,
+	QuotationUpdateSchema,
+} from '@/schemas/quotations'
 export { Signal, SignalCreate, SignalUpdate } from '@/schemas/signal'
-import { CreateQuotation } from '@/schemas/quotations'
 import { z } from 'zod'
 
 export interface Items {
@@ -22,8 +25,7 @@ export interface PageProps {
 	}
 }
 
-type QuotationCreateType = z.infer<typeof CreateQuotation>
-
-export interface QuotationCreateType {
-	number: string
-}
+export type QuotationCreateType = z.infer<typeof QuotationCreateSchema>
+export type QuotationType = z.infer<typeof QuotationSchema>
+export type QuotationUpdateType = z.infer<typeof QuotationUpdateSchema>
+export type QuotationItemType = z.infer<typeof QuotationSchema>['items'][0]

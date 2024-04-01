@@ -2,15 +2,15 @@ import { NoResultRow } from '@/components/no-result-row'
 import { TextGradient } from '@/components/text-gradient'
 import { EyeIcon } from '@/icons'
 import { fetchFilteredQuotations } from '@/lib/data/quotations'
-import type { Quotation } from '@/types'
 import { getIgv } from '@/lib/utils'
 import { formatDateToLocal } from '@/lib/utils'
+import type { QuotationType } from '@/types'
 import Link from 'next/link'
 import { EditButton } from '../buttons'
 import { RegularCustomerToggle } from './regular-customer-toggle'
 
 function TableRow({ quotation }: {
-	quotation: Quotation
+	quotation: QuotationType
 }) {
 	const { formatedTotal } = getIgv(quotation.items)
 	return (
@@ -55,7 +55,7 @@ function TableRow({ quotation }: {
 	)
 }
 
-function QuotationRows({ quotations }: { quotations: Quotation[] }) {
+function QuotationRows({ quotations }: { quotations: QuotationType[] }) {
 	return quotations.map(quotation => (
 		<TableRow
 			key={quotation.id}
@@ -65,7 +65,7 @@ function QuotationRows({ quotations }: { quotations: Quotation[] }) {
 }
 
 function QuotationCard({ quotation }: {
-	quotation: Quotation
+	quotation: QuotationType
 }) {
 	const { formatedTotal } = getIgv(quotation.items)
 

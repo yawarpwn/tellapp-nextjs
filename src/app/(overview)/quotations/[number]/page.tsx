@@ -1,5 +1,5 @@
 import Breadcrumbs from '@/components/breadcrumbs'
-import { Quotation } from '@/components/quotations/quotation'
+import { QuotationPageByNumber } from '@/components/quotations/quotation'
 import { QuotationSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
 
@@ -21,7 +21,7 @@ async function QuotationPage({ params }: { params: { number: string } }) {
 				]}
 			/>
 			<Suspense fallback={<QuotationSkeleton />}>
-				<Quotation number={number} />
+				<QuotationPageByNumber number={number} />
 			</Suspense>
 		</>
 	)

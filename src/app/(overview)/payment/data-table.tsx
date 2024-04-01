@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useTable } from '@/hooks/use-table'
-import type { Quotation } from '@/types'
+import type { QuotationType } from '@/types'
 import React from 'react'
 
 import {
@@ -18,7 +18,7 @@ import { formatDateToLocal, getIgv } from '@/lib/utils'
 
 interface DataTableProps {
 	columns: []
-	data: Quotation[]
+	data: QuotationType[]
 }
 
 export function DataTable({

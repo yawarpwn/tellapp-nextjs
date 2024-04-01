@@ -2,9 +2,9 @@ import Fuse from 'fuse.js'
 import React from 'react'
 import { useDebounce } from 'use-debounce'
 
-import type { Quotation } from '@/types'
+import type { QuotationType } from '@/types'
 type Props = {
-	data: Quotation[]
+	data: QuotationType[]
 }
 
 const ROWS_PER_PAGE = 20

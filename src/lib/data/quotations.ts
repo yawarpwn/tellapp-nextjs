@@ -3,7 +3,7 @@ import { TABLES } from '@/constants'
 import { fetchCustomers } from '@/lib/data/customers'
 import { createClient } from '@/lib/supabase/server'
 import { isValidNumber } from '@/lib/utils'
-import type { Quotation } from '@/types'
+import type { QuotationType } from '@/types'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
@@ -14,7 +14,7 @@ export async function fetchQuotations() {
 	const { data: quotations, error } = await supabase.from(TABLES.Quotations)
 		.select()
 		.order('number', { ascending: false })
-		.returns<Quotation[]>()
+		.returns<QuotationType[]>()
 
 	if (error) {
 		throw new Error('Error fetching quotations')
@@ -49,7 +49,9 @@ export async function fetchFilteredQuotations({ query, currentPage }: {
 		queryBuilder.ilike('company', `%${query}%`)
 	}
 
-	const { data: quotations, error } = await queryBuilder.returns<Quotation[]>()
+	const { data: quotations, error } = await queryBuilder.returns<
+		QuotationType[]
+	>()
 
 	if (error) {
 		throw new Error('Error fetching quotations')

@@ -25,11 +25,11 @@ import {
 import { PlusIcon } from '@/icons'
 
 import { DebouncedInput } from '@/components/input-debounce'
-import type { Quotation } from '@/types'
+import type { QuotationType } from '@/types'
 import Link from 'next/link'
 
 interface Props {
-	data: Quotation[]
+	data: QuotationType[]
 	columns: any
 }
 
