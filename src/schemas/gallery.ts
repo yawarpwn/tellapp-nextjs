@@ -1,7 +1,7 @@
 import { GALLERY_CATEGORIES } from '@/constants'
 import { z } from 'zod'
 
-export const GallerySchema = z.object({
+export const GalleryImageSchema = z.object({
 	title: z.string(),
 	id: z.string(),
 	category: z.nativeEnum(GALLERY_CATEGORIES),
@@ -13,5 +13,3 @@ export const GallerySchema = z.object({
 	updated_at: z.string(),
 	created_at: z.string(),
 })
-
-export type GalleryImage = z.infer<typeof GallerySchema>

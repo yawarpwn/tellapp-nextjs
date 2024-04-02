@@ -1,12 +1,20 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
-export { Product } from '@/schemas'
-export { GalleryImage } from '@/schemas/gallery'
+import { GalleryImageSchema } from '@/schemas/gallery'
+import {
+	ProductCreateSchema,
+	ProductSchema,
+	ProductUpdateSchema,
+} from '@/schemas/products'
 import {
 	QuotationCreateSchema,
 	QuotationSchema,
 	QuotationUpdateSchema,
 } from '@/schemas/quotations'
-export { Signal, SignalCreate, SignalUpdate } from '@/schemas/signal'
+import {
+	SignalCreateSchema,
+	SignalSchema,
+	SignalUpdateSchema,
+} from '@/schemas/signal'
 import { z } from 'zod'
 
 export interface Items {
@@ -17,15 +25,26 @@ export interface Items {
 	description: string
 }
 
-export type SignalCategory = keyof typeof SIGNALS_CATEGORIES
-
 export interface PageProps {
 	searchParams?: {
 		[key: string]: string | undefined
 	}
 }
 
+// Quotations
 export type QuotationCreateType = z.infer<typeof QuotationCreateSchema>
 export type QuotationType = z.infer<typeof QuotationSchema>
 export type QuotationUpdateType = z.infer<typeof QuotationUpdateSchema>
 export type QuotationItemType = z.infer<typeof QuotationSchema>['items'][0]
+
+// Signals
+export type SignalType = z.infer<typeof SignalSchema>
+export type SignalUpdateType = z.infer<typeof SignalUpdateSchema>
+export type SignalCreateType = z.infer<typeof SignalCreateSchema>
+export type SignalCategory = keyof typeof SIGNALS_CATEGORIES
+
+// Product
+export type ProductType = z.infer<typeof ProductSchema>
+
+// Gallery
+export type GalleryImageType = z.infer<typeof GalleryImageSchema>
