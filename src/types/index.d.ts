@@ -17,6 +17,13 @@ import {
 } from '@/schemas/signal'
 import { z } from 'zod'
 
+export type CustomersType = {
+	id: string
+	name: string
+	ruc: string
+	address: string
+}
+
 export interface Items {
 	id: string
 	qty: number

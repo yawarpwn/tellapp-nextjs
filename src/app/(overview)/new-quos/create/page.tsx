@@ -1,9 +1,8 @@
-import { CreateUpdateQuosForm } from '../create-update-quos-form'
-export default function Page() {
-	return (
-		<div>
-			<h2>Crear Quo</h2>
-			<CreateUpdateQuosForm />
-		</div>
-	)
+import { fetchCustomers } from '@/lib/data/customers'
+import ClientPage from './page.client'
+
+export default async function Page() {
+	const customers = await fetchCustomers()
+
+	return <ClientPage customers={customers} />
 }

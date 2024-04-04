@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const QuotationSchema = z.object({
-	number: z.coerce.number(),
+	number: z.number(),
 	id: z.string(),
 	include_igv: z.coerce.boolean(),
 	is_regular_customer: z.coerce.boolean(),
@@ -35,6 +35,7 @@ export const QuotationSchema = z.object({
 
 export const QuotationCreateSchema = QuotationSchema.omit({
 	id: true,
+	number: true,
 	created_at: true,
 	updated_at: true,
 })

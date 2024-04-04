@@ -113,9 +113,7 @@ function AddForm({ action, lastQuotationNumber }: Props) {
 		event.preventDefault()
 		startTransition(async () => {
 			const formData = new FormData(event.currentTarget)
-			const { errors, message } = await action(undefined, formData)
-
-			const quoNumber = formData.get('number') as string
+			const { errors, message, data } = await action(undefined, formData)
 
 			if (errors) {
 				const JSonError = JSON.stringify(errors, null, 2)
@@ -131,7 +129,7 @@ function AddForm({ action, lastQuotationNumber }: Props) {
 			}
 
 			shootCoffeti()
-			router.push(`/quotations/${quoNumber}`)
+			router.push(`/quotations/${data.number}`)
 		})
 	}
 

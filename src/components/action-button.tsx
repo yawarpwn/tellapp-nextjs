@@ -49,7 +49,7 @@ export function ActionForm(props: Props) {
 						</form>
 					</DialogFooter>
 				</DialogContent>
-				<DialogTrigger>
+				<DialogTrigger asChild>
 					{buttonComponent}
 				</DialogTrigger>
 			</Dialog>

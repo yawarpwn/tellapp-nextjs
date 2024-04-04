@@ -44,7 +44,7 @@ function CreateEditInputs({
 	return (
 		<>
 			<div className='grid grid-cols-12 gap-4'>
-				<div className='col-span-12'>
+				<div className='col-span-6'>
 					<Input
 						labelText='Ruc'
 						name='ruc'
@@ -66,18 +66,6 @@ function CreateEditInputs({
 						value={quotation?.deadline}
 						onChange={onChange}
 						errors={state.errors?.deadline}
-						disabled={loading || pending}
-						required
-					/>
-				</div>
-				<div className='col-span-6'>
-					<Input
-						labelText='Número'
-						type='number'
-						name='number'
-						onChange={onChange}
-						value={quotation?.number}
-						errors={state.errors?.number}
 						disabled={loading || pending}
 						required
 					/>

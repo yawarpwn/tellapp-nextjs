@@ -2,7 +2,10 @@
 
 import { TABLES } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
-import { CreateQuotation, UpdateQuotation } from '@/schemas/quotations'
+import {
+	QuotationCreateSchema,
+	QuotationUpdateSchema,
+} from '@/schemas/quotations'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -11,7 +14,6 @@ import { fetchLastQuotation, fetchQuotationById } from '../data/quotations'
 // Create Product
 export async function createQuotation(_: undefined, formData: FormData) {
 	const rawData = {
-		number: formData.get('number'),
 		ruc: formData.get('ruc') || null,
 		company: formData.get('company') || 'SIN RUC PROPORCIONADO',
 		address: formData.get('address'),
@@ -22,7 +24,7 @@ export async function createQuotation(_: undefined, formData: FormData) {
 	}
 
 	// validated fields with zod
-	const validatedFields = CreateQuotation.safeParse(rawData)
+	const validatedFields = QuotationCreateSchema.safeParse(rawData)
 
 	// if error
 	if (!validatedFields.success) {
@@ -37,7 +39,6 @@ export async function createQuotation(_: undefined, formData: FormData) {
 	const supabase = createClient(cookieStore)
 
 	const {
-		number,
 		company,
 		ruc,
 		address,
@@ -83,7 +84,6 @@ export async function createQuotation(_: undefined, formData: FormData) {
 	// prepare data to insert
 	//
 	const quotationToInsert = {
-		number,
 		company,
 		ruc,
 		address,
@@ -92,22 +92,15 @@ export async function createQuotation(_: undefined, formData: FormData) {
 		include_igv,
 	}
 
-	const { error } = await supabase.from(TABLES.Quotations).insert(
+	const { error, data } = await supabase.from(TABLES.Quotations).insert(
 		quotationToInsert,
-	)
+	).select()
 
-	// handle error
 	if (error) {
-		if (error?.code === '23505') {
-			return {
-				errors: {
-					number: ['Ya existe es cotización '],
-				},
-			}
-		}
-
 		return {
-			erros: error,
+			errors: error,
+			data: null,
+			message: 'Failed to create quotation',
 		}
 	}
 
@@ -115,7 +108,8 @@ export async function createQuotation(_: undefined, formData: FormData) {
 
 	return {
 		errors: null,
-		message: `Se ha creado la cotización ${number}`,
+		message: `Se ha creado la cotización`,
+		data: data[0],
 	}
 }
 
@@ -127,14 +121,13 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 		company: formData.get('company') || 'Sin Ruc Proporcionado',
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
-		number: formData.get('number'),
 		items: JSON.parse(formData.get('items') as string),
 		include_igv: formData.get('include_igv'),
 		is_regular_customer: formData.get('is_regular_customer'),
 	}
 
 	// validated fields
-	const validatedFields = UpdateQuotation.safeParse(rawData)
+	const validatedFields = QuotationUpdateSchema.safeParse(rawData)
 
 	// if have error
 	if (!validatedFields.success) {
