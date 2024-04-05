@@ -1,5 +1,4 @@
 import { z } from 'zod'
-
 export const QuotationSchema = z.object({
 	number: z.number(),
 	id: z.string(),
@@ -11,8 +10,8 @@ export const QuotationSchema = z.object({
 			message: 'Ruc debe tener 11 caracteres',
 		})
 		.nullable(),
-	company: z.string().default('SIN RUC PROPORCIONADO'),
-	address: z.string(),
+	company: z.string().nullable(),
+	address: z.string().nullable(),
 	deadline: z.coerce.number().gt(0, {
 		message: 'Debe ser mayor a 0',
 	}),
@@ -22,6 +21,7 @@ export const QuotationSchema = z.object({
 				id: z.string(),
 				price: z.number(),
 				qty: z.number(),
+				cost: z.number(),
 				unit_size: z.string(),
 				description: z.string(),
 			}),
@@ -33,10 +33,13 @@ export const QuotationSchema = z.object({
 	updated_at: z.string(),
 })
 
+export const QuotationItemsSchema = QuotationSchema.pick({ items: true })
+
 export const QuotationCreateSchema = QuotationSchema.omit({
 	id: true,
 	number: true,
 	created_at: true,
 	updated_at: true,
+	items: true,
 })
 export const QuotationUpdateSchema = QuotationSchema.partial()

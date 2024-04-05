@@ -19,7 +19,7 @@ export function CustomersPicker({ customers, onPick }: Props) {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
-		onPick(customers[0])
+		onPick(customers[2])
 		setOpen(false)
 	}
 
@@ -29,7 +29,7 @@ export function CustomersPicker({ customers, onPick }: Props) {
 			onOpenChange={setOpen}
 		>
 			<DialogTrigger asChild>
-				<button className='btn btn-primary'>
+				<button className='btn btn-secondary'>
 					Clientes Frecuentes
 				</button>
 			</DialogTrigger>

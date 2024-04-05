@@ -102,6 +102,12 @@
   color: #fff;
 }
 
+.btn-primary[disabled] {
+  opacity: 0.5 !important;
+  pointer-events: none !important;
+  color: white;
+}
+
 .btn-secondary {
   border-color: transparent;
   color: inherit;
