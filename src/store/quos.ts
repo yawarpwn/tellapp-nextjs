@@ -4,6 +4,7 @@ import { persist } from 'zustand/middleware'
 
 type QuoActionsType = {
 	setQuo: (quo: Partial<QuotationCreateType>) => void
+	setItems: (item: QuotationItemType[]) => void
 	addItem: (item: QuotationItemType) => void
 	deleteItem: (id: string) => void
 	editItem: (item: QuotationItemType) => void
@@ -24,14 +25,15 @@ const useQuoStore = create<QuoState>()(set => ({
 		is_regular_customer: false,
 	},
 	items: [{
-		id: '1',
-		price: 10,
-		qty: 100,
+		id: '0',
+		price: 0,
+		qty: 0,
 		unit_size: 'und',
-		description:
-			'Es algo de que vamos a probar 20x30cm con lamina refletiva hip con lafhhl  - y fibra de vidrio',
+		cost: 1,
+		description: '',
 	}],
 	setQuo: (quo) => set((state) => ({ quo: { ...state.quo, ...quo } })),
+	setItems: (items) => set((state) => ({ items })),
 	addItem: (item) => set((state) => ({ items: [...state.items, item] })),
 	deleteItem: (id) =>
 		set((state) => ({ items: state.items.filter(item => item.id !== id) })),

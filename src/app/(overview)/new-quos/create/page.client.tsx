@@ -22,15 +22,31 @@ import { QuotationItemModal } from '@/components/quotation-item-modal'
 import { toast } from '@/hooks/use-toast'
 import { getRuc } from '@/lib/sunat'
 import { useQuoStore } from '@/store/quos'
-import { type CustomersType, type QuotationCreateType } from '@/types'
+import {
+	type CustomersType,
+	type QuotationCreateType,
+	type QuotationType,
+} from '@/types'
 import { useForm } from 'react-hook-form'
 
 interface Props {
 	customers: CustomersType[]
+	quotation?: QuotationType
 }
 
-export default function Page({ customers }: Props) {
+export default function Page({ customers, quotation }: Props) {
 	const [loading, setLoading] = React.useState(false)
+	useQuoStore.setState({
+		quo: {
+			deadline: quotation?.deadline || 1,
+			company: quotation?.company || '',
+			ruc: quotation?.ruc || '',
+			address: quotation?.address || '',
+			is_regular_customer: quotation?.is_regular_customer || false,
+			include_igv: quotation?.include_igv || true,
+		},
+		items: quotation?.items || [],
+	})
 	const quo = useQuoStore(state => state.quo)
 	const setQuo = useQuoStore(state => state.setQuo)
 
@@ -192,7 +208,7 @@ export default function Page({ customers }: Props) {
 						<QuotationAddItemButton />
 					</div>
 					<div className='col-span-12 py-12'>
-						<QuotationItemsTable />
+						<QuotationItemsTable items={quotation?.items} />
 					</div>
 					<footer className='flex justify-between col-span-12 gap-4'>
 						<button
