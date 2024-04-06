@@ -19,9 +19,9 @@ import React from 'react'
 // import { useTransition } from 'react'
 import { CustomersPicker } from '@/components/customers-picker'
 import { QuotationItemModal } from '@/components/quotation-item-modal'
+import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { toast } from '@/hooks/use-toast'
 import { getRuc } from '@/lib/sunat'
-import { useQuoStore } from '@/store/quos'
 import {
 	type CustomersType,
 	type QuotationCreateType,
@@ -36,8 +36,8 @@ interface Props {
 
 export default function Page({ customers }: Props) {
 	const [loading, setLoading] = React.useState(false)
-	const quo = useQuoStore(state => state.quo)
-	const setQuo = useQuoStore(state => state.setQuo)
+	const quo = useQuotationContext(state => state.quo)
+	const setQuo = useQuotationContext(state => state.setQuo)
 
 	const form = useForm<QuotationCreateType>({
 		resolver: zodResolver(QuotationCreateSchema),

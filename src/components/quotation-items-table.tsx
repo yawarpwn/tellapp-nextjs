@@ -8,8 +8,8 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
+import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { EditIcon, TrashIcon } from '@/icons'
-import { useQuoStore } from '@/store/quos'
 import { QuotationItemType } from '@/types'
 import React from 'react'
 import { QuotationEditItemButton } from './quotations/buttons'
@@ -18,8 +18,8 @@ interface Props {
 	items: QuotationItemType[]
 }
 export function QuotationItemsTable() {
-	const items = useQuoStore(state => state.items)
-	const deleteItem = useQuoStore(state => state.deleteItem)
+	const items = useQuotationContext(state => state.items)
+	const deleteItem = useQuotationContext(state => state.deleteItem)
 
 	return (
 		<Table>

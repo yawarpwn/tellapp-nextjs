@@ -20,7 +20,7 @@ import {
 	Dialog,
 	DialogContent,
 } from '@/components/ui/dialog'
-import { useQuoStore } from '@/store/quos'
+import { useQuotationContext } from '@/hooks/use-quotation-store'
 
 const initialState = {
 	price: 0,
@@ -35,8 +35,8 @@ export function QuotationItemModal(props: Props) {
 	// const [open, setOpen] = React.useState(false)
 	const [item, setItem] = React.useState(props.itemToEdit || initialState)
 	const [products, setProducts] = React.useState<ProductType[]>([])
-	const addItem = useQuoStore(state => state.addItem)
-	const editItem = useQuoStore(state => state.editItem)
+	const addItem = useQuotationContext(state => state.addItem)
+	const editItem = useQuotationContext(state => state.editItem)
 
 	const { results, setSearchValue } = useSearch({
 		dataSet: products,
