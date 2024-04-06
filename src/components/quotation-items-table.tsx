@@ -10,9 +10,13 @@ import {
 } from '@/components/ui/table'
 import { EditIcon, TrashIcon } from '@/icons'
 import { useQuoStore } from '@/store/quos'
+import { QuotationItemType } from '@/types'
 import React from 'react'
 import { QuotationEditItemButton } from './quotations/buttons'
 
+interface Props {
+	items: QuotationItemType[]
+}
 export function QuotationItemsTable() {
 	const items = useQuoStore(state => state.items)
 	const deleteItem = useQuoStore(state => state.deleteItem)

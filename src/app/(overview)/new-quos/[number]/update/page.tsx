@@ -9,7 +9,7 @@ export default async function Page(
 	const customers = await fetchCustomers()
 	return (
 		<div>
-			<ClientPage customers={customers} quotation={quotation} />
+			<ClientPage customers={customers} />
 		</div>
 	)
 }
