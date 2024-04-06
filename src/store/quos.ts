@@ -43,7 +43,7 @@ export const createQuotationStore = (initProps: QuotationProps) => {
 		products: initProps.products,
 		customers: initProps.customers,
 		items: [
-			...initProps.items,
+			...initProps?.items || [],
 		],
 		setQuo: (quo) => set((state) => ({ quo: { ...state.quo, ...quo } })),
 		setItems: (items) => set((state) => ({ items })),
