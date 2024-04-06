@@ -1,7 +1,6 @@
 'use client'
 
 import { useSearch } from '@/hooks/use-search'
-import { createBrowserClient } from '@/lib/supabase'
 import { ProductType } from '@/types'
 import { QuotationItemType } from '@/types'
 import { XIcon } from 'lucide-react'
@@ -34,9 +33,9 @@ export function QuotationItemModal(props: Props) {
 	const { itemToEdit, open, onOpenChange, closeModal } = props
 	// const [open, setOpen] = React.useState(false)
 	const [item, setItem] = React.useState(props.itemToEdit || initialState)
-	const [products, setProducts] = React.useState<ProductType[]>([])
 	const addItem = useQuotationContext(state => state.addItem)
 	const editItem = useQuotationContext(state => state.editItem)
+	const products = useQuotationContext(state => state.products)
 
 	const { results, setSearchValue } = useSearch({
 		dataSet: products,
@@ -45,22 +44,6 @@ export function QuotationItemModal(props: Props) {
 
 	const isCreate = !props.itemToEdit
 	// const closeModal = () => setOpen(false)
-
-	React.useEffect(() => {
-		const supabase = createBrowserClient()
-		const getProducts = async () => {
-			const { data, error } = await supabase
-				.from('products')
-				.select()
-				.returns<ProductType[]>()
-
-			if (data) {
-				setProducts(data)
-			}
-		}
-
-		getProducts()
-	}, [])
 
 	const showClearDescription = item.description.length >= 3
 
@@ -235,7 +218,7 @@ export function QuotationItemModal(props: Props) {
 					</div>
 					<footer className='flex items-center gap-4 mt-4 '>
 						<button className='btn btn-secondary flex-1' type='submit'>
-							{isCreate ? 'Crear' : 'Actualizar'}
+							{isCreate ? 'Agregar' : 'Actualizar'}
 						</button>
 						<button
 							className='btn btn-secondary flex-1'

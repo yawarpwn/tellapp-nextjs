@@ -1,12 +1,19 @@
 import React from 'react'
 
-import { QuotationCreateType, QuotationItemType } from '@/types'
+import {
+	CustomersType,
+	ProductType,
+	QuotationCreateType,
+	QuotationItemType,
+} from '@/types'
 import { createStore } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export interface QuotationProps {
-	quo?: QuotationCreateType
-	items?: QuotationItemType[]
+	quo: QuotationCreateType
+	items: QuotationItemType[]
+	products: ProductType[]
+	customers: CustomersType[]
 }
 
 export interface QuotationState extends QuotationProps {
@@ -15,9 +22,10 @@ export interface QuotationState extends QuotationProps {
 	addItem: (item: QuotationItemType) => void
 	deleteItem: (id: string) => void
 	editItem: (item: QuotationItemType) => void
+	onPickCustomer: (customer: CustomersType) => void
 }
 
-export const createQuotationStore = (initProps?: Partial<QuotationProps>) => {
+export const createQuotationStore = (initProps: QuotationProps) => {
 	const DEFAULT_PROPS = {
 		ruc: null,
 		company: null,
@@ -32,7 +40,11 @@ export const createQuotationStore = (initProps?: Partial<QuotationProps>) => {
 			...DEFAULT_PROPS,
 			...initProps?.quo,
 		},
-		items: initProps?.items || [],
+		products: initProps.products,
+		customers: initProps.customers,
+		items: [
+			...initProps.items,
+		],
 		setQuo: (quo) => set((state) => ({ quo: { ...state.quo, ...quo } })),
 		setItems: (items) => set((state) => ({ items })),
 		addItem: (item) => set((state) => ({ items: [...state.items, item] })),
@@ -41,6 +53,15 @@ export const createQuotationStore = (initProps?: Partial<QuotationProps>) => {
 		editItem: (item) =>
 			set((state) => ({
 				items: state.items.map(i => i.id === item.id ? item : i),
+			})),
+		onPickCustomer: (customer) =>
+			set(state => ({
+				quo: {
+					...state.quo,
+					ruc: customer.ruc,
+					company: customer.name,
+					address: customer.address,
+				},
 			})),
 	}))
 }

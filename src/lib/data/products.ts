@@ -1,8 +1,25 @@
 // import { ITEMS_PER_PAGE } from '@/constants'
 import { ITEMS_PER_PAGE } from '@/constants'
+import { TABLES } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
-import { type Product } from '@/types'
+import { ProductType } from '@/types'
 import { cookies } from 'next/headers'
+
+export async function fetchProducts() {
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+	const { data: products, error } = await supabase
+		.from(TABLES.Products)
+		.select()
+		.returns<ProductType[]>()
+
+	if (error) {
+		throw new Error('Error fetching products')
+	}
+
+	return products
+}
 
 export async function fetchFilteredProducts(
 	{ query, currentPage }: { query: string; currentPage: number },
@@ -18,7 +35,7 @@ export async function fetchFilteredProducts(
 		.or(`description.ilike.%${query}%, code.ilike.${query}`)
 		.range(offset, offset + ITEMS_PER_PAGE)
 		.order('inserted_at', { ascending: false })
-		.returns<Product[]>()
+		.returns<ProductType[]>()
 
 	// handle error
 	if (error) throw new Error('Error fetching customers')
@@ -57,7 +74,7 @@ export async function fetchProductById(
 	// get product from DB by id
 	const { data: products, error } = await supabase.from('products').select('*')
 		.eq('id', id)
-		.returns<Product[]>()
+		.returns<ProductType[]>()
 
 	// handle error
 	if (error) throw new Error('Failed to fetch product by id ')

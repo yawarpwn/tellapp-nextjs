@@ -1,8 +1,33 @@
+import Breadcrumbs from '@/components/breadcrumbs'
+import { CreateUpdatePage } from '@/components/quotations/create-update-page'
+import { QuotationStoreProvider } from '@/hooks/use-quotation-store'
 import { fetchCustomers } from '@/lib/data/customers'
-import ClientPage from './page.client'
+import { fetchProducts } from '@/lib/data/products'
 
 export default async function Page() {
-	const customers = await fetchCustomers()
+	const [customers, products] = await Promise.all([
+		fetchCustomers(),
+		fetchProducts(),
+	])
 
-	return <ClientPage customers={customers} />
+	return (
+		<>
+			<Breadcrumbs
+				breadcrumbs={[
+					{
+						label: 'Cotizaciones',
+						href: '/quotations',
+					},
+					{
+						label: 'Crear',
+						href: '/quotations/crear',
+						active: true,
+					},
+				]}
+			/>
+			<QuotationStoreProvider customers={customers} products={products}>
+				<CreateUpdatePage customers={customers} />
+			</QuotationStoreProvider>
+		</>
+	)
 }
