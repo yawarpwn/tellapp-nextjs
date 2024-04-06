@@ -30,6 +30,7 @@ const initialState = {
 }
 
 export function QuotationItemModal(props: Props) {
+	console.log('render QuotationItemModal')
 	const { itemToEdit, open, onOpenChange, closeModal } = props
 	// const [open, setOpen] = React.useState(false)
 	const [item, setItem] = React.useState(props.itemToEdit || initialState)

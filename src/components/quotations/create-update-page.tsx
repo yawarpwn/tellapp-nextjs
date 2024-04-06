@@ -1,7 +1,8 @@
 'use client'
 
 import { QuotationItemsTable } from '@/components/quotation-items-table'
-import { QuotationAddItemButton } from '@/components/quotations/buttons'
+// import { QuotationAddItemButton } from '@/components/quotations/buttons'
+import { QuotationAddItemButton } from '@/components/quotations/quotation-add-items-button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
 	Form,
@@ -44,16 +45,6 @@ export function CreateUpdatePage() {
 
 	const { formState: { errors } } = form
 
-	// Manejador para selecionar un cliente frecuente
-	const handlePickCustomer = (customer: CustomersType) => {
-		setQuo({
-			company: customer.name,
-			ruc: customer.ruc,
-			address: customer.address,
-			is_regular_customer: true,
-		})
-	}
-
 	// Manjedor para buscar cliente por Ruc
 	const handleRucBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
 		const value = event.target.value
@@ -87,9 +78,7 @@ export function CreateUpdatePage() {
 				>
 					<header className='col-span-12 flex justify-between'>
 						<div></div>
-						<CustomersPicker
-							onPick={handlePickCustomer}
-						/>
+						<CustomersPicker />
 					</header>
 					<FormField
 						control={form.control}

@@ -1,7 +1,7 @@
 'use client'
 
 import { type CustomersType } from '@/types'
-import React, { useState } from 'react'
+import React from 'react'
 import InputSearch from './input-search'
 
 interface Props {
@@ -16,12 +16,15 @@ import {
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 
 export function CustomersPicker() {
+	console.log('render customerPIcker')
 	const [open, setOpen] = React.useState(false)
 	const [selectedItemId, setSelectedItemId] = React.useState<string | null>(
 		null,
 	)
+
 	const [filterValue, setFilterValue] = React.useState('')
 	const customers = useQuotationContext(state => state.customers)
+	const onPickCustomer = useQuotationContext(state => state.onPickCustomer)
 
 	const filteredCustomers = React.useMemo(() => {
 		if (!filterValue) return customers
@@ -31,9 +34,14 @@ export function CustomersPicker() {
 		})
 	}, [filterValue, customers])
 
+	const closeModal = () => setOpen(false)
+
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
-		setOpen(false)
+		const selectedCustomer = customers.find(c => c.id === selectedItemId)
+		if (!selectedCustomer) return
+		onPickCustomer(selectedCustomer)
+		closeModal()
 	}
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +96,7 @@ export function CustomersPicker() {
 							Aceptar
 						</button>
 						<button
-							onClick={() => setOpen(false)}
+							onClick={closeModal}
 							type='button'
 							className='btn btn-secondary flex-1'
 						>
