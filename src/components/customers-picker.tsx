@@ -16,7 +16,6 @@ import {
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 
 export function CustomersPicker() {
-	console.log('render customerPIcker')
 	const [open, setOpen] = React.useState(false)
 	const [selectedItemId, setSelectedItemId] = React.useState<string | null>(
 		null,

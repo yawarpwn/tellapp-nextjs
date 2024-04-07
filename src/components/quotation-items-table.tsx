@@ -20,6 +20,7 @@ interface Props {
 export function QuotationItemsTable() {
 	const items = useQuotationContext(state => state.items)
 	const deleteItem = useQuotationContext(state => state.deleteItem)
+	const onEditItem = useQuotationContext(state => state.onEditItem)
 
 	return (
 		<Table>
@@ -56,7 +57,13 @@ export function QuotationItemsTable() {
 							</TableCell>
 							<TableCell>
 								<div className='flex gap-2'>
-									<QuotationEditItemButton itemToEdit={item} />
+									<button
+										onClick={() => onEditItem(item.id)}
+										type='button'
+										className='btn btn-sm'
+									>
+										<EditIcon />
+									</button>
 									<button
 										onClick={() => deleteItem(item.id)}
 										className='btn btn-sm'

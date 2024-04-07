@@ -6,10 +6,24 @@ import {
 	QuotationCreateSchema,
 	QuotationUpdateSchema,
 } from '@/schemas/quotations'
+import { QutoationCreateWithItems } from '@/types'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { fetchLastQuotation, fetchQuotationById } from '../data/quotations'
+
+export async function insertQuotation(
+	quotationToInset: QutoationCreateWithItems,
+) {
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+	const { data, error } = await supabase
+		.from(TABLES.Quotations)
+		.insert(quotationToInset)
+	if (error) {
+		console.log(error)
+	}
+}
 
 // Create Product
 export async function createQuotation(_: undefined, formData: FormData) {

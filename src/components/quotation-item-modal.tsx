@@ -20,6 +20,7 @@ import {
 	DialogContent,
 } from '@/components/ui/dialog'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
+import { DialogTrigger } from '@radix-ui/react-dialog'
 
 const initialState = {
 	price: 0,
@@ -29,21 +30,28 @@ const initialState = {
 	unit_size: '',
 }
 
-export function QuotationItemModal(props: Props) {
-	console.log('render QuotationItemModal')
-	const { itemToEdit, open, onOpenChange, closeModal } = props
+export function QuotationItemModal() {
+	// const { itemToEdit, open, onOpenChange, closeModal } = props
 	// const [open, setOpen] = React.useState(false)
-	const [item, setItem] = React.useState(props.itemToEdit || initialState)
+	const isItemModalOpen = useQuotationContext(state => state.isItemModalOpen)
+	const openItemModal = useQuotationContext(state => state.openItemModal)
+	const closeItemModal = useQuotationContext(state => state.closeItemModal)
+	const items = useQuotationContext(state => state.items)
 	const addItem = useQuotationContext(state => state.addItem)
 	const editItem = useQuotationContext(state => state.editItem)
+	const selectedIdItem = useQuotationContext(state => state.selectedIdItem)
+	const itemToEdit = items.find(item => item.id === selectedIdItem)
+	const [item, setItem] = React.useState(itemToEdit || initialState)
 	const products = useQuotationContext(state => state.products)
+
+	console.log({ isItemModalOpen, selectedIdItem, itemToEdit })
 
 	const { results, setSearchValue } = useSearch({
 		dataSet: products,
 		keys: ['description', 'code'],
 	})
 
-	const isCreate = !props.itemToEdit
+	const isEditMode = !!itemToEdit
 	// const closeModal = () => setOpen(false)
 
 	const showClearDescription = item.description.length >= 3
@@ -94,16 +102,7 @@ export function QuotationItemModal(props: Props) {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 
-		if (isCreate) {
-			addItem({
-				id: crypto.randomUUID(),
-				price: item.price,
-				qty: item.qty,
-				unit_size: item.unit_size,
-				description: item.description,
-				cost: item.cost,
-			})
-		} else {
+		if (isEditMode) {
 			editItem({
 				id: itemToEdit.id,
 				price: item.price,
@@ -112,14 +111,28 @@ export function QuotationItemModal(props: Props) {
 				description: item.description,
 				cost: item.cost,
 			})
+		} else {
+			addItem({
+				id: crypto.randomUUID(),
+				price: item.price,
+				qty: item.qty,
+				unit_size: item.unit_size,
+				description: item.description,
+				cost: item.cost,
+			})
 		}
-		closeModal()
+		closeItemModal()
 	}
+
+	React.useEffect(() => {
+		console.log('monted')
+		return () => console.log('unmonted')
+	}, [])
 
 	return (
 		<Dialog
-			open={open}
-			onOpenChange={onOpenChange}
+			open={isItemModalOpen}
+			onOpenChange={closeItemModal}
 		>
 			<DialogContent>
 				<form onSubmit={handleSubmit}>
@@ -219,11 +232,12 @@ export function QuotationItemModal(props: Props) {
 					</div>
 					<footer className='flex items-center gap-4 mt-4 '>
 						<button className='btn btn-secondary flex-1' type='submit'>
-							{isCreate ? 'Agregar' : 'Actualizar'}
+							{isEditMode ? 'Actualizar' : 'Agregar'}
 						</button>
 						<button
+							type='button'
 							className='btn btn-secondary flex-1'
-							onClick={closeModal}
+							onClick={closeItemModal}
 						>
 							Cancelar
 						</button>

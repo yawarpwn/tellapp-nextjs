@@ -40,6 +40,11 @@ export interface PageProps {
 
 // Quotations
 export type QuotationCreateType = z.infer<typeof QuotationCreateSchema>
+export type QuotationCreateWithItems =
+	& Omit<QuotationCreateType, 'is_regular_customer'>
+	& {
+		items: QuotationItemType[]
+	}
 export type QuotationType = z.infer<typeof QuotationSchema>
 export type QuotationUpdateType = z.infer<typeof QuotationUpdateSchema>
 export type QuotationItemType = z.infer<typeof QuotationSchema>['items'][0]

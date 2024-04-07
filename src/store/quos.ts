@@ -7,7 +7,7 @@ import {
 	QuotationItemType,
 } from '@/types'
 import { createStore } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 
 export interface QuotationProps {
 	quo: QuotationCreateType
@@ -17,6 +17,13 @@ export interface QuotationProps {
 }
 
 export interface QuotationState extends QuotationProps {
+	selectedIdItem: string | null
+	itemToEdit: QuotationItemType | null
+	isItemModalOpen: boolean
+	onEditItem: (id: string) => void
+	closeItemModal: () => void
+	openItemModal: () => void
+	onItemSave: (item?: QuotationItemType) => void
 	setQuo: (quo: Partial<QuotationCreateType>) => void
 	setItems: (item: QuotationItemType[]) => void
 	addItem: (item: QuotationItemType) => void
@@ -35,35 +42,64 @@ export const createQuotationStore = (initProps: QuotationProps) => {
 		is_regular_customer: false,
 	}
 
-	return createStore<QuotationState>()(set => ({
-		quo: {
-			...DEFAULT_PROPS,
-			...initProps?.quo,
-		},
-		products: initProps.products,
-		customers: initProps.customers,
-		items: [
-			...initProps?.items || [],
-		],
-		setQuo: (quo) => set((state) => ({ quo: { ...state.quo, ...quo } })),
-		setItems: (items) => set((state) => ({ items })),
-		addItem: (item) => set((state) => ({ items: [...state.items, item] })),
-		deleteItem: (id) =>
-			set((state) => ({ items: state.items.filter(item => item.id !== id) })),
-		editItem: (item) =>
-			set((state) => ({
-				items: state.items.map(i => i.id === item.id ? item : i),
-			})),
-		onPickCustomer: (customer) =>
-			set(state => ({
-				quo: {
-					...state.quo,
-					ruc: customer.ruc,
-					company: customer.name,
-					address: customer.address,
+	return createStore<QuotationState>()(
+		devtools(
+			persist(
+				(set) => ({
+					isItemModalOpen: false,
+					openItemModal: () =>
+						set(state => ({ isItemModalOpen: true, selectedIdItem: null })),
+					closeItemModal: () =>
+						set(state => ({ isItemModalOpen: false, selectedIdItem: null })),
+					selectedIdItem: null,
+					itemToEdit: null,
+					onEditItem: (id) =>
+						set(state => ({ selectedIdItem: id, isItemModalOpen: true })),
+					onItemSave: (item) => {
+						if (item) {
+							set(state => ({ items: [...state.items, item] }))
+							set(state => ({ isItemModalOpen: false }))
+						} else {
+							set(state => ({ isItemModalOpen: true }))
+						}
+					},
+					quo: {
+						...DEFAULT_PROPS,
+						...initProps?.quo,
+					},
+					products: initProps.products,
+					customers: initProps.customers,
+					items: [
+						...initProps?.items || [],
+					],
+					setQuo: (quo) => set((state) => ({ quo: { ...state.quo, ...quo } })),
+					setItems: (items) => set((state) => ({ items })),
+					addItem: (item) =>
+						set((state) => ({ items: [...state.items, item] })),
+					deleteItem: (id) =>
+						set((state) => ({
+							items: state.items.filter(item => item.id !== id),
+						})),
+					editItem: (item) =>
+						set((state) => ({
+							items: state.items.map(i => i.id === item.id ? item : i),
+						})),
+					onPickCustomer: (customer) =>
+						set(state => ({
+							quo: {
+								...state.quo,
+								ruc: customer.ruc,
+								company: customer.name,
+								address: customer.address,
+							},
+						})),
+				}),
+				{
+					name: 'quotation-tell',
 				},
-			})),
-	}))
+			),
+		),
+	)
 }
 
 export type QuotationStore = ReturnType<typeof createQuotationStore>
