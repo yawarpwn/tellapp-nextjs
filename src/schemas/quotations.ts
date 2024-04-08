@@ -9,9 +9,9 @@ export const QuotationSchema = z.object({
 		.length(11, {
 			message: 'Ruc debe tener 11 caracteres',
 		})
-		.nullable(),
-	company: z.string().nullable(),
-	address: z.string().nullable(),
+		.optional(),
+	company: z.string().optional(),
+	address: z.string().optional(),
 	deadline: z.coerce.number().gt(0, {
 		message: 'Debe ser mayor a 0',
 	}),

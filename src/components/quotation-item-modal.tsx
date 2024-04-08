@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/dialog'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { DialogTrigger } from '@radix-ui/react-dialog'
+import { QuotationItemsSearch } from './items-search'
 
 const initialState = {
 	price: 0,
@@ -124,11 +125,6 @@ export function QuotationItemModal() {
 		closeItemModal()
 	}
 
-	React.useEffect(() => {
-		console.log('monted')
-		return () => console.log('unmonted')
-	}, [])
-
 	return (
 		<Dialog
 			open={isItemModalOpen}
@@ -147,6 +143,7 @@ export function QuotationItemModal() {
 									<XIcon />
 								</button>
 							)}
+							<QuotationItemsSearch />
 							<Textarea
 								labelText='Descripcion'
 								autoFocus

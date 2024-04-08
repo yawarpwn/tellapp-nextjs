@@ -1,6 +1,6 @@
 'use client'
 
-import { QuotationItemsTable } from '@/components/quotation-items-table'
+import { CustomersPicker } from '@/components/customers-picker'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
 	Form,
@@ -12,52 +12,34 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { insertQuotation } from '@/lib/actions/quoatations'
-import { QuotationCreateSchema } from '@/schemas/quotations'
-import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
-// import { useTransition } from 'react'
-import { CustomersPicker } from '@/components/customers-picker'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { toast } from '@/hooks/use-toast'
 import { getRuc } from '@/lib/sunat'
+import { QuotationCreateSchema } from '@/schemas/quotations'
 import {
-	type CustomersType,
 	type QuotationCreateType,
-	type QuotationCreateWithItems,
-	type QuotationItemType,
 } from '@/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+import React from 'react'
 import { useForm } from 'react-hook-form'
-import { QuotationItemModal } from '../quotation-item-modal'
 
 export function CreateUpdatePage() {
 	const [loading, setLoading] = React.useState(false)
-	const [pending, startTransition] = React.useTransition()
+	const [active, setActive] = React.useState('indeterminate')
 	const quo = useQuotationContext(state => state.quo)
 	const setQuo = useQuotationContext(state => state.setQuo)
-	const isItemModalOpen = useQuotationContext(state => state.isItemModalOpen)
-	const openItemModal = useQuotationContext(state => state.openItemModal)
-	const items = useQuotationContext(state => state.items)
 
 	const form = useForm<QuotationCreateType>({
 		resolver: zodResolver(QuotationCreateSchema),
-		defaultValues: { ...quo },
+		mode: 'onChange',
+		defaultValues: quo,
 	})
 
 	const onSubmit = () => {
-		const quoToInsert: QuotationCreateWithItems = {
-			ruc: quo.ruc,
-			company: quo.company,
-			address: quo.address,
-			include_igv: quo.include_igv,
-			deadline: quo.deadline,
-			items: items,
-		}
-		startTransition(async () => {
-			await insertQuotation(quoToInsert)
-			alert('insert')
-		})
+		console.log('submit', quo)
 	}
+
+	console.log('quo', quo)
 
 	const { formState: { errors } } = form
 
@@ -87,16 +69,12 @@ export function CreateUpdatePage() {
 
 	return (
 		<>
-			{isItemModalOpen && <QuotationItemModal />}
-
 			<section>
 				<header className='col-span-12 flex justify-between'>
 					<div>
 					</div>
 					<div className='flex gap-4'>
-						<button onClick={openItemModal} className='btn btn-secondary'>
-							Agregar Producto
-						</button>
+						<div></div>
 						<CustomersPicker />
 					</div>
 				</header>
@@ -105,38 +83,6 @@ export function CreateUpdatePage() {
 						onSubmit={form.handleSubmit(onSubmit)}
 						className='grid grid-cols-12 gap-4'
 					>
-						<FormField
-							control={form.control}
-							name='ruc'
-							render={({ field }) => {
-								return (
-									<FormItem className='col-span-12'>
-										<FormLabel>Ruc</FormLabel>
-										<FormControl>
-											<Input
-												{...field}
-												value={field.value || ''}
-												onChange={field.onChange}
-												type='string'
-												placeholder='Ej. 20610555536'
-												onBlur={handleRucBlur}
-												disabled={loading}
-											/>
-										</FormControl>
-										<FormDescription />
-										<FormMessage />
-									</FormItem>
-								)
-							}}
-						/>
-
-						{quo?.company && (
-							<p className='text-success col-span-12'>{quo.company}</p>
-						)}
-						{quo?.address && (
-							<p className='text-success col-span-12'>{quo.address}</p>
-						)}
-
 						<FormField
 							control={form.control}
 							name='deadline'
@@ -148,8 +94,79 @@ export function CreateUpdatePage() {
 											<Input
 												{...field}
 												type='number'
+												value={quo.deadline}
+												onChange={e =>
+													setQuo({
+														...quo,
+														deadline: Number(e.target.value),
+													})}
 												placeholder='Ej. 5020'
 												disabled={loading}
+											/>
+										</FormControl>
+										<FormDescription />
+										<FormMessage />
+									</FormItem>
+								)
+							}}
+						/>
+						<FormField
+							control={form.control}
+							name='ruc'
+							render={({ field }) => {
+								return (
+									<FormItem className='col-span-12'>
+										<FormLabel>Ruc</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+												value={quo.ruc}
+												onChange={(event) =>
+													setQuo({
+														...quo,
+														ruc: event.target.value,
+													})}
+											/>
+										</FormControl>
+										<FormDescription />
+										<FormMessage />
+									</FormItem>
+								)
+							}}
+						/>
+
+						<FormField
+							control={form.control}
+							name='company'
+							render={({ field }) => {
+								return (
+									<FormItem className='col-span-12'>
+										<FormLabel>Cliente</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+												value={quo.company}
+												disabled
+											/>
+										</FormControl>
+										<FormDescription />
+										<FormMessage />
+									</FormItem>
+								)
+							}}
+						/>
+						<FormField
+							control={form.control}
+							name='address'
+							render={({ field }) => {
+								return (
+									<FormItem className='col-span-12'>
+										<FormLabel>Dirección</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+												value={quo.address}
+												disabled
 											/>
 										</FormControl>
 										<FormDescription />
@@ -166,8 +183,13 @@ export function CreateUpdatePage() {
 								<FormItem className='col-span-6 flex flex-row space-x-3 items-center'>
 									<FormControl>
 										<Checkbox
-											checked={field.value}
-											onCheckedChange={field.onChange}
+											checked={quo.include_igv}
+											onCheckedChange={() => {
+												setQuo({
+													...quo,
+													include_igv: !quo.include_igv,
+												})
+											}}
 											disabled={loading}
 										/>
 									</FormControl>
@@ -187,8 +209,12 @@ export function CreateUpdatePage() {
 								<FormItem className='col-span-6 flex flex-row space-x-3 items-center'>
 									<FormControl>
 										<Checkbox
-											checked={field.value}
-											onCheckedChange={field.onChange}
+											checked={quo.is_regular_customer}
+											onCheckedChange={() =>
+												setQuo({
+													...quo,
+													is_regular_customer: !quo.is_regular_customer,
+												})}
 											disabled={loading}
 										/>
 									</FormControl>
@@ -200,23 +226,13 @@ export function CreateUpdatePage() {
 								</FormItem>
 							)}
 						/>
-						<div className='col-span-12 mt-4'>
-							<QuotationItemsTable />
-						</div>
-						<footer className='flex justify-between col-span-12 gap-4'>
+						<footer className='flex justify-between col-span-12 gap-4 mt-4'>
 							<button
-								className='btn btn-primary flex-1 w-full'
+								className='btn btn-secondary w-full'
 								type='submit'
 								disabled={loading}
 							>
-								Aceptar
-							</button>
-							<button
-								disabled={loading}
-								className='btn btn-secondary flex-1 w-full'
-								type='button'
-							>
-								Cancelar
+								Siguiente
 							</button>
 						</footer>
 					</form>

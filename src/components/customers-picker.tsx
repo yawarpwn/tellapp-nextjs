@@ -1,11 +1,11 @@
 'use client'
 
-import { type CustomersType } from '@/types'
+import { type CustomerType } from '@/types'
 import React from 'react'
 import InputSearch from './input-search'
 
 interface Props {
-	onPick: (customer: CustomersType) => void
+	onPick: (customer: CustomerType) => void
 }
 
 import {

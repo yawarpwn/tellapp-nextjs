@@ -38,9 +38,9 @@ export const initQuotationStore = (
 ) => {
 	return {
 		quo: {
-			ruc: null,
-			company: null,
-			address: null,
+			ruc: undefined,
+			company: undefined,
+			address: undefined,
 			deadline: 1,
 			include_igv: true,
 			is_regular_customer: false,
@@ -53,9 +53,9 @@ export const initQuotationStore = (
 
 const DEFAULT_PROPS: QuotationState = {
 	quo: {
-		ruc: null,
-		company: null,
-		address: null,
+		ruc: undefined,
+		company: undefined,
+		address: undefined,
 		deadline: 1,
 		include_igv: true,
 		is_regular_customer: false,
