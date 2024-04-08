@@ -1,28 +1,38 @@
 'use client'
+import { type CustomerType, type ProductType } from '@/types'
 
 import {
 	createQuotationStore,
-	QuotationContext,
-	type QuotationProps,
-	type QuotationState,
+	initQuotationStore,
 	type QuotationStore,
 } from '@/store/quos'
 import React from 'react'
-import { useStore } from 'zustand'
+import { StoreApi, useStore } from 'zustand'
+
+export const QuotationContext = React.createContext<
+	StoreApi<QuotationStore> | null
+>(null)
 
 export function useQuotationStore() {
 	const store = React.useContext(QuotationContext)
 	return store
 }
 
-type QuotationProviderProps = React.PropsWithChildren<QuotationProps>
+// type QuotationProviderProps =  React.PropsWithChildren<Partial<QuotationStore>>
+type QuotationProviderProps = {
+	children: React.ReactNode
+	customers: CustomerType[]
+	products: ProductType[]
+}
 
 export function QuotationStoreProvider(
 	{ children, ...props }: QuotationProviderProps,
 ) {
-	const storeRef = React.useRef<QuotationStore>()
+	const storeRef = React.useRef<StoreApi<QuotationStore>>()
 	if (!storeRef.current) {
-		storeRef.current = createQuotationStore(props)
+		storeRef.current = createQuotationStore(
+			initQuotationStore(props.customers, props.products),
+		)
 	}
 
 	return (
@@ -33,9 +43,10 @@ export function QuotationStoreProvider(
 }
 
 export function useQuotationContext<T>(
-	selector: (state: QuotationState) => T,
+	selector: (state: QuotationStore) => T,
 ): T {
 	const store = React.useContext(QuotationContext)
+
 	if (!store) throw new Error('Missing QuotationContext.Provider in the tree')
 
 	return useStore(store, selector)

@@ -17,7 +17,7 @@ import {
 } from '@/schemas/signal'
 import { z } from 'zod'
 
-export type CustomersType = {
+export type CustomerType = {
 	id: string
 	name: string
 	ruc: string

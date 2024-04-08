@@ -25,7 +25,10 @@ export default async function Page() {
 					},
 				]}
 			/>
-			<QuotationStoreProvider customers={customers} products={products}>
+			<QuotationStoreProvider
+				customers={customers}
+				products={products}
+			>
 				<CreateUpdatePage />
 			</QuotationStoreProvider>
 		</>
