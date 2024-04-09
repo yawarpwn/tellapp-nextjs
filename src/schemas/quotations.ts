@@ -4,12 +4,7 @@ export const QuotationSchema = z.object({
 	id: z.string(),
 	include_igv: z.coerce.boolean(),
 	is_regular_customer: z.coerce.boolean(),
-	ruc: z
-		.string()
-		.length(11, {
-			message: 'Ruc debe tener 11 caracteres',
-		})
-		.optional(),
+	ruc: z.optional(z.string()),
 	company: z.string().optional(),
 	address: z.string().optional(),
 	deadline: z.coerce.number().gt(0, {

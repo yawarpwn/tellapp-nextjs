@@ -8,6 +8,7 @@ import { createStore } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
 export interface QuotationState {
+	step: number
 	quo: QuotationCreateType
 	items: QuotationItemType[]
 	products: ProductType[]
@@ -28,6 +29,8 @@ export interface QuotationActions {
 	deleteItem: (id: string) => void
 	editItem: (item: QuotationItemType) => void
 	onPickCustomer: (customer: CustomerType) => void
+	incrementStep: () => void
+	descrementStep: () => void
 }
 
 export type QuotationStore = QuotationState & QuotationActions
@@ -35,12 +38,13 @@ export type QuotationStore = QuotationState & QuotationActions
 export const initQuotationStore = (
 	customers: CustomerType[],
 	products: ProductType[],
-) => {
+): QuotationState => {
 	return {
+		step: 1,
 		quo: {
-			ruc: undefined,
-			company: undefined,
-			address: undefined,
+			ruc: '',
+			company: '',
+			address: '',
 			deadline: 1,
 			include_igv: true,
 			is_regular_customer: false,
@@ -52,10 +56,11 @@ export const initQuotationStore = (
 }
 
 const DEFAULT_PROPS: QuotationState = {
+	step: 1,
 	quo: {
-		ruc: undefined,
-		company: undefined,
-		address: undefined,
+		ruc: '',
+		company: '',
+		address: '',
 		deadline: 1,
 		include_igv: true,
 		is_regular_customer: false,
@@ -72,6 +77,8 @@ export const createQuotationStore = (
 		(set) => ({
 			...initProps,
 			isItemModalOpen: false,
+			incrementStep: () => set(state => ({ step: state.step + 1 })),
+			descrementStep: () => set(state => ({ step: state.step - 1 })),
 			openItemModal: () =>
 				set(state => ({ isItemModalOpen: true, selectedIdItem: null })),
 			closeItemModal: () =>
