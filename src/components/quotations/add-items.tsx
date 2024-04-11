@@ -1,19 +1,53 @@
-import {
-	Card,
-	CardContent,
-} from '@/components/ui/card'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { DeleteIcon, EditIcon, PlusIcon, XIcon } from '@/icons'
+import { QuotationItemType } from '@/types'
+import {
+	useDragAndDrop,
+} from '@formkit/drag-and-drop/react'
 import React from 'react'
+import { EditItemModal } from './edit-item-modal'
 import { QuotationSearchProduct } from './search-product'
 export function QuotationAddItems() {
 	const descrmentStep = useQuotationContext(state => state.descrementStep)
+	// const setItems = useQuotationContext(state => state.setItems)
 	const items = useQuotationContext(state => state.items)
+
+	const [parentDrag, itemsDrag, setItemsDrag] = useDragAndDrop<
+		HTMLUListElement,
+		QuotationItemType
+	>(items)
+
+	const editItem = useQuotationContext(state => state.editItem)
 	const deleteItem = useQuotationContext(state => state.deleteItem)
 	const [seletedProductId, setSelectedProductId] = React.useState<
 		string | null
 	>(null)
-	console.log({ items })
+
+	const [open, setOpen] = React.useState(false)
+	const closeItemModal = () => setOpen(false)
+
+	const onChangeValue = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		item: QuotationItemType,
+	) => {
+		const { name, value } = e.target
+		if (name == 'price' || name == 'qty') {
+			editItem({
+				...item,
+				[name]: Number(value),
+			})
+		} else {
+			editItem({
+				...item,
+				[name]: value,
+			})
+		}
+	}
+
+	React.useEffect(() => {
+		setItemsDrag(items)
+	}, [items, setItemsDrag])
+
 	return (
 		<section>
 			<header className='flex justify-between items-center mb-4'>
@@ -25,40 +59,61 @@ export function QuotationAddItems() {
 				</button>
 				<QuotationSearchProduct />
 			</header>
-			{items.length > 0
+			{itemsDrag.length > 0
 				? (
-					<div className='flex flex-col gap-2'>
-						{items.map(item => (
-							<Card key={item.id}>
-								<CardContent>
+					<ul ref={parentDrag} className='flex flex-col gap-2'>
+						{itemsDrag.map(item => (
+							<li className='card border' key={item.id}>
+								<div className='p-4 border-base-200'>
+									<div>
+										<input
+											checked={item.id === seletedProductId}
+											onChange={() => setSelectedProductId(item.id)}
+											className='checkbox checkbox-sm'
+											type='checkbox'
+										/>
+									</div>
 									<div className='flex justify-between gap-4 items-center'>
-										<div>
-											<input
-												checked={item.id === seletedProductId}
-												onChange={() => setSelectedProductId(item.id)}
-												className='checkbox checkbox-sm'
-												type='checkbox'
-											/>
-										</div>
-										<div className='flex-1'>
-											<p>{item.description}</p>
-											<p>10 x S/20.00</p>
-										</div>
-										<div>
-											<span>S/.2000</span>
+										<div className='flex flex-col gap-4'>
+											<div className='flex-1'>
+												<p>{item.description}</p>
+											</div>
+											<div className='flex gap-2 overflow-hidden'>
+												<input
+													className='w-32 bg-transparent  px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+													type='text'
+													onChange={(e) => onChangeValue(e, item)}
+													name='unit_size'
+													value={item.unit_size}
+												/>
+												<input
+													className='w-16 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+													type='number'
+													onChange={(e) => onChangeValue(e, item)}
+													name='price'
+													value={item.price}
+												/>
+												<input
+													className='w-16 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+													type='number'
+													onChange={(e) => onChangeValue(e, item)}
+													name='qty'
+													value={item.qty}
+												/>
+											</div>
 										</div>
 									</div>
-								</CardContent>
-							</Card>
+								</div>
+							</li>
 						))}
-					</div>
+					</ul>
 				)
 				: (
-					<Card>
-						<CardContent>
+					<div>
+						<div>
 							Sin Productos
-						</CardContent>
-					</Card>
+						</div>
+					</div>
 				)}
 
 			<footer className='flex justify-between mt-4'>
@@ -101,3 +156,15 @@ export function QuotationAddItems() {
 		</section>
 	)
 }
+
+// <EditItemModal
+// 	value={String(item.price)}
+// 	onEdit={(editedValue: string) => {
+// 		editItem({
+// 			...item,
+// 			price: Number(editedValue),
+// 		})
+// 	}}
+// 	open={open}
+// 	onClose={closeItemModal}
+// />
