@@ -4,6 +4,7 @@ import { QuotationItemType } from '@/types'
 import {
 	useDragAndDrop,
 } from '@formkit/drag-and-drop/react'
+import { GripHorizontal } from 'lucide-react'
 import React from 'react'
 import { EditItemModal } from './edit-item-modal'
 import { QuotationSearchProduct } from './search-product'
@@ -65,14 +66,16 @@ export function QuotationAddItems() {
 						{itemsDrag.map(item => (
 							<li className='card border' key={item.id}>
 								<div className='p-4 border-base-200'>
-									<div>
+									<div className='flex justify-between'>
 										<input
 											checked={item.id === seletedProductId}
 											onChange={() => setSelectedProductId(item.id)}
 											className='checkbox checkbox-sm'
 											type='checkbox'
 										/>
+										<GripHorizontal />
 									</div>
+
 									<div className='flex justify-between gap-4 items-center'>
 										<div className='flex flex-col gap-4'>
 											<div className='flex-1'>
