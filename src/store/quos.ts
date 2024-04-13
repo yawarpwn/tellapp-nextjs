@@ -27,10 +27,12 @@ export interface QuotationActions {
 	setItems: (item: QuotationItemType[]) => void
 	addItem: (item: QuotationItemType) => void
 	deleteItem: (id: string) => void
+	duplicateItem: (item: QuotationItemType) => void
 	editItem: (item: QuotationItemType) => void
 	onPickCustomer: (customer: CustomerType) => void
 	incrementStep: () => void
-	descrementStep: () => void
+	decrementStep: () => void
+	setStep: (step: number) => void
 }
 
 export type QuotationStore = QuotationState & QuotationActions
@@ -77,8 +79,9 @@ export const createQuotationStore = (
 		(set) => ({
 			...initProps,
 			isItemModalOpen: false,
+			setStep: (step) => set(state => ({ step })),
 			incrementStep: () => set(state => ({ step: state.step + 1 })),
-			descrementStep: () => set(state => ({ step: state.step - 1 })),
+			decrementStep: () => set(state => ({ step: state.step - 1 })),
 			openItemModal: () =>
 				set(state => ({ isItemModalOpen: true, selectedIdItem: null })),
 			closeItemModal: () =>
@@ -98,6 +101,13 @@ export const createQuotationStore = (
 			setQuo: (quo) => set((state) => ({ quo: { ...state.quo, ...quo } })),
 			setItems: (items) => set((state) => ({ items })),
 			addItem: (item) => set((state) => ({ items: [...state.items, item] })),
+			duplicateItem: (item) =>
+				set(state => ({
+					items: [...state.items, {
+						...item,
+						id: crypto.randomUUID(),
+					}],
+				})),
 			deleteItem: (id) =>
 				set((state) => ({
 					items: state.items.filter(item => item.id !== id),

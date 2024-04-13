@@ -36,6 +36,7 @@ export function QuotationCustomerInfo() {
 	})
 
 	const onSubmit = () => {
+		console.log('submit main')
 		incrementStep()
 	}
 
@@ -68,19 +69,19 @@ export function QuotationCustomerInfo() {
 	return (
 		<>
 			<Form {...form}>
+				<header className='flex justify-between'>
+					<div>
+					</div>
+					<div className='flex gap-4'>
+						<div>
+						</div>
+						<CustomersPicker />
+					</div>
+				</header>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
 					className='grid grid-cols-12 gap-4'
 				>
-					<header className='col-span-12 flex justify-between'>
-						<div>
-						</div>
-						<div className='flex gap-4'>
-							<div>
-							</div>
-							<CustomersPicker />
-						</div>
-					</header>
 					<FormField
 						control={form.control}
 						name='deadline'

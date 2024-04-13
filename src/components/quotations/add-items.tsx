@@ -1,6 +1,16 @@
 import { useQuotationContext } from '@/hooks/use-quotation-store'
-import { DeleteIcon, EditIcon, PlusIcon, XIcon } from '@/icons'
+import {
+	DeleteIcon,
+	DocumentDuplicateIcon,
+	EditIcon,
+	PlusIcon,
+	XIcon,
+} from '@/icons'
+
 import { QuotationItemType } from '@/types'
+import {
+	animations,
+} from '@formkit/drag-and-drop'
 import {
 	useDragAndDrop,
 } from '@formkit/drag-and-drop/react'
@@ -9,14 +19,19 @@ import React from 'react'
 import { EditItemModal } from './edit-item-modal'
 import { QuotationSearchProduct } from './search-product'
 export function QuotationAddItems() {
-	const descrmentStep = useQuotationContext(state => state.descrementStep)
+	const descrmentStep = useQuotationContext(state => state.decrementStep)
 	// const setItems = useQuotationContext(state => state.setItems)
 	const items = useQuotationContext(state => state.items)
+	const setItems = useQuotationContext(state => state.setItems)
+	const duplicateItem = useQuotationContext(state => state.duplicateItem)
 
 	const [parentDrag, itemsDrag, setItemsDrag] = useDragAndDrop<
 		HTMLUListElement,
 		QuotationItemType
-	>(items)
+	>(items, {
+		dragHandle: '.drag-handle',
+		plugins: [animations()],
+	})
 
 	const editItem = useQuotationContext(state => state.editItem)
 	const deleteItem = useQuotationContext(state => state.deleteItem)
@@ -47,7 +62,7 @@ export function QuotationAddItems() {
 
 	React.useEffect(() => {
 		setItemsDrag(items)
-	}, [items, setItemsDrag])
+	}, [setItemsDrag, items])
 
 	return (
 		<section>
@@ -64,26 +79,35 @@ export function QuotationAddItems() {
 				? (
 					<ul ref={parentDrag} className='flex flex-col gap-2'>
 						{itemsDrag.map(item => (
-							<li className='card border' key={item.id}>
+							<li className='card bg-black border' key={item.id}>
 								<div className='p-4 border-base-200'>
 									<div className='flex justify-between'>
 										<input
 											checked={item.id === seletedProductId}
-											onChange={() => setSelectedProductId(item.id)}
+											onChange={() =>
+												setSelectedProductId(item.id)}
 											className='checkbox checkbox-sm'
 											type='checkbox'
 										/>
-										<GripHorizontal />
+										<button
+											onClick={() =>
+												duplicateItem(item)}
+										>
+											<DocumentDuplicateIcon />
+										</button>
+										<span className='drag-handle'>
+											<GripHorizontal />
+										</span>
 									</div>
 
 									<div className='flex justify-between gap-4 items-center'>
 										<div className='flex flex-col gap-4'>
 											<div className='flex-1'>
-												<p>{item.description}</p>
+												<p className='text-xs'>{item.description}</p>
 											</div>
 											<div className='flex gap-2 overflow-hidden'>
 												<input
-													className='w-32 bg-transparent  px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+													className='w-32 bg-transparent  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
 													type='text'
 													onChange={(e) => onChangeValue(e, item)}
 													name='unit_size'

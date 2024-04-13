@@ -6,23 +6,53 @@ import {
 	QuotationCreateSchema,
 	QuotationUpdateSchema,
 } from '@/schemas/quotations'
-import { QutoationCreateWithItems } from '@/types'
+import { type QuotationCreateWithItems } from '@/types'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { fetchLastQuotation, fetchQuotationById } from '../data/quotations'
 
 export async function insertQuotation(
-	quotationToInset: QutoationCreateWithItems,
+	quotation: QuotationCreateWithItems,
 ) {
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
+
+	if (quotation.is_regular_customer) {
+		const { data: customers, error: errorCustomers } = await supabase.from(
+			TABLES.Customers,
+		).insert({
+			name: quotation.company,
+			ruc: quotation.ruc,
+			address: quotation.address,
+		})
+
+		if (errorCustomers) {
+			throw errorCustomers
+		}
+	}
+
+	const quotationToInsert = {
+		ruc: quotation.ruc,
+		company: quotation.company,
+		address: quotation.address,
+		deadline: quotation.deadline,
+		include_igv: quotation.include_igv,
+		items: quotation.items,
+	}
+
 	const { data, error } = await supabase
 		.from(TABLES.Quotations)
-		.insert(quotationToInset)
+		.insert(quotationToInsert)
+		.select()
+
 	if (error) {
-		console.log(error)
+		throw error
 	}
+
+	if (!data) return
+
+	console.log(data[0])
 }
 
 // Create Product
