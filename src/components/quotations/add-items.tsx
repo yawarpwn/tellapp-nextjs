@@ -1,11 +1,12 @@
+import { Button, buttonVariants } from '@/components/ui/button'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import {
 	DeleteIcon,
 	DocumentDuplicateIcon,
 	EditIcon,
-	PlusIcon,
-	XIcon,
 } from '@/icons'
+import { cn } from '@/lib/utils'
+import { NoResult } from './no-result'
 
 import { QuotationItemType } from '@/types'
 import {
@@ -14,15 +15,13 @@ import {
 import {
 	useDragAndDrop,
 } from '@formkit/drag-and-drop/react'
-import { GripHorizontal } from 'lucide-react'
+import { GripHorizontal, PlusIcon } from 'lucide-react'
 import React from 'react'
 import { EditItemModal } from './edit-item-modal'
 import { QuotationSearchProduct } from './search-product'
 export function QuotationAddItems() {
-	const descrmentStep = useQuotationContext(state => state.decrementStep)
 	// const setItems = useQuotationContext(state => state.setItems)
 	const items = useQuotationContext(state => state.items)
-	const setItems = useQuotationContext(state => state.setItems)
 	const duplicateItem = useQuotationContext(state => state.duplicateItem)
 
 	const [parentDrag, itemsDrag, setItemsDrag] = useDragAndDrop<
@@ -38,6 +37,8 @@ export function QuotationAddItems() {
 	const [seletedProductId, setSelectedProductId] = React.useState<
 		string | null
 	>(null)
+
+	const productItem = items.find(item => item.id == seletedProductId)
 
 	const [open, setOpen] = React.useState(false)
 	const closeItemModal = () => setOpen(false)
@@ -66,38 +67,52 @@ export function QuotationAddItems() {
 
 	return (
 		<section>
-			<header className='flex justify-between items-center mb-4'>
-				<h2 className='text-xl font-bold mb-4'>
+			<header className='flex justify-between items-center py-4'>
+				<h2 className='text-xl font-bold '>
 					Agregar Productos
 				</h2>
-				<button type='button' className='btn btn-secondary'>
-					<PlusIcon size={30} />
-				</button>
-				<QuotationSearchProduct />
+				<div className='flex items-center gap-2'>
+					<Button
+						onClick={() => {
+							setOpen(true)
+						}}
+						variant={'secondary'}
+					>
+						<PlusIcon size={20} />
+					</Button>
+					<QuotationSearchProduct />
+				</div>
 			</header>
 			{itemsDrag.length > 0
 				? (
-					<ul ref={parentDrag} className='flex flex-col gap-2'>
+					<ul ref={parentDrag} className='flex flex-col gap-4'>
 						{itemsDrag.map(item => (
-							<li className='card bg-black border' key={item.id}>
-								<div className='p-4 border-base-200'>
-									<div className='flex justify-between'>
-										<input
-											checked={item.id === seletedProductId}
-											onChange={() =>
-												setSelectedProductId(item.id)}
-											className='checkbox checkbox-sm'
-											type='checkbox'
-										/>
-										<button
-											onClick={() =>
-												duplicateItem(item)}
-										>
-											<DocumentDuplicateIcon />
-										</button>
-										<span className='drag-handle'>
+							<li className='card bg-black' key={item.id}>
+								<div className='p-2  grid gap-4'>
+									<div className='flex justify-between items-center'>
+										<span className='drag-handle cursor-grabbing'>
 											<GripHorizontal />
 										</span>
+										<div className='flex space-x-4 items-center'>
+											<Button
+												onClick={() => duplicateItem(item)}
+											>
+												<DocumentDuplicateIcon />
+											</Button>
+											<Button
+												onClick={() => {
+													setOpen(true)
+													setSelectedProductId(item.id)
+												}}
+											>
+												<EditIcon size={20} />
+											</Button>
+											<Button
+												onClick={() => deleteItem(item.id)}
+											>
+												<DeleteIcon size={20} />
+											</Button>
+										</div>
 									</div>
 
 									<div className='flex justify-between gap-4 items-center'>
@@ -105,93 +120,51 @@ export function QuotationAddItems() {
 											<div className='flex-1'>
 												<p className='text-xs'>{item.description}</p>
 											</div>
-											<div className='flex gap-2 overflow-hidden'>
-												<input
-													className='w-32 bg-transparent  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
-													type='text'
-													onChange={(e) => onChangeValue(e, item)}
-													name='unit_size'
-													value={item.unit_size}
-												/>
-												<input
-													className='w-16 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
-													type='number'
-													onChange={(e) => onChangeValue(e, item)}
-													name='price'
-													value={item.price}
-												/>
-												<input
-													className='w-16 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
-													type='number'
-													onChange={(e) => onChangeValue(e, item)}
-													name='qty'
-													value={item.qty}
-												/>
-											</div>
 										</div>
+									</div>
+									<div className='grid grid-cols-12 gap-2'>
+										<input
+											className='bg-transparent col-span-4  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
+											type='text'
+											onChange={(e) => onChangeValue(e, item)}
+											name='unit_size'
+											value={item.unit_size}
+										/>
+										<div className='flex items-center gap-1 col-span-3'>
+											<span>S/</span>
+											<input
+												className=' bg-transparent w-full px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+												type='number'
+												onChange={(e) => onChangeValue(e, item)}
+												name='price'
+												value={item.price}
+											/>
+										</div>
+										<input
+											className='col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+											type='number'
+											onChange={(e) => onChangeValue(e, item)}
+											name='qty'
+											value={item.qty}
+										/>
+										<span className='col-span-3 bg-primary rounded px-2 py-1'>
+											S/ {item.price * item.qty}
+										</span>
 									</div>
 								</div>
 							</li>
 						))}
 					</ul>
 				)
-				: (
-					<div>
-						<div>
-							Sin Productos
-						</div>
-					</div>
-				)}
+				: <NoResult />}
 
-			<footer className='flex justify-between mt-4'>
-				<button
-					type='button'
-					className='btn btn-secondary'
-					onClick={descrmentStep}
-				>
-					Anterior
-				</button>
-				<button type='button' className='btn btn-secondary'>
-					Crear Cotización
-				</button>
-			</footer>
-			{seletedProductId && (
-				<div className='fixed bottom-4 left-1/2 -translate-x-1/2'>
-					<button
-						onClick={() => setSelectedProductId(null)}
-						className='btn btn-xs'
-					>
-						<XIcon />
-					</button>
-					<button
-						onClick={() => ({})}
-						className='btn btn-xs'
-					>
-						<EditIcon />
-					</button>
-					<button
-						onClick={() => {
-							deleteItem(seletedProductId)
-							setSelectedProductId(null)
-						}}
-						className='btn btn-xs'
-					>
-						<DeleteIcon size={20} />
-					</button>
-				</div>
+			{open && (
+				<EditItemModal
+					item={productItem}
+					open={open}
+					onClose={closeItemModal}
+				/>
 			)}
 		</section>
 	)
 }
-
-// <EditItemModal
-// 	value={String(item.price)}
-// 	onEdit={(editedValue: string) => {
-// 		editItem({
-// 			...item,
-// 			price: Number(editedValue),
-// 		})
-// 	}}
-// 	open={open}
-// 	onClose={closeItemModal}
-// />

@@ -1,10 +1,13 @@
+import { Button } from '@/components/ui/button'
 import {
 	Dialog,
 	DialogContent,
+	DialogHeader,
 	DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
+import { SearchIcon } from '@/icons'
 import { Checkbox } from '@radix-ui/react-checkbox'
 import React from 'react'
 
@@ -34,23 +37,23 @@ export function QuotationSearchProduct() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<button type='button' className='btn btn-primary'>
-					Buscar
-				</button>
+				<Button variant='secondary' type='button'>
+					<SearchIcon size={20} />
+				</Button>
 			</DialogTrigger>
 			<DialogContent>
-				<header>
+				<DialogHeader>
 					<Input
 						onChange={(e) => setSearchValue(e.target.value)}
 						value={searchValue}
 						type='search'
 						placeholder='Ej. Fibra de ...'
+						className='max-w-sm'
 					/>
-				</header>
+				</DialogHeader>
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead>P</TableHead>
 							<TableHead>Código</TableHead>
 							<TableHead>Descripción</TableHead>
 							<TableHead>Precio</TableHead>
@@ -59,17 +62,24 @@ export function QuotationSearchProduct() {
 					</TableHeader>
 					<TableBody>
 						{results.map(product => (
-							<TableRow key={product.id}>
-								<TableCell>
-									<input
-										onChange={() => setSelectedProductId(product.id)}
-										checked={product.id === selectedProductId}
-										className='checkbox checkbox-sm'
-										type='checkbox'
-									/>
-									{/* <Checkbox checked /> */}
+							<TableRow
+								key={product.id}
+								className='hover:bg-primary hover:cursor-pointer'
+								onClick={() => {
+									addItem({
+										id: crypto.randomUUID(),
+										description: product.description,
+										cost: product.cost,
+										price: product.price,
+										unit_size: product.unit_size,
+										qty: 1,
+									})
+									setOpen(false)
+								}}
+							>
+								<TableCell className='min-w-[250px]'>
+									{product.description}
 								</TableCell>
-								<TableCell>{product.description}</TableCell>
 								<TableCell>{product.code}</TableCell>
 								<TableCell>{product.price}</TableCell>
 								<TableCell>{product.cost}</TableCell>
@@ -99,16 +109,6 @@ export function QuotationSearchProduct() {
 						setOpen(false)
 					}}
 				>
-					<footer className='flex items-center justify-between'>
-						<button className='btn btn-secondary' type='submit'>Aceptar</button>
-						<button
-							onClick={() => setOpen(false)}
-							className='btn btn-secondary'
-							type='button'
-						>
-							Cancelar
-						</button>
-					</footer>
 				</form>
 			</DialogContent>
 		</Dialog>
