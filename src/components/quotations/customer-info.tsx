@@ -1,17 +1,9 @@
 'use client'
 
 import { CustomersPicker } from '@/components/customers-picker'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { toast } from '@/hooks/use-toast'
 import { getRuc } from '@/lib/sunat'
@@ -22,6 +14,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { DatePicker } from '../ui/date-picker'
 
 export function QuotationCustomerInfo() {
 	const [loading, setLoading] = React.useState(false)
@@ -66,186 +59,64 @@ export function QuotationCustomerInfo() {
 		}
 	}
 
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value, name } = e.target
+		setQuo({
+			...quo,
+			[name]: value,
+		})
+	}
+
 	return (
 		<>
-			<Form {...form}>
-				<header className='flex justify-between'>
+			<header className='flex justify-between'>
+				<div>
+				</div>
+				<div className='flex gap-4'>
 					<div>
 					</div>
-					<div className='flex gap-4'>
-						<div>
-						</div>
-						<CustomersPicker />
-					</div>
-				</header>
-				<form
-					onSubmit={form.handleSubmit(onSubmit)}
-					className='grid grid-cols-12 gap-4'
-				>
-					<FormField
-						control={form.control}
-						name='deadline'
-						render={({ field }) => {
-							return (
-								<FormItem className='col-span-12'>
-									<FormLabel>Tiempo de Entrega</FormLabel>
-									<FormControl>
-										<Input
-											type='number'
-											value={quo.deadline}
-											onChange={e =>
-												setQuo({
-													...quo,
-													deadline: Number(e.target.value),
-												})}
-											placeholder='Ej. 5020'
-											disabled={loading}
-										/>
-									</FormControl>
-									<FormDescription />
-									<FormMessage />
-								</FormItem>
-							)
-						}}
-					/>
-					<FormField
-						control={form.control}
+					<CustomersPicker />
+				</div>
+			</header>
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className='flex flex-col gap-6'
+			>
+				<DatePicker />
+				<div className='grid gap-2'>
+					<Label htmlFor='ruc'>Ruc</Label>
+					<Input
+						id='ruc'
+						value={quo.ruc}
 						name='ruc'
-						render={({ field }) => {
-							return (
-								<FormItem className='col-span-12'>
-									<FormLabel>Ruc</FormLabel>
-									<FormControl>
-										<Input
-											value={quo.ruc}
-											onBlur={handleRucBlur}
-											disabled={loading}
-											onChange={(event) =>
-												setQuo({
-													...quo,
-													ruc: event.target.value,
-												})}
-										/>
-									</FormControl>
-									<FormDescription />
-									<FormMessage />
-								</FormItem>
-							)
-						}}
+						onBlur={handleRucBlur}
+						disabled={loading}
+						onChange={handleInputChange}
 					/>
+				</div>
 
-					<FormField
-						control={form.control}
+				<div className='grid gap-2'>
+					<Label htmlFor='company'>Cliente</Label>
+					<Input
+						id='company'
 						name='company'
-						render={({ field }) => {
-							return (
-								<FormItem className='col-span-12'>
-									<FormLabel>Cliente</FormLabel>
-									<FormControl>
-										<Input
-											value={quo.company}
-											onChange={(e) => {
-												setQuo({
-													...quo,
-													company: e.target.value,
-												})
-											}}
-											disabled
-										/>
-									</FormControl>
-									<FormDescription />
-									<FormMessage />
-								</FormItem>
-							)
-						}}
+						value={quo.company}
+						onBlur={handleRucBlur}
+						disabled={true}
 					/>
-					<FormField
-						control={form.control}
+				</div>
+
+				<div className='grid gap-2'>
+					<Label htmlFor='ruc'>Dirección</Label>
+					<Input
+						id='address'
 						name='address'
-						render={({ field }) => {
-							return (
-								<FormItem className='col-span-12'>
-									<FormLabel>Dirección</FormLabel>
-									<FormControl>
-										<Input
-											value={quo.address}
-											onChange={(e) => {
-												setQuo({
-													...quo,
-													address: e.target.value,
-												})
-											}}
-											disabled
-										/>
-									</FormControl>
-									<FormDescription />
-									<FormMessage />
-								</FormItem>
-							)
-						}}
+						value={quo.address}
+						onBlur={handleRucBlur}
+						disabled={true}
 					/>
-
-					<FormField
-						control={form.control}
-						name='include_igv'
-						render={({ field }) => (
-							<FormItem className='col-span-6 flex flex-row space-x-3 items-center'>
-								<FormControl>
-									<Checkbox
-										checked={quo.include_igv}
-										onCheckedChange={() => {
-											setQuo({
-												...quo,
-												include_igv: !quo.include_igv,
-											})
-										}}
-										disabled={loading}
-									/>
-								</FormControl>
-								<FormLabel>
-									Incluir IGV
-								</FormLabel>
-								<FormDescription>
-								</FormDescription>
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name='is_regular_customer'
-						render={({ field }) => (
-							<FormItem className='col-span-6 flex flex-row space-x-3 items-center'>
-								<FormControl>
-									<Checkbox
-										checked={quo.is_regular_customer}
-										onCheckedChange={() =>
-											setQuo({
-												...quo,
-												is_regular_customer: !quo.is_regular_customer,
-											})}
-										disabled={loading}
-									/>
-								</FormControl>
-								<FormLabel>
-									Cliente Frecuente
-								</FormLabel>
-								<FormDescription>
-								</FormDescription>
-							</FormItem>
-						)}
-					/>
-					<footer className='flex justify-between col-span-12 gap-4 mt-4'>
-						<button
-							className='btn btn-secondary w-full'
-							type='submit'
-							disabled={loading}
-						>
-							Siguiente
-						</button>
-					</footer>
-				</form>
-			</Form>
+				</div>
+			</form>
 		</>
 	)
 }

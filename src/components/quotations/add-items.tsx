@@ -1,11 +1,11 @@
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import {
 	DeleteIcon,
 	DocumentDuplicateIcon,
 	EditIcon,
 } from '@/icons'
-import { cn } from '@/lib/utils'
 import { NoResult } from './no-result'
 
 import { QuotationItemType } from '@/types'
@@ -20,7 +20,6 @@ import React from 'react'
 import { EditItemModal } from './edit-item-modal'
 import { QuotationSearchProduct } from './search-product'
 export function QuotationAddItems() {
-	// const setItems = useQuotationContext(state => state.setItems)
 	const items = useQuotationContext(state => state.items)
 	const duplicateItem = useQuotationContext(state => state.duplicateItem)
 
@@ -87,71 +86,79 @@ export function QuotationAddItems() {
 				? (
 					<ul ref={parentDrag} className='flex flex-col gap-4'>
 						{itemsDrag.map(item => (
-							<li className='card bg-black' key={item.id}>
-								<div className='p-2  grid gap-4'>
-									<div className='flex justify-between items-center'>
-										<span className='drag-handle cursor-grabbing'>
-											<GripHorizontal />
-										</span>
-										<div className='flex space-x-4 items-center'>
-											<Button
-												onClick={() => duplicateItem(item)}
-											>
-												<DocumentDuplicateIcon />
-											</Button>
-											<Button
-												onClick={() => {
-													setOpen(true)
-													setSelectedProductId(item.id)
-												}}
-											>
-												<EditIcon size={20} />
-											</Button>
-											<Button
-												onClick={() => deleteItem(item.id)}
-											>
-												<DeleteIcon size={20} />
-											</Button>
-										</div>
-									</div>
-
-									<div className='flex justify-between gap-4 items-center'>
-										<div className='flex flex-col gap-4'>
-											<div className='flex-1'>
-												<p className='text-xs'>{item.description}</p>
+							<li key={item.id}>
+								<Card className='border-border'>
+									<CardContent className='p-4 grid gap-4'>
+										<div className='flex justify-between items-center'>
+											<span className='drag-handle cursor-grabbing'>
+												<GripHorizontal />
+											</span>
+											<div className='flex space-x-4 items-center'>
+												<Button
+													size='icon'
+													variant='ghost'
+													onClick={() => duplicateItem(item)}
+												>
+													<DocumentDuplicateIcon />
+												</Button>
+												<Button
+													size='icon'
+													variant='ghost'
+													onClick={() => {
+														setOpen(true)
+														setSelectedProductId(item.id)
+													}}
+												>
+													<EditIcon size={20} />
+												</Button>
+												<Button
+													size='icon'
+													variant='ghost'
+													onClick={() => deleteItem(item.id)}
+												>
+													<DeleteIcon size={20} />
+												</Button>
 											</div>
 										</div>
-									</div>
-									<div className='grid grid-cols-12 gap-2'>
-										<input
-											className='bg-transparent col-span-4  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
-											type='text'
-											onChange={(e) => onChangeValue(e, item)}
-											name='unit_size'
-											value={item.unit_size}
-										/>
-										<div className='flex items-center gap-1 col-span-3'>
-											<span>S/</span>
+
+										<div className='flex justify-between gap-4 items-center'>
+											<div className='flex flex-col gap-4'>
+												<div className='flex-1'>
+													<p className='text-xs'>{item.description}</p>
+												</div>
+											</div>
+										</div>
+										<div className='grid grid-cols-12 gap-2'>
 											<input
-												className=' bg-transparent w-full px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+												className='bg-transparent col-span-4  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
+												type='text'
+												onChange={(e) => onChangeValue(e, item)}
+												name='unit_size'
+												value={item.unit_size}
+											/>
+											<div className='flex items-center gap-1 col-span-3'>
+												<span>S/</span>
+												<input
+													className=' bg-transparent w-full px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+													type='number'
+													onChange={(e) => onChangeValue(e, item)}
+													name='price'
+													value={item.price}
+												/>
+											</div>
+											<input
+												className='col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
 												type='number'
 												onChange={(e) => onChangeValue(e, item)}
-												name='price'
-												value={item.price}
+												name='qty'
+												value={item.qty}
 											/>
+											<span className='col-span-3 rounded px-2 py-1'>
+												S/ {item.price * item.qty}
+											</span>
 										</div>
-										<input
-											className='col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
-											type='number'
-											onChange={(e) => onChangeValue(e, item)}
-											name='qty'
-											value={item.qty}
-										/>
-										<span className='col-span-3 bg-primary rounded px-2 py-1'>
-											S/ {item.price * item.qty}
-										</span>
-									</div>
-								</div>
+									</CardContent>
+								</Card>
 							</li>
 						))}
 					</ul>

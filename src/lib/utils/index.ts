@@ -7,17 +7,19 @@ export function cn(...inputs: ClassNameValue[]) {
 }
 
 export const formatDateToLocal = (
-	dateStr: string,
+	dateStr: string | Date,
 	locale = 'es-US',
+	options?: Intl.DateTimeFormatOptions,
 ) => {
 	const date = new Date(dateStr)
 
-	const options: Intl.DateTimeFormatOptions = {
+	const defaultOptions: Intl.DateTimeFormatOptions = {
 		day: 'numeric',
 		month: 'numeric',
 		year: 'numeric',
+		...options,
 	}
-	const formatter = new Intl.DateTimeFormat(locale, options)
+	const formatter = new Intl.DateTimeFormat(locale, defaultOptions)
 	return formatter.format(date)
 }
 

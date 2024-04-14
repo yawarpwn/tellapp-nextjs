@@ -11,12 +11,14 @@ interface Props {
 import {
 	Dialog,
 	DialogContent,
+	DialogHeader,
 	DialogTrigger,
 } from '@/components/ui/dialog'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 
 export function CustomersPicker() {
 	const [open, setOpen] = React.useState(false)
+	const setQuo = useQuotationContext(state => state.setQuo)
 	const [selectedItemId, setSelectedItemId] = React.useState<string | null>(
 		null,
 	)
@@ -34,14 +36,6 @@ export function CustomersPicker() {
 	}, [filterValue, customers])
 
 	const closeModal = () => setOpen(false)
-
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault()
-		const selectedCustomer = customers.find(c => c.id === selectedItemId)
-		if (!selectedCustomer) return
-		onPickCustomer(selectedCustomer)
-		closeModal()
-	}
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = event.currentTarget
@@ -61,50 +55,33 @@ export function CustomersPicker() {
 				</DialogTrigger>
 				{open && (
 					<DialogContent>
-						<form onSubmit={handleSubmit}>
-							<div className='mt-4'>
-								<InputSearch
-									searchValue={filterValue}
-									placeholder={'Buscar cliente...'}
-									onSearchChange={handleSearchChange}
-								/>
-							</div>
-							<div className='overflow-y-auto h-[500px] mt-4'>
-								{filteredCustomers.length > 0
-									&& filteredCustomers.map(item => {
-										return (
-											<label
-												className='flex items-center justify-between gap-x-4'
-												key={item.id}
-											>
-												<div className='flex items-center gap-2'>
-													<input
-														onChange={() => {
-															setSelectedItemId(item.id)
-														}}
-														type='checkbox'
-														className='checkbox checkbox-xs'
-														checked={selectedItemId === item.id}
-													/>
-													<p>{item.name}</p>
-												</div>
-											</label>
-										)
-									})}
-							</div>
-							<footer className='flex w-full gap-4 mt-4'>
-								<button className='btn btn-secondary flex-1' type='submit'>
-									Aceptar
-								</button>
-								<button
-									onClick={closeModal}
-									type='button'
-									className='btn btn-secondary flex-1'
-								>
-									Cancelar
-								</button>
-							</footer>
-						</form>
+						<DialogHeader>
+							<InputSearch
+								searchValue={filterValue}
+								placeholder={'Buscar cliente...'}
+								onSearchChange={handleSearchChange}
+							/>
+						</DialogHeader>
+						<ul className='overflow-y-auto h-auto flex flex-col'>
+							{filteredCustomers.length > 0
+								&& filteredCustomers.map(item => {
+									return (
+										<li
+											key={item.id}
+											onClick={() => {
+												onPickCustomer({
+													...item,
+													address: item.address || '',
+												})
+												closeModal()
+											}}
+											className='flex py-2 px-2 cursor-pointer items-center gap-2 hover:bg-primary hover:text-primary-foreground'
+										>
+											<p>{item.name}</p>
+										</li>
+									)
+								})}
+						</ul>
 					</DialogContent>
 				)}
 			</Dialog>
