@@ -54,8 +54,8 @@ export function QuotationSearchProduct() {
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead>Código</TableHead>
 							<TableHead>Descripción</TableHead>
+							<TableHead>Código</TableHead>
 							<TableHead>Precio</TableHead>
 							<TableHead>Costo</TableHead>
 						</TableRow>
@@ -64,7 +64,7 @@ export function QuotationSearchProduct() {
 						{results.map(product => (
 							<TableRow
 								key={product.id}
-								className='hover:bg-primary hover:cursor-pointer'
+								className='hover:bg-foreground hover:text-background hover:cursor-pointer'
 								onClick={() => {
 									addItem({
 										id: crypto.randomUUID(),

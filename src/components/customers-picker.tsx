@@ -1,12 +1,7 @@
 'use client'
 
-import { type CustomerType } from '@/types'
 import React from 'react'
 import InputSearch from './input-search'
-
-interface Props {
-	onPick: (customer: CustomerType) => void
-}
 
 import {
 	Dialog,
@@ -18,10 +13,6 @@ import { useQuotationContext } from '@/hooks/use-quotation-store'
 
 export function CustomersPicker() {
 	const [open, setOpen] = React.useState(false)
-	const setQuo = useQuotationContext(state => state.setQuo)
-	const [selectedItemId, setSelectedItemId] = React.useState<string | null>(
-		null,
-	)
 
 	const [filterValue, setFilterValue] = React.useState('')
 	const customers = useQuotationContext(state => state.customers)

@@ -49,6 +49,8 @@ export function getIgv(items: Items[]) {
 		subTotal: subTotal.toFixed(2),
 		igv: igv.toFixed(2),
 		formatedTotal: formatNumberToLocal(total),
+		formatedIgv: formatNumberToLocal(igv),
+		formatedSubTotal: formatNumberToLocal(subTotal),
 	}
 }
 

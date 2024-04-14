@@ -26,29 +26,29 @@ export function CreateUpdatePage() {
 	}]
 	return (
 		<section>
-			<nav className='my-6'>
-				<ul
-					defaultValue={'step-1'}
-					className='grid grid-cols-3 gap-4'
-				>
-					{steps.map(({ quoStep, Icon, label }) => (
-						<li key={quoStep}>
-							<button
-								onClick={() => setStep(quoStep)}
-								data-active={quoStep === step}
-								className={cn(
-									`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 w-full 
-                  hover:bg-accent hover:text-accent-foreground data-[active]:`,
-									quoStep === step && 'border-primary',
-								)}
-							>
-								<Icon />
-								{label}
-							</button>
-						</li>
-					))}
-				</ul>
-			</nav>
+			{/* <nav className='my-6'> */}
+			{/* 	<ul */}
+			{/* 		defaultValue={'step-1'} */}
+			{/* 		className='grid grid-cols-3 gap-4' */}
+			{/* 	> */}
+			{/* 		{steps.map(({ quoStep, Icon, label }) => ( */}
+			{/* 			<li key={quoStep}> */}
+			{/* 				<button */}
+			{/* 					onClick={() => setStep(quoStep)} */}
+			{/* 					data-active={quoStep === step} */}
+			{/* 					className={cn( */}
+			{/* 						`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 w-full  */}
+			{/*                hover:bg-accent hover:text-accent-foreground data-[active]:`, */}
+			{/* 						quoStep === step && 'border-primary', */}
+			{/* 					)} */}
+			{/* 				> */}
+			{/* 					<Icon /> */}
+			{/* 					{label} */}
+			{/* 				</button> */}
+			{/* 			</li> */}
+			{/* 		))} */}
+			{/* 	</ul> */}
+			{/* </nav> */}
 			{step === 1 && <QuotationCustomerInfo />}
 			{step === 2 && <QuotationAddItems />}
 			{step === 3 && <QuotationFinalStep />}

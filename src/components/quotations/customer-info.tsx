@@ -2,18 +2,13 @@
 
 import { CustomersPicker } from '@/components/customers-picker'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { toast } from '@/hooks/use-toast'
 import { getRuc } from '@/lib/sunat'
-import { QuotationCreateSchema } from '@/schemas/quotations'
-import {
-	type QuotationCreateType,
-} from '@/types'
-import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
-import { useForm } from 'react-hook-form'
 import { DatePicker } from '../ui/date-picker'
 
 export function QuotationCustomerInfo() {
@@ -22,18 +17,11 @@ export function QuotationCustomerInfo() {
 	const setQuo = useQuotationContext(state => state.setQuo)
 	const incrementStep = useQuotationContext(state => state.incrementStep)
 
-	const form = useForm<QuotationCreateType>({
-		resolver: zodResolver(QuotationCreateSchema),
-		mode: 'onSubmit',
-		defaultValues: quo,
-	})
-
-	const onSubmit = () => {
-		console.log('submit main')
+	const handleSubmit = () => {
 		incrementStep()
 	}
 
-	const { formState: { errors } } = form
+	const canContinue = quo.deadline === 0
 
 	// Manjedor para buscar cliente por Ruc
 	const handleRucBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
@@ -79,7 +67,7 @@ export function QuotationCustomerInfo() {
 				</div>
 			</header>
 			<form
-				onSubmit={form.handleSubmit(onSubmit)}
+				onSubmit={handleSubmit}
 				className='flex flex-col gap-6'
 			>
 				<DatePicker />
@@ -88,6 +76,7 @@ export function QuotationCustomerInfo() {
 					<Input
 						id='ruc'
 						value={quo.ruc}
+						type='text'
 						name='ruc'
 						onBlur={handleRucBlur}
 						disabled={loading}
@@ -100,6 +89,7 @@ export function QuotationCustomerInfo() {
 					<Input
 						id='company'
 						name='company'
+						type='text'
 						value={quo.company}
 						onBlur={handleRucBlur}
 						disabled={true}
@@ -111,11 +101,73 @@ export function QuotationCustomerInfo() {
 					<Input
 						id='address'
 						name='address'
+						type='text'
 						value={quo.address}
 						onBlur={handleRucBlur}
 						disabled={true}
 					/>
 				</div>
+
+				<div className='grid gap-2'>
+					<Label htmlFor='ruc'>Correo</Label>
+					<Input
+						id='email'
+						name='email'
+						type='email'
+						value={quo.address}
+						onBlur={handleRucBlur}
+						disabled={true}
+					/>
+				</div>
+
+				<div className='grid gap-2'>
+					<Label htmlFor='phone'>Telefono</Label>
+					<Input
+						id='phone'
+						name='phone'
+						type='number'
+						value={quo.address}
+						onBlur={handleRucBlur}
+						disabled={true}
+					/>
+				</div>
+
+				<div className='grid gap-2'>
+					<Label htmlFor='deadline'>
+						Tiempo de entrega
+					</Label>
+					<Input
+						required
+						type='number'
+						id='deadline'
+						value={quo.deadline}
+						onChange={e => setQuo({ ...quo, deadline: Number(e.target.value) })}
+					/>
+				</div>
+				<div className='flex space-x-3 items-start '>
+					<Checkbox
+						id='include_igv'
+						onCheckedChange={e => setQuo({ ...quo, include_igv: Boolean(e) })}
+						checked={quo.include_igv}
+					/>
+					<Label htmlFor='include_igv'>
+						Incluir IGV
+					</Label>
+				</div>
+				<div className='flex space-x-3 items-start '>
+					<Checkbox
+						id='is_regular_customer'
+						checked={quo.is_regular_customer}
+						onCheckedChange={e =>
+							setQuo({ ...quo, is_regular_customer: Boolean(e) })}
+					/>
+					<Label htmlFor='is_regular_customer'>
+						Agregar como cliente frecuente
+					</Label>
+				</div>
+				<footer className='flex justify-end'>
+					<Button disabled={canContinue}>Siguiente</Button>
+				</footer>
 			</form>
 		</>
 	)

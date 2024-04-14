@@ -22,6 +22,8 @@ import { QuotationSearchProduct } from './search-product'
 export function QuotationAddItems() {
 	const items = useQuotationContext(state => state.items)
 	const duplicateItem = useQuotationContext(state => state.duplicateItem)
+	const decrementStep = useQuotationContext(state => state.decrementStep)
+	const incrementStep = useQuotationContext(state => state.incrementStep)
 
 	const [parentDrag, itemsDrag, setItemsDrag] = useDragAndDrop<
 		HTMLUListElement,
@@ -68,7 +70,7 @@ export function QuotationAddItems() {
 		<section>
 			<header className='flex justify-between items-center py-4'>
 				<h2 className='text-xl font-bold '>
-					Agregar Productos
+					Productos
 				</h2>
 				<div className='flex items-center gap-2'>
 					<Button
@@ -164,6 +166,12 @@ export function QuotationAddItems() {
 					</ul>
 				)
 				: <NoResult />}
+			<footer className='flex items-center justify-between mt-8 '>
+				<Button onClick={decrementStep}>Anterior</Button>
+				<Button disabled={itemsDrag.length == 0} onClick={incrementStep}>
+					Siguiente
+				</Button>
+			</footer>
 
 			{open && (
 				<EditItemModal
