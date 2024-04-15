@@ -1,8 +1,7 @@
 'use client'
-import ItemPickerModal from '@/components/item-picker-modal'
 import { Input } from '@/components/input'
+import ItemPickerModal from '@/components/item-picker-modal'
 import { SubmitButton } from '@/components/submit-button'
-import toast from '@/components/ui/toaster'
 import { getDni, getRuc } from '@/services/sunat'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -86,13 +85,6 @@ function AddLabelForm({ labelToEdit, action, serverAgencies }) {
 	}
 
 	const hasAgency = label?.agencies
-
-	useEffect(() => {
-		if (error) {
-			const errorNotify = () => toast.error(error)
-			errorNotify()
-		}
-	}, [error])
 
 	return (
 		<>
