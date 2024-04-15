@@ -6,7 +6,7 @@ import {
 	initQuotationStore,
 	type QuotationStore,
 } from '@/store/quos'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StoreApi, useStore } from 'zustand'
 
 export const QuotationContext = React.createContext<
