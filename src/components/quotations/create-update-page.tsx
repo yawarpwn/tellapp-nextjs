@@ -16,12 +16,16 @@ export function CreateUpdatePage() {
 	const step = useQuotationContext(state => state.step)
 	const store = useQuotationStore()
 
+	const isUpdate = useQuotationContext(state => state.isUpdate)
+
 	React.useEffect(() => {
 		console.log('--------------')
-		if (localStorage.getItem(QUOTATION_LOCALSTORAGE_NAME)) {
+		if (
+			localStorage.getItem(QUOTATION_LOCALSTORAGE_NAME) && !isUpdate
+		) {
 			setConfirmModalOpen(true)
 		}
-	}, [])
+	}, [isUpdate])
 
 	return (
 		<section>

@@ -6,14 +6,72 @@ import {
 	QuotationCreateSchema,
 	QuotationUpdateSchema,
 } from '@/schemas/quotations'
-import { type QuotationCreateWithItems } from '@/types'
+import {
+	QuotationCreateType,
+	type QuotationCreateWithItems,
+	QuotationItemType,
+	QuotationUpdateType,
+} from '@/types'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { fetchLastQuotation, fetchQuotationById } from '../data/quotations'
 
+export async function setQuotation(quotation: QuotationUpdateType) {
+	console.log('actualizado...jeje')
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	if (quotation.is_regular_customer) {
+		const { data: customerFounds, error: customerFoundError } = await supabase
+			.from(TABLES.Customers).select('ruc').eq('ruc', quotation.ruc)
+
+		if (customerFoundError) {
+			console.log(customerFoundError)
+		}
+
+		if (customerFounds?.length === 0) {
+			const { data: customers, error: errorCustomers } = await supabase.from(
+				TABLES.Customers,
+			).insert({
+				name: quotation.company,
+				ruc: quotation.ruc,
+				address: quotation.address,
+			})
+
+			if (errorCustomers) {
+				throw errorCustomers
+			}
+		}
+	}
+
+	const quotationToUpdate = {
+		ruc: quotation.ruc,
+		company: quotation.company,
+		address: quotation.address,
+		deadline: quotation.deadline,
+		include_igv: quotation.include_igv,
+		items: quotation.items,
+	}
+
+	const { data, error } = await supabase
+		.from(TABLES.Quotations)
+		.update(quotationToUpdate)
+		.eq('id', quotation.id)
+		.select()
+
+	if (error) {
+		throw error
+	}
+
+	if (!data) return
+
+	console.log(data[0])
+}
+
 export async function insertQuotation(
-	quotation: QuotationCreateWithItems,
+	quotation: QuotationCreateType,
+	items: QuotationItemType[],
 ) {
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
@@ -38,7 +96,7 @@ export async function insertQuotation(
 		address: quotation.address,
 		deadline: quotation.deadline,
 		include_igv: quotation.include_igv,
-		items: quotation.items,
+		items,
 	}
 
 	const { data, error } = await supabase

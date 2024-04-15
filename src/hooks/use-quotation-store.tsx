@@ -1,5 +1,12 @@
 'use client'
-import { type CustomerType, type ProductType } from '@/types'
+import {
+	type CustomerType,
+	type ProductType,
+	type QuotationCreateType,
+	type QuotationItemType,
+	type QuotationType,
+	type QuotationUpdateType,
+} from '@/types'
 
 import {
 	createQuotationStore,
@@ -25,15 +32,19 @@ type QuotationProviderProps = {
 	children: React.ReactNode
 	customers: CustomerType[]
 	products: ProductType[]
+	quo?: QuotationCreateType | QuotationUpdateType
+	items?: QuotationItemType[]
+	isUpdate?: boolean | undefined
 }
 
 export function QuotationStoreProvider(
-	{ children, ...props }: QuotationProviderProps,
+	props: QuotationProviderProps,
 ) {
+	const { children, customers, products, quo, items, isUpdate } = props
 	const storeRef = React.useRef<QuoStore>()
 	if (!storeRef.current) {
 		storeRef.current = createQuotationStore(
-			initQuotationStore(props.customers, props.products),
+			initQuotationStore({ customers, products, quo, items, isUpdate }),
 		)
 	}
 

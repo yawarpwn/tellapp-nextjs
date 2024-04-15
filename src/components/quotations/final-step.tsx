@@ -5,10 +5,11 @@ import {
 	useQuotationStore,
 } from '@/hooks/use-quotation-store'
 import { useToast } from '@/hooks/use-toast'
-import { insertQuotation } from '@/lib/actions/quoatations'
+import { insertQuotation, setQuotation } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { formatDateToLocal } from '@/lib/utils'
 import { getIgv } from '@/lib/utils'
+import { QuotationCreateType, QuotationUpdateType } from '@/types'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import React from 'react'
@@ -16,6 +17,7 @@ export function QuotationFinalStep() {
 	const [pending, startTransition] = useTransition()
 	const store = useQuotationStore()
 	const quo = useQuotationContext(state => state.quo)
+	const isUpdate = useQuotationContext(state => state.isUpdate)
 	const decrementStep = useQuotationContext(state => state.decrementStep)
 	const items = useQuotationContext(state => state.items)
 	const { toast } = useToast()
@@ -25,15 +27,23 @@ export function QuotationFinalStep() {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		const quoToInsert = {
-			...quo,
-			items,
-		}
-
 		startTransition(async () => {
 			try {
-				await insertQuotation(quoToInsert)
-				store?.persist.clearStorage()
+				if ('id' in quo) {
+					const quoToUpdate = {
+						...quo,
+						id: quo.id,
+						items,
+					}
+					await setQuotation(quoToUpdate as QuotationUpdateType)
+				} else {
+					const quoToInsert = {
+						...quo,
+						items,
+					}
+					await insertQuotation(quoToInsert as QuotationCreateType, items)
+					store?.persist.clearStorage()
+				}
 				shootCoffeti()
 				router.push('/new-quos')
 			} catch (error) {
@@ -191,7 +201,9 @@ export function QuotationFinalStep() {
 				<Button disabled={pending} type='button' onClick={decrementStep}>
 					Anterior
 				</Button>
-				<Button disabled={pending} type='submit'>Crear Cotizacion</Button>
+				<Button disabled={pending} type='submit'>
+					{isUpdate ? 'Actualizar cotizacion' : 'Crear Cotización'}
+				</Button>
 			</form>
 		</div>
 	)

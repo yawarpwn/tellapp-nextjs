@@ -3,13 +3,15 @@ import {
 	ProductType,
 	QuotationCreateType,
 	QuotationItemType,
+	QuotationUpdateType,
 } from '@/types'
 import { createStore } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
 export interface QuotationState {
 	step: number
-	quo: QuotationCreateType
+	isUpdate: boolean
+	quo: QuotationCreateType | QuotationUpdateType
 	items: QuotationItemType[]
 	products: ProductType[]
 	customers: CustomerType[]
@@ -30,13 +32,23 @@ export interface QuotationActions {
 
 export type QuotationStore = QuotationState & QuotationActions
 
-export const initQuotationStore = (
-	customers: CustomerType[],
-	products: ProductType[],
-): QuotationState => {
+export const initQuotationStore = ({
+	customers,
+	products,
+	items,
+	quo,
+	isUpdate,
+}: {
+	isUpdate?: boolean
+	customers: CustomerType[]
+	products: ProductType[]
+	quo?: QuotationCreateType | QuotationUpdateType
+	items?: QuotationItemType[]
+}): QuotationState => {
 	return {
 		step: 1,
-		quo: {
+		isUpdate: isUpdate || false,
+		quo: quo || {
 			ruc: '',
 			company: '',
 			address: '',
@@ -44,7 +56,7 @@ export const initQuotationStore = (
 			include_igv: true,
 			is_regular_customer: false,
 		},
-		items: [],
+		items: items || [],
 		products: products,
 		customers: customers,
 	}
@@ -52,6 +64,7 @@ export const initQuotationStore = (
 
 const DEFAULT_PROPS: QuotationState = {
 	step: 1,
+	isUpdate: false,
 	quo: {
 		ruc: '',
 		company: '',
