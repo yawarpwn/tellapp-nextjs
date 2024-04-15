@@ -69,11 +69,23 @@ const DEFAULT_PROPS: QuotationState = {
 // const quoStore= createStore<QuotationStore>()((set) => ({
 // })
 // )
+const useBear = createStore<{
+	bears: number
+}>()(
+	persist(
+		set => ({
+			bears: 0,
+		}),
+		{
+			name: 'Bears',
+		},
+	),
+)
 
 export const createQuotationStore = (
 	initProps: QuotationState = DEFAULT_PROPS,
 ) => {
-	return createStore<QuotationStore>()(
+	const res = createStore<QuotationStore>()(
 		devtools(
 			persist(
 				(set) => ({
@@ -136,4 +148,6 @@ export const createQuotationStore = (
 			),
 		),
 	)
+
+	return res
 }

@@ -6,11 +6,13 @@ import {
 	initQuotationStore,
 	type QuotationStore,
 } from '@/store/quos'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { StoreApi, useStore } from 'zustand'
 
+type QuoStore = ReturnType<typeof createQuotationStore>
+
 export const QuotationContext = React.createContext<
-	StoreApi<QuotationStore> | null
+	QuoStore | null
 >(null)
 
 export function useQuotationStore() {
@@ -28,7 +30,7 @@ type QuotationProviderProps = {
 export function QuotationStoreProvider(
 	{ children, ...props }: QuotationProviderProps,
 ) {
-	const storeRef = React.useRef<StoreApi<QuotationStore>>()
+	const storeRef = React.useRef<QuoStore>()
 	if (!storeRef.current) {
 		storeRef.current = createQuotationStore(
 			initQuotationStore(props.customers, props.products),

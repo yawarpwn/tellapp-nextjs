@@ -1,23 +1,26 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { useQuotationContext } from '@/hooks/use-quotation-store'
+import {
+	useQuotationContext,
+	useQuotationStore,
+} from '@/hooks/use-quotation-store'
 import { useToast } from '@/hooks/use-toast'
 import { insertQuotation } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { formatDateToLocal } from '@/lib/utils'
-import { formatNumberToLocal } from '@/lib/utils'
 import { getIgv } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import React from 'react'
 export function QuotationFinalStep() {
 	const [pending, startTransition] = useTransition()
+	const store = useQuotationStore()
 	const quo = useQuotationContext(state => state.quo)
-	const setQuo = useQuotationContext(state => state.setQuo)
 	const decrementStep = useQuotationContext(state => state.decrementStep)
 	const items = useQuotationContext(state => state.items)
 	const { toast } = useToast()
 
-	// const toast = useToast()
+	const router = useRouter()
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -27,12 +30,12 @@ export function QuotationFinalStep() {
 			items,
 		}
 
-		console.log(quoToInsert)
-		return
 		startTransition(async () => {
 			try {
 				await insertQuotation(quoToInsert)
+				store?.persist.clearStorage()
 				shootCoffeti()
+				router.push('/new-quos')
 			} catch (error) {
 				toast({
 					title: 'Error',
