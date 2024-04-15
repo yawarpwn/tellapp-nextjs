@@ -75,6 +75,12 @@ export const NAVIGATION = [
 		href: '/signals',
 		icon: SignalIcon,
 	},
+
+	{
+		title: 'news Quos',
+		href: '/new-quos',
+		icon: QuotationIcon,
+	},
 ]
 
 export const GALLERY_CATEGORIES = {

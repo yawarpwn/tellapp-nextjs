@@ -60,7 +60,7 @@ export const columns = [
 							<Link href={`/quotations/${row.original.number}`}>Ver</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem>
-							<Link href={`/quotations/${row.original.number}`}>
+							<Link href={`/new-quos/${row.original.number}/update`}>
 								Editar
 							</Link>
 						</DropdownMenuItem>

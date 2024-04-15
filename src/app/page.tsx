@@ -1,6 +1,6 @@
-import { createServerClient } from '@/lib/supabase'
 import { LoginForm } from '@/components/login-form'
 import { Logo } from '@/components/logo'
+import { createServerClient } from '@/lib/supabase'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -40,7 +40,7 @@ export default async function Home(
 							</footer>
 						</aside>
 					</div>
-					<article className='flex min-h-screen flex-1 flex-shrink basis-1/4 flex-col items-center justify-center bg-primary text-white '>
+					<article className='flex min-h-screen flex-1 flex-shrink basis-1/4 flex-col items-center justify-center bg-purple-500 text-white '>
 						<div className='flex max-w-md px-4 flex-col gap-4'>
 							<div className='flex max-w-xl flex-col gap-4 font-mono text-2xl text-pretty'>
 								<p>
