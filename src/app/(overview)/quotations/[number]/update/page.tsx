@@ -1,11 +1,11 @@
-import { updateQuotation } from '@/lib/actions/quoatations'
-import { fetchQuotationById } from '@/lib/data/quotations'
 import Breadcrumbs from '@/components/breadcrumbs'
 import EditForm from '@/components/quotations/edit-form'
 import { CreateUpdateQuotationSkeleton } from '@/components/skeletons/quotations'
+import { updateQuotation } from '@/lib/actions/quoatations'
+import { fetchQuotationById } from '@/lib/data/quotations'
 import { Suspense } from 'react'
 
-async function EditFormWrapper({ number }) {
+async function EditFormWrapper({ number }: { number: number }) {
 	const quotation = await fetchQuotationById({ number })
 	return (
 		<EditForm
@@ -15,8 +15,8 @@ async function EditFormWrapper({ number }) {
 	)
 }
 
-async function UpdatePage({ params }) {
-	const { number } = params
+async function UpdatePage({ params }: { params: { number: string } }) {
+	const number = Number(params.number)
 	return (
 		<>
 			<Breadcrumbs

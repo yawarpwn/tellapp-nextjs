@@ -9,12 +9,6 @@ import {
 import { NoResult } from './no-result'
 
 import { QuotationItemType } from '@/types'
-import {
-	animations,
-} from '@formkit/drag-and-drop'
-import {
-	useDragAndDrop,
-} from '@formkit/drag-and-drop/react'
 import { GripHorizontal, PlusIcon } from 'lucide-react'
 import React from 'react'
 import { EditItemModal } from './edit-item-modal'
@@ -24,14 +18,6 @@ export function QuotationAddItems() {
 	const duplicateItem = useQuotationContext(state => state.duplicateItem)
 	const decrementStep = useQuotationContext(state => state.decrementStep)
 	const incrementStep = useQuotationContext(state => state.incrementStep)
-
-	const [parentDrag, itemsDrag, setItemsDrag] = useDragAndDrop<
-		HTMLUListElement,
-		QuotationItemType
-	>(items, {
-		dragHandle: '.drag-handle',
-		plugins: [animations()],
-	})
 
 	const editItem = useQuotationContext(state => state.editItem)
 	const deleteItem = useQuotationContext(state => state.deleteItem)
@@ -62,10 +48,6 @@ export function QuotationAddItems() {
 		}
 	}
 
-	React.useEffect(() => {
-		setItemsDrag(items)
-	}, [setItemsDrag, items])
-
 	return (
 		<section>
 			<header className='flex justify-between items-center py-4'>
@@ -84,10 +66,10 @@ export function QuotationAddItems() {
 					<QuotationSearchProduct />
 				</div>
 			</header>
-			{itemsDrag.length > 0
+			{items.length > 0
 				? (
-					<ul ref={parentDrag} className='flex flex-col gap-4'>
-						{itemsDrag.map(item => (
+					<ul className='flex flex-col gap-4'>
+						{items.map(item => (
 							<li key={item.id}>
 								<Card className='border-border'>
 									<CardContent className='p-4 grid gap-4'>
@@ -168,7 +150,7 @@ export function QuotationAddItems() {
 				: <NoResult />}
 			<footer className='flex items-center justify-between mt-8 '>
 				<Button onClick={decrementStep}>Anterior</Button>
-				<Button disabled={itemsDrag.length == 0} onClick={incrementStep}>
+				<Button disabled={items.length == 0} onClick={incrementStep}>
 					Siguiente
 				</Button>
 			</footer>

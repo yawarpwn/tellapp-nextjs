@@ -33,6 +33,7 @@ function EditForm({ quotationToUpdate, action }: Props) {
 			const formData = new FormData(event.currentTarget)
 
 			const { errors, message } = await action(undefined, formData)
+			console.log(errors)
 
 			const quoNumber = formData.get('number') as string
 
