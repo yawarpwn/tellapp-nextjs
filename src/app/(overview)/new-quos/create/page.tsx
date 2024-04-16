@@ -16,11 +16,11 @@ export default async function Page() {
 				breadcrumbs={[
 					{
 						label: 'Cotizaciones',
-						href: '/quotations',
+						href: '/new-quos',
 					},
 					{
 						label: 'Crear',
-						href: '/quotations/crear',
+						href: '/new-quos/crear',
 						active: true,
 					},
 				]}

@@ -12,11 +12,14 @@ export async function fetchProducts() {
 	const { data: products, error } = await supabase
 		.from(TABLES.Products)
 		.select()
+		.order('rank', { ascending: false })
 		.returns<ProductType[]>()
 
 	if (error) {
 		throw new Error('Error fetching products')
 	}
+
+	console.log(products)
 
 	return products
 }

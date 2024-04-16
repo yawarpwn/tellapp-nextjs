@@ -11,6 +11,7 @@ export const ProductSchema = z.object({
 	cost: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
 	category: z.nativeEnum(PRODUCT_CATEGORIES),
 	unit_size: z.string().min(3, { message: 'Mínimo 3 caracteres' }),
+	rank: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }),
 })
 
 export const ProductCreateSchema = ProductSchema.omit({ id: true })

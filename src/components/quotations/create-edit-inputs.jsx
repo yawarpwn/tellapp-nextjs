@@ -41,8 +41,6 @@ function CreateEditInputs({
 		}
 	}, [quotation.ruc, toast, updateQuotation])
 
-	console.log(quotation)
-
 	return (
 		<>
 			<div className='grid grid-cols-12 gap-4'>

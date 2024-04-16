@@ -1,7 +1,7 @@
 'use server'
 
 import { createServerClient } from '@/lib/supabase'
-import { CreateProductSchema, UpdateProductSchema } from '@/schemas'
+import { ProductCreateSchema, ProductUpdateSchema } from '@/schemas/products'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
@@ -16,10 +16,11 @@ export async function createProduct(_: undefined, formData: FormData) {
 		cost: formData.get('cost'),
 		category: formData.get('category'),
 		unit_size: formData.get('unit_size'),
+		rank: formData.get('rank'),
 	}
 
 	// Validacion con Zod
-	const validatedFields = CreateProductSchema.safeParse(rawData)
+	const validatedFields = ProductCreateSchema.safeParse(rawData)
 
 	// En caso de error
 	if (!validatedFields.success) {
@@ -59,9 +60,10 @@ export async function updateProduct(_: undefined, formData: FormData) {
 		cost: formData.get('cost'),
 		category: formData.get('category'),
 		unit_size: formData.get('unit_size'),
+		rank: formData.get('rank'),
 	}
 
-	const validatedFields = UpdateProductSchema.safeParse(rawData)
+	const validatedFields = ProductUpdateSchema.safeParse(rawData)
 
 	if (!validatedFields.success) {
 		return {

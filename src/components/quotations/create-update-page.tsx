@@ -19,7 +19,6 @@ export function CreateUpdatePage() {
 	const isUpdate = useQuotationContext(state => state.isUpdate)
 
 	React.useEffect(() => {
-		console.log('--------------')
 		if (
 			localStorage.getItem(QUOTATION_LOCALSTORAGE_NAME) && !isUpdate
 		) {

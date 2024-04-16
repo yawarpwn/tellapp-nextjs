@@ -67,6 +67,20 @@ export function InputsProduct({ state, product }) {
 					ariaLabelledby={'price-error'}
 				/>
 			</div>
+
+			<div className='col-span-12'>
+				<Input
+					required
+					name='rank'
+					labelText='Rank'
+					type='number'
+					defaultValue={product?.rank}
+					step='0.1'
+					placeholder='100'
+					errors={state.errors?.rank}
+					ariaLabelledby={'rank-error'}
+				/>
+			</div>
 			<input type='hidden' name='id' defaultValue={product?.id} />
 			<div className='col-span-12 flex justify-between items-center'>
 				<select

@@ -6,6 +6,7 @@ import {
 	DocumentDuplicateIcon,
 	EditIcon,
 } from '@/icons'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import { NoResult } from './no-result'
 
 import { QuotationItemType } from '@/types'
@@ -18,6 +19,7 @@ export function QuotationAddItems() {
 	const duplicateItem = useQuotationContext(state => state.duplicateItem)
 	const decrementStep = useQuotationContext(state => state.decrementStep)
 	const incrementStep = useQuotationContext(state => state.incrementStep)
+	const setItems = useQuotationContext(state => state.setItems)
 
 	const editItem = useQuotationContext(state => state.editItem)
 	const deleteItem = useQuotationContext(state => state.deleteItem)
@@ -29,6 +31,25 @@ export function QuotationAddItems() {
 
 	const [open, setOpen] = React.useState(false)
 	const closeItemModal = () => setOpen(false)
+
+	const move = (currentIndex: number, nextIndex: number) => {
+		const newItems = [...items]
+		newItems[currentIndex] = items[nextIndex]
+		newItems[nextIndex] = items[currentIndex]
+		setItems(newItems)
+	}
+
+	const moveUpItem = (index: number) => {
+		if (index > 0) {
+			move(index, index - 1)
+		}
+	}
+
+	const moveDownItem = (index: number) => {
+		if (index < items.length - 1) {
+			move(index, index + 1)
+		}
+	}
 
 	const onChangeValue = (
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -69,14 +90,27 @@ export function QuotationAddItems() {
 			{items.length > 0
 				? (
 					<ul className='flex flex-col gap-4'>
-						{items.map(item => (
+						{items.map((item, index) => (
 							<li key={item.id}>
 								<Card className='border-border'>
 									<CardContent className='p-4 grid gap-4'>
 										<div className='flex justify-between items-center'>
-											<span className='drag-handle cursor-grabbing'>
-												<GripHorizontal />
-											</span>
+											<div className='flex items-center gap-1'>
+												<Button
+													size='icon'
+													variant='ghost'
+													onClick={() => moveUpItem(index)}
+												>
+													<ChevronUp />
+												</Button>
+												<Button
+													size='icon'
+													variant='ghost'
+													onClick={() => moveDownItem(index)}
+												>
+													<ChevronDown />
+												</Button>
+											</div>
 											<div className='flex space-x-4 items-center'>
 												<Button
 													size='icon'

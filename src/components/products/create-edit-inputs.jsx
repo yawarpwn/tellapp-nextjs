@@ -1,7 +1,7 @@
-import { CATEGORIES } from '@/constants'
 import { Input } from '@/components/input'
-import Link from 'next/link'
 import { SubmitButton } from '@/components/submit-button'
+import { CATEGORIES } from '@/constants'
+import Link from 'next/link'
 
 function CreateEditInputs({ state, product }) {
 	return (
@@ -51,6 +51,7 @@ function CreateEditInputs({ state, product }) {
 					ariaLabelledby={'cost-error'}
 				/>
 			</div>
+
 			<div className='flex items-center gap-2 '>
 				<Input
 					required

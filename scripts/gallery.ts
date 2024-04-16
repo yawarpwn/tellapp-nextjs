@@ -35,7 +35,6 @@ async function  main () {
     })
     })
 
-    console.log(promises)
 
   } catch(error) {
     console.log(error)
