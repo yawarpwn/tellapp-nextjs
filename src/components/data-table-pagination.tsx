@@ -1,10 +1,10 @@
+import { Table } from '@tanstack/react-table'
 import {
 	ChevronLeftIcon,
 	ChevronRightIcon,
-	DoubleArrowLeftIcon,
-	DoubleArrowRightIcon,
-} from '@radix-ui/react-icons'
-import { Table } from '@tanstack/react-table'
+	ChevronsLeft as DoubleArrowLeftIcon,
+	ChevronsRight as DoubleArrowRightIcon,
+} from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
