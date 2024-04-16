@@ -32,10 +32,8 @@ function EditForm({ quotationToUpdate, action }: Props) {
 		startTransition(async () => {
 			const formData = new FormData(event.currentTarget)
 
-			const { errors, message } = await action(undefined, formData)
+			const { errors, message, quoNumber } = await action(undefined, formData)
 			console.log(errors)
-
-			const quoNumber = formData.get('number') as string
 
 			if (errors) {
 				const JSonError = JSON.stringify(errors, null, 2)

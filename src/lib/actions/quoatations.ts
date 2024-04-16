@@ -120,10 +120,11 @@ export async function createQuotation(_: undefined, formData: FormData) {
 		company: formData.get('company') || 'SIN RUC PROPORCIONADO',
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
-		items: JSON.parse(formData.get('items') as string),
 		include_igv: formData.get('include_igv'),
 		is_regular_customer: formData.get('is_regular_customer'),
 	}
+
+	const items = JSON.parse(formData.get('items') as string)
 
 	// validated fields with zod
 	const validatedFields = QuotationCreateSchema.safeParse(rawData)
@@ -145,7 +146,6 @@ export async function createQuotation(_: undefined, formData: FormData) {
 		ruc,
 		address,
 		deadline,
-		items,
 		include_igv,
 		is_regular_customer,
 	} = validatedFields.data
@@ -212,6 +212,7 @@ export async function createQuotation(_: undefined, formData: FormData) {
 		errors: null,
 		message: `Se ha creado la cotización`,
 		data: data[0],
+		quoNumber: data[0].number,
 	}
 }
 
@@ -223,10 +224,11 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 		company: formData.get('company') || 'Sin Ruc Proporcionado',
 		address: formData.get('address'),
 		deadline: formData.get('deadline'),
-		items: JSON.parse(formData.get('items') as string),
 		include_igv: formData.get('include_igv'),
 		is_regular_customer: formData.get('is_regular_customer'),
 	}
+
+	const items = JSON.parse(formData.get('items') as string)
 
 	// validated fields
 	const validatedFields = QuotationUpdateSchema.safeParse(rawData)
@@ -246,7 +248,6 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 		ruc,
 		address,
 		deadline,
-		items,
 		include_igv,
 		is_regular_customer,
 	} = validatedFields.data
@@ -299,13 +300,13 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 		// is_regular_customer
 	}
 
-	const { error } = await supabase.from(TABLES.Quotations).update(
+	const { error, data } = await supabase.from(TABLES.Quotations).update(
 		quotationToUpdate,
 	)
 		.eq(
 			'id',
 			id,
-		)
+		).select()
 
 	// handle error
 	if (error) {
@@ -318,6 +319,7 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 	return {
 		errors: null,
 		message: `Cotización ${number} actualizada correctamente`,
+		quoNumber: data[0].number,
 	}
 }
 

@@ -41,6 +41,8 @@ function CreateEditInputs({
 		}
 	}, [quotation.ruc, toast, updateQuotation])
 
+	console.log(quotation)
+
 	return (
 		<>
 			<div className='grid grid-cols-12 gap-4'>
@@ -94,6 +96,7 @@ function CreateEditInputs({
 					/>
 				</div>
 				<input type='hidden' name='id' value={quotation?.id} />
+				<input type='hidden' name='id' value={quotation?.number} />
 				<input
 					type='hidden'
 					name='items'
