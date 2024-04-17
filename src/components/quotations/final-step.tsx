@@ -18,6 +18,7 @@ export function QuotationFinalStep() {
 	const store = useQuotationStore()
 	const quo = useQuotationContext(state => state.quo)
 	const isUpdate = useQuotationContext(state => state.isUpdate)
+	const quoNumber = useQuotationContext(state => state.quoNumber)
 	const decrementStep = useQuotationContext(state => state.decrementStep)
 	const items = useQuotationContext(state => state.items)
 	const { toast } = useToast()
@@ -67,7 +68,7 @@ export function QuotationFinalStep() {
 								Cotización #
 							</h2>
 							<span className='mt-1 text-xl block '>
-								5050
+								{quoNumber}
 							</span>
 						</div>
 					</div>
@@ -90,7 +91,9 @@ export function QuotationFinalStep() {
 										Fecha:
 									</dt>
 									<dd className='col-span-3 '>
-										{formatDateToLocal(new Date())}
+										{isUpdate
+											? formatDateToLocal(quo?.created_at)
+											: formatDateToLocal(new Date())}
 									</dd>
 								</dl>
 								<dl className='grid sm:grid-cols-6 gap-x-3'>
@@ -98,7 +101,9 @@ export function QuotationFinalStep() {
 										Actualizado:
 									</dt>
 									<dd className='col-span-3 '>
-										{formatDateToLocal(new Date())}
+										{isUpdate && (
+											formatDateToLocal(quo.updated_at)
+										)}
 									</dd>
 								</dl>
 							</div>

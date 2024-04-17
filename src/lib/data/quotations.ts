@@ -38,7 +38,7 @@ export async function fetchFilteredQuotations({ query, currentPage }: {
 	// Build query
 	let queryBuilder = supabase.from(TABLES.Quotations).select('*')
 		.range(offset, offset + ITEMS_PER_PAGE)
-		.order('number', {
+		.order('created_at', {
 			ascending: false,
 		})
 
@@ -129,7 +129,7 @@ export async function fetchLastQuotation() {
 		).order(
 			'number',
 			{ ascending: false },
-		)
+		).limit(1)
 
 	// handle error
 	if (error) throw new Error('Failed to fetch last quotation')

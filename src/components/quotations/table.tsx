@@ -23,8 +23,6 @@ function TableRow({ quotation }: {
 			</td>
 			<td>
 				<p className='min-w-[250px]'>{quotation.company}</p>
-			</td>
-			<td>
 				<p>{quotation.ruc}</p>
 			</td>
 			<td>
@@ -144,7 +142,6 @@ async function QuotationsTable({ query, currentPage }: {
 							<tr>
 								<th>No</th>
 								<th>Cliente</th>
-								<th>Ruc</th>
 								<th>Fecha</th>
 								<th>Total</th>
 								<th>Acciones</th>

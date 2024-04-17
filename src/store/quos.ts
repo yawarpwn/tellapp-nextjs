@@ -9,6 +9,7 @@ import { createStore } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
 export interface QuotationState {
+	quoNumber: number
 	step: number
 	isUpdate: boolean
 	quo: QuotationCreateType | QuotationUpdateType
@@ -33,6 +34,7 @@ export interface QuotationActions {
 export type QuotationStore = QuotationState & QuotationActions
 
 export const initQuotationStore = ({
+	quoNumber,
 	customers,
 	products,
 	items,
@@ -40,12 +42,14 @@ export const initQuotationStore = ({
 	isUpdate,
 }: {
 	isUpdate?: boolean
+	quoNumber: number
 	customers: CustomerType[]
 	products: ProductType[]
 	quo?: QuotationCreateType | QuotationUpdateType
 	items?: QuotationItemType[]
 }): QuotationState => {
 	return {
+		quoNumber,
 		step: 1,
 		isUpdate: isUpdate || false,
 		quo: quo || {
@@ -63,6 +67,7 @@ export const initQuotationStore = ({
 }
 
 const DEFAULT_PROPS: QuotationState = {
+	quoNumber: 0,
 	step: 1,
 	isUpdate: false,
 	quo: {
@@ -82,18 +87,6 @@ const DEFAULT_PROPS: QuotationState = {
 // const quoStore= createStore<QuotationStore>()((set) => ({
 // })
 // )
-const useBear = createStore<{
-	bears: number
-}>()(
-	persist(
-		set => ({
-			bears: 0,
-		}),
-		{
-			name: 'Bears',
-		},
-	),
-)
 
 export const createQuotationStore = (
 	initProps: QuotationState = DEFAULT_PROPS,

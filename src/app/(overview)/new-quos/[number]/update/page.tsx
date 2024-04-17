@@ -15,6 +15,7 @@ export default async function Page(
 			customers={customers}
 			products={products}
 			isUpdate
+			quoNumber={quotation.number}
 			quo={{
 				id: quotation.id,
 				ruc: quotation.ruc,
@@ -23,6 +24,8 @@ export default async function Page(
 				deadline: quotation.deadline,
 				include_igv: quotation.include_igv,
 				is_regular_customer: quotation.is_regular_customer,
+				created_at: quotation.created_at,
+				updated_at: quotation.updated_at,
 			}}
 			items={quotation.items}
 		>

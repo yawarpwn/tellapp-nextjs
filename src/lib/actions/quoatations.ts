@@ -7,10 +7,9 @@ import {
 	QuotationUpdateSchema,
 } from '@/schemas/quotations'
 import {
-	QuotationCreateType,
-	type QuotationCreateWithItems,
-	QuotationItemType,
-	QuotationUpdateType,
+	type QuotationCreateType,
+	type QuotationItemType,
+	type QuotationUpdateType,
 } from '@/types'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
@@ -51,6 +50,7 @@ export async function setQuotation(quotation: QuotationUpdateType) {
 		address: quotation.address,
 		deadline: quotation.deadline,
 		include_igv: quotation.include_igv,
+		updated_at: new Date().toISOString(),
 		items: quotation.items,
 	}
 
@@ -96,6 +96,7 @@ export async function insertQuotation(
 		address: quotation.address,
 		deadline: quotation.deadline,
 		include_igv: quotation.include_igv,
+		created_at: new Date().toISOString(),
 		items,
 	}
 
@@ -192,6 +193,7 @@ export async function createQuotation(_: undefined, formData: FormData) {
 		deadline,
 		items,
 		include_igv,
+		created_at: new Date().toISOString(),
 	}
 
 	const { error, data } = await supabase.from(TABLES.Quotations).insert(
@@ -297,6 +299,7 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 		deadline,
 		items,
 		include_igv,
+		updated_at: new Date().toISOString(),
 		// is_regular_customer
 	}
 
@@ -363,6 +366,5 @@ export async function duplicateQuotation(_: undefined, formData: FormData) {
 		console.log(error)
 	}
 
-	console.log(data)
 	redirect('/quotations')
 }

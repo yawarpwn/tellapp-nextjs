@@ -3,11 +3,13 @@ import { CreateUpdatePage } from '@/components/quotations/create-update-page'
 import { QuotationStoreProvider } from '@/hooks/use-quotation-store'
 import { fetchCustomers } from '@/lib/data/customers'
 import { fetchProducts } from '@/lib/data/products'
+import { fetchLastQuotation } from '@/lib/data/quotations'
 
 export default async function Page() {
-	const [customers, products] = await Promise.all([
+	const [customers, products, lastQuotation] = await Promise.all([
 		fetchCustomers(),
 		fetchProducts(),
+		fetchLastQuotation(),
 	])
 
 	return (
@@ -28,6 +30,7 @@ export default async function Page() {
 			<QuotationStoreProvider
 				customers={customers}
 				products={products}
+				quoNumber={lastQuotation.number + 1}
 			>
 				<CreateUpdatePage />
 			</QuotationStoreProvider>

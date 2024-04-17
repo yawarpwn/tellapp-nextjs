@@ -32,6 +32,7 @@ type QuotationProviderProps = {
 	children: React.ReactNode
 	customers: CustomerType[]
 	products: ProductType[]
+	quoNumber: number
 	quo?: QuotationCreateType | QuotationUpdateType
 	items?: QuotationItemType[]
 	isUpdate?: boolean | undefined
@@ -40,11 +41,19 @@ type QuotationProviderProps = {
 export function QuotationStoreProvider(
 	props: QuotationProviderProps,
 ) {
-	const { children, customers, products, quo, items, isUpdate } = props
+	const { children, customers, products, quo, items, isUpdate, quoNumber } =
+		props
 	const storeRef = React.useRef<QuoStore>()
 	if (!storeRef.current) {
 		storeRef.current = createQuotationStore(
-			initQuotationStore({ customers, products, quo, items, isUpdate }),
+			initQuotationStore({
+				customers,
+				products,
+				quo,
+				items,
+				isUpdate,
+				quoNumber,
+			}),
 		)
 	}
 

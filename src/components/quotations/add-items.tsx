@@ -148,7 +148,7 @@ export function QuotationAddItems() {
 										</div>
 										<div className='grid grid-cols-12 gap-2'>
 											<input
-												className='bg-transparent col-span-4  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
+												className='bg-zinc-800 col-span-4  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
 												type='text'
 												onChange={(e) => onChangeValue(e, item)}
 												name='unit_size'
@@ -157,7 +157,7 @@ export function QuotationAddItems() {
 											<div className='flex items-center gap-1 col-span-3'>
 												<span>S/</span>
 												<input
-													className=' bg-transparent w-full px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+													className='bg-zinc-800 w-full px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
 													type='number'
 													onChange={(e) => onChangeValue(e, item)}
 													name='price'
@@ -165,13 +165,13 @@ export function QuotationAddItems() {
 												/>
 											</div>
 											<input
-												className='col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+												className='bg-zinc-800 col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
 												type='number'
 												onChange={(e) => onChangeValue(e, item)}
 												name='qty'
 												value={item.qty}
 											/>
-											<span className='col-span-3 rounded px-2 py-1'>
+											<span className='col-span-3 rounded px-2 py-1 text-success'>
 												S/ {item.price * item.qty}
 											</span>
 										</div>

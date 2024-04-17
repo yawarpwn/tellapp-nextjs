@@ -33,7 +33,6 @@ export const QuotationItemsSchema = QuotationSchema.pick({ items: true })
 export const QuotationCreateSchema = QuotationSchema.omit({
 	id: true,
 	number: true,
-	created_at: true,
 	updated_at: true,
 	items: true,
 })

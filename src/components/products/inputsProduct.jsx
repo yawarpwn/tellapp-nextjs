@@ -41,7 +41,7 @@ export function InputsProduct({ state, product }) {
 					ariaLabelledby={'unit-size-error'}
 				/>
 			</div>
-			<div className='col-span-6'>
+			<div className='col-span-4'>
 				<Input
 					required
 					name='cost'
@@ -54,7 +54,7 @@ export function InputsProduct({ state, product }) {
 					ariaLabelledby={'cost-error'}
 				/>
 			</div>
-			<div className='col-span-6'>
+			<div className='col-span-4'>
 				<Input
 					required
 					name='price'
@@ -68,7 +68,7 @@ export function InputsProduct({ state, product }) {
 				/>
 			</div>
 
-			<div className='col-span-12'>
+			<div className='col-span-4'>
 				<Input
 					required
 					name='rank'

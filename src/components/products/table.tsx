@@ -1,7 +1,7 @@
+import { NoResultRow } from '@/components/no-result-row'
 import { deleteProduct } from '@/lib/actions/products'
 import { fetchFilteredProducts } from '@/lib/data/products'
 import React from 'react'
-import { NoResultRow } from '@/components/no-result-row'
 import { EditProductForm } from '.'
 import { ProductDeleteButton } from './buttons'
 
@@ -24,6 +24,7 @@ async function ProductTable({ query, currentPage }: Props) {
 							<th>U/M</th>
 							<th>Costo</th>
 							<th>Precio</th>
+							<th>Rank</th>
 							<th>Categ</th>
 							<th>Acciones</th>
 						</tr>
@@ -52,6 +53,7 @@ async function ProductTable({ query, currentPage }: Props) {
 										</td>
 										<td className='text-xs'>{product.cost.toFixed(2)}</td>
 										<td className='text-xs'>{product.price.toFixed(2)}</td>
+										<td className='text-xs'>{product.rank}</td>
 										<td>
 											<p className='w-[40px] truncate text-xs'>
 												{product.category}

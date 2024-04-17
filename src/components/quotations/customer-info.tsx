@@ -91,7 +91,6 @@ export function QuotationCustomerInfo() {
 						name='company'
 						type='text'
 						value={quo.company}
-						onBlur={handleRucBlur}
 						disabled={true}
 					/>
 				</div>
@@ -103,7 +102,6 @@ export function QuotationCustomerInfo() {
 						name='address'
 						type='text'
 						value={quo.address}
-						onBlur={handleRucBlur}
 						disabled={true}
 					/>
 				</div>
@@ -114,8 +112,8 @@ export function QuotationCustomerInfo() {
 						id='email'
 						name='email'
 						type='email'
-						value={quo.address}
-						onBlur={handleRucBlur}
+						// value={quo.address}
+						// onBlur={handleRucBlur}
 						disabled={true}
 					/>
 				</div>
@@ -126,8 +124,7 @@ export function QuotationCustomerInfo() {
 						id='phone'
 						name='phone'
 						type='number'
-						value={quo.address}
-						onBlur={handleRucBlur}
+						// value={quo.address}
 						disabled={true}
 					/>
 				</div>

@@ -19,8 +19,6 @@ export async function fetchProducts() {
 		throw new Error('Error fetching products')
 	}
 
-	console.log(products)
-
 	return products
 }
 
