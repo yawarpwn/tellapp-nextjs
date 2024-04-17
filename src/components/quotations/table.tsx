@@ -117,6 +117,7 @@ async function QuotationsTable({ query, currentPage }: {
 	currentPage: number
 }) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
+	console.log({ quotations })
 
 	const hasQuotations = quotations.length > 0
 	return (
