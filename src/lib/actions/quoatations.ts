@@ -116,9 +116,9 @@ export async function insertQuotation(
 // Create Product
 export async function createQuotation(_: undefined, formData: FormData) {
 	const rawData = {
-		ruc: formData.get('ruc') || null,
-		company: formData.get('company') || 'SIN RUC PROPORCIONADO',
-		address: formData.get('address'),
+		ruc: formData.get('ruc') || undefined,
+		company: formData.get('company') || undefined,
+		address: formData.get('address') || undefined,
 		deadline: formData.get('deadline'),
 		include_igv: formData.get('include_igv'),
 		is_regular_customer: formData.get('is_regular_customer'),
@@ -220,9 +220,9 @@ export async function createQuotation(_: undefined, formData: FormData) {
 export async function updateQuotation(_: undefined, formData: FormData) {
 	const rawData = {
 		id: formData.get('id'),
-		ruc: formData.get('ruc') || null,
-		company: formData.get('company') || 'Sin Ruc Proporcionado',
-		address: formData.get('address'),
+		ruc: formData.get('ruc') || undefined,
+		company: formData.get('company') || undefined,
+		address: formData.get('address') || undefined,
 		deadline: formData.get('deadline'),
 		include_igv: formData.get('include_igv'),
 		is_regular_customer: formData.get('is_regular_customer'),
