@@ -17,7 +17,8 @@ export function QuotationCustomerInfo() {
 	const setQuo = useQuotationContext(state => state.setQuo)
 	const incrementStep = useQuotationContext(state => state.incrementStep)
 
-	const handleSubmit = () => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
 		incrementStep()
 	}
 
@@ -75,7 +76,7 @@ export function QuotationCustomerInfo() {
 					<Label htmlFor='ruc'>Ruc</Label>
 					<Input
 						id='ruc'
-						value={quo.ruc}
+						value={quo.ruc ?? ''}
 						type='text'
 						name='ruc'
 						onBlur={handleRucBlur}
@@ -90,7 +91,7 @@ export function QuotationCustomerInfo() {
 						id='company'
 						name='company'
 						type='text'
-						value={quo.company}
+						value={quo.company ?? ''}
 						disabled={true}
 					/>
 				</div>
@@ -101,7 +102,7 @@ export function QuotationCustomerInfo() {
 						id='address'
 						name='address'
 						type='text'
-						value={quo.address}
+						value={quo.address ?? ''}
 						disabled={true}
 					/>
 				</div>
@@ -112,9 +113,7 @@ export function QuotationCustomerInfo() {
 						id='email'
 						name='email'
 						type='email'
-						// value={quo.address}
-						// onBlur={handleRucBlur}
-						disabled={true}
+						disabled={loading}
 					/>
 				</div>
 
@@ -124,8 +123,7 @@ export function QuotationCustomerInfo() {
 						id='phone'
 						name='phone'
 						type='number'
-						// value={quo.address}
-						disabled={true}
+						disabled={loading}
 					/>
 				</div>
 
@@ -138,6 +136,7 @@ export function QuotationCustomerInfo() {
 						type='number'
 						id='deadline'
 						value={quo.deadline}
+						disabled={loading}
 						onChange={e => setQuo({ ...quo, deadline: Number(e.target.value) })}
 					/>
 				</div>

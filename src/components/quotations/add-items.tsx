@@ -154,6 +154,13 @@ export function QuotationAddItems() {
 												name='unit_size'
 												value={item.unit_size}
 											/>
+											<input
+												className='bg-zinc-800 col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+												type='number'
+												onChange={(e) => onChangeValue(e, item)}
+												name='qty'
+												value={item.qty}
+											/>
 											<div className='flex items-center gap-1 col-span-3'>
 												<span>S/</span>
 												<input
@@ -164,13 +171,6 @@ export function QuotationAddItems() {
 													value={item.price}
 												/>
 											</div>
-											<input
-												className='bg-zinc-800 col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
-												type='number'
-												onChange={(e) => onChangeValue(e, item)}
-												name='qty'
-												value={item.qty}
-											/>
 											<span className='col-span-3 rounded px-2 py-1 text-success'>
 												S/ {item.price * item.qty}
 											</span>
