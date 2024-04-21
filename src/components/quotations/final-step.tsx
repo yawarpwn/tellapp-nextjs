@@ -10,7 +10,7 @@ import { QuotationCreateType, QuotationUpdateType } from '@/types'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import React from 'react'
-import { ItemList } from './items-list'
+import { ItemsList } from './items-list'
 export function QuotationFinalStep() {
 	const [pending, startTransition] = useTransition()
 	const store = useQuotationStore()
@@ -57,7 +57,7 @@ export function QuotationFinalStep() {
 
 	return (
 		<div>
-			<ItemList
+			<ItemsList
 				ruc={quo.ruc}
 				company={quo.company}
 				deadline={quo?.deadline || 1}

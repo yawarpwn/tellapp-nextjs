@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { formatDateToLocal, getIgv } from '@/lib/utils'
-import { QuotationItemType, type QuotationType } from '@/types'
+import { QuotationItemType } from '@/types'
 import { add } from 'date-fns'
 import React from 'react'
 
@@ -15,7 +15,7 @@ interface Props {
 	deadline: number
 }
 
-export function ItemList(
+export function ItemsList(
 	{
 		company = '',
 		ruc = '',
@@ -44,14 +44,12 @@ export function ItemList(
 				<div className='mt-6 grid sm:grid-cols-2 gap-3'>
 					<div>
 						<h3 className='text-lg font-semibold '>
-							Cliente:
-						</h3>
-						<h3 className='text-lg font-semibold '>
 							{company}
 						</h3>
 						<address className='mt-2 not-italic text-muted-foreground '>
 							{address}
 						</address>
+						<p className='mt-2 text-muted-foreground'>{ruc}</p>
 					</div>
 					<div className='sm:text-right space-y-2'>
 						<div className='grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2'>

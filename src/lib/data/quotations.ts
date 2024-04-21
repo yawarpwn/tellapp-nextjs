@@ -99,6 +99,7 @@ export async function fetchQuotationById(
 	const { data: quotations, error } = await supabase.from(TABLES.Quotations)
 		.select()
 		.eq('number', number)
+		.returns<QuotationType[]>()
 	if (error) {
 		// throw new Error('Failed to fetch quotation by id ')
 		console.log(error)
