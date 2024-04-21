@@ -1,4 +1,5 @@
 'use client'
+import { type QuotationType } from '@/types'
 import { Document, Page, StyleSheet } from '@react-pdf/renderer'
 import QuoBAnkInfo from './bank-info'
 import QuoCustomer from './customer'
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-const PDFGenerator = ({ quotation }) => {
+const PDFGenerator = ({ quotation }: { quotation: QuotationType }) => {
 	return (
 		<Document title={`Cotización-${quotation.number}`}>
 			<Page size='a4' style={styles.page}>

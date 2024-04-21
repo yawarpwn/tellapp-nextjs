@@ -1,3 +1,4 @@
+import type { QuotationType } from '@/types'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 const styles = StyleSheet.create({
 	container: {
@@ -41,7 +42,9 @@ const styles = StyleSheet.create({
 		textAlign: 'right',
 	},
 })
-export default function QuoCustomer({ quotation }) {
+export default function QuoCustomer(
+	{ quotation }: { quotation: QuotationType },
+) {
 	const { company, ruc, phone, number, create_at, address } = quotation
 	return (
 		<View style={styles.container}>

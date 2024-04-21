@@ -1,3 +1,4 @@
+import { QuotationItemType } from '@/types'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 const styles = StyleSheet.create({
 	tableContainer: {
@@ -58,7 +59,12 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default function Table({ items, includeIgv = true }) {
+type Props = {
+	items: QuotationItemType[]
+	includeIgv: boolean
+}
+
+export default function Table({ items, includeIgv = true }: Props) {
 	return (
 		<View style={styles.tableContainer}>
 			<View style={styles.tableHeader}>

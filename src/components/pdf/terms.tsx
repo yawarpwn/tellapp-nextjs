@@ -22,7 +22,11 @@ const styles = StyleSheet.create({
 		width: '75%',
 	},
 })
-export default function QuoTerms({ deadline }) {
+
+type Props = {
+	deadline: number
+}
+export default function QuoTerms({ deadline }: Props) {
 	return (
 		<View style={styles.container}>
 			<View style={{ width: '70%' }}>

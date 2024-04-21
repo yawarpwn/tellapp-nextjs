@@ -1,6 +1,7 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
-import ShippingIcons from './ShippingIcons'
-import SvgLogo from './SvgLogo'
+
+import ShippingIcons from './shipping-icons'
+import SvgLogo from './svg-logo'
 
 const data = {
 	destination: 'Piura - Paracas',
@@ -11,7 +12,20 @@ const data = {
 	address: 'AV. jiron de algo some body',
 }
 
-export function Label({ label = data }) {
+type LabelType = {
+	destination: string
+	recipient: string
+	ruc: string
+	dni: string
+	phone: string
+	address: string
+}
+
+type Props = {
+	label: LabelType
+}
+
+export function Label({ label = data }: Props) {
 	const { destination, recipient, ruc, dni, phone, address } = label
 	const styles = StyleSheet.create({
 		label: {
@@ -103,7 +117,9 @@ export function Label({ label = data }) {
 	)
 }
 
-export default function ShippingLabels({ currentLabel }) {
+export default function ShippingLabels(
+	{ currentLabel }: { currentLabel: LabelType },
+) {
 	const styles = StyleSheet.create({
 		page: {
 			fontFamily: 'Helvetica',

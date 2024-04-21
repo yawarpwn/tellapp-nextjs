@@ -1,6 +1,9 @@
 import { getIgv } from '@/lib/utils'
+import { type QuotationItemType } from '@/types'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
+
 const styles = StyleSheet.create({
+	tableCell: {},
 	container: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -31,7 +34,13 @@ const styles = StyleSheet.create({
 		width: '80%',
 	},
 })
-export default function QuoTotal({ items, includeIgv }) {
+
+type Props = {
+	items: QuotationItemType[]
+	includeIgv: boolean
+}
+
+export default function QuoTotal({ items, includeIgv }: Props) {
 	const { total, subTotal, igv } = getIgv(items)
 	return (
 		<View style={styles.container}>

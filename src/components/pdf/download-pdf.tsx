@@ -1,9 +1,12 @@
 'use client'
 import { DownloadIcon, ShareIcon } from '@/icons'
+import { type QuotationType } from '@/types'
 import { usePDF } from '@react-pdf/renderer'
 import PDFGenerator from './pdf-generator'
 
-export default function DownloadPDF({ quotation }) {
+export default function DownloadPDF(
+	{ quotation }: { quotation: QuotationType },
+) {
 	const [instance, updateInstance] = usePDF({
 		document: <PDFGenerator quotation={quotation} />,
 	})
