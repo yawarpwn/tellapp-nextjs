@@ -1,5 +1,6 @@
 'use client'
 import ItemPickerModal from '@/components/item-picker-modal'
+import { Button } from '@/components/ui/button'
 import useAutoSave from '@/hooks/use-autosave'
 import useQuotations from '@/hooks/use-quotations'
 import { useToast } from '@/hooks/use-toast'
@@ -163,9 +164,9 @@ function AddForm({ action, lastQuotationNumber }: Props) {
 			/>
 			<div className='flex justify-between'>
 				<div />
-				<button onClick={openCustomersModal} className='btn btn-secondary'>
+				<Button variant={'secondary'} onClick={openCustomersModal}>
 					Cliente frecuentes
-				</button>
+				</Button>
 			</div>
 			<form
 				onSubmit={handleSubmit}

@@ -1,3 +1,23 @@
-.button-secondary {
-  border: 1px solid orange;
+.btn-primary {
+  background: linear-gradient(
+    122deg,
+    /*#4d91ff */ oklch(var(--accent)) 0.01%,
+    /*#fa5560*/ oklch(var(--primary)) 49.9%,
+    /*#b14bf4*/ oklch(var(--secondary)) 100%
+  );
+
+  &:hover {
+    box-shadow: rgba(161 128 255 /0.6) 0px 0px 1rem 0px;
+  }
+}
+
+.btn-secondary {
+  border-color: transparent;
+  color: inherit;
+  border: 1px solid transparent;
+  background: var(--border-gradient);
+
+  &:hover {
+    background: var(--border-gradient-hover);
+  }
 }

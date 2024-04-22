@@ -1,5 +1,13 @@
 import { NoResultRow } from '@/components/no-result-row'
 import { TextGradient } from '@/components/text-gradient'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '@/components/ui/table'
 import { EyeIcon } from '@/icons'
 import { fetchFilteredQuotations } from '@/lib/data/quotations'
 import { getIgv } from '@/lib/utils'
@@ -9,33 +17,33 @@ import Link from 'next/link'
 import { EditButton } from '../buttons'
 import { RegularCustomerToggle } from './regular-customer-toggle'
 
-function TableRow({ quotation }: {
+function QuotationTableRow({ quotation }: {
 	quotation: QuotationType
 }) {
 	const { formatedTotal } = getIgv(quotation.items)
 	return (
-		<tr>
-			<td>
+		<TableRow>
+			<TableCell>
 				<Link href={`/quotations/${quotation.number}`}>
 					<TextGradient className='font-bold text-lg' as='span'>#</TextGradient>
 					{quotation.number}
 				</Link>
-			</td>
-			<td>
+			</TableCell>
+			<TableCell>
 				<p className='min-w-[250px]'>{quotation.company}</p>
 				<p>{quotation.ruc}</p>
-			</td>
-			<td>
+			</TableCell>
+			<TableCell>
 				<span className='text-xs'>
 					{formatDateToLocal(quotation.created_at)}
 				</span>
-			</td>
-			<td>
+			</TableCell>
+			<TableCell>
 				<div className='text-xs'>
 					{formatedTotal}
 				</div>
-			</td>
-			<td>
+			</TableCell>
+			<TableCell>
 				<div className='flex items-center gap-x-2'>
 					<EditButton
 						href={`/quotations/${quotation.number}/update`}
@@ -48,14 +56,14 @@ function TableRow({ quotation }: {
 					</Link>
 					<RegularCustomerToggle active={quotation.is_regular_customer} />
 				</div>
-			</td>
-		</tr>
+			</TableCell>
+		</TableRow>
 	)
 }
 
 function QuotationRows({ quotations }: { quotations: QuotationType[] }) {
 	return quotations.map(quotation => (
-		<TableRow
+		<QuotationTableRow
 			key={quotation.id}
 			quotation={quotation}
 		/>
@@ -117,7 +125,6 @@ async function QuotationsTable({ query, currentPage }: {
 	currentPage: number
 }) {
 	const quotations = await fetchFilteredQuotations({ query, currentPage })
-	console.log({ quotations })
 
 	const hasQuotations = quotations.length > 0
 	return (
@@ -137,23 +144,23 @@ async function QuotationsTable({ query, currentPage }: {
 						)}
 				</div>
 				<div className='overflow-x-auto'>
-					<table className='table hidden md:table'>
+					<Table className='hidden md:table'>
 						{/* head */}
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>Cliente</th>
-								<th>Fecha</th>
-								<th>Total</th>
-								<th>Acciones</th>
-							</tr>
-						</thead>
-						<tbody>
+						<TableHeader>
+							<TableRow>
+								<TableHead>No</TableHead>
+								<TableHead>Cliente</TableHead>
+								<TableHead>Fecha</TableHead>
+								<TableHead>Total</TableHead>
+								<TableHead>Acciones</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
 							{hasQuotations
 								? <QuotationRows quotations={quotations} />
 								: <NoResultRow query={query} colSpan={6} />}
-						</tbody>
-					</table>
+						</TableBody>
+					</Table>
 				</div>
 			</>
 		</div>

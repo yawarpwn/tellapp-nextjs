@@ -4,19 +4,21 @@
 
 @layer base {
   :root {
+    color-scheme: dark;
+
     --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --foreground: 0 0% 85%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
+    --primary: 62.37% 0.244 308.5;
     --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
+    --secondary: 67.61% 0.2 20.57;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
+    --accent: 66.65% 0.177 249.59;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
@@ -24,12 +26,49 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
     --radius: 0.5rem;
+
+    --nav-height: 3rem;
+
+    /* Gradients */
+    --border-gradient: linear-gradient(rgb(32, 33, 37), rgb(32, 33, 37))
+        no-repeat padding-box,
+      linear-gradient(
+          81.02deg,
+          oklch(var(--secondary)) -23.47%,
+          oklch(var(--primary)) 45.52%,
+          oklch(var(--accent)) 114.8%
+        )
+        border-box;
+    --border-gradient-hover: linear-gradient(rgb(38, 39, 44), rgb(38, 39, 44))
+        no-repeat padding-box,
+      linear-gradient(
+          81.02deg,
+          oklch(var(--secondary)) -23.47%,
+          oklch(var(--primary)) 45.52%,
+          oklch(var(--accent)) 114.8%
+        )
+        border-box;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
 @layer components {
   .sk {
     @apply animate-background-shine bg-[linear-gradient(110deg,#222,45%,#111,55%,#222)] bg-[length:250%_100%];
+  }
+
+  .border-gradient {
+    background:
+      linear-gradient(hsl(var(--background)), hsl(var(--background))) no-repeat
+        padding-box,
+      linear-gradient(red, lime) border-box;
   }
 }
 
@@ -50,29 +89,6 @@
   margin-bottom: 1.5rem;
   margin-inline-start: 1rem;
   margin-inline-end: 1rem;
-}
-
-:root {
-  color-scheme: dark;
-  --nav-height: 3rem;
-  --border-gradient: linear-gradient(rgb(32, 33, 37), rgb(32, 33, 37)) no-repeat
-      padding-box,
-    linear-gradient(
-        81.02deg,
-        oklch(var(--s)) -23.47%,
-        oklch(var(--p)) 45.52%,
-        oklch(var(--a)) 114.8%
-      )
-      border-box;
-  --border-gradient-hover: linear-gradient(rgb(38, 39, 44), rgb(38, 39, 44))
-      no-repeat padding-box,
-    linear-gradient(
-        81.02deg,
-        oklch(var(--s)) -23.47%,
-        oklch(var(--p)) 45.52%,
-        oklch(var(--a)) 114.8%
-      )
-      border-box;
 }
 
 .btn-accent {
@@ -130,14 +146,14 @@
   background: lime;
 }
 
-form:has(input:invalid, textarea:invalid, select:invalid)
-  button[type='submit'] {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-form:not(:has(input:invalid, textarea:invalid, select:invalid))
-  button[type='submit'] {
-  opacity: 1;
-  pointer-events: auto;
-}
+/* form:has(input:invalid, textarea:invalid, select:invalid) */
+/*   button[type='submit'] { */
+/*   opacity: 0.5; */
+/*   pointer-events: none; */
+/* } */
+/**/
+/* form:not(:has(input:invalid, textarea:invalid, select:invalid)) */
+/*   button[type='submit'] { */
+/*   opacity: 1; */
+/*   pointer-events: auto; */
+/* } */

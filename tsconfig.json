@@ -30,8 +30,5 @@
     "src/ui/gallery/gallery-form-modal",
     "src/ui/components/text-gradient"
   ],
-  "exclude": ["node_modules"],
-  "types": [
-    "bun-types" // add Bun global
-  ]
+  "exclude": ["node_modules"]
 }

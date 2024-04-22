@@ -1,24 +1,21 @@
-import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
 import { useFormStatus } from 'react-dom'
 
 interface Props {
 	text?: string
-	className?: string
 }
-export function SubmitButton({ text = 'Aceptar', className }: Props) {
+export function SubmitButton({ text = 'Aceptar' }: Props) {
 	const { pending } = useFormStatus()
 	return (
-		<button
+		<Button
+			variant={'primary'}
 			disabled={pending}
 			type='submit'
-			className={cn(
-				'btn btn-secondary w-full',
-				pending && 'btn-disabled',
-				className,
-			)}
 		>
-			{pending && <span className='loading loading-spinner'></span>}
+			{pending
+				&& <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
 			<span>{text}</span>
-		</button>
+		</Button>
 	)
 }

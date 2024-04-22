@@ -5,8 +5,9 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export default async function Home(
-	{ searchParams }: { searchParams: { message?: string } },
+	{ searchParams }: { searchParams?: { message?: string } },
 ) {
+	const message = searchParams?.message || ''
 	const storeCookie = cookies()
 	const supabase = createServerClient(storeCookie)
 	const {
@@ -20,9 +21,9 @@ export default async function Home(
 	return (
 		<>
 			<main className=''>
-				<div className='flex flex-col lg:flex-row '>
-					<div className='flex min-h-screen flex-1 flex-shrink-0 flex-col justify-center items-center border-r border-primary/50 bg-base-200'>
-						<aside className='sm:[384px] flex w-[320px] flex-col '>
+				<div className='flex flex-col lg:flex-row bg-indigo-500'>
+					<div className='flex min-h-screen md:flex-1 md:flex-shrink-0 flex-col justify-center items-center p-14 border '>
+						<aside className='flex-col w-full h-full bg-background p-4 rounded-md'>
 							<header className='mb-10 '>
 								<h1 className='mb-2 mt-8 text-2xl lg:text-3xl '>
 									<span>
@@ -34,7 +35,7 @@ export default async function Home(
 									Adminitra cotizaciónes, clientes y más.
 								</h2>
 							</header>
-							<LoginForm message={searchParams?.message} />
+							<LoginForm message={message} />
 							<footer className='mt-10 text-center text-sm'>
 								<a href='#'>Olvidaste tu contraseña?</a>
 							</footer>

@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { createBrowserClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
@@ -46,9 +47,9 @@ function LoginForm({ session }) {
 
 	return (
 		<>
-			<button className='btn' onClick={handleSignIn}>
+			<Button variant='primary' onClick={handleSignIn}>
 				Entrar
-			</button>
+			</Button>
 		</>
 	)
 }

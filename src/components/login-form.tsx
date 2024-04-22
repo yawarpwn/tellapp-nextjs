@@ -1,7 +1,9 @@
 'use client'
 
-import { signIn } from '@/lib/actions/auth'
 import { SubmitButton } from '@/components/submit-button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { signIn, signOut } from '@/lib/actions/auth'
 import { useFormState } from 'react-dom'
 
 export function LoginForm({ message }: { message: string }) {
@@ -10,28 +12,28 @@ export function LoginForm({ message }: { message: string }) {
 	return (
 		<>
 			<form action={dispatch}>
-				<div className='flex flex-col gap-2'>
-					<div className='form-control'>
-						<label htmlFor='email' className='label'>
-							<span className='label-text'>Correo</span>
-						</label>
-						<input
+				<div className='flex flex-col gap-4'>
+					<div className='grid gap-4'>
+						<Label htmlFor='email' className='label'>
+							Correo
+						</Label>
+						<Input
 							type='email'
 							name='email'
 							id='email'
-							className='input'
+							className=''
 							placeholder='correo@dominio.com'
 							required
 						/>
-						{state.errors?.email && (
+						{state?.errors?.email && (
 							<p className='text-error mt-1'>{state.errors.email[0]}</p>
 						)}
 					</div>
-					<div className='form-control'>
-						<label htmlFor='password' className='label'>
+					<div className='grid gap-4'>
+						<Label htmlFor='password' className='label'>
 							<span className='label-text'>Constraseña</span>
-						</label>
-						<input
+						</Label>
+						<Input
 							type='password'
 							name='password'
 							id='password'
@@ -40,12 +42,16 @@ export function LoginForm({ message }: { message: string }) {
 							required
 						/>
 
-						{state.errors?.email && (
-							<p className='text-error mt-1'>{state.errors.password[0]}</p>
-						)}
+						{/* {state.errors?.email && ( */}
+						{/* 	<p className='text-error mt-1'>{state.errors.password[0]}</p> */}
+						{/* )} */}
 					</div>
-					<SubmitButton className='w-full btn-primary' />
-					{message && <p className='text-error'>{message}</p>}
+					<SubmitButton />
+					{message && (
+						<div className='border border-destructive text-destructive p-2 rounded-sm'>
+							<p className='text-xs text-center'>{message}</p>
+						</div>
+					)}
 				</div>
 			</form>
 		</>

@@ -1,9 +1,9 @@
-import { createQuotation } from '@/lib/actions/quoatations'
-import { fetchCustomers } from '@/lib/data/customers'
-import { fetchLastQuotation } from '@/lib/data/quotations'
 import Breadcrumbs from '@/components/breadcrumbs'
 import AddForm from '@/components/quotations/add-form'
 import { CreateUpdateQuotationSkeleton } from '@/components/skeletons/quotations'
+import { createQuotation } from '@/lib/actions/quoatations'
+import { fetchCustomers } from '@/lib/data/customers'
+import { fetchLastQuotation } from '@/lib/data/quotations'
 import { Suspense } from 'react'
 
 async function AddFormWrapper() {

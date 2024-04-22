@@ -1,10 +1,11 @@
+import { buttonVariants } from '@/components/ui/button'
 import { EditIcon, PlusIcon } from '@/icons'
 import Link from 'next/link'
 
 export function AddButton({ href }) {
 	return (
-		<Link className='btn btn-sm btn-primary' href={href}>
-			<PlusIcon />
+		<Link className={buttonVariants({ variant: 'primary' })} href={href}>
+			<PlusIcon className='ml-1' />
 			<span className=''>Crear</span>
 		</Link>
 	)

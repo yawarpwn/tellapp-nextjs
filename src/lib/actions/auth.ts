@@ -8,7 +8,13 @@ const AuthSchema = z.object({
 	password: z.string(),
 	email: z.string().email(),
 })
-export async function signIn(_, formData) {
+
+type InitialState = {
+	message?: string
+	error?: string
+}
+
+export async function signIn(_: InitialState, formData: FormData) {
 	const entries = Object.fromEntries(formData)
 	const validateFields = AuthSchema.safeParse(entries)
 
