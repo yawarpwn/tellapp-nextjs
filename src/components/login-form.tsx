@@ -26,7 +26,9 @@ export function LoginForm({ message }: { message: string }) {
 							required
 						/>
 						{state?.errors?.email && (
-							<p className='text-error mt-1'>{state.errors.email[0]}</p>
+							<p className='text-destructive text-xs'>
+								{state?.errors?.email[0]}
+							</p>
 						)}
 					</div>
 					<div className='grid gap-4'>
@@ -42,11 +44,20 @@ export function LoginForm({ message }: { message: string }) {
 							required
 						/>
 
-						{/* {state.errors?.email && ( */}
-						{/* 	<p className='text-error mt-1'>{state.errors.password[0]}</p> */}
-						{/* )} */}
+						{state?.errors?.password && (
+							<p className='text-error mt-1'>{state?.errors?.password[0]}</p>
+						)}
+						<p className='text-[#6b66ff] text-xs'>
+							<a href='#'>
+								Olvidates tu contraseña ?
+							</a>
+						</p>
 					</div>
 					<SubmitButton />
+					<p className='text-xs text-center'>
+						Necesitas una cuenta?{' '}
+						<a href='#' className='text-[#6b66ff] '>Registrate</a>
+					</p>
 					{message && (
 						<div className='border border-destructive text-destructive p-2 rounded-sm'>
 							<p className='text-xs text-center'>{message}</p>
