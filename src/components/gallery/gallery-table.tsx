@@ -1,6 +1,14 @@
+import { NoResultRow } from '@/components/no-result-row'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '@/components/ui/table'
 import { fetchFilteredGallery } from '@/lib/data/gallery'
 import { TrashIcon } from 'lucide-react'
-import { NoResultRow } from '@/components/no-result-row'
 import {
 	GalleryDeleteFormButton,
 	GalleryEditFormButton,
@@ -14,23 +22,23 @@ export async function GalleryTable({ query, currentPage }: {
 	const hasGalleryImages = galleryImages && galleryImages.length > 0
 	return (
 		<div className='overflow-x-auto'>
-			<table className='table table-sm'>
-				<thead>
-					<tr>
-						<th></th>
-						<th>Nombre</th>
-						<th>Categoria</th>
-						<th>Ancho</th>
-						<th>Alto</th>
-						<th>Formato</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
-				<tbody>
+			<Table className='table table-sm'>
+				<TableHeader>
+					<TableRow>
+						<TableCell></TableCell>
+						<TableCell>Nombre</TableCell>
+						<TableCell>Categoria</TableCell>
+						<TableCell>Ancho</TableCell>
+						<TableCell>Alto</TableCell>
+						<TableCell>Formato</TableCell>
+						<TableCell>Acciones</TableCell>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{hasGalleryImages
 						? galleryImages.map((photo) => (
-							<tr key={photo.id}>
-								<td>
+							<TableRow key={photo.id}>
+								<TableCell>
 									<div className='w-12 h-12 '>
 										<img
 											alt={photo.title}
@@ -38,17 +46,17 @@ export async function GalleryTable({ query, currentPage }: {
 											src={`https://res.cloudinary.com/tellsenales-cloud/image/upload/c_scale,w_40/${photo.public_id}.${photo.format}`}
 										/>
 									</div>
-								</td>
-								<td>
+								</TableCell>
+								<TableCell>
 									<div className='min-w-[250px]'>
 										{photo.title}
 									</div>
-								</td>
-								<td>{photo.category}</td>
-								<td>{photo.width}</td>
-								<td>{photo.height}</td>
-								<td>{photo.format}</td>
-								<td>
+								</TableCell>
+								<TableCell>{photo.category}</TableCell>
+								<TableCell>{photo.width}</TableCell>
+								<TableCell>{photo.height}</TableCell>
+								<TableCell>{photo.format}</TableCell>
+								<TableCell>
 									<div className='flex gap-2 items-center'>
 										<GalleryEditFormButton galleryImage={photo} />
 										<GalleryDeleteFormButton
@@ -56,12 +64,12 @@ export async function GalleryTable({ query, currentPage }: {
 											publicId={photo.public_id}
 										/>
 									</div>
-								</td>
-							</tr>
+								</TableCell>
+							</TableRow>
 						))
 						: <NoResultRow query={query} colSpan={7} />}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	)
 }

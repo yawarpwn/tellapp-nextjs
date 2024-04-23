@@ -1,6 +1,7 @@
 'use client'
+import { buttonVariants } from '@/components/ui/button'
 import { generatePagination } from '@/lib/utils'
-import clsx from 'clsx'
+import { cn } from '@/lib/utils'
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -18,13 +19,13 @@ export function Pagination({ totalPages }: { totalPages: number }) {
 	}
 
 	return (
-		<div className='flex items-center justify-center mt-4'>
+		<div className='flex items-center justify-center mt-4 gap-2'>
 			<PaginationArrow
 				href={createPageURL(currentPage - 1)}
 				direction='left'
 				isDisabled={currentPage <= 1}
 			/>
-			<div className='join'>
+			<div className='flex items-center gap-2'>
 				{allPages.map((page, index) => {
 					let position
 
@@ -61,9 +62,12 @@ function PaginationArrow({ href, direction, isDisabled }: {
 	const icon = direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />
 
 	return isDisabled
-		? <div className='btn btn-sm btn-disabled'>{icon}</div>
+		? <div>{icon}</div>
 		: (
-			<Link href={href} className='btn btn-sm'>
+			<Link
+				href={href}
+				className={cn(buttonVariants())}
+			>
 				{icon}
 			</Link>
 		)
@@ -75,13 +79,16 @@ function PaginationNumber({ isActive, href, position, page }: {
 	position?: 'first' | 'last' | 'middle' | 'single'
 	page: number | string
 }) {
-	const className = clsx('join-item btn btn-sm', {
-		'btn-active': isActive,
-	})
 	return isActive || position === 'middle'
-		? <div className={className}>{page}</div>
+		? <div className={cn(buttonVariants(), 'w-8 h-8 rounded-full')}>{page}</div>
 		: (
-			<Link className={className} href={href}>
+			<Link
+				className={cn(
+					buttonVariants({ variant: 'secondary', size: 'icon' }),
+					'w-8 h-8 rounded-full',
+				)}
+				href={href}
+			>
 				{page}
 			</Link>
 		)

@@ -1,9 +1,16 @@
+import { NoResultRow } from '@/components/no-result-row'
 import {
 	SignalDeleteFormButton,
 	SignalEditFormButton,
 } from '@/components/signals/signal-button'
-import { NoResultRow } from '@/components/no-result-row'
 import { fetchFilteredSignals } from '@/lib/data/signals'
+
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableRow,
+} from '@/components/ui/table'
 
 export interface Props {
 	currentPage: number
@@ -18,24 +25,12 @@ export async function SignalsTable({
 	const hasSignals = signals && signals.length > 0
 	return (
 		<div className='overflow-x-auto mt-4'>
-			<table className='table table-sm'>
-				<thead>
-					<tr>
-						<th></th>
-						<th>Nombre</th>
-						<th>Categoria</th>
-						<th>Codigo</th>
-						<th>Ancho</th>
-						<th>Alto</th>
-						<th>Formato</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
-				<tbody>
+			<Table className='table table-sm'>
+				<TableBody>
 					{hasSignals
 						? signals.map((signal) => (
-							<tr key={signal.id}>
-								<td>
+							<TableRow key={signal.id}>
+								<TableCell>
 									<div className='w-12 h-12 '>
 										<img
 											alt={signal.title}
@@ -43,18 +38,18 @@ export async function SignalsTable({
 											src={`https://res.cloudinary.com/tellsenales-cloud/image/upload/c_scale,w_40/${signal.public_id}.${signal.format}`}
 										/>
 									</div>
-								</td>
-								<td>
+								</TableCell>
+								<TableCell>
 									<div className='min-w-[250px]'>
 										{signal.title}
 									</div>
-								</td>
-								<td>{signal.category}</td>
-								<td>{signal.code.toUpperCase()}</td>
-								<td>{signal.width}</td>
-								<td>{signal.height}</td>
-								<td>{signal.format}</td>
-								<td>
+								</TableCell>
+								<TableCell>{signal.category}</TableCell>
+								<TableCell>{signal.code.toUpperCase()}</TableCell>
+								<TableCell>{signal.width}</TableCell>
+								<TableCell>{signal.height}</TableCell>
+								<TableCell>{signal.format}</TableCell>
+								<TableCell>
 									<div className='flex gap-2 items-center'>
 										<SignalEditFormButton item={signal} />
 										<SignalDeleteFormButton
@@ -62,12 +57,12 @@ export async function SignalsTable({
 											publicId={signal.public_id}
 										/>
 									</div>
-								</td>
-							</tr>
+								</TableCell>
+							</TableRow>
 						))
 						: <NoResultRow query={query} colSpan={7} />}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	)
 }

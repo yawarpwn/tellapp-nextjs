@@ -1,4 +1,5 @@
 import { CreateUpdateImageModal } from '@/components/create-update-image-modal'
+import { Button } from '@/components/ui/button'
 import type { GalleryImage, Signal } from '@/types'
 import { EditIcon, PlusIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -24,17 +25,17 @@ export function CreateUpdateImageButton(
 		<>
 			{isEditMode
 				? (
-					<button onClick={openModal}>
+					<Button onClick={openModal}>
 						<EditIcon />
-					</button>
+					</Button>
 				)
 				: (
-					<button onClick={openModal} className='btn btn-primary btn-sm'>
+					<Button onClick={openModal} variant={'primary'}>
 						<span>
 							Agregar
 						</span>
 						<PlusIcon />
-					</button>
+					</Button>
 				)}
 			{isOpenModal && (
 				<CreateUpdateImageModal

@@ -1,5 +1,6 @@
 'use client'
 import { Modal } from '@/components/modal'
+import { Button } from '@/components/ui/button'
 import { PlusIcon } from '@/icons'
 import { EditIcon } from '@/icons'
 import { useState, useTransition } from 'react'
@@ -38,14 +39,14 @@ function UpdateEditForm(
 				<div className='col-span-12 mt-2 text-error'>{state.message}</div>
 			)}
 			<footer className='col-span-12 flex gap-4 justify-between mt-2'>
-				<button
+				<Button
 					disabled={isPending}
 					type='submit'
-					className='btn btn-secondary flex-1'
+					variant='primay'
 				>
 					{isPending && <span className='loading loading-spinner'></span>}
 					Aceptar
-				</button>
+				</Button>
 				<button
 					disabled={isPending}
 					onClick={closeModal}
@@ -68,15 +69,19 @@ export function ModalButton({ action, itemToEdit, renderInputs }) {
 		<>
 			{!itemToEdit
 				? (
-					<button onClick={openModal} className='btn btn-sm btn-primary'>
+					<Button onClick={openModal} variant='primary'>
 						<PlusIcon />
 						<span className=''>Crear</span>
-					</button>
+					</Button>
 				)
 				: (
-					<button className='btn btn-sm' onClick={openModal}>
+					<Button
+						size='icon'
+						className='btn btn-sm'
+						onClick={openModal}
+					>
 						<EditIcon size={20} />
-					</button>
+					</Button>
 				)}
 
 			<Modal isOpen={isOpenModal} onClose={closeModal}>

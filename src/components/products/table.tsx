@@ -1,4 +1,11 @@
 import { NoResultRow } from '@/components/no-result-row'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+} from '@/components/ui/table'
 import { deleteProduct } from '@/lib/actions/products'
 import { fetchFilteredProducts } from '@/lib/data/products'
 import React from 'react'
@@ -15,62 +22,66 @@ async function ProductTable({ query, currentPage }: Props) {
 	return (
 		<>
 			<div className='overflow-x-auto'>
-				<table className='table table-sm'>
+				<Table className='table table-sm'>
 					{/* head */}
 					<thead>
-						<tr>
-							<th>Descripcion</th>
-							<th>Codigo</th>
-							<th>U/M</th>
-							<th>Costo</th>
-							<th>Precio</th>
-							<th>Rank</th>
-							<th>Categ</th>
-							<th>Acciones</th>
-						</tr>
+						<TableRow>
+							<TableHead>Descripcion</TableHead>
+							<TableHead>Codigo</TableHead>
+							<TableHead>U/M</TableHead>
+							<TableHead>Costo</TableHead>
+							<TableHead>Precio</TableHead>
+							<TableHead>Rank</TableHead>
+							<TableHead>Categ</TableHead>
+							<TableHead>Acciones</TableHead>
+						</TableRow>
 					</thead>
-					<tbody>
+					<TableBody>
 						{hasProducts
 							? products.map(product => {
 								return (
-									<tr key={product.id}>
+									<TableRow key={product.id}>
 										{/* Description */}
-										<td>
+										<TableCell>
 											<div>
 												<p className='min-w-[250px]'>{product.description}</p>
 											</div>
-										</td>
-										<td>
+										</TableCell>
+										<TableCell>
 											<p className='text-xs'>
 												{product.code.toUpperCase()}
 											</p>
-										</td>
+										</TableCell>
 
-										<td>
+										<TableCell>
 											<p className='text-xs'>
 												{product.unit_size}
 											</p>
-										</td>
-										<td className='text-xs'>{product.cost.toFixed(2)}</td>
-										<td className='text-xs'>{product.price.toFixed(2)}</td>
-										<td className='text-xs'>{product.rank}</td>
-										<td>
+										</TableCell>
+										<TableCell className='text-xs'>
+											{product.cost.toFixed(2)}
+										</TableCell>
+										<TableCell className='text-xs'>
+											{product.price.toFixed(2)}
+										</TableCell>
+										<TableCell className='text-xs'>{product.rank}</TableCell>
+										<TableCell>
 											<p className='w-[40px] truncate text-xs'>
 												{product.category}
 											</p>
-										</td>
-										<td>
+										</TableCell>
+										<TableCell>
 											<div className='flex items-center gap-x-2'>
 												<EditProductForm itemToEdit={product} />
 												<ProductDeleteButton id={product.id} />
 											</div>
-										</td>
-									</tr>
+										</TableCell>
+									</TableRow>
 								)
 							})
 							: <NoResultRow query={query} colSpan={7} />}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		</>
 	)

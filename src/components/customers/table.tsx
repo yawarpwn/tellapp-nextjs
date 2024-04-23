@@ -1,5 +1,13 @@
 import { EditCustomerForm } from '@/components/customers'
 import { NoResultRow } from '@/components/no-result-row'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '@/components/ui/table'
 import { fetchFilteredCustomers } from '@/lib/data/customers'
 import DeleteForm from './delete-form'
 
@@ -12,47 +20,44 @@ export default async function CustomersTable({ query, currentPage }: Props) {
 	const hasCustomers = customers.length > 0
 	return (
 		<div className='overflow-x-auto'>
-			<table className='table'>
+			<Table className='table'>
 				{/* head */}
-				<thead>
-					<tr>
-						<th>Nombre</th>
-						<th>Ruc</th>
-						<th>Dirección</th>
-						<th>Telefono</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
-				<tbody>
+				<TableHeader>
+					<TableRow>
+						<TableHead>Cliente</TableHead>
+						<TableHead>Ruc</TableHead>
+						<TableHead>Telefono</TableHead>
+						<TableHead>Acciones</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{hasCustomers
 						? customers.map(customer => {
 							const { id, phone, email, ruc, name, address } = customer
 							return (
-								<tr key={id}>
-									<td>
+								<TableRow key={id}>
+									<TableCell>
 										<div>
 											<p className='min-w-[250px] '>{name}</p>
+											<p className='min-w-[250px] text-[10px]'>
+												{address}
+											</p>
 										</div>
-									</td>
-									<td>{ruc}</td>
-									<td>
-										<p className='min-w-[250px] text-[10px]'>
-											{address}
-										</p>
-									</td>
-									<td>{phone}</td>
-									<td>
+									</TableCell>
+									<TableCell>{ruc}</TableCell>
+									<TableCell>{phone}</TableCell>
+									<TableCell>
 										<div className='flex gap-2'>
 											<EditCustomerForm customer={customer} />
 											<DeleteForm id={id} />
 										</div>
-									</td>
-								</tr>
+									</TableCell>
+								</TableRow>
 							)
 						})
 						: <NoResultRow query={query} colSpan={5} />}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	)
 }
