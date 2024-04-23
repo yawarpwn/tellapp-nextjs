@@ -22,7 +22,7 @@ export function Sidebar(props: Props) {
 			style={{ scrollbarWidth: 'thin' }}
 			className={cn(
 				`
-flex w-full md:w-[16.875rem] bg-base-100 flex-col h-dvh 
+flex w-full md:w-[16.875rem] bg-background flex-col h-dvh 
 border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto text-sm`,
 			)}
 		>

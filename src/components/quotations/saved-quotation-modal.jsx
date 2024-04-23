@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { Modal } from '../modal'
 
 function SavedQuotationModal({ isOpen, onClose, onConfirm }) {
@@ -9,12 +10,12 @@ function SavedQuotationModal({ isOpen, onClose, onConfirm }) {
 			onClose={onClose}
 		>
 			<div className='flex items-center justify-between'>
-				<button type='button' className='btn btn-primary' onClick={onConfirm}>
+				<Button variant='primary' type='button' onClick={onConfirm}>
 					Aceptar
-				</button>
-				<button type='button' className='btn btn-secondary' onClick={onClose}>
+				</Button>
+				<Button variant='secondary' type='button' onClick={onClose}>
 					Cancelar
-				</button>
+				</Button>
 			</div>
 		</Modal>
 	)

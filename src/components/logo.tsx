@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 export function Logo({ size }: {
-	size: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 }) {
 	return (
 		<Link href='/quotations'>

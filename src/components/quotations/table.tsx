@@ -1,5 +1,6 @@
 import { NoResultRow } from '@/components/no-result-row'
 import { TextGradient } from '@/components/text-gradient'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import {
 	Table,
 	TableBody,
@@ -76,47 +77,47 @@ function QuotationCard({ quotation }: {
 	const { formatedTotal } = getIgv(quotation.items)
 
 	return (
-		<div
+		<Card
 			key={quotation.id}
 			className='card card-compact'
 		>
-			<div className='card-body bg-base-200'>
-				<div className='flex flex-col items-center justify-between border-b border-base-content/10 pb-4 w-full'>
-					<div className='mb-2 flex items-center justify-between w-full'>
-						<p>
-							<span className='text-primary '>#</span>
-							<span>
-								{quotation.number}
-							</span>
-						</p>
-						<div>
-							{quotation.ruc ?? 'xxxxxxxxxxx'}
-						</div>
-					</div>
-					<p className='text-xs text-base-content/70'>
-						{quotation.company ?? 'Sin RUC'}
-					</p>
-				</div>
-				<div className='flex w-full items-center justify-between'>
+			<CardHeader>
+				<div className='mb-2 flex items-center justify-between w-full'>
 					<p>
-						{formatedTotal}
+						<span className='text-primary '>#</span>
+						<span>
+							{quotation.number}
+						</span>
 					</p>
-					<p>{formatDateToLocal(quotation.created_at)}</p>
-					<div className='flex justify-end gap-2'>
-						<RegularCustomerToggle active={quotation.is_regular_customer} />
-						<EditButton
-							href={`/quotations/${quotation.number}/update`}
-						/>
-						<Link
-							href={`/quotations/${quotation.number}`}
-							className='btn btn-sm'
-						>
-							<EyeIcon size={20} />
-						</Link>
+					<div>
+						{quotation.ruc ?? 'xxxxxxxxxxx'}
 					</div>
 				</div>
-			</div>
-		</div>
+			</CardHeader>
+			<CardContent>
+				<p className='text-xs text-base-content/70 text-center'>
+					{quotation.company ?? 'Sin RUC'}
+				</p>
+			</CardContent>
+			<CardFooter className='flex items-center justify-between'>
+				<p>
+					{formatedTotal}
+				</p>
+				<p>{formatDateToLocal(quotation.created_at)}</p>
+				<div className='flex justify-end gap-2'>
+					<RegularCustomerToggle active={quotation.is_regular_customer} />
+					<EditButton
+						href={`/quotations/${quotation.number}/update`}
+					/>
+					<Link
+						href={`/quotations/${quotation.number}`}
+						className='btn btn-sm'
+					>
+						<EyeIcon size={20} />
+					</Link>
+				</div>
+			</CardFooter>
+		</Card>
 	)
 }
 

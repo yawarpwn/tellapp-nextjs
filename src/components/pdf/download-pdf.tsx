@@ -1,4 +1,5 @@
 'use client'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { DownloadIcon, ShareIcon } from '@/icons'
 import { type QuotationType } from '@/types'
 import { usePDF } from '@react-pdf/renderer'
@@ -53,17 +54,17 @@ export default function DownloadPDF(
 
 	return (
 		<>
-			<button onClick={handleShare} className='btn btn-secondary'>
+			<Button onClick={handleShare} variant='secondary'>
 				<ShareIcon size={20} />
-				<span className='hidden lg:block'>Compartir</span>
-			</button>
+				<span className='hidden lg:block ml-2'>Compartir</span>
+			</Button>
 			<a
 				href={instance.url}
 				download={`COT-2024-${quotation.number}${ruc}.pdf`}
-				className='btn btn-secondary'
+				className={buttonVariants({ variant: 'secondary' })}
 			>
 				<DownloadIcon size={20} />
-				<span className='hidden lg:block'>Descargar</span>
+				<span className='hidden lg:block ml-2'>Descargar</span>
 			</a>
 		</>
 	)

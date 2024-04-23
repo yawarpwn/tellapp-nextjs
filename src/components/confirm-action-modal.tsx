@@ -1,4 +1,5 @@
 'use client'
+import { Button } from '@/components/ui/button'
 
 import clsx from 'clsx'
 import React, { useEffect, useRef } from 'react'
@@ -8,19 +9,19 @@ function SubmitButton({ onClose }: { onClose: () => void }) {
 	const { pending } = useFormStatus()
 	return (
 		<>
-			<button type='submit' disabled={pending} className='btn btn-success'>
+			<Button type='submit' disabled={pending} variant='secondary'>
 				{pending
 					? <span className='loading loading-spinner'></span>
 					: 'Aceptar'}
-			</button>
-			<button
+			</Button>
+			<Button
 				type='button'
 				disabled={pending}
 				onClick={onClose}
-				className='btn btn-error'
+				variant='secondary'
 			>
 				Cancelar
-			</button>
+			</Button>
 		</>
 	)
 }

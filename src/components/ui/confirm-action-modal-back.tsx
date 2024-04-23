@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import clsx from 'clsx'
 import React, { useEffect, useRef } from 'react'
 import { createPortal, useFormStatus } from 'react-dom'
@@ -8,22 +9,20 @@ export function SubmitButton({ onClose }: { onClose: () => void }) {
 	const { pending } = useFormStatus()
 	return (
 		<>
-			<button
+			<Button
 				type='submit'
 				disabled={pending}
-				className='btn btn-primary'
 			>
 				<span>Aceptar</span>
 				{pending && <span className='loading loading-spinner'></span>}
-			</button>
-			<button
+			</Button>
+			<Button
 				type='button'
 				disabled={pending}
 				onClick={onClose}
-				className='btn btn-secondary'
 			>
 				Cancelar
-			</button>
+			</Button>
 		</>
 	)
 }

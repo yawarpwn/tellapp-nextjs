@@ -1,6 +1,7 @@
 'use client'
 import { ActionForm } from '@/components/action-button'
 import { QuotationItemModal } from '@/components/quotation-item-modal'
+import { Button } from '@/components/ui/button'
 import { DocumentDuplicateIcon } from '@/icons'
 import { EditIcon, TrashIcon } from '@/icons'
 import { deleteQuotation, duplicateQuotation } from '@/lib/actions/quoatations'
@@ -14,10 +15,10 @@ export function QuotationDuplicateButton({ number }: { number: number }) {
 			dialogTitle='Duplicar'
 			dialogDescription={` ¿Seguro de duplicar Cotización #${number}?`}
 			buttonComponent={
-				<button className='btn btn-secondary'>
+				<Button variant={'secondary'}>
 					<DocumentDuplicateIcon size={20} />
-					<span className='hidden md:block'>Duplicar</span>
-				</button>
+					<span className='hidden md:block ml-2'>Duplicar</span>
+				</Button>
 			}
 		>
 			<input
@@ -37,10 +38,10 @@ export function QuotationDeleteButton({ number }: { number: number }) {
 			dialogTitle='Eliminar'
 			dialogDescription={`¿Seguro de eliminar Cotización #${number}?`}
 			buttonComponent={
-				<button className='btn btn-secondary'>
+				<Button variant='secondary'>
 					<TrashIcon size={20} />
-					<span className='hidden md:block'>Eliminar</span>
-				</button>
+					<span className='hidden md:block ml-2'>Eliminar</span>
+				</Button>
 			}
 		>
 			<input

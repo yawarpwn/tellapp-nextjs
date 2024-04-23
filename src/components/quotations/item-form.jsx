@@ -1,5 +1,6 @@
 import { Input } from '@/components/input'
 import { Textarea } from '@/components/textarea'
+import { Button } from '@/components/ui/button'
 import { XIcon } from '@/icons'
 import { createBrowserClient } from '@/lib/supabase'
 import { createSearchInstance } from '@/services/search'
@@ -205,16 +206,16 @@ export function ItemForm({
 				</div>
 			</div>
 			<div className='mt-4 flex items-center gap-4 justify-between'>
-				<button type='submit' className='btn btn-secondary flex-1'>
+				<Button type='submit' className='btn btn-secondary flex-1'>
 					Aceptar
-				</button>
-				<button
+				</Button>
+				<Button
 					onClick={onCloseModal}
 					type='button'
 					className='btn btn-secondary flex-1'
 				>
 					Cancelar
-				</button>
+				</Button>
 			</div>
 		</form>
 	)

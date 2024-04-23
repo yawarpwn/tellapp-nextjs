@@ -1,5 +1,6 @@
 import DownloadPDF from '@/components/pdf/download-pdf'
 import { ItemsList } from '@/components/quotations/items-list'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { EditIcon } from '@/icons'
 import { fetchQuotationById } from '@/lib/data/quotations'
 import { getIgv } from '@/lib/utils'
@@ -18,10 +19,10 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
 				<div className='flex gap-2'>
 					<Link
 						href={`/quotations/${number}/update`}
-						className='btn btn-secondary'
+						className={buttonVariants({ variant: 'secondary' })}
 					>
 						<EditIcon size={20} />
-						<span className='hidden lg:block'>Editar</span>
+						<span className='hidden lg:block ml-2'>Editar</span>
 					</Link>
 					<DownloadPDF quotation={quotation} />
 					{/* <DuplicateQuotation number={number} /> */}

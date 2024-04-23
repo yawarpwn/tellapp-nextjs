@@ -1,7 +1,9 @@
 'use client'
 
 import { Input } from '@/components/input'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { PlusIcon } from '@/icons'
+import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import ItemsTable from './items-table'
 
@@ -137,14 +139,14 @@ function CreateEditInputs({
 					<header className='flex items-center justify-between'>
 						<h3 className='text-xl font-bold'>Productos:</h3>
 
-						<button
+						<Button
 							type='button'
 							onClick={openItemModal}
-							className='btn btn-primary'
+							variant='secondary'
 						>
 							<PlusIcon />
 							Agregar Item
-						</button>
+						</Button>
 					</header>
 					<ItemsTable
 						items={quotation.items}
@@ -163,15 +165,19 @@ function CreateEditInputs({
 				<Link
 					href={'/quotations'}
 					aria-disabled={pending}
-					className='btn btn-secondary  flex-1'
+					className={cn(buttonVariants({ variant: 'secondary' }), 'flex-1')}
 				>
 					Cancelar
 				</Link>
-				<button disabled={pending} className='btn btn-primary  flex-1'>
+				<Button
+					disabled={pending}
+					variant='secondary'
+					className='flex-1'
+				>
 					<span>{confirmButtonText}</span>
 					{pending
 						&& <span className='loading loading-spinner'></span>}
-				</button>
+				</Button>
 				{/* <SubmitButton /> */}
 			</footer>
 		</>

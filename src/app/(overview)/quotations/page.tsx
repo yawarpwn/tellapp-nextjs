@@ -1,9 +1,9 @@
-import { fetchQuotationsPages } from '@/lib/data/quotations'
 import { AddButton } from '@/components/buttons'
 import Pagination from '@/components/pagination'
 import QuotationsTable from '@/components/quotations/table'
 import Search from '@/components/search'
 import { QuotationsTableSkeleton } from '@/components/skeletons/quotations'
+import { fetchQuotationsPages } from '@/lib/data/quotations'
 import { Suspense } from 'react'
 async function QuotationsPage({ searchParams }: {
 	searchParams?: {
@@ -24,6 +24,7 @@ async function QuotationsPage({ searchParams }: {
 				key={query}
 				fallback={<QuotationsTableSkeleton />}
 			>
+				{/* <QuotationsTableSkeleton /> */}
 				<QuotationsTable
 					query={query}
 					currentPage={page}

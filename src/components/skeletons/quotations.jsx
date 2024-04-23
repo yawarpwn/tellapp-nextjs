@@ -1,7 +1,6 @@
+import { Card, CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { TableSkeleton } from './table-skeleton'
-
-const shimmer =
-	'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent'
 
 export function InvoiceSkeleton() {
 	return (
@@ -18,53 +17,23 @@ export function InvoiceSkeleton() {
 	)
 }
 
-function TableSkeletonRow() {
-	return (
-		<tr>
-			<td>
-				<div className='skeleton w-8 h-8'></div>
-			</td>
-			{/* Company */}
-			<td>
-				<div className='skeleton min-w-[250px] h-6'></div>
-			</td>
-			{/* Fecha */}
-			<td>
-				<div className='skeleton min-w-14 h-6'></div>
-			</td>
-			{/* Total */}
-			<td>
-				<div className='skeleton min-w-14 h-6'></div>
-			</td>
-			<td>
-				<div className='flex items-center justify-center gap-x-2'>
-					<div className='flex gap-4'>
-						<div className='skeleton w-8 h-6'></div>
-						<div className='skeleton w-8 h-6'></div>
-					</div>
-				</div>
-			</td>
-		</tr>
-	)
-}
-
 export function InvoicesMobileSkeleton() {
 	return (
 		<div className='card card-compact bg-base-200'>
 			<div className='card-body'>
 				<div className=' border-b border-base-content/30 pb-4 pt-2 flex flex-col gap-2'>
 					<div className='flex items-center justify-between'>
-						<div className='skeleton w-16 h-4'></div>
-						<div className='skeleton w-16 h-4'></div>
+						<Skeleton className='skeleton w-16 h-4'></Skeleton>
+						<Skeleton className='skeleton w-16 h-4'></Skeleton>
 					</div>
 					<div className='skeleton w-60 h-4 mx-auto'></div>
 				</div>
 				<div className='flex w-full items-center justify-between'>
-					<div className='skeleton w-16 h-4'></div>
-					<div className='skeleton w-16 h-4'></div>
+					<Skeleton className='skeleton w-16 h-4'></Skeleton>
+					<Skeleton className='skeleton w-16 h-4'></Skeleton>
 					<div className='flex gap-2'>
-						<div className='skeleton w-6 h-4'></div>
-						<div className='skeleton w-6 h-4'></div>
+						<Skeleton className='skeleton w-6 h-4'></Skeleton>
+						<Skeleton className='skeleton w-6 h-4'></Skeleton>
 					</div>
 				</div>
 			</div>
@@ -78,20 +47,20 @@ function SkeletonCard() {
 			<div className='card-body bg-base-200'>
 				<div className='flex flex-col items-center justify-between border-b border-base-content/10 pb-4 w-full'>
 					<div className='mb-2 flex items-center justify-between w-full'>
-						<div className='skeleton w-14 h-6'>
-						</div>
-						<div className='skeleton w-14 h-6'>
-						</div>
+						<Skeleton className='skeleton w-14 h-6'>
+						</Skeleton>
+						<Skeleton className='skeleton w-14 h-6'>
+						</Skeleton>
 					</div>
-					<div className='skeleton w-72 h-6'>
-					</div>
+					<Skeleton className='skeleton w-72 h-6'>
+					</Skeleton>
 				</div>
 				<div className='flex w-full items-center justify-between'>
-					<div className='skeleton w-16 h-6'></div>
-					<div className='skeleton w-16 h-6'></div>
+					<Skeleton className='skeleton w-16 h-6'></Skeleton>
+					<Skeleton className='skeleton w-16 h-6'></Skeleton>
 					<div className='flex justify-end gap-2'>
-						<div className='skeleton w-6 h-6'></div>
-						<div className='skeleton w-6 h-6'></div>
+						<Skeleton className='skeleton w-6 h-6'></Skeleton>
+						<Skeleton className='skeleton w-6 h-6'></Skeleton>
 					</div>
 				</div>
 			</div>
@@ -208,48 +177,48 @@ export function CreateUpdateQuotationSkeleton({ isEdit }) {
 			{!isEdit && (
 				<div className='flex justify-between'>
 					<div />
-					<div className='- skeleton w-32 h-6'></div>
+					<Skeleton className='- skeleton w-32 h-6'></Skeleton>
 				</div>
 			)}
 			<div className='grid grid-cols-12 gap-4'>
 				<div className='col-span-12'>
-					<div className='skeleton w-20 h-4 mb-2'></div>
-					<div className='skeleton h-10 w-full' />
+					<Skeleton className='skeleton w-20 h-4 mb-2'></Skeleton>
+					<Skeleton className='skeleton h-10 w-full' />
 				</div>
 				<div className='col-span-6'>
-					<div className='skeleton w-20 h-4 mb-2'></div>
-					<div className='skeleton h-10 w-full' />
+					<Skeleton className='skeleton w-20 h-4 mb-2'></Skeleton>
+					<Skeleton className='skeleton h-10 w-full' />
 				</div>
 				<div className='col-span-6'>
-					<div className='skeleton w-20 h-4 mb-2'></div>
-					<div className='skeleton h-10 w-full' />
+					<Skeleton className='skeleton w-20 h-4 mb-2'></Skeleton>
+					<Skeleton className='skeleton h-10 w-full' />
 				</div>
 				<div className='col-span-12'>
-					<div className='skeleton w-20 h-4 mb-2'></div>
-					<div className='skeleton h-10 w-full' />
+					<Skeleton className='skeleton w-20 h-4 mb-2'></Skeleton>
+					<Skeleton className='skeleton h-10 w-full' />
 				</div>
 
 				<div className='col-span-12'>
-					<div className='skeleton w-20 h-4 mb-2'></div>
-					<div className='skeleton h-10 w-full' />
+					<Skeleton className='skeleton w-20 h-4 mb-2'></Skeleton>
+					<Skeleton className='skeleton h-10 w-full' />
 				</div>
 				<div className='col-span-6 flex items-center gap-4'>
-					<div className='skeleton rounded-md w-7 h-7 ' />
-					<div className='skeleton w-20 h-4 '>
-					</div>
+					<Skeleton className='skeleton rounded-md w-7 h-7 ' />
+					<Skeleton className='skeleton w-20 h-4 '>
+					</Skeleton>
 				</div>
 
 				<div className='col-span-6 flex items-center gap-4'>
-					<div className='skeleton rounded-md w-7 h-7 ' />
-					<div className='skeleton w-20 h-4 '>
-					</div>
+					<Skeleton className='skeleton rounded-md w-7 h-7 ' />
+					<Skeleton className='skeleton w-20 h-4 '>
+					</Skeleton>
 				</div>
 
 				<section className='col-span-12 mt-4'>
 					<header className='flex items-center justify-between'>
-						<div className='skeleton w-32 h-8'></div>
-						<div className='skeleton w-36 h-8'>
-						</div>
+						<Skeleton className='skeleton w-32 h-8'></Skeleton>
+						<Skeleton className='skeleton w-36 h-8'>
+						</Skeleton>
 					</header>
 				</section>
 			</div>
@@ -257,8 +226,8 @@ export function CreateUpdateQuotationSkeleton({ isEdit }) {
 				<div className='skeleton w-full h-6'></div>
 				<div className='skeleton w-full h-32 mt-4'></div>
 				<div className='flex justify-between mt-4'>
-					<div className='skeleton w-32 h-8'></div>
-					<div className='skeleton w-32 h-8'></div>
+					<Skeleton className='skeleton w-32 h-8'></Skeleton>
+					<Skeleton className='skeleton w-32 h-8'></Skeleton>
 				</div>
 			</div>
 		</>
