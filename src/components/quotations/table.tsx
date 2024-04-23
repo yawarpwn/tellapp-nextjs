@@ -1,5 +1,6 @@
 import { NoResultRow } from '@/components/no-result-row'
 import { TextGradient } from '@/components/text-gradient'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import {
 	Table,
@@ -49,12 +50,13 @@ function QuotationTableRow({ quotation }: {
 					<EditButton
 						href={`/quotations/${quotation.number}/update`}
 					/>
-					<Link
-						href={`/quotations/${quotation.number}`}
-						className='btn btn-sm'
-					>
-						<EyeIcon size={20} />
-					</Link>
+					<Button asChild size='icon'>
+						<Link
+							href={`/quotations/${quotation.number}`}
+						>
+							<EyeIcon size={20} />
+						</Link>
+					</Button>
 					<RegularCustomerToggle active={quotation.is_regular_customer} />
 				</div>
 			</TableCell>

@@ -11,7 +11,8 @@ disabled:pointer-events-none disabled:opacity-40 `,
 	{
 		variants: {
 			variant: {
-				default: 'shadow',
+				default: `border bg-[rgb(19,19,19)] 
+bg-origin-padding  hover:bg-[rgb(57,59,69)]`,
 				destructive:
 					'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
 				outline:
@@ -52,7 +53,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 		const Comp = asChild ? Slot : 'button'
 		return (
 			<Comp
-				className={cn(buttonVariants({ variant, size, className }))}
+				className={cn(
+					buttonVariants({ variant, size, className }),
+					'',
+				)}
 				ref={ref}
 				{...props}
 			/>

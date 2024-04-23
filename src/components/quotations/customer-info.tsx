@@ -61,9 +61,7 @@ export function QuotationCustomerInfo() {
 			<header className='flex justify-between'>
 				<div>
 				</div>
-				<div className='flex gap-4'>
-					<div>
-					</div>
+				<div className='flex justify-end'>
 					<CustomersPicker />
 				</div>
 			</header>

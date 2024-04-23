@@ -1,5 +1,5 @@
 'use client'
-
+import { Button } from '@/components/ui/button'
 import React from 'react'
 import InputSearch from './input-search'
 
@@ -40,9 +40,9 @@ export function CustomersPicker() {
 				onOpenChange={setOpen}
 			>
 				<DialogTrigger asChild>
-					<button className='btn btn-secondary'>
+					<Button disabled variant={'secondary'}>
 						Clientes Frecuentes
-					</button>
+					</Button>
 				</DialogTrigger>
 				{open && (
 					<DialogContent>
