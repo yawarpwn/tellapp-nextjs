@@ -111,12 +111,13 @@ function QuotationCard({ quotation }: {
 					<EditButton
 						href={`/quotations/${quotation.number}/update`}
 					/>
-					<Link
-						href={`/quotations/${quotation.number}`}
-						className='btn btn-sm'
-					>
-						<EyeIcon size={20} />
-					</Link>
+					<Button size='icon' asChild>
+						<Link
+							href={`/quotations/${quotation.number}`}
+						>
+							<EyeIcon size={20} />
+						</Link>
+					</Button>
 				</div>
 			</CardFooter>
 		</Card>

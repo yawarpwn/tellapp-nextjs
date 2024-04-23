@@ -1,4 +1,5 @@
-export default function DownloadIcon({ size }) {
+import { type IconProps } from '@/icons'
+export default function DownloadIcon({ size = 24, ...props }: IconProps) {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
@@ -6,8 +7,9 @@ export default function DownloadIcon({ size }) {
 			viewBox='0 0 24 24'
 			strokeWidth={1.5}
 			stroke='currentColor'
-			width={size || 24}
-			height={size || 24}
+			width={size}
+			height={size}
+			{...props}
 		>
 			<path
 				strokeLinecap='round'

@@ -79,19 +79,42 @@ function PaginationNumber({ isActive, href, position, page }: {
 	position?: 'first' | 'last' | 'middle' | 'single'
 	page: number | string
 }) {
-	return isActive || position === 'middle'
-		? <div className={cn(buttonVariants(), 'w-8 h-8 rounded-full')}>{page}</div>
-		: (
-			<Link
+	if (isActive) {
+		return (
+			<div
 				className={cn(
-					buttonVariants({ variant: 'secondary', size: 'icon' }),
+					buttonVariants({ variant: 'primary' }),
 					'w-8 h-8 rounded-full',
 				)}
-				href={href}
 			>
 				{page}
-			</Link>
+			</div>
 		)
+	}
+
+	if (position === 'middle') {
+		return (
+			<div
+				className={cn(
+					'w-8 h-8 rounded-full inline-flex justify-center',
+				)}
+			>
+				{page}
+			</div>
+		)
+	}
+
+	return (
+		<Link
+			className={cn(
+				buttonVariants({ size: 'icon' }),
+				'w-8 h-8 rounded-full',
+			)}
+			href={href}
+		>
+			{page}
+		</Link>
+	)
 }
 
 export default Pagination

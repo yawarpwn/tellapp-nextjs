@@ -1,37 +1,8 @@
-import { AddButton } from '@/components/buttons'
-import Pagination from '@/components/pagination'
-import QuotationsTable from '@/components/quotations/new-quo-table'
-import Search from '@/components/search'
-import { QuotationsTableSkeleton } from '@/components/skeletons/quotations'
-import { fetchQuotationsPages } from '@/lib/data/quotations'
-import { Suspense } from 'react'
-async function QuotationsPage({ searchParams }: {
-	searchParams?: {
-		page?: string
-		query?: string
-	}
-}) {
-	const page = Number(searchParams?.page) || 1
-	const query = searchParams?.query || ''
-	const totalPages = await fetchQuotationsPages({ query })
-	return (
-		<>
-			<header className='flex items-center justify-between gap-2 mb-4'>
-				<Search placeholder='Buscar Cotización' searchValue={query} />
-				<AddButton href={'/new-quos/create'} />
-			</header>
-			<Suspense
-				key={query}
-				fallback={<QuotationsTableSkeleton />}
-			>
-				<QuotationsTable
-					query={query}
-					currentPage={page}
-				/>
-			</Suspense>
-			<Pagination totalPages={totalPages} />
-		</>
-	)
-}
+import { fetchQuotations } from '@/lib/data/quotations'
+import { columns } from './columns'
+import { DataTable } from './data-table'
 
-export default QuotationsPage
+export default async function Page() {
+	const quotations = await fetchQuotations()
+	return <DataTable data={quotations} columns={columns} />
+}

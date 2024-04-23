@@ -23,6 +23,7 @@ bg-origin-padding  hover:bg-[rgb(57,59,69)]`,
 				link: 'text-primary underline-offset-4 hover:underline',
 				primary:
 					`bg-gradient-to-r from-accent from-0% via-primary via-50% to-secondary to-100% text-secondary-foreground 
+hover:shadow-[rgba(161,128,255,0.6)_0px_0px_1rem_0px] hover:text-white
           disabled:bg-gradient-to-r disabled:from-[#4e4343] disabled:via-[#757575] disabled:to-[#9a9a9a]
 `,
 			},

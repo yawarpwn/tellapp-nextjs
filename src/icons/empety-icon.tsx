@@ -11,7 +11,7 @@ export default function EmpetyIcon(props: IconProps) {
 			strokeWidth={1}
 			strokeLinecap='round'
 			strokeLinejoin='round'
-			className={props.className}
+			{...props}
 		>
 			<path d='M15.236 22a3 3 0 0 0-2.2-5' />
 			<path d='M16 20a3 3 0 0 1 3-3h1a2 2 0 0 0 2-2v-2a4 4 0 0 0-4-4V4' />

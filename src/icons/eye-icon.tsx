@@ -1,6 +1,6 @@
 import { IconProps } from '@/icons'
 
-export default function Icon({ size = 24 }: IconProps) {
+export default function Icon({ size = 24, ...props }: IconProps) {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
@@ -8,6 +8,7 @@ export default function Icon({ size = 24 }: IconProps) {
 			fill='currentColor'
 			width={size}
 			height={size}
+			{...props}
 		>
 			<path d='M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
 			<path

@@ -66,14 +66,13 @@ export function DataTable(props: Props) {
 					onChange={(value) => setGlobalFilter(String(value))}
 					placeholder='Filtrar...'
 				/>
-				<div className='flex gap-4'>
-					<Link className={buttonVariants()} href='/new-quos/create'>
-						<PlusIcon size={20} />
-						<span className='ml-2'>
-							Crear
-						</span>
-					</Link>
-				</div>
+				<Link
+					className={buttonVariants({ variant: 'primary' })}
+					href='/new-quos/create'
+				>
+					<PlusIcon className='mr-2' size={20} />
+					Crear
+				</Link>
 			</div>
 			<Table>
 				<TableHeader>

@@ -1,4 +1,5 @@
-export default function TrashIcon({ size }) {
+import { type IconProps } from '@/icons'
+export default function TrashIcon({ size, ...props }: IconProps) {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
@@ -8,6 +9,7 @@ export default function TrashIcon({ size }) {
 			stroke='currentColor'
 			width={size ?? 24}
 			height={size ?? 24}
+			{...props}
 		>
 			<path
 				strokeLinecap='round'

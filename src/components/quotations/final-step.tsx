@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast'
 import { insertQuotation, setQuotation } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { QuotationCreateType, QuotationUpdateType } from '@/types'
+import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import React from 'react'
@@ -74,7 +75,8 @@ export function QuotationFinalStep() {
 				<Button disabled={pending} type='button' onClick={decrementStep}>
 					Anterior
 				</Button>
-				<Button disabled={pending} type='submit'>
+				<Button variant='primary' disabled={pending} type='submit'>
+					{pending && <Loader2 className='mr-2 w-4 h-4 animate-spin' />}
 					{isUpdate ? 'Actualizar cotizacion' : 'Crear Cotización'}
 				</Button>
 			</form>

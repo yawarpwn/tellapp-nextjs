@@ -1,6 +1,6 @@
 import { type IconProps } from '@/icons'
 
-export default function Icon({ size }: IconProps) {
+export default function Icon({ size = 24, ...props }: IconProps) {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
@@ -8,8 +8,9 @@ export default function Icon({ size }: IconProps) {
 			viewBox='0 0 24 24'
 			strokeWidth={1.5}
 			stroke='currentColor'
-			width={size || 24}
-			height={size || 24}
+			width={size}
+			height={size}
+			{...props}
 		>
 			<path
 				strokeLinecap='round'

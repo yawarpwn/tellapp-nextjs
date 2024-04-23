@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
+
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -49,9 +51,9 @@ export const columns = [
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<button className='btn btn-sm btn-ghost'>
+						<Button className='btn btn-sm btn-ghost'>
 							<MoreHorizontal className='w-4 h-4' />
-						</button>
+						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
 						<DropdownMenuLabel>Acciones</DropdownMenuLabel>

@@ -40,7 +40,7 @@ export function CustomersPicker() {
 				onOpenChange={setOpen}
 			>
 				<DialogTrigger asChild>
-					<Button disabled variant={'secondary'}>
+					<Button variant={'secondary'}>
 						Clientes Frecuentes
 					</Button>
 				</DialogTrigger>
@@ -66,7 +66,7 @@ export function CustomersPicker() {
 												})
 												closeModal()
 											}}
-											className='flex py-2 px-2 cursor-pointer items-center gap-2 hover:bg-primary hover:text-primary-foreground'
+											className='flex py-2 px-2 cursor-pointer items-center gap-2 hover:bg-foreground hover:text-background'
 										>
 											<p>{item.name}</p>
 										</li>

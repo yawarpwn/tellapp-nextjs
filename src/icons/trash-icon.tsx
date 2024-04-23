@@ -1,4 +1,5 @@
-export default function TashIcon({ size = 24 }) {
+import { IconProps } from '@/icons'
+export default function TashIcon({ size = 24, ...props }: IconProps) {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
@@ -6,6 +7,7 @@ export default function TashIcon({ size = 24 }) {
 			fill='currentColor'
 			width={size}
 			height={size}
+			{...props}
 		>
 			<path
 				fillRule='evenodd'

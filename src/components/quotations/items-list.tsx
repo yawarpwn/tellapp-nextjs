@@ -29,8 +29,8 @@ export function ItemsList(
 ) {
 	const { formatedSubTotal, formatedTotal, formatedIgv } = getIgv(items)
 	return (
-		<Card className='border-0'>
-			<CardContent className='p-0'>
+		<div className='border-0'>
+			<div className='p-0'>
 				<div className='flex justify-end'>
 					<div className='text-right'>
 						<h2 className='text-2xl md:text-3xl font-semibold'>
@@ -170,7 +170,7 @@ export function ItemsList(
 						</div>
 					</div>
 				</div>
-			</CardContent>
-		</Card>
+			</div>
+		</div>
 	)
 }

@@ -1,4 +1,5 @@
-export default function Icon({ size = 24, ...props }) {
+import { type IconProps } from '@/icons'
+export default function Icon({ size = 24, ...props }: IconProps) {
 	return (
 		<svg
 			height={size}
