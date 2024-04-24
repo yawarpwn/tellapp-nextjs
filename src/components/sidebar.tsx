@@ -1,6 +1,7 @@
 'use client'
 
 import SignOutButton from '@/components/sign-out-button'
+import { Button } from '@/components/ui/button'
 import { NAVIGATION } from '@/constants'
 import { cn } from '@/lib/utils'
 import { XIcon } from 'lucide-react'
@@ -28,14 +29,13 @@ border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto text-sm`,
 		>
 			<header className='mt-4 flex justify-between px-4 md:hidden'>
 				<Logo />
-				<button onClick={onClose} className='btn btn-sm text-white'>
+				<Button onClick={onClose} className='btn btn-sm text-white'>
 					<XIcon />
-				</button>
+				</Button>
 			</header>
 
 			<div className='hidden md:block mt-4 pl-5'>
 				<Logo />
-				<span className='badge badge-xs badge-ghost'>2.0</span>
 			</div>
 			<ul className='flex flex-col pt-2 mb-1 '>
 				{NAVIGATION.map(({ href, title, icon: Icon }) => {

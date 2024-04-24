@@ -27,11 +27,20 @@ export const columns = [
 	}),
 	columnHelper.accessor('company', {
 		header: 'Cliente',
-		cell: props => <p className='min-w-[250px]'>{props.getValue()}</p>,
+		cell: props => (
+			<div>
+				<p className='min-w-[250px]'>{props.getValue() || 'SIN RUC'}</p>
+				<p>{props.row.original.ruc}</p>
+			</div>
+		),
 	}),
-	columnHelper.accessor('ruc', {
-		header: 'Ruc',
-		cell: props => <span>{props.getValue()}</span>,
+	columnHelper.accessor('updated_at', {
+		header: 'Actualizado',
+		cell: props => (
+			<div className='w-[max-content]'>
+				{getFormatedDate(props.getValue())}
+			</div>
+		),
 	}),
 	columnHelper.accessor('created_at', {
 		header: 'Fecha',
@@ -51,7 +60,7 @@ export const columns = [
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button className='btn btn-sm btn-ghost'>
+						<Button size='sm'>
 							<MoreHorizontal className='w-4 h-4' />
 						</Button>
 					</DropdownMenuTrigger>

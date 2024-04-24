@@ -1,4 +1,5 @@
 'use client'
+import { Button } from '@/components/ui/button'
 import { MenuIcon } from '@/icons'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -11,9 +12,9 @@ export function MobileMenu() {
 
 	return (
 		<>
-			<button className='btn btn-sm text-white' onClick={openMobileMenu}>
+			<Button size='sm' onClick={openMobileMenu}>
 				<MenuIcon />
-			</button>
+			</Button>
 			{showMobileMenu && createPortal(
 				<MobileSidebar
 					showMobileMenu={showMobileMenu}

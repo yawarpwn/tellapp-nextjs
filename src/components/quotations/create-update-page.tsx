@@ -2,11 +2,16 @@
 
 import { QuotationCustomerInfo } from '@/components/quotations/customer-info'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import {
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+} from '@/components/ui/dialog'
 import { QUOTATION_LOCALSTORAGE_NAME } from '@/constants'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { useQuotationStore } from '@/hooks/use-quotation-store'
-import { DialogDescription } from '@radix-ui/react-dialog'
 import React from 'react'
 import { QuotationAddItems } from './add-items'
 import { QuotationFinalStep } from './final-step'
@@ -30,19 +35,11 @@ export function CreateUpdatePage() {
 		<section>
 			{confirmModalOpen && (
 				<Dialog open={confirmModalOpen} onOpenChange={setConfirmModalOpen}>
-					<DialogContent className='max-h-[200px]'>
-						<DialogDescription>
+					<DialogContent className='max-h-[200px] gap-0'>
+						<DialogHeader className='text-center'>
 							Hemos recuperando al cotizacion , quieres recuperar?
-						</DialogDescription>
-						<div className='flex flex-row items-center justify-between'>
-							<Button
-								onClick={() => {
-									store?.persist.rehydrate()
-									setConfirmModalOpen(false)
-								}}
-							>
-								Aceptar
-							</Button>
+						</DialogHeader>
+						<DialogFooter className='flex flex-row items-center justify-between'>
 							<Button
 								onClick={() => {
 									store?.persist.clearStorage()
@@ -51,7 +48,16 @@ export function CreateUpdatePage() {
 							>
 								Cancelar
 							</Button>
-						</div>
+							<Button
+								variant='primary'
+								onClick={() => {
+									store?.persist.rehydrate()
+									setConfirmModalOpen(false)
+								}}
+							>
+								Aceptar
+							</Button>
+						</DialogFooter>
 					</DialogContent>
 				</Dialog>
 			)}

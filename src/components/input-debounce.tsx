@@ -1,4 +1,5 @@
 import { Input } from '@/components/ui/input'
+import { SearchIcon } from '@/icons'
 import React from 'react'
 
 export function DebouncedInput({
@@ -26,11 +27,14 @@ export function DebouncedInput({
 	}, [value, onChange, debounce])
 
 	return (
-		<Input
-			{...props}
-			value={value}
-			onChange={e => setValue(e.target.value)}
-			className='max-w-xs'
-		/>
+		<div className='flex items-center gap-2 bg-background200 py-1 px-2 rounded-md border [&:has(input:focus)]:border-primary '>
+			<SearchIcon size={20} />
+			<input
+				{...props}
+				value={value}
+				onChange={e => setValue(e.target.value)}
+				className='bg-transparent border-none outline-none'
+			/>
+		</div>
 	)
 }

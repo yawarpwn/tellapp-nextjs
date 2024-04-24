@@ -28,7 +28,7 @@ const DialogOverlay = React.forwardRef<
 >(({ children, className, ...props }, ref) => (
 	<PrimitiveDialog.Overlay
 		className={cn(
-			'fixed inset-0 z-50 bg-black/90 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0',
+			'fixed inset-0 z-50 bg-background/50 backdrop-blur-md saturate-150 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0',
 			className,
 		)}
 		ref={ref}
@@ -49,7 +49,7 @@ const DialogContent = React.forwardRef<
 			<PrimitiveDialog.Content
 				ref={ref}
 				className={cn(
-					`fixed inset-0 z-50 grid gap-4 w-full max-w-lg bg-base-100 rounded md:rounded-lg p-6
+					`fixed inset-0 z-50 grid gap-4 w-full max-w-lg bg-card rounded md:rounded-lg p-6
 overflow-hidden h-[95%]
 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-200 shadow-lg
 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]
@@ -61,7 +61,7 @@ data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=close
 			>
 				{children}
 				<PrimitiveDialog.Close id='closeDialog' asChild>
-					<button className='absolute top-4 right-4 bg-base-300 flex items-center justify-center  rounded-full opacity-70 hover:opacity-100'>
+					<button className='absolute top-4 right-4 bg-background flex items-center justify-center  rounded-full opacity-70 hover:opacity-100'>
 						<X className='w-4 h-4' />
 					</button>
 				</PrimitiveDialog.Close>
