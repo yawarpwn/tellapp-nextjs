@@ -66,7 +66,7 @@ function PaginationArrow({ href, direction, isDisabled }: {
 		: (
 			<Link
 				href={href}
-				className={cn(buttonVariants())}
+				className={cn(buttonVariants({ size: 'icon' }))}
 			>
 				{icon}
 			</Link>
@@ -84,7 +84,7 @@ function PaginationNumber({ isActive, href, position, page }: {
 			<div
 				className={cn(
 					buttonVariants({ variant: 'primary' }),
-					'w-8 h-8 rounded-full',
+					'px-0 w-8 h-8 rounded-full',
 				)}
 			>
 				{page}
@@ -96,7 +96,7 @@ function PaginationNumber({ isActive, href, position, page }: {
 		return (
 			<div
 				className={cn(
-					'w-8 h-8 rounded-full inline-flex justify-center',
+					'px-0 w-8 h-8 rounded-full inline-flex justify-center',
 				)}
 			>
 				{page}
@@ -108,7 +108,7 @@ function PaginationNumber({ isActive, href, position, page }: {
 		<Link
 			className={cn(
 				buttonVariants({ size: 'icon' }),
-				'w-8 h-8 rounded-full',
+				'px-0 w-8 h-8 rounded-full',
 			)}
 			href={href}
 		>

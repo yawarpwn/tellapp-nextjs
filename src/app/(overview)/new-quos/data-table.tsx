@@ -2,6 +2,7 @@
 
 import { DataTablePagination } from '@/components/data-table-pagination'
 import { buttonVariants } from '@/components/ui/button'
+import { EmpetyIcon } from '@/icons'
 import {
 	flexRender,
 	getCoreRowModel,
@@ -26,6 +27,7 @@ import { PlusIcon } from '@/icons'
 import { DebouncedInput } from '@/components/input-debounce'
 import type { QuotationType } from '@/types'
 import Link from 'next/link'
+import { getColumns } from './columns'
 
 interface Props {
 	data: QuotationType[]
@@ -33,12 +35,14 @@ interface Props {
 }
 
 export function DataTable(props: Props) {
-	const { data, columns } = props
+	const { data } = props
 	const [globalFilter, setGlobalFilter] = React.useState('')
 	const [pagination, setPagination] = React.useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 14,
 	})
+
+	const columns = React.useMemo(() => getColumns(), [])
 
 	const table = useReactTable({
 		data,
@@ -108,8 +112,18 @@ export function DataTable(props: Props) {
 						)
 						: (
 							<TableRow>
-								<TableCell colSpan={columns.length}>
-									No hay resultados
+								<TableCell
+									className='min-h-[500px]'
+									colSpan={columns.length}
+								>
+									<div className='min-h-[500px] flex items-center justify-center'>
+										<div>
+											<EmpetyIcon className='w-60 h-60' />
+											<p className='text-center text-2xl font-bold'>
+												No hay resultados
+											</p>
+										</div>
+									</div>
 								</TableCell>
 							</TableRow>
 						)}
