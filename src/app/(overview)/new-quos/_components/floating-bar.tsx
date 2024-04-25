@@ -25,8 +25,9 @@ import React from 'react'
 interface Props {
 	id: string
 	quotation: QuotationType
+	clearSelectedRow: () => void
 }
-export function FloatingBar({ id, quotation }: Props) {
+export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
 	const [showDeleteModal, setShowDeleteModal] = React.useState(false)
 	const [showDuplicateModal, setShowDuplicateModal] = React.useState(
 		false,
@@ -37,7 +38,6 @@ export function FloatingBar({ id, quotation }: Props) {
 	const closeDeleteModal = () => setShowDeleteModal(false)
 	const closeDuplicateModal = () => setShowDuplicateModal(false)
 
-	console.log('qo', quotation)
 	return (
 		<>
 			<ConfirmActionDialog
@@ -70,11 +70,19 @@ export function FloatingBar({ id, quotation }: Props) {
 				showTrigger={false}
 			/>
 			<div className='fixed inset-x-0 bottom-4 z-40 w-full p-4'>
-				<div className='w-full overflow-x-auto'>
+				<div className='w-full'>
 					<div className='mx-auto w-fit flex items-center gap-2 rounded-md bg-card p-2 shadow-2xl [&>button]:shrink-0 [&>a]:shrink-0'>
-						<Button className='size-9 hover:border' size={'icon'}>
-							<XIcon />
-						</Button>
+						<div className='flex h-9 items-center rounded-md border border-dashed pl-2.5 pr-1'>
+							<span>#{quotation.number}</span>
+							<Separator orientation='vertical' className='ml-2 mr-1' />
+							<Button
+								onClick={clearSelectedRow}
+								className='size-7 hover:border'
+								size={'icon'}
+							>
+								<XIcon className='size-4' />
+							</Button>
+						</div>
 
 						<Button className='size-9 hover:border' size={'icon'} asChild>
 							<Link

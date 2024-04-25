@@ -33,14 +33,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 			enableGlobalFilter: true,
 			cell: ({ row }) => (
 				<div className='flex items-center gap-1'>
-					<Checkbox
-						id={`checked-${row.id}`}
-						checked={row.getIsSelected()}
-						onCheckedChange={value => row.toggleSelected(!!value)}
-						aria-label='Select Row'
-						className='translate-y-0.5'
-					/>
-					<label htmlFor={`checked-${row.id}`}>{row.original.number}</label>
+					<span>{row.original.number}</span>
 				</div>
 			),
 		},
@@ -101,7 +94,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 						/>
 
 						<ConfirmActionDialog
-							action={() => duplicateQuotationAction(row.original.number)}
+							action={() => duplicateQuotationAction(row.original.id)}
 							dialogTitle={
 								<>
 									¿Deseas Duplicar la cotización{' '}

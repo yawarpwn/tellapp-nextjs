@@ -75,13 +75,13 @@ export function DataTable(props: Props) {
 
 	const selectedRows = table.getFilteredSelectedRowModel().flatRows
 	// console.log(selectedRows)
-
 	return (
 		<div>
 			{selectedRows.length > 0 && (
 				<FloatingBar
 					id={selectedRows[0].id}
 					quotation={selectedRows[0].original}
+					clearSelectedRow={() => table.toggleAllRowsSelected(false)}
 				/>
 			)}
 			<div className='py-4 flex items-center justify-between'>
@@ -120,6 +120,7 @@ export function DataTable(props: Props) {
 						? (
 							table.getRowModel().rows.map(row => (
 								<TableRow
+									onClick={() => row.toggleSelected(true)}
 									data-state={row.getIsSelected() && 'selected'}
 									key={row.id}
 								>

@@ -1,22 +1,9 @@
-'use client'
-import {
-	QuotationStoreProvider,
-	useQuotationContext,
-} from '@/hooks/use-quotation-store'
+import { fetchQuotationByNumber } from '@/lib/data/quotations'
 import React from 'react'
-import { useBearStore } from './use-bear-store'
 
-function App() {
-	const quo = useQuotationContext(state => state.quo)
-
-	return (
-		<div>
-			{JSON.stringify(quo)}
-		</div>
-	)
-}
-
-export default function PageTest() {
+export default async function PageTest() {
+	const quo = await fetchQuotationByNumber({ number: 4020 })
+	console.log(quo)
 	return (
 		<form>
 			Neyda
