@@ -68,7 +68,7 @@ export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
 				onOpenChange={setShowDuplicateModal}
 				showTrigger={false}
 			/>
-			<div className='fixed inset-x-0 bottom-4 z-40 w-full p-4'>
+			<div className='fixed inset-x-0 bottom-[1vh] z-40 w-full p-4'>
 				<div className='w-full'>
 					<div className='mx-auto w-fit flex items-center gap-2 rounded-md bg-card p-2 shadow-2xl [&>button]:shrink-0 [&>a]:shrink-0'>
 						<div className='flex h-9 items-center rounded-md border border-dashed pl-2.5 pr-1'>
