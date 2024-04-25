@@ -29,7 +29,7 @@ border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto text-sm`,
 		>
 			<header className='mt-4 flex justify-between px-4 md:hidden'>
 				<Logo />
-				<Button onClick={onClose} className='btn btn-sm text-white'>
+				<Button size='icon' onClick={onClose} className='size-9'>
 					<XIcon />
 				</Button>
 			</header>

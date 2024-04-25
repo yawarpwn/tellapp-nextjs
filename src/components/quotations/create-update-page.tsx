@@ -8,10 +8,12 @@ import {
 	DialogContent,
 	DialogFooter,
 	DialogHeader,
+	DialogTitle,
 } from '@/components/ui/dialog'
 import { QUOTATION_LOCALSTORAGE_NAME } from '@/constants'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { useQuotationStore } from '@/hooks/use-quotation-store'
+import { DialogDescription } from '@radix-ui/react-dialog'
 import React from 'react'
 import { QuotationAddItems } from './add-items'
 import { QuotationFinalStep } from './final-step'
@@ -37,7 +39,15 @@ export function CreateUpdatePage() {
 				<Dialog open={confirmModalOpen} onOpenChange={setConfirmModalOpen}>
 					<DialogContent>
 						<DialogHeader>
-							Hemos recuperando una cotización , quieres restaurarla?
+							<DialogTitle>Recupear Cotización</DialogTitle>
+							<DialogDescription>
+								<p>
+									Hemos recuperando una cotización no guardarda
+								</p>
+								<p>
+									¿ Desea restaurarla?
+								</p>
+							</DialogDescription>
 						</DialogHeader>
 						<DialogFooter>
 							<Button

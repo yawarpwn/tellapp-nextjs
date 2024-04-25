@@ -12,7 +12,7 @@ export function MobileMenu() {
 
 	return (
 		<>
-			<Button size='sm' onClick={openMobileMenu}>
+			<Button size='icon' className='size-9' onClick={openMobileMenu}>
 				<MenuIcon />
 			</Button>
 			{showMobileMenu && createPortal(

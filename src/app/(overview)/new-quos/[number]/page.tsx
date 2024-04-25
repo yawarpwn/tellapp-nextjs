@@ -11,11 +11,11 @@ async function QuotationPage({ params }: { params: { number: string } }) {
 				breadcrumbs={[
 					{
 						label: 'Cotizaciones',
-						href: '/quotations',
+						href: '/new-quos',
 					},
 					{
 						label: ` #${number}`,
-						href: `/quotations/${number}`,
+						href: `/new-quos/${number}`,
 						active: true,
 					},
 				]}
