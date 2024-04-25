@@ -40,7 +40,7 @@ export const ITEMS_PER_PAGE = 12
 export const NAVIGATION = [
 	{
 		title: 'Cotizaciones',
-		href: '/quotations',
+		href: '/new-quos',
 		icon: QuotationIcon,
 	},
 	{
@@ -77,8 +77,8 @@ export const NAVIGATION = [
 	},
 
 	{
-		title: 'news Quos',
-		href: '/new-quos',
+		title: 'Antiguas',
+		href: '/quotations',
 		icon: QuotationIcon,
 	},
 ]

@@ -42,7 +42,7 @@ export async function signIn(_prevState: FormState, formData: FormData) {
 		redirect('/?message=Password or Email invalido')
 	}
 
-	redirect('/quotations')
+	redirect('/new-quos')
 }
 
 export async function signOut() {

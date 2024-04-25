@@ -45,7 +45,7 @@ export function CustomersPicker() {
 					</Button>
 				</DialogTrigger>
 				{open && (
-					<DialogContent>
+					<DialogContent className='h-[90vh]'>
 						<DialogHeader>
 							<InputSearch
 								searchValue={filterValue}

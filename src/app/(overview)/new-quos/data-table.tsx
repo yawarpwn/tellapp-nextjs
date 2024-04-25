@@ -41,8 +41,6 @@ export function DataTable(props: Props) {
 	const { data } = props
 
 	const [globalFilter, setGlobalFilter] = React.useState('')
-	const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({})
-	const [selectedId, setSelectedId] = React.useState<string | null>(null)
 	const [pagination, setPagination] = React.useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 14,
@@ -56,16 +54,15 @@ export function DataTable(props: Props) {
 		state: {
 			globalFilter,
 			pagination,
-			rowSelection,
 		},
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		onGlobalFilterChange: setGlobalFilter,
-		onRowSelectionChange: setRowSelection,
 		onPaginationChange: setPagination,
 		enableMultiRowSelection: false,
+		enableGlobalFilter: true,
 		getRowId: row => row.id,
 	})
 
@@ -74,7 +71,8 @@ export function DataTable(props: Props) {
 	// console.log(table.getFilteredSelectedRowModel().rows) // get filtered client-side selected rows console.log(table.getGroupedSelectedRowModel().rows) // get grouped client-side selected rows
 
 	const selectedRows = table.getFilteredSelectedRowModel().flatRows
-	// console.log(selectedRows)
+	console.log(table.getGlobalFilterFn())
+
 	return (
 		<div>
 			{selectedRows.length > 0 && (

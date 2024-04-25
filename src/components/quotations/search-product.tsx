@@ -41,7 +41,7 @@ export function QuotationSearchProduct() {
 					<SearchIcon size={20} />
 				</Button>
 			</DialogTrigger>
-			<DialogContent>
+			<DialogContent className='h-[90vh]'>
 				<DialogHeader>
 					<Input
 						onChange={(e) => setSearchValue(e.target.value)}

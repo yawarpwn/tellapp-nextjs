@@ -77,7 +77,7 @@ export function QuotationFinalStep() {
 				</Button>
 				<Button variant='primary' disabled={pending} type='submit'>
 					{pending && <Loader2 className='mr-2 w-4 h-4 animate-spin' />}
-					{isUpdate ? 'Actualizar cotizacion' : 'Crear Cotización'}
+					{isUpdate ? 'Actualizar' : 'Crear'}
 				</Button>
 			</form>
 		</div>

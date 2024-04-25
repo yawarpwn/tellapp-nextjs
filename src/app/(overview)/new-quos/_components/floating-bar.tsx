@@ -18,7 +18,6 @@ import {
 	deleteQuotationAction,
 	duplicateQuotationAction,
 } from '@/lib/actions/quoatations'
-import { cn } from '@/lib/utils'
 import { QuotationType } from '@/types'
 import Link from 'next/link'
 import React from 'react'
@@ -86,7 +85,7 @@ export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
 
 						<Button className='size-9 hover:border' size={'icon'} asChild>
 							<Link
-								href={`/quotation/${quotation.number}`}
+								href={`/new-quos/${quotation.number}`}
 							>
 								<EyeIcon />
 							</Link>

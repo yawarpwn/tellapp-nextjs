@@ -35,11 +35,11 @@ export function CreateUpdatePage() {
 		<section>
 			{confirmModalOpen && (
 				<Dialog open={confirmModalOpen} onOpenChange={setConfirmModalOpen}>
-					<DialogContent className='max-h-[200px] gap-0'>
-						<DialogHeader className='text-center'>
-							Hemos recuperando al cotizacion , quieres recuperar?
+					<DialogContent>
+						<DialogHeader>
+							Hemos recuperando una cotización , quieres restaurarla?
 						</DialogHeader>
-						<DialogFooter className='flex flex-row items-center justify-between'>
+						<DialogFooter>
 							<Button
 								onClick={() => {
 									store?.persist.clearStorage()

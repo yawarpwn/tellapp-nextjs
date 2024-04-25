@@ -15,7 +15,7 @@ export default async function Home(
 	} = await supabase.auth.getSession()
 
 	if (session) {
-		redirect('/quotations')
+		redirect('/new-quos')
 	}
 
 	return (

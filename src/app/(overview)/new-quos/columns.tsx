@@ -31,6 +31,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 			header: 'Nro',
 			accessorKey: 'number',
 			enableGlobalFilter: true,
+			filterFn: 'inNumberRange',
 			cell: ({ row }) => (
 				<div className='flex items-center gap-1'>
 					<span>{row.original.number}</span>
@@ -39,16 +40,21 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 		},
 		{
 			accessorKey: 'company',
+			// accessorFn: row => row.company,
 			header: 'Cliente',
 			cell: ({ row }) => (
 				<div>
-					<p className='min-w-[250px]'>
+					<p className='min-w-[230px]'>
 						{row.original.company || 'SIN RUC'}
 					</p>
 					<p>{row.original.ruc}</p>
 				</div>
 			),
-			enableGlobalFilter: true,
+		},
+		{
+			header: 'Monto',
+			cell: ({ row }) => getIgv(row.original.items).formatedTotal,
+			enableGlobalFilter: false,
 		},
 		{
 			header: 'Fecha',
@@ -57,10 +63,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 					{getFormatedDate(row.original.created_at)}
 				</div>
 			),
-		},
-		{
-			header: 'Monto',
-			cell: ({ row }) => getIgv(row.original.items).formatedTotal,
+			enableGlobalFilter: false,
 		},
 		{
 			id: 'actions',
@@ -117,7 +120,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 							<DropdownMenuLabel>Acciones</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem asChild>
-								<Link href={`/quotations/${row.original.number}`}>Ver</Link>
+								<Link href={`/new-quos/${row.original.number}`}>Ver</Link>
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<Link href={`/new-quos/${row.original.number}/update`}>

@@ -3,12 +3,7 @@ import { ItemsList } from '@/components/quotations/items-list'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { EditIcon } from '@/icons'
 import { fetchQuotationByNumber } from '@/lib/data/quotations'
-import { getIgv } from '@/lib/utils'
 import Link from 'next/link'
-import {
-	QuotationDeleteButton,
-	QuotationDuplicateButton,
-} from './buttons'
 
 export async function QuotationPageByNumber({ number }: { number: number }) {
 	const quotation = await fetchQuotationByNumber({ number })
@@ -17,7 +12,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
 			<header className='flex justify-end gap-x-2'>
 				<div className='flex gap-2'>
 					<Link
-						href={`/quotations/${number}/update`}
+						href={`/new-quos/${number}/update`}
 						className={buttonVariants({ variant: 'secondary' })}
 					>
 						<EditIcon size={20} />
@@ -25,8 +20,6 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
 					</Link>
 					<DownloadPDF quotation={quotation} />
 					{/* <DuplicateQuotation number={number} /> */}
-					<QuotationDuplicateButton number={number} />
-					<QuotationDeleteButton number={number} />
 				</div>
 			</header>
 
