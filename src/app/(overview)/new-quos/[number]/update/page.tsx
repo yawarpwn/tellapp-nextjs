@@ -2,12 +2,12 @@ import { CreateUpdatePage } from '@/components/quotations/create-update-page'
 import { QuotationStoreProvider } from '@/hooks/use-quotation-store'
 import { fetchCustomers } from '@/lib/data/customers'
 import { fetchProducts } from '@/lib/data/products'
-import { fetchQuotationById } from '@/lib/data/quotations'
+import { fetchQuotationByNumber } from '@/lib/data/quotations'
 export default async function Page(
 	{ params }: { params?: { number?: string } },
 ) {
 	const number = Number(params?.number)
-	const quotation = await fetchQuotationById({ number })
+	const quotation = await fetchQuotationByNumber({ number })
 	const customers = await fetchCustomers()
 	const products = await fetchProducts()
 	return (

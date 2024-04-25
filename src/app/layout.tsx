@@ -1,6 +1,7 @@
 import './globals.css'
-import { siteConfig } from '@/config/site'
+import { Toaster as ToasterSonner } from '@/components/ui/sonner'
 import { Toaster } from '@/components/ui/toaster'
+import { siteConfig } from '@/config/site'
 import { type Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
@@ -27,6 +28,7 @@ export default async function RootLayout(
 			>
 				<NextTopLoader showSpinner={false} color='oklch(var(--p))' />
 				<Toaster />
+				<ToasterSonner />
 				{children}
 			</body>
 		</html>

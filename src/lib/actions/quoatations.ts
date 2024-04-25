@@ -14,7 +14,11 @@ import {
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { fetchLastQuotation, fetchQuotationById } from '../data/quotations'
+import {
+	fetchLastQuotation,
+	fetchQuotationById,
+	fetchQuotationByNumber,
+} from '../data/quotations'
 
 export async function setQuotation(quotation: QuotationUpdateType) {
 	console.log('actualizado...jeje')
@@ -111,7 +115,7 @@ export async function insertQuotation(
 
 	if (!data) return
 
-	console.log(data[0])
+	revalidatePath('/new-quos')
 }
 
 // Create Product
@@ -337,6 +341,41 @@ export async function deleteQuotation(_: undefined, formData: FormData) {
 	redirect('/quotations')
 }
 
+export async function deleteQuotationAction(id: string) {
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+	await supabase.from(TABLES.Quotations).delete().eq('id', id)
+	revalidateTag('/new-quos')
+}
+
+export async function duplicateQuotationAction(id: string) {
+	// create supabase client
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	const quotation = await fetchQuotationById(id)
+	const { is_regular_customer, ...restQuotation } = quotation
+
+	const quotationToDuplicate = {
+		...restQuotation,
+		id: crypto.randomUUID(),
+		created_at: new Date().toISOString(),
+		updated_at: new Date().toISOString(),
+	}
+
+	const { data, error } = await supabase
+		.from(TABLES.Quotations)
+		.insert(quotationToDuplicate)
+
+	if (error) {
+		console.log('error duplicating', error)
+		throw new Error('Error duplicando cotización')
+	}
+
+	revalidateTag('/new-quos')
+}
+
 export async function duplicateQuotation(_: undefined, formData: FormData) {
 	const number = Number(formData.get('number'))
 
@@ -344,7 +383,7 @@ export async function duplicateQuotation(_: undefined, formData: FormData) {
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
-	const quotation = await fetchQuotationById({ number })
+	const quotation = await fetchQuotationByNumber({ number })
 	const { number: lastQuotation } = await fetchLastQuotation()
 
 	const dataToDuplicate = {
@@ -364,6 +403,7 @@ export async function duplicateQuotation(_: undefined, formData: FormData) {
 
 	if (error) {
 		console.log(error)
+		throw new Error('Error duplicando cotización')
 	}
 
 	redirect('/quotations')

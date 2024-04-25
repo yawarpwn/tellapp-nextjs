@@ -90,7 +90,7 @@ export async function fetchQuotationsPages({ query }: { query: string }) {
 	}
 }
 
-export async function fetchQuotationById(
+export async function fetchQuotationByNumber(
 	{ number }: { number: number },
 ) {
 	// create supabase Client
@@ -99,6 +99,33 @@ export async function fetchQuotationById(
 	const { data: quotations, error } = await supabase.from(TABLES.Quotations)
 		.select()
 		.eq('number', number)
+		.returns<QuotationType[]>()
+	if (error) {
+		// throw new Error('Failed to fetch quotation by id ')
+		console.log(error)
+		notFound()
+	}
+
+	if (quotations.length === 0) {
+		notFound()
+	}
+
+	const quotation = quotations[0]
+	const customers = await fetchCustomers()
+	const isRegularCustomer = customers.some(c => c.ruc === quotation.ruc)
+	return {
+		...quotation,
+		is_regular_customer: isRegularCustomer,
+	}
+}
+
+export async function fetchQuotationById(id: string) {
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	const { data: quotations, error } = await supabase.from(TABLES.Quotations)
+		.select()
+		.eq('id', id)
 		.returns<QuotationType[]>()
 	if (error) {
 		// throw new Error('Failed to fetch quotation by id ')

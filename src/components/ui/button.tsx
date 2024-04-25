@@ -6,14 +6,13 @@ import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
 	`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors 
-
 focus-visible:outline-none focus-visible:ring-none focus-visible:ring-ring 
 disabled:pointer-events-none disabled:opacity-40 `,
 	{
 		variants: {
 			variant: {
-				default: `bg-[rgba(255,255,255,0.08)] 
-bg-origin-padding  hover:bg-[rgba(252,255,255,0.16)]`,
+				default:
+					`bg-[rgba(255,255,255,0.08)] bg-origin-padding  hover:bg-[rgba(252,255,255,0.16)]`,
 				destructive:
 					'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
 				outline:
@@ -29,10 +28,10 @@ hover:shadow-[rgba(161,128,255,0.6)_0px_0px_1rem_0px] hover:text-white
 `,
 			},
 			size: {
-				default: 'h-10 px-6 py-2',
+				default: 'h-9 px-4 py-2',
 				sm: 'h-8 rounded-md px-3 text-xs',
 				lg: 'h-10 rounded-md px-8',
-				icon: 'h-9 w-9',
+				icon: 'w-9 h-9 w-full',
 			},
 		},
 		defaultVariants: {

@@ -136,19 +136,24 @@ export function ItemForm({
 					/>
 				</div>
 
-				<ul className='menu bg-none w-full bg-base-200 flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto'>
+				<ul className=' w-full bg-card flex flex-col flex-nowrap gap-4  rounded-box h-[300px] overflow-y-auto'>
 					{resultsToRender?.length > 0
 						? resultsToRender.map(item => (
 							<li
 								onClick={() => handleProductClick(item)}
-								className='flex gap-x-1 '
+								className='flex gap-x-1 hover:bg-zinc-800 '
 								key={item.id}
 							>
 								<div className='p-0 flex items-center gap-x-2'>
-									<span className='btn btn-primary btn-xs h-full '>
-										<p style={{ writingMode: 'vertical-lr' }}>{item.code}</p>
+									<span className='bg-primary py-2 h-full'>
+										<p
+											className='uppercase'
+											style={{ writingMode: 'vertical-lr' }}
+										>
+											{item.code}
+										</p>
 									</span>
-									<span className='p-0'>{item.description}</span>
+									<span className='text-sm'>{item.description}</span>
 								</div>
 							</li>
 						))

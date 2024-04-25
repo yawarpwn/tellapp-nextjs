@@ -4,11 +4,13 @@ import { DataTablePagination } from '@/components/data-table-pagination'
 import { buttonVariants } from '@/components/ui/button'
 import { EmpetyIcon } from '@/icons'
 import {
+	type ColumnDef,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
-	PaginationState,
+	type PaginationState,
+	type RowSelectionState,
 	useReactTable,
 } from '@tanstack/react-table'
 import React from 'react'
@@ -27,16 +29,20 @@ import { PlusIcon } from '@/icons'
 import { DebouncedInput } from '@/components/input-debounce'
 import type { QuotationType } from '@/types'
 import Link from 'next/link'
+import { FloatingBar } from './_components/floating-bar'
 import { getColumns } from './columns'
 
 interface Props {
 	data: QuotationType[]
-	columns: any
+	columns: ColumnDef<QuotationType>[]
 }
 
 export function DataTable(props: Props) {
 	const { data } = props
+
 	const [globalFilter, setGlobalFilter] = React.useState('')
+	const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({})
+	const [selectedId, setSelectedId] = React.useState<string | null>(null)
 	const [pagination, setPagination] = React.useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 14,
@@ -46,26 +52,41 @@ export function DataTable(props: Props) {
 
 	const table = useReactTable({
 		data,
+		initialState: {},
 		state: {
 			globalFilter,
 			pagination,
+			rowSelection,
 		},
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		onGlobalFilterChange: setGlobalFilter,
+		onRowSelectionChange: setRowSelection,
 		onPaginationChange: setPagination,
-		debugTable: true,
-		debugColumns: true,
-		debugHeaders: true,
+		enableMultiRowSelection: false,
+		getRowId: row => row.id,
 	})
+
+	// console.log(table.getState().rowSelection) // get the row selection state - { 1: true, 2: false, etc... }
+	// console.log(table.getSelectedRowModel().rows) // get full client-side selected rows
+	// console.log(table.getFilteredSelectedRowModel().rows) // get filtered client-side selected rows console.log(table.getGroupedSelectedRowModel().rows) // get grouped client-side selected rows
+
+	const selectedRows = table.getFilteredSelectedRowModel().flatRows
+	// console.log(selectedRows)
 
 	return (
 		<div>
+			{selectedRows.length > 0 && (
+				<FloatingBar
+					id={selectedRows[0].id}
+					quotation={selectedRows[0].original}
+				/>
+			)}
 			<div className='py-4 flex items-center justify-between'>
 				<DebouncedInput
-					value={globalFilter ?? ''}
+					value={globalFilter}
 					onChange={(value) => setGlobalFilter(String(value))}
 					placeholder='Filtrar...'
 				/>
@@ -98,16 +119,19 @@ export function DataTable(props: Props) {
 					{table.getRowModel().rows?.length
 						? (
 							table.getRowModel().rows.map(row => (
-								<tr className='border-b [&_td]:px-4 [&_td]:py-2 ' key={row.id}>
+								<TableRow
+									data-state={row.getIsSelected() && 'selected'}
+									key={row.id}
+								>
 									{row.getVisibleCells().map(cell => (
-										<td key={cell.id}>
+										<TableCell key={cell.id}>
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext(),
 											)}
-										</td>
+										</TableCell>
 									))}
-								</tr>
+								</TableRow>
 							))
 						)
 						: (

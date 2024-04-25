@@ -1,6 +1,12 @@
 'use client'
 
+import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import {
+	deleteQuotationAction,
+	duplicateQuotationAction,
+} from '@/lib/actions/quoatations'
 import React from 'react'
 
 import {
@@ -17,17 +23,29 @@ import Link from 'next/link'
 
 import { getFormatedDate, getIgv } from '@/lib/utils'
 import { type QuotationType } from '@/types'
-import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
-
-const columnHelper = createColumnHelper<QuotationType>()
+import { type ColumnDef } from '@tanstack/react-table'
 
 export function getColumns(): ColumnDef<QuotationType>[] {
 	return [
 		{
 			header: 'Nro',
-			cell: ({ row }) => <span>{row.original.number}</span>,
+			accessorKey: 'number',
+			enableGlobalFilter: true,
+			cell: ({ row }) => (
+				<div className='flex items-center gap-1'>
+					<Checkbox
+						id={`checked-${row.id}`}
+						checked={row.getIsSelected()}
+						onCheckedChange={value => row.toggleSelected(!!value)}
+						aria-label='Select Row'
+						className='translate-y-0.5'
+					/>
+					<label htmlFor={`checked-${row.id}`}>{row.original.number}</label>
+				</div>
+			),
 		},
 		{
+			accessorKey: 'company',
 			header: 'Cliente',
 			cell: ({ row }) => (
 				<div>
@@ -37,6 +55,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 					<p>{row.original.ruc}</p>
 				</div>
 			),
+			enableGlobalFilter: true,
 		},
 		{
 			header: 'Fecha',
@@ -54,8 +73,48 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 			id: 'actions',
 			cell: function Cell({ row }) {
 				const [showDeleteModal, setShowDeleteModal] = React.useState(false)
+				const [showDuplicateModal, setShowDuplicateModal] = React.useState(
+					false,
+				)
+
+				const openDuplicateModal = () => setShowDuplicateModal(true)
+				const openDeleteModal = () => setShowDeleteModal(true)
+				const closeDeleteModal = () => setShowDeleteModal(false)
+				const closeDuplicateModal = () => setShowDuplicateModal(false)
+
 				return (
 					<DropdownMenu>
+						<ConfirmActionDialog
+							action={() => deleteQuotationAction(row.original.id)}
+							dialogTitle={
+								<>
+									¿Deseas borrar la cotización{' '}
+									<span className='font-bold text-accent'>
+										#{row.original.number}
+									</span>
+								</>
+							}
+							onSuccess={closeDeleteModal}
+							open={showDeleteModal}
+							onOpenChange={setShowDeleteModal}
+							showTrigger={false}
+						/>
+
+						<ConfirmActionDialog
+							action={() => duplicateQuotationAction(row.original.number)}
+							dialogTitle={
+								<>
+									¿Deseas Duplicar la cotización{' '}
+									<span className='font-bold text-accent'>
+										#{row.original.number}
+									</span>
+								</>
+							}
+							onSuccess={closeDuplicateModal}
+							open={showDuplicateModal}
+							onOpenChange={setShowDuplicateModal}
+							showTrigger={false}
+						/>
 						<DropdownMenuTrigger asChild>
 							<Button size='sm'>
 								<MoreHorizontal className='w-4 h-4' />
@@ -72,10 +131,10 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 									Editar
 								</Link>
 							</DropdownMenuItem>
-							<DropdownMenuItem onSelect={() => setShowDeleteModal(true)}>
+							<DropdownMenuItem onSelect={openDeleteModal}>
 								Borrar
 							</DropdownMenuItem>
-							<DropdownMenuItem onSelect={() => setShowDeleteModal(true)}>
+							<DropdownMenuItem onSelect={openDuplicateModal}>
 								Duplicar
 							</DropdownMenuItem>
 						</DropdownMenuContent>
