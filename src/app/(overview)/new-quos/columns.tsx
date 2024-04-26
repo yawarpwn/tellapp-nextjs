@@ -2,7 +2,7 @@
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { StartIcon } from '@/icons'
 import {
 	deleteQuotationAction,
 	duplicateQuotationAction,
@@ -34,6 +34,9 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 			filterFn: 'inNumberRange',
 			cell: ({ row }) => (
 				<div className='flex items-center gap-1'>
+					{row.original.is_regular_customer
+						? <StartIcon filled className='size-4' />
+						: <StartIcon className='size-4' />}
 					<span>{row.original.number}</span>
 				</div>
 			),

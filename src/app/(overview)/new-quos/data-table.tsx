@@ -71,7 +71,6 @@ export function DataTable(props: Props) {
 	// console.log(table.getFilteredSelectedRowModel().rows) // get filtered client-side selected rows console.log(table.getGroupedSelectedRowModel().rows) // get grouped client-side selected rows
 
 	const selectedRows = table.getFilteredSelectedRowModel().flatRows
-	console.log(table.getGlobalFilterFn())
 
 	return (
 		<div>

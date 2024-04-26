@@ -20,6 +20,7 @@ export function QuotationAddItems() {
 	const decrementStep = useQuotationContext(state => state.decrementStep)
 	const incrementStep = useQuotationContext(state => state.incrementStep)
 	const setItems = useQuotationContext(state => state.setItems)
+	const addItem = useQuotationContext(state => state.addItem)
 
 	const editItem = useQuotationContext(state => state.editItem)
 	const deleteItem = useQuotationContext(state => state.deleteItem)
@@ -28,7 +29,6 @@ export function QuotationAddItems() {
 	>(null)
 
 	const productItem = items.find(item => item.id == seletedProductId)
-
 	const [open, setOpen] = React.useState(false)
 	const closeItemModal = () => setOpen(false)
 
@@ -71,6 +71,21 @@ export function QuotationAddItems() {
 
 	return (
 		<section>
+			{open && (
+				<EditItemModal
+					onSubmit={(item) => {
+						if (seletedProductId) {
+							editItem(item)
+						} else {
+							addItem(item)
+						}
+						setSelectedProductId(null)
+					}}
+					item={productItem}
+					open={open}
+					onClose={closeItemModal}
+				/>
+			)}
 			<header className='flex justify-between items-center py-4'>
 				<h2 className='text-xl font-bold '>
 					Productos
@@ -79,6 +94,7 @@ export function QuotationAddItems() {
 					<Button
 						onClick={() => {
 							setOpen(true)
+							setSelectedProductId(null)
 						}}
 						variant={'secondary'}
 					>
@@ -94,18 +110,16 @@ export function QuotationAddItems() {
 							<li key={item.id}>
 								<Card className='border-border'>
 									<CardContent className='p-4 grid gap-4'>
-										<div className='flex justify-between items-center'>
+										<div className='flex justify-between items-center [&_button]:size-7 [&_button]:shrink-0 [&_button_svg]:size-4 '>
 											<div className='flex items-center gap-1'>
 												<Button
 													size='icon'
-													variant='ghost'
 													onClick={() => moveUpItem(index)}
 												>
 													<ChevronUp />
 												</Button>
 												<Button
 													size='icon'
-													variant='ghost'
 													onClick={() => moveDownItem(index)}
 												>
 													<ChevronDown />
@@ -114,14 +128,12 @@ export function QuotationAddItems() {
 											<div className='flex space-x-4 items-center'>
 												<Button
 													size='icon'
-													variant='ghost'
 													onClick={() => duplicateItem(item)}
 												>
 													<DocumentDuplicateIcon />
 												</Button>
 												<Button
 													size='icon'
-													variant='ghost'
 													onClick={() => {
 														setOpen(true)
 														setSelectedProductId(item.id)
@@ -131,7 +143,6 @@ export function QuotationAddItems() {
 												</Button>
 												<Button
 													size='icon'
-													variant='ghost'
 													onClick={() => deleteItem(item.id)}
 												>
 													<DeleteIcon size={20} />
@@ -188,14 +199,6 @@ export function QuotationAddItems() {
 					Siguiente
 				</Button>
 			</footer>
-
-			{open && (
-				<EditItemModal
-					item={productItem}
-					open={open}
-					onClose={closeItemModal}
-				/>
-			)}
 		</section>
 	)
 }

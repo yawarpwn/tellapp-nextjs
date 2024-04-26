@@ -2,7 +2,7 @@ import { IconProps } from '@/icons'
 import { useId } from 'react'
 import { GradientIcons } from './gradient-icons'
 export default function StartIcon(
-	{ size = 24, filled = false, className }: IconProps,
+	{ size = 24, filled = false, ...props }: IconProps,
 ) {
 	const id = useId()
 	return filled
@@ -13,6 +13,7 @@ export default function StartIcon(
 				fill='currentColor'
 				width={size}
 				height={size}
+				{...props}
 			>
 				<path
 					fillRule='evenodd'
@@ -32,7 +33,7 @@ export default function StartIcon(
 				stroke='currentColor'
 				width={size}
 				height={size}
-				className={className}
+				{...props}
 			>
 				<path
 					strokeLinecap='round'

@@ -9,6 +9,7 @@ import {
 import {
 	type QuotationCreateType,
 	type QuotationItemType,
+	QuotationType,
 	type QuotationUpdateType,
 } from '@/types'
 import { revalidatePath, revalidateTag } from 'next/cache'
@@ -20,8 +21,9 @@ import {
 	fetchQuotationByNumber,
 } from '../data/quotations'
 
-export async function setQuotation(quotation: QuotationUpdateType) {
-	console.log('actualizado...jeje')
+export async function setQuotation(
+	quotation: QuotationUpdateType,
+): Promise<[Error?, QuotationType?]> {
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
@@ -65,29 +67,28 @@ export async function setQuotation(quotation: QuotationUpdateType) {
 		.select()
 
 	if (error) {
-		throw error
+		console.log('error updating quotation', error)
+		return [new Error('Error actualizando cotización')]
 	}
 
-	if (!data) return
-
-	console.log(data[0])
+	return [undefined, data[0]]
 }
 
 export async function insertQuotation(
 	quotation: QuotationCreateType,
 	items: QuotationItemType[],
-) {
+): Promise<[Error?, QuotationType?]> {
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
 	if (quotation.is_regular_customer) {
-		const { data: customers, error: errorCustomers } = await supabase.from(
-			TABLES.Customers,
-		).insert({
-			name: quotation.company,
-			ruc: quotation.ruc,
-			address: quotation.address,
-		})
+		const { data: customers, error: errorCustomers } = await supabase
+			.from(TABLES.Customers)
+			.insert({
+				name: quotation.company,
+				ruc: quotation.ruc,
+				address: quotation.address,
+			})
 
 		if (errorCustomers) {
 			throw errorCustomers
@@ -108,14 +109,15 @@ export async function insertQuotation(
 		.from(TABLES.Quotations)
 		.insert(quotationToInsert)
 		.select()
+		.returns<QuotationType[]>()
 
 	if (error) {
-		throw error
+		console.log('error inserting quotation', error)
+		return [new Error('Error inserting quotation')]
 	}
 
-	if (!data) return
-
 	revalidatePath('/new-quos')
+	return [undefined, data[0]]
 }
 
 // Create Product

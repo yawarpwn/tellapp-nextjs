@@ -28,30 +28,55 @@ export function QuotationFinalStep() {
 		e.preventDefault()
 
 		startTransition(async () => {
-			try {
-				if ('id' in quo) {
-					const quoToUpdate = {
-						...quo,
-						id: quo.id,
-						items,
-					}
-					await setQuotation(quoToUpdate as QuotationUpdateType)
-				} else {
-					const quoToInsert = {
-						...quo,
-						items,
-					}
-					await insertQuotation(quoToInsert as QuotationCreateType, items)
-					store?.persist.clearStorage()
+			if ('id' in quo) {
+				// update quotation
+				const quoToUpdate = {
+					...quo,
+					id: quo.id,
+					items,
 				}
-				shootCoffeti()
-				router.push('/new-quos')
-			} catch (error) {
-				toast({
-					title: 'Error',
-					description: 'No se pudo crear la cotización',
-					variant: 'destructive',
-				})
+				const [error, data] = await setQuotation(
+					quoToUpdate as QuotationUpdateType,
+				)
+
+				if (error) {
+					toast({
+						title: 'Error',
+						description: 'No se pudo actualizar la cotización',
+						variant: 'destructive',
+					})
+				}
+
+				if (data) {
+					store?.persist.clearStorage()
+					router.push(`/new-quos/${data.number}`)
+				}
+			} else {
+				// crate quotation
+				const quoToInsert = {
+					...quo,
+					items,
+				}
+				const [error, data] = await insertQuotation(
+					quoToInsert as QuotationCreateType,
+					items,
+				)
+
+				// handle error
+				if (error) {
+					toast({
+						title: 'Error',
+						description: 'No se pudo crear la cotización',
+						variant: 'destructive',
+					})
+				}
+
+				if (data) {
+					// success
+					store?.persist.clearStorage()
+					shootCoffeti()
+					router.push(`/new-quos/${data.number}`)
+				}
 			}
 		})
 	}

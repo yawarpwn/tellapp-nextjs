@@ -41,12 +41,8 @@ export function CreateUpdatePage() {
 						<DialogHeader>
 							<DialogTitle>Recupear Cotización</DialogTitle>
 							<DialogDescription>
-								<p>
-									Hemos recuperando una cotización no guardarda
-								</p>
-								<p>
-									¿ Desea restaurarla?
-								</p>
+								Hemos recuperando una cotización no guardarda, ¿Desea
+								restaurarla?
 							</DialogDescription>
 						</DialogHeader>
 						<DialogFooter>

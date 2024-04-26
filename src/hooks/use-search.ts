@@ -22,7 +22,7 @@ export function useSearch({ dataSet, keys }: UseSearchProps) {
 	}, [dataSet, keys])
 
 	const results = React.useMemo(() => {
-		if (!debouncedValue) return dataSet
+		if (!debouncedValue) return []
 
 		const searchResult = fuse.search(debouncedValue)
 

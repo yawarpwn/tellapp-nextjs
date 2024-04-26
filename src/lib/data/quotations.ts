@@ -20,7 +20,20 @@ export async function fetchQuotations() {
 		throw new Error('Error fetching quotations')
 	}
 
-	return quotations
+	const customers = await fetchCustomers()
+
+	const isRegularCustomer = (ruc: string | undefined): Boolean => {
+		if (!ruc) return false
+
+		return customers.some(customer => customer.ruc === ruc)
+	}
+
+	const mappedQuotations = quotations.map(quo => ({
+		...quo,
+		is_regular_customer: isRegularCustomer(quo?.ruc),
+	}))
+
+	return mappedQuotations
 }
 
 export async function fetchFilteredQuotations({ query, currentPage }: {
