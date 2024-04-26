@@ -9,7 +9,7 @@ import {
 	useQuotationContext,
 	useQuotationStore,
 } from '@/hooks/use-quotation-store'
-import { toast } from '@/hooks/use-toast'
+// import { toast } from '@/hooks/use-toast'
 import { insertQuotation, setQuotation } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { getRuc } from '@/lib/sunat'
@@ -18,6 +18,7 @@ import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import { toast } from 'sonner'
 import { DatePicker } from '../ui/date-picker'
 import { QuotationAddItems } from './add-items'
 
@@ -31,62 +32,68 @@ export function QuotationCustomerInfo() {
 	const store = useQuotationStore()
 	const router = useRouter()
 
+	console.log(quo)
+
 	const handleSubmit = () => {
 		startTransition(async () => {
-			if ('id' in quo) {
-				// update quotation
-				const quoToUpdate = {
-					...quo,
-					id: quo.id,
-					items,
-				}
-				const [error, data] = await setQuotation(
-					quoToUpdate as QuotationUpdateType,
-				)
+			if (isUpdate) {
+				// Update Quotation
+				toast.promise(() =>
+					setQuotation({
+						id: quo.id,
+						ruc: quo.ruc,
+						company: quo.company,
+						address: quo.address,
+						deadline: quo.deadline as number,
+						include_igv: quo.include_igv as boolean,
+						is_regular_customer: quo.is_regular_customer as boolean,
+						items,
+					}), {
+					loading: 'Creando',
+					success: ([error, data]) => {
+						if (error) throw new Error('Error Update')
+						if (!data) return
+						store?.persist.clearStorage()
+						router.push(`/new-quos/${data.number}`)
 
-				if (error) {
-					toast({
-						title: 'Error',
-						description: 'No se pudo actualizar la cotización',
-						variant: 'destructive',
-					})
-				}
-
-				if (data) {
-					store?.persist.clearStorage()
-					router.push(`/new-quos/${data.number}`)
-				}
+						return (
+							<p>
+								Cotizacion {data.number} Actualizando correctamente
+							</p>
+						)
+					},
+					error: 'Error Actualizando cotizacion',
+				})
 			} else {
-				// crate quotation
-				const quoToInsert = {
-					...quo,
-					items,
-				}
-				const [error, data] = await insertQuotation(
-					quoToInsert as QuotationCreateType,
-					items,
-				)
+				// Insert Quotation
+				toast.promise(() =>
+					insertQuotation({
+						ruc: quo.ruc,
+						company: quo.company,
+						address: quo.address,
+						deadline: quo.deadline as number,
+						include_igv: quo.include_igv as boolean,
+						is_regular_customer: quo.is_regular_customer as boolean,
+					}, items), {
+					loading: 'Creando',
+					success: ([error, data]) => {
+						if (error) throw new Error('Error creando Cotizacion')
+						if (!data) return
+						store?.persist.clearStorage()
+						shootCoffeti()
+						router.push(`/new-quos/${data.number}`)
 
-				// handle error
-				if (error) {
-					toast({
-						title: 'Error',
-						description: 'No se pudo crear la cotización',
-						variant: 'destructive',
-					})
-				}
-
-				if (data) {
-					// success
-					store?.persist.clearStorage()
-					shootCoffeti()
-					router.push(`/new-quos/${data.number}`)
-				}
+						return (
+							<p>
+								Cotizacion {data.number} Creado correctamente
+							</p>
+						)
+					},
+					error: 'Error creando',
+				})
 			}
 		})
 	}
-
-	const canContinue = quo.deadline === 0
 
 	// Manjedor para buscar cliente por Ruc
 	const handleRucBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
@@ -101,11 +108,9 @@ export function QuotationCustomerInfo() {
 					address,
 				})
 			} catch (error) {
-				toast({
-					title: 'Error',
-					description: 'Ruc no encontrado',
-					variant: 'destructive',
-				})
+				toast(
+					'Ruc no encontrado',
+				)
 			} finally {
 				setLoading(false)
 			}
@@ -142,34 +147,34 @@ export function QuotationCustomerInfo() {
 						onChange={handleInputChange}
 					/>
 				</div>
-				<div>
-					<p className='text-green-300 text-sm'>{quo.company}</p>
-				</div>
-				<div>
-					<p className='text-xs text-muted-foreground'>{quo.address}</p>
-				</div>
-
-				{/* <div className='grid gap-2'> */}
-				{/* 	<Label htmlFor='company'>Cliente</Label> */}
-				{/* 	<Input */}
-				{/* 		id='company' */}
-				{/* 		name='company' */}
-				{/* 		type='text' */}
-				{/* 		value={quo.company ?? ''} */}
-				{/* 		disabled={true} */}
-				{/* 	/> */}
+				{/* <div> */}
+				{/* 	<p className='text-green-300 text-sm'>{quo.company}</p> */}
+				{/* </div> */}
+				{/* <div> */}
+				{/* 	<p className='text-xs text-muted-foreground'>{quo.address}</p> */}
 				{/* </div> */}
 
-				{/* <div className='grid gap-2'> */}
-				{/* 	<Label htmlFor='ruc'>Dirección</Label> */}
-				{/* 	<Input */}
-				{/* 		id='address' */}
-				{/* 		name='address' */}
-				{/* 		type='text' */}
-				{/* 		value={quo.address ?? ''} */}
-				{/* 		disabled={true} */}
-				{/* 	/> */}
-				{/* </div> */}
+				<div className='grid gap-2'>
+					<Label htmlFor='company'>Cliente</Label>
+					<Input
+						id='company'
+						name='company'
+						type='text'
+						value={quo.company ?? ''}
+						disabled={true}
+					/>
+				</div>
+
+				<div className='grid gap-2'>
+					<Label htmlFor='ruc'>Dirección</Label>
+					<Input
+						id='address'
+						name='address'
+						type='text'
+						value={quo.address ?? ''}
+						disabled={true}
+					/>
+				</div>
 				<div className='grid gap-2'>
 					<Label htmlFor='deadline'>
 						Tiempo de entrega

@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import React from 'react'
 
 import {
 	Breadcrumb,
@@ -14,7 +14,7 @@ import Link from 'next/link'
 type Props = {
 	breadcrumbs: {
 		label: string
-		href: string
+		href?: string
 		active?: boolean
 	}[]
 }
@@ -25,27 +25,27 @@ function Breadcrumbs({ breadcrumbs }: Props) {
 				{breadcrumbs.map(({ label, href, active }, index) => (
 					active
 						? (
-							<>
+							<React.Fragment
+								key={href}
+							>
 								<BreadcrumbItem
-									className='breadcrumbs-active font-bold'
-									key={href}
 									aria-current={active}
 								>
 									<span>
 										{label}
 									</span>
 								</BreadcrumbItem>
-							</>
+							</React.Fragment>
 						)
 						: (
-							<>
-								<BreadcrumbItem
-									key={href}
-								>
+							<React.Fragment
+								key={href}
+							>
+								<BreadcrumbItem>
 									<Link href={href}>{label}</Link>
 								</BreadcrumbItem>
 								<BreadcrumbSeparator />
-							</>
+							</React.Fragment>
 						)
 				))}
 			</BreadcrumbList>

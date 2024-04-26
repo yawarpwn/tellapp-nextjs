@@ -9,7 +9,7 @@ import {
 import {
 	type QuotationCreateType,
 	type QuotationItemType,
-	QuotationType,
+	type QuotationType,
 	type QuotationUpdateType,
 } from '@/types'
 import { revalidatePath, revalidateTag } from 'next/cache'
@@ -24,25 +24,28 @@ import {
 export async function setQuotation(
 	quotation: QuotationUpdateType,
 ): Promise<[Error?, QuotationType?]> {
+	console.log({ quotation })
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
 	if (quotation.is_regular_customer) {
 		const { data: customerFounds, error: customerFoundError } = await supabase
-			.from(TABLES.Customers).select('ruc').eq('ruc', quotation.ruc)
+			.from(TABLES.Customers)
+			.select('ruc')
+			.eq('ruc', quotation.ruc)
 
 		if (customerFoundError) {
 			console.log(customerFoundError)
 		}
 
 		if (customerFounds?.length === 0) {
-			const { data: customers, error: errorCustomers } = await supabase.from(
-				TABLES.Customers,
-			).insert({
-				name: quotation.company,
-				ruc: quotation.ruc,
-				address: quotation.address,
-			})
+			const { data: customers, error: errorCustomers } = await supabase
+				.from(TABLES.Customers)
+				.insert({
+					name: quotation.company,
+					ruc: quotation.ruc,
+					address: quotation.address,
+				})
 
 			if (errorCustomers) {
 				throw errorCustomers
