@@ -2,7 +2,6 @@
 
 import { QuotationCustomerInfo } from '@/components/quotations/customer-info'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import {
 	Dialog,
 	DialogContent,
@@ -15,12 +14,9 @@ import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { useQuotationStore } from '@/hooks/use-quotation-store'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import React from 'react'
-import { QuotationAddItems } from './add-items'
-import { QuotationFinalStep } from './final-step'
 
 export function CreateUpdatePage() {
 	const [confirmModalOpen, setConfirmModalOpen] = React.useState(false)
-	const step = useQuotationContext(state => state.step)
 	const store = useQuotationStore()
 
 	const isUpdate = useQuotationContext(state => state.isUpdate)
@@ -67,9 +63,7 @@ export function CreateUpdatePage() {
 					</DialogContent>
 				</Dialog>
 			)}
-			{step === 1 && <QuotationCustomerInfo />}
-			{step === 2 && <QuotationAddItems />}
-			{step === 3 && <QuotationFinalStep />}
+			<QuotationCustomerInfo />
 		</section>
 	)
 }

@@ -56,7 +56,7 @@ export const initQuotationStore = ({
 			ruc: '',
 			company: '',
 			address: '',
-			deadline: 0,
+			deadline: 1,
 			include_igv: true,
 			is_regular_customer: false,
 		},

@@ -6,6 +6,7 @@ import {
 	DocumentDuplicateIcon,
 	EditIcon,
 } from '@/icons'
+import { getIgv } from '@/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { NoResult } from './no-result'
 
@@ -17,8 +18,6 @@ import { QuotationSearchProduct } from './search-product'
 export function QuotationAddItems() {
 	const items = useQuotationContext(state => state.items)
 	const duplicateItem = useQuotationContext(state => state.duplicateItem)
-	const decrementStep = useQuotationContext(state => state.decrementStep)
-	const incrementStep = useQuotationContext(state => state.incrementStep)
 	const setItems = useQuotationContext(state => state.setItems)
 	const addItem = useQuotationContext(state => state.addItem)
 
@@ -69,6 +68,8 @@ export function QuotationAddItems() {
 		}
 	}
 
+	const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(items)
+
 	return (
 		<section>
 			{open && (
@@ -77,7 +78,10 @@ export function QuotationAddItems() {
 						if (seletedProductId) {
 							editItem(item)
 						} else {
-							addItem(item)
+							addItem({
+								...item,
+								id: crypto.randomUUID(),
+							})
 						}
 						setSelectedProductId(null)
 					}}
@@ -92,6 +96,7 @@ export function QuotationAddItems() {
 				</h2>
 				<div className='flex items-center gap-2'>
 					<Button
+						type='button'
 						onClick={() => {
 							setOpen(true)
 							setSelectedProductId(null)
@@ -105,100 +110,128 @@ export function QuotationAddItems() {
 			</header>
 			{items.length > 0
 				? (
-					<ul className='flex flex-col gap-4'>
-						{items.map((item, index) => (
-							<li key={item.id}>
-								<Card className='border-border'>
-									<CardContent className='p-4 grid gap-4'>
-										<div className='flex justify-between items-center [&_button]:size-7 [&_button]:shrink-0 [&_button_svg]:size-4 '>
-											<div className='flex items-center gap-1'>
-												<Button
-													size='icon'
-													onClick={() => moveUpItem(index)}
-												>
-													<ChevronUp />
-												</Button>
-												<Button
-													size='icon'
-													onClick={() => moveDownItem(index)}
-												>
-													<ChevronDown />
-												</Button>
-											</div>
-											<div className='flex space-x-4 items-center'>
-												<Button
-													size='icon'
-													onClick={() => duplicateItem(item)}
-												>
-													<DocumentDuplicateIcon />
-												</Button>
-												<Button
-													size='icon'
-													onClick={() => {
-														setOpen(true)
-														setSelectedProductId(item.id)
-													}}
-												>
-													<EditIcon size={20} />
-												</Button>
-												<Button
-													size='icon'
-													onClick={() => deleteItem(item.id)}
-												>
-													<DeleteIcon size={20} />
-												</Button>
-											</div>
-										</div>
-
-										<div className='flex justify-between gap-4 items-center'>
-											<div className='flex flex-col gap-4'>
-												<div className='flex-1'>
-													<p className='text-xs'>{item.description}</p>
+					<div>
+						<ul className='flex flex-col gap-4'>
+							{items.map((item, index) => (
+								<li key={item.id}>
+									<Card className='border-border'>
+										<CardContent className='p-4 grid gap-4'>
+											<div className='flex justify-between items-center [&_button]:size-7 [&_button]:shrink-0 [&_button_svg]:size-4 '>
+												<div className='flex items-center gap-1'>
+													<Button
+														type='button'
+														size='icon'
+														onClick={() => moveUpItem(index)}
+													>
+														<ChevronUp />
+													</Button>
+													<Button
+														size='icon'
+														onClick={() => moveDownItem(index)}
+													>
+														<ChevronDown />
+													</Button>
+												</div>
+												<div className='flex space-x-4 items-center'>
+													<Button
+														size='icon'
+														onClick={() => duplicateItem(item)}
+													>
+														<DocumentDuplicateIcon />
+													</Button>
+													<Button
+														size='icon'
+														onClick={() => {
+															setOpen(true)
+															setSelectedProductId(item.id)
+														}}
+													>
+														<EditIcon size={20} />
+													</Button>
+													<Button
+														size='icon'
+														onClick={() => deleteItem(item.id)}
+													>
+														<DeleteIcon size={20} />
+													</Button>
 												</div>
 											</div>
-										</div>
-										<div className='grid grid-cols-12 gap-2'>
-											<input
-												className='bg-zinc-800 col-span-4  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
-												type='text'
-												onChange={(e) => onChangeValue(e, item)}
-												name='unit_size'
-												value={item.unit_size}
-											/>
-											<input
-												className='bg-zinc-800 col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
-												type='number'
-												onChange={(e) => onChangeValue(e, item)}
-												name='qty'
-												value={item.qty}
-											/>
-											<div className='flex items-center gap-1 col-span-3'>
-												<span>S/</span>
+
+											<div className='flex justify-between gap-4 items-center'>
+												<div className='flex flex-col gap-4'>
+													<div className='flex-1'>
+														<p className='text-xs'>{item.description}</p>
+													</div>
+												</div>
+											</div>
+											<div className='grid grid-cols-12 gap-2'>
 												<input
-													className='bg-zinc-800 w-full px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+													className='bg-zinc-800 col-span-4  px-2 py-1 rounded border border-transparent outline-none focus:border-primary text-xs'
+													type='text'
+													onChange={(e) => onChangeValue(e, item)}
+													name='unit_size'
+													value={item.unit_size}
+												/>
+												<input
+													className='bg-zinc-800 col-span-2 bg-transparent px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
 													type='number'
 													onChange={(e) => onChangeValue(e, item)}
-													name='price'
-													value={item.price}
+													name='qty'
+													value={item.qty}
 												/>
+												<div className='flex items-center gap-1 col-span-3'>
+													<span>S/</span>
+													<input
+														className='bg-zinc-800 w-full px-2 py-1 rounded border border-transparent outline-none focus:border-primary'
+														type='number'
+														onChange={(e) => onChangeValue(e, item)}
+														name='price'
+														value={item.price}
+													/>
+												</div>
+												<span className='col-span-3 rounded px-2 py-1 text-success'>
+													S/ {item.price * item.qty}
+												</span>
 											</div>
-											<span className='col-span-3 rounded px-2 py-1 text-success'>
-												S/ {item.price * item.qty}
-											</span>
-										</div>
-									</CardContent>
-								</Card>
-							</li>
-						))}
-					</ul>
+										</CardContent>
+									</Card>
+								</li>
+							))}
+						</ul>
+
+						<div className='mt-2 flex justify-start sm:flex sm:justify-end'>
+							<div className='sm:text-right space-y-2 w-full sm:w-auto'>
+								<div className='grid grid-cols-3 sm:grid-cols-1 gap-3 sm:gap-2'>
+									<dl className='grid sm:grid-cols-5 gap-x-3'>
+										<dt className='col-span-3 font-semibold '>
+											Subtotal:
+										</dt>
+										<dd className='col-span-2 '>
+											{formatedSubTotal}
+										</dd>
+									</dl>
+									<dl className='grid sm:grid-cols-5 gap-x-3'>
+										<dt className='col-span-3 font-semibold '>
+											Igv:
+										</dt>
+										<dd className='col-span-2 '>
+											{formatedIgv}
+										</dd>
+									</dl>
+									<dl className='grid sm:grid-cols-5 gap-x-3'>
+										<dt className='col-span-3 font-semibold '>
+											Total:
+										</dt>
+										<dd className='col-span-2 '>
+											{formatedTotal}
+										</dd>
+									</dl>
+								</div>
+							</div>
+						</div>
+					</div>
 				)
 				: <NoResult />}
-			<footer className='flex items-center justify-between mt-8 '>
-				<Button onClick={decrementStep}>Anterior</Button>
-				<Button disabled={items.length == 0} onClick={incrementStep}>
-					Siguiente
-				</Button>
-			</footer>
 		</section>
 	)
 }

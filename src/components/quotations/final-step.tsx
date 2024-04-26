@@ -83,16 +83,6 @@ export function QuotationFinalStep() {
 
 	return (
 		<div>
-			<ItemsList
-				ruc={quo.ruc}
-				company={quo.company}
-				deadline={quo?.deadline || 1}
-				address={quo.address}
-				items={items}
-				quoNumber={quoNumber}
-				created_at={new Date().toISOString()}
-				updated_at={quo?.updated_at}
-			/>
 			<form
 				onSubmit={handleSubmit}
 				className='flex items-center justify-between mt-4'

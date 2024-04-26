@@ -22,7 +22,6 @@ type Props = {
 }
 
 const initialQuoItem = {
-	id: crypto.randomUUID(),
 	price: 0,
 	qty: 0,
 	unit_size: '',
@@ -33,7 +32,7 @@ const initialQuoItem = {
 export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
 	const products = useQuotationContext(state => state.products)
 
-	const [quoItem, setQuoItem] = React.useState<QuotationItemType>(
+	const [quoItem, setQuoItem] = React.useState<typeof initialQuoItem>(
 		item || initialQuoItem,
 	)
 

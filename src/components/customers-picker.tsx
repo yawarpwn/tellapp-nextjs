@@ -68,7 +68,7 @@ export function CustomersPicker() {
 											}}
 											className='flex py-2 px-2 cursor-pointer items-center gap-2 hover:bg-foreground hover:text-background'
 										>
-											<p>{item.name}</p>
+											<p className='text-sm'>{item.name}</p>
 										</li>
 									)
 								})}
