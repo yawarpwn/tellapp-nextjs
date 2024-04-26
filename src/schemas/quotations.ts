@@ -37,4 +37,6 @@ export const QuotationCreateSchema = QuotationSchema.omit({
 	items: true,
 	created_at: true,
 })
-export const QuotationUpdateSchema = QuotationSchema.partial()
+export const QuotationUpdateSchema = QuotationSchema.partial().omit({
+	items: true,
+})

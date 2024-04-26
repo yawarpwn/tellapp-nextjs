@@ -9,11 +9,10 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog'
-import { useToast } from '@/hooks/use-toast'
 import { DeleteIcon } from '@/icons'
 import { Loader2 } from 'lucide-react'
 import React from 'react'
-// import { toast } from 'sonner'
+import { toast } from 'sonner'
 
 interface Props extends React.ComponentPropsWithRef<typeof Dialog> {
 	showTrigger?: boolean
@@ -32,7 +31,6 @@ export function ConfirmActionDialog({
 	...props
 }: Props) {
 	const [pending, startTranstion] = React.useTransition()
-	const { toast } = useToast()
 	return (
 		<Dialog {...props}>
 			{showTrigger
@@ -62,21 +60,15 @@ export function ConfirmActionDialog({
 							disabled={pending}
 							onClick={() => {
 								startTranstion(async () => {
-									try {
-										await action()
-										toast({
-											title: 'Realizado',
-											description: 'Se ha realizado la accion',
-										})
-									} catch (error) {
-										toast({
-											title: 'Error',
-											description: 'No se pudo realizar la accion',
-											variant: 'destructive',
-										})
-									} finally {
-										onSuccess()
-									}
+									toast.promise(action, {
+										loading: 'Eliminando',
+										success: (data) => {
+											console.log(data)
+											onSuccess()
+											return 'Eliminado'
+										},
+										error: 'No se pudo eliminar',
+									})
 								})
 							}}
 						>

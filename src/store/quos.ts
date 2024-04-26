@@ -3,6 +3,7 @@ import {
 	ProductType,
 	QuotationCreateType,
 	QuotationItemType,
+	QuotationType,
 	QuotationUpdateType,
 } from '@/types'
 import { createStore } from 'zustand'
@@ -10,7 +11,6 @@ import { devtools, persist } from 'zustand/middleware'
 
 export interface QuotationState {
 	quoNumber: number
-	step: number
 	isUpdate: boolean
 	quo: QuotationCreateType | QuotationUpdateType
 	items: QuotationItemType[]
@@ -26,8 +26,6 @@ export interface QuotationActions {
 	duplicateItem: (item: QuotationItemType) => void
 	editItem: (item: QuotationItemType) => void
 	onPickCustomer: (customer: CustomerType) => void
-	incrementStep: () => void
-	decrementStep: () => void
 	reset: () => void
 }
 
@@ -45,12 +43,11 @@ export const initQuotationStore = ({
 	quoNumber: number
 	customers: CustomerType[]
 	products: ProductType[]
-	quo?: QuotationCreateType | QuotationUpdateType
+	quo: QuotationCreateType | QuotationType
 	items?: QuotationItemType[]
 }): QuotationState => {
 	return {
 		quoNumber,
-		step: 1,
 		isUpdate: isUpdate || false,
 		quo: quo || {
 			ruc: '',
@@ -68,7 +65,6 @@ export const initQuotationStore = ({
 
 const DEFAULT_PROPS: QuotationState = {
 	quoNumber: 0,
-	step: 1,
 	isUpdate: false,
 	quo: {
 		ruc: '',
@@ -96,8 +92,6 @@ export const createQuotationStore = (
 			persist(
 				(set) => ({
 					...initProps,
-					incrementStep: () => set(state => ({ step: state.step + 1 })),
-					decrementStep: () => set(state => ({ step: state.step - 1 })),
 					selectedIdItem: null,
 					itemToEdit: null,
 					setQuo: (quo) => set((state) => ({ quo: { ...state.quo, ...quo } })),

@@ -6,7 +6,7 @@ import { QuotationPageByNumber } from '../_components/quotation-page-by-number'
 async function QuotationPage({ params }: { params: { number: string } }) {
 	const number = Number(params.number)
 	return (
-		<>
+		<div className='flex flex-col gap-4'>
 			<Breadcrumbs
 				breadcrumbs={[
 					{
@@ -23,7 +23,7 @@ async function QuotationPage({ params }: { params: { number: string } }) {
 			<Suspense fallback={<QuotationSkeleton />}>
 				<QuotationPageByNumber number={number} />
 			</Suspense>
-		</>
+		</div>
 	)
 }
 

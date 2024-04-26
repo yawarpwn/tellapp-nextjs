@@ -9,17 +9,14 @@ import {
 	useQuotationContext,
 	useQuotationStore,
 } from '@/hooks/use-quotation-store'
-// import { toast } from '@/hooks/use-toast'
 import { insertQuotation, setQuotation } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { getRuc } from '@/lib/sunat'
-import { QuotationCreateType, QuotationUpdateType } from '@/types'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'sonner'
-import { DatePicker } from '../ui/date-picker'
 import { QuotationAddItems } from './add-items'
 
 export function QuotationCustomerInfo() {
@@ -32,23 +29,15 @@ export function QuotationCustomerInfo() {
 	const store = useQuotationStore()
 	const router = useRouter()
 
-	console.log(quo)
-
 	const handleSubmit = () => {
 		startTransition(async () => {
-			if (isUpdate) {
+			if ('id' in quo) {
 				// Update Quotation
 				toast.promise(() =>
-					setQuotation({
-						id: quo.id,
-						ruc: quo.ruc,
-						company: quo.company,
-						address: quo.address,
-						deadline: quo.deadline as number,
-						include_igv: quo.include_igv as boolean,
-						is_regular_customer: quo.is_regular_customer as boolean,
+					setQuotation(
+						quo,
 						items,
-					}), {
+					), {
 					loading: 'Creando',
 					success: ([error, data]) => {
 						if (error) throw new Error('Error Update')

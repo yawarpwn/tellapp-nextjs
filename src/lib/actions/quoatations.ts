@@ -23,8 +23,8 @@ import {
 
 export async function setQuotation(
 	quotation: QuotationUpdateType,
+	items: QuotationItemType[],
 ): Promise<[Error?, QuotationType?]> {
-	console.log({ quotation })
 	const cookieStore = cookies()
 	const supabase = createClient(cookieStore)
 
@@ -60,7 +60,7 @@ export async function setQuotation(
 		deadline: quotation.deadline,
 		include_igv: quotation.include_igv,
 		updated_at: new Date().toISOString(),
-		items: quotation.items,
+		items: items,
 	}
 
 	const { data, error } = await supabase
@@ -73,7 +73,7 @@ export async function setQuotation(
 		console.log('error updating quotation', error)
 		return [new Error('Error actualizando cotización')]
 	}
-
+	revalidatePath(`/new-quos/${data[0].number}`)
 	return [undefined, data[0]]
 }
 
@@ -397,7 +397,6 @@ export async function duplicateQuotation(_: undefined, formData: FormData) {
 		ruc: quotation.ruc,
 		address: quotation.address,
 		deadline: quotation.deadline,
-		phone: quotation.phone,
 		items: quotation.items,
 		include_igv: quotation.include_igv,
 	}
