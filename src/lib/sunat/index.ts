@@ -1,25 +1,43 @@
-export async function getRuc(ruc: string) {
+type Company = {
+	ruc: string
+	company: string
+	address: string
+}
+
+export async function getRuc(
+	ruc: string,
+): Promise<[Error | null, Company | null]> {
 	const URL = 'https://dniruc.apisperu.com/api/v1'
 	const TOKEN =
 		'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5leWRhLm1pbGkxMUBnbWFpbC5jb20ifQ.UtiFRViVJrO2YGQ5H3alRcFBhnSwuE5yKU9PYuojgq0'
 	// https://dniruc.apisperu.com/api/v1/ruc/20131312955?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5leWRhLm1pbGkxMUBnbWFpbC5jb20ifQ.UtiFRViVJrO2YGQ5H3alRcFBhnSwuE5yKU9PYuojgq0
 	const query = `${URL}/ruc/${ruc}?token=${TOKEN}`
 
-	const res = await fetch(query)
+	try {
+		const res = await fetch(query)
 
-	if (!res.ok) {
-		throw new Error('Error de petición')
-	}
-	const data = await res.json()
+		if (!res.ok) {
+			throw new Error('Error de petición')
+		}
 
-	if (data.success === false) {
-		throw new Error('Ruc no encotrado')
-	}
+		const data = await res.json()
 
-	return {
-		ruc: String(data.ruc),
-		company: String(data.razonSocial),
-		address: String(data.direccion ?? ''),
+		// if (data.success === false) {
+		// 	return [new Error('Ruc no encotrado'), undefined]
+		// }
+
+		const companyFound = {
+			ruc: String(data.ruc),
+			company: String(data.razonSocial),
+			address: String(data.direccion ?? ''),
+		}
+
+		return [null, companyFound]
+	} catch (error) {
+		const errorMessage = error instanceof Error
+			? error.message
+			: 'Error de petición'
+		return [new Error(errorMessage), null]
 	}
 }
 

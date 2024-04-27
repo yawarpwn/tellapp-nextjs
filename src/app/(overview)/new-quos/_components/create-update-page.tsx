@@ -1,6 +1,5 @@
 'use client'
 
-import { QuotationCustomerInfo } from '@/components/quotations/customer-info'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
@@ -14,6 +13,7 @@ import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { useQuotationStore } from '@/hooks/use-quotation-store'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import React from 'react'
+import { QuotationCustomerInfo } from './customer-info'
 
 export function CreateUpdatePage() {
 	const [confirmModalOpen, setConfirmModalOpen] = React.useState(false)

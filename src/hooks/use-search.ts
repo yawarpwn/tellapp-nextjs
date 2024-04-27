@@ -10,7 +10,7 @@ type UseSearchProps = {
 }
 export function useSearch({ dataSet, keys }: UseSearchProps) {
 	const [searchValue, setSearchValue] = React.useState('')
-	const [debouncedValue] = useDebounce(searchValue, 500)
+	const [debouncedValue] = useDebounce(searchValue, 300)
 
 	const fuse = React.useMemo(() => {
 		const options = {
@@ -22,12 +22,12 @@ export function useSearch({ dataSet, keys }: UseSearchProps) {
 	}, [dataSet, keys])
 
 	const results = React.useMemo(() => {
-		if (!debouncedValue) return []
+		if (!debouncedValue) return dataSet
 
 		const searchResult = fuse.search(debouncedValue)
 
 		return searchResult
-			.filter(fuseResult => fuseResult.score < SCORE_THRESHOLD)
+			// .filter(fuseResult => fuseResult.score < SCORE_THRESHOLD)
 			.map(fuseResult => fuseResult.item)
 	}, [fuse, dataSet, debouncedValue])
 

@@ -1,9 +1,9 @@
 import Breadcrumbs from '@/components/breadcrumbs'
-import { CreateUpdatePage } from '@/components/quotations/create-update-page'
 import { QuotationStoreProvider } from '@/hooks/use-quotation-store'
 import { fetchCustomers } from '@/lib/data/customers'
 import { fetchProducts } from '@/lib/data/products'
 import { fetchQuotationByNumber } from '@/lib/data/quotations'
+import { CreateUpdatePage } from '../../_components/create-update-page'
 export default async function Page(
 	{ params }: { params?: { number?: string } },
 ) {

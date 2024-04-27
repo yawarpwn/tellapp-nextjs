@@ -32,6 +32,7 @@ export function QuotationSearchProduct() {
 
 	const { results, searchValue, setSearchValue } = useSearch({
 		dataSet: products,
+		initialValue: 'fh',
 		keys: ['code', 'description'],
 	})
 	return (

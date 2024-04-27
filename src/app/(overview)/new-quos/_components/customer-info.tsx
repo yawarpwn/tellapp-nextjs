@@ -29,7 +29,13 @@ export function QuotationCustomerInfo() {
 	const store = useQuotationStore()
 	const router = useRouter()
 
+	const hastItems = items.length > 0
+
 	const handleSubmit = () => {
+		if (!hastItems) {
+			toast.error('Debe agregar al menos un Producto')
+			return
+		}
 		startTransition(async () => {
 			if ('id' in quo) {
 				// Update Quotation
@@ -88,21 +94,28 @@ export function QuotationCustomerInfo() {
 	const handleRucBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
 		const value = event.target.value
 		if (value.length === 11) {
-			try {
-				setLoading(true)
-				const { company, ruc, address } = await getRuc(value)
-				setQuo({
-					ruc,
-					company,
-					address,
-				})
-			} catch (error) {
-				toast(
-					'Ruc no encontrado',
-				)
-			} finally {
-				setLoading(false)
-			}
+			toast.promise(() => getRuc(value), {
+				loading: 'Buscando...',
+				success: ([error, data]) => {
+					if (error) {
+						throw new Error(error.message)
+					}
+
+					if (data) {
+						const { ruc, company, address } = data
+						setQuo({
+							ruc,
+							company,
+							address,
+						})
+						return 'Ruc encontrado'
+					}
+				},
+				error: (error) => {
+					console.log(error)
+					return 'Ruc encontrado'
+				},
+			})
 		}
 	}
 
@@ -123,18 +136,36 @@ export function QuotationCustomerInfo() {
 					<CustomersPicker />
 				</div>
 			</header>
-			<article className='flex flex-col gap-4'>
-				<div className='grid gap-2'>
-					<Label htmlFor='ruc'>Ruc</Label>
-					<Input
-						id='ruc'
-						value={quo.ruc ?? ''}
-						type='text'
-						name='ruc'
-						onBlur={handleRucBlur}
-						disabled={loading}
-						onChange={handleInputChange}
-					/>
+			<article className='flex flex-col gap-4 mt-4'>
+				<div className='grid grid-cols-2 gap-4 '>
+					<div className='grid gap-2'>
+						<Label htmlFor='ruc'>Ruc</Label>
+						<Input
+							required
+							id='ruc'
+							value={quo.ruc ?? ''}
+							type='text'
+							name='ruc'
+							onBlur={handleRucBlur}
+							disabled={loading}
+							onChange={handleInputChange}
+						/>
+					</div>
+					<div className='grid gap-2'>
+						<Label htmlFor='deadline'>
+							Tiempo de entrega
+						</Label>
+						<Input
+							className={quo?.deadline === 0 ? 'border border-destructive' : ''}
+							required
+							type='number'
+							id='deadline'
+							value={quo.deadline}
+							disabled={loading}
+							onChange={e =>
+								setQuo({ ...quo, deadline: Number(e.target.value) })}
+						/>
+					</div>
 				</div>
 				{/* <div> */}
 				{/* 	<p className='text-green-300 text-sm'>{quo.company}</p> */}
@@ -164,19 +195,6 @@ export function QuotationCustomerInfo() {
 						disabled={true}
 					/>
 				</div>
-				<div className='grid gap-2'>
-					<Label htmlFor='deadline'>
-						Tiempo de entrega
-					</Label>
-					<Input
-						required
-						type='number'
-						id='deadline'
-						value={quo.deadline}
-						disabled={loading}
-						onChange={e => setQuo({ ...quo, deadline: Number(e.target.value) })}
-					/>
-				</div>
 				<div className='flex gap-4'>
 					<div className='flex space-x-2 items-start '>
 						<Checkbox
@@ -202,7 +220,7 @@ export function QuotationCustomerInfo() {
 				</div>
 				<QuotationAddItems />
 				<footer className='flex items-center justify-between'>
-					<Button disabled={pending} type='button' className='px-14' asChild>
+					<Button disabled={pending} type='button' className='px-12' asChild>
 						<Link href='/new-quos'>
 							Anterior
 						</Link>
@@ -210,8 +228,8 @@ export function QuotationCustomerInfo() {
 					<Button
 						onClick={handleSubmit}
 						variant='primary'
-						className='px-14'
-						disabled={pending}
+						className='px-12'
+						disabled={pending || !hastItems || quo.deadline === 0}
 						type='submit'
 					>
 						{pending && <Loader2 className='mr-2 w-4 h-4 animate-spin' />}
