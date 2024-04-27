@@ -90,11 +90,11 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
 		<Dialog open={open} onOpenChange={onClose}>
 			<DialogContent
 				showCloseButton={false}
-				className='max-w-sm md:max-w-md h-[98vh]'
+				className='max-w-sm md:max-w-md h-[98svh]'
 			>
 				<form
 					onSubmit={handleSubmit}
-					className='flex flex-col gap-4 h-[93vh]'
+					className='flex flex-col gap-4 h-[93svh]'
 				>
 					<div className='grid gap-2 relative'>
 						{/* <Label htmlFor='description'>Descripcion</Label> */}
