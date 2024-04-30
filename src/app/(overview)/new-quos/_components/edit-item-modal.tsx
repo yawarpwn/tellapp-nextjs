@@ -90,7 +90,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
         showCloseButton={false}
-        className='max-w-sm md:max-w-md h-[98svh]'
+        className='max-w-sm md:max-w-3xl h-[98svh]'
       >
         <form
           onSubmit={handleSubmit}
@@ -136,7 +136,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                     {product.code}
                   </Badge>
                   <p className='text-sm'>
-                    {product.description.slice(0, 85)}...
+                    {product.description}
                   </p>
                 </div>
               </li>
