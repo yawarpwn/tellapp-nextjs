@@ -21,11 +21,11 @@ type Props = {
 }
 
 const initialQuoItem = {
-  price: 0,
-  qty: 0,
-  unit_size: '',
+  price: 1,
+  qty: 1,
+  unit_size: 'und',
   description: '',
-  cost: 0,
+  cost: 1,
 }
 
 export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
@@ -90,7 +90,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
         showCloseButton={false}
-        className='max-w-sm md:max-w-3xl h-[98svh]'
+        className='max-w-sm md:max-w-3xl h-[98svh] p-2'
       >
         <form
           onSubmit={handleSubmit}
@@ -117,9 +117,25 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
             />
           </div>
           <ul className='flex flex-col gap-2 overflow-y-auto'>
+
+            {/* <li */}
+            {/* 	onClick={() => handleProductClick(item)} */}
+            {/* 	className='flex gap-x-1 ' */}
+            {/* 	key={item.id} */}
+            {/* > */}
+            {/* 	<div className='p-0 flex items-center gap-x-2'> */}
+            {/* 		<span className='btn btn-primary btn-xs h-full '> */}
+            {/* 			<p style={{ writingMode: 'vertical-lr' }}> */}
+            {/* 				{item.code} */}
+            {/* 			</p> */}
+            {/* 		</span> */}
+            {/* 		<span className='p-0'>{item.description}</span> */}
+            {/* 	</div> */}
+            {/* </li> */}
             {results.map(product => (
               <li
                 key={product.id}
+                className='cursor-pointer flex'
                 onClick={() => {
                   setQuoItem({
                     ...quoItem,
@@ -131,13 +147,15 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                   })
                 }}
               >
-                <div className='grid grid-cols-[60px_1fr] items-center gap-2 hover:bg-zinc-800 hover:text-white rounded-md px-1 py-1'>
-                  <Badge variant='secondary' className='text-[10px] uppercase px-1 justify-center'>
-                    {product.code}
-                  </Badge>
-                  <p className='text-sm'>
-                    {product.description}
-                  </p>
+
+                <div className='p-0 flex bg-card items-center gap-x-2 rounded-md hover:bg-zinc-800 overflow-hidden'>
+
+                  <span className='h-full bg-secondary inline-flex items-center '>
+                    <span style={{ writingMode: 'vertical-lr' }} className='text-white uppercase'  >
+                      {product.code}
+                    </span>
+                  </span>
+                  <span className='p-1'>{product.description}</span>
                 </div>
               </li>
             ))}
