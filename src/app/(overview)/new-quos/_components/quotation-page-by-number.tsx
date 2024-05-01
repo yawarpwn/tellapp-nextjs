@@ -1,12 +1,13 @@
 import DownloadPDF from '@/components/pdf/download-pdf'
 import { buttonVariants } from '@/components/ui/button'
+import { DeleteButton } from './delete-button'
+import { DuplicateButton } from './duplicate-button'
 import { EditIcon } from '@/icons'
 import { formatNumberToLocal, formatDateToLocal } from '@/lib/utils'
 import { fetchQuotationByNumber } from '@/lib/data/quotations'
 import Link from 'next/link'
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from '@/components/ui/table'
 import { getIgv } from '@/lib/utils'
-
 export async function QuotationPageByNumber({ number }: { number: number }) {
   const quotation = await fetchQuotationByNumber({ number })
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(quotation.items)
@@ -22,6 +23,8 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <span className='hidden lg:block ml-2'>Editar</span>
           </Link>
           <DownloadPDF quotation={quotation} />
+          <DuplicateButton id={quotation.id} />
+          <DeleteButton id={quotation.id} />
           {/* <DuplicateQuotation number={number} /> */}
         </div>
       </header>
