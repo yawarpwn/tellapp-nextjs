@@ -88,11 +88,13 @@ export function DataTable(props: Props) {
 					placeholder='Filtrar...'
 				/>
 				<Link
-					className={buttonVariants({ variant: 'primary' })}
+					className={buttonVariants({ variant: 'primary', size: 'sm' })}
 					href='/new-quos/create'
 				>
-					<PlusIcon className='mr-2' size={20} />
-					Crear
+					<PlusIcon className='md:mr-2' size={24} />
+					<span className='hidden md:block'>
+						Crear
+					</span>
 				</Link>
 			</div>
 			<Table>

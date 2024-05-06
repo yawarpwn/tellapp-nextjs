@@ -1,11 +1,11 @@
 'use client'
 
-import { createCustomer } from '@/lib/actions/customers'
 import { Input } from '@/components/input'
+import { SubmitButton } from '@/components/submit-button'
+import { createCustomer } from '@/lib/actions/customers'
 import Link from 'next/link'
 import React from 'react'
 import { useFormState } from 'react-dom'
-import { SubmitButton } from '@/components/submit-button'
 
 const initialState = {
 	message: null,

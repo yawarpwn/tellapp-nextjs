@@ -1,7 +1,7 @@
+import AddLabelForm from '@/components/labels/add-form'
 import { updateLabel } from '@/lib/actions/labels'
 import { fetchFilteredAgencies } from '@/lib/data/agencies'
 import { fetchLabelsById } from '@/lib/data/labels'
-import AddLabelForm from '@/components/labels/add-form'
 
 async function UpdateLagelPage({ params }) {
 	const id = params?.id

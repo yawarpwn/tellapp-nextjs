@@ -1,10 +1,10 @@
-import { fetchLabelsPages } from '@/lib/data/labels'
-import { PageProps } from '@/types'
 import { AddButton } from '@/components/buttons'
 import LabelsTable from '@/components/labels/table'
 import Pagination from '@/components/pagination'
 import Search from '@/components/search'
 import { TableSkeleton } from '@/components/skeletons/table-skeleton'
+import { fetchLabelsPages } from '@/lib/data/labels'
+import { PageProps } from '@/types'
 import { Suspense } from 'react'
 
 async function LabelsPage(

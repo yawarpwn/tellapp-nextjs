@@ -1,7 +1,7 @@
-import { createServerClient } from '@/lib/supabase'
 import { Logo } from '@/components/logo'
 import { MobileMenu } from '@/components/mobile-menu'
 import { Sidebar } from '@/components/sidebar'
+import { createServerClient } from '@/lib/supabase'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import React from 'react'

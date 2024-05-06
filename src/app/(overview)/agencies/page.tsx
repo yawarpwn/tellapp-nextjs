@@ -1,10 +1,10 @@
-import { fetchAgenciesPages } from '@/lib/data/agencies'
-import { PageProps } from '@/types'
 import { AddFormAgency } from '@/components/agencies'
 import AgenciesTable from '@/components/agencies/table'
 import Pagination from '@/components/pagination'
 import Search from '@/components/search'
 import { TableSkeleton } from '@/components/skeletons/table-skeleton'
+import { fetchAgenciesPages } from '@/lib/data/agencies'
+import { PageProps } from '@/types'
 import { Suspense } from 'react'
 async function AgenciesPage({ searchParams }: PageProps) {
 	const page = Number(searchParams?.page) || 1

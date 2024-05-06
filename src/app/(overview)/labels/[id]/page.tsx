@@ -1,5 +1,5 @@
-import { fetchLabelsById } from '@/lib/data/labels'
 import PrintLabel from '@/components/labels/print-label'
+import { fetchLabelsById } from '@/lib/data/labels'
 import React from 'react'
 
 async function LabelIdPage({ params }) {

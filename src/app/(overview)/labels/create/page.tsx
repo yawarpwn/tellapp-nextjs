@@ -1,6 +1,6 @@
+import AddLabelForm from '@/components/labels/add-form'
 import { createLabel } from '@/lib/actions/labels'
 import { fetchAgencies } from '@/lib/data/agencies'
-import AddLabelForm from '@/components/labels/add-form'
 
 async function CreateLabelPage() {
 	const agencies = await fetchAgencies()
