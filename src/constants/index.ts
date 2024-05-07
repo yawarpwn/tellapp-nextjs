@@ -45,7 +45,7 @@ export const NAVIGATION = [
   },
   {
     title: 'Productos',
-    href: '/products',
+    href: '/new-products',
     icon: ProductsIcon,
   },
 

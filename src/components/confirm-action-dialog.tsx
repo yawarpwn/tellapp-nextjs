@@ -67,7 +67,6 @@ export function ConfirmActionDialog({
 									toast.promise(action, {
 										loading: 'Eliminando',
 										success: (data) => {
-											console.log(data)
 											onSuccess()
 											return 'Eliminado'
 										},
