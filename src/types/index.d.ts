@@ -26,6 +26,12 @@ import {
   customerUpdateSchema,
 } from '@/schemas/customers'
 
+import {
+  agencieCreateSchema,
+  agencieUpdateSchema,
+  agencySceham,
+} from '@/schemas/agencies'
+
 export interface Items {
   id: string
   qty: number
@@ -39,6 +45,11 @@ export interface PageProps {
     [key: string]: string | undefined
   }
 }
+
+// Agency
+export type AgencyType = z.infer<typeof agencySceham>
+export type AgencyCreateType = z.infer<typeof agencieCreateSchema>
+export type AgencyUpdateType = z.infer<typeof agencieUpdateSchema>
 
 // Customer
 export type CustomerType = z.infer<typeof customerSchema>

@@ -16,6 +16,7 @@ export const TABLES = {
   Signals: 'signals',
   Customers: 'customers',
   Gallery: 'gallery',
+  Agencies: 'agencies',
 } as const
 
 export const ROW_PER_PAGE = 6
