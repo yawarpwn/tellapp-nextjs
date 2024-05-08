@@ -1,15 +1,19 @@
+import { DataTable } from '@/components/data-table'
 import { DataTableSkeleton } from '@/components/skeletons/data-table'
-
 import { fetchProducts } from '@/lib/data/products'
 import { Suspense } from 'react'
-import { ProductsTable } from './_components/products-table'
+import { CreateProductDialog } from './_components/create-product-dialog'
+import { productColumns } from './_components/product-columns'
 
-async function ProductTablePage() {
+async function ProductTable() {
 	const products = await fetchProducts()
+
 	return (
-		<div>
-			<ProductsTable data={products} />
-		</div>
+		<DataTable
+			createComponent={<CreateProductDialog />}
+			columns={productColumns}
+			data={products}
+		/>
 	)
 }
 
@@ -24,7 +28,7 @@ export default async function Page() {
 				/>
 			}
 		>
-			<ProductTablePage />
+			<ProductTable />
 		</Suspense>
 	)
 }

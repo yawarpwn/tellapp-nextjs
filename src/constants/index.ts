@@ -51,7 +51,7 @@ export const NAVIGATION = [
 
   {
     title: 'Clientes',
-    href: '/customers',
+    href: '/new-customers',
     icon: CustomersIcon,
   },
   {
@@ -61,7 +61,7 @@ export const NAVIGATION = [
   },
   {
     title: 'Agencias',
-    href: '/agencies',
+    href: '/new-agencies',
     icon: TruckIcon,
   },
 

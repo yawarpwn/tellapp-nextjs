@@ -29,7 +29,7 @@ interface Props {
 	createComponent: React.ReactNode
 }
 
-export function ProductsTable({ data, columns, createComponent }: Props) {
+export function DataTable({ data, columns, createComponent }: Props) {
 	const [globalFilter, setGlobalFilter] = React.useState('')
 	const [pagination, setPagination] = React.useState<PaginationState>({
 		pageSize: 14,
