@@ -1,28 +1,30 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 import { GalleryImageSchema } from '@/schemas/gallery'
+import { z } from 'zod'
+
 import {
   ProductCreateSchema,
   ProductSchema,
   ProductUpdateSchema,
 } from '@/schemas/products'
+
 import {
   QuotationCreateSchema,
   QuotationSchema,
   QuotationUpdateSchema,
 } from '@/schemas/quotations'
+
 import {
   SignalCreateSchema,
   SignalSchema,
   SignalUpdateSchema,
 } from '@/schemas/signal'
-import { z } from 'zod'
 
-export type CustomerType = {
-  id: string
-  name: string
-  ruc: string
-  address: string
-}
+import {
+  customerCreateSchema,
+  customerSchema,
+  customerUpdateSchema,
+} from '@/schemas/customers'
 
 export interface Items {
   id: string
@@ -37,6 +39,11 @@ export interface PageProps {
     [key: string]: string | undefined
   }
 }
+
+// Customer
+export type CustomerType = z.infer<typeof customerSchema>
+export type CustomerCreateType = z.infer<typeof customerCreateSchema>
+export type CustomerUpdateType = z.infer<typeof customerUpdateSchema>
 
 // Quotations
 export type QuotationCreateType = z.infer<typeof QuotationCreateSchema>

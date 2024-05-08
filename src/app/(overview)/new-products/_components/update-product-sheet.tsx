@@ -71,10 +71,10 @@ export function UpdateProductSheet({
 	function onSubmit(input: z.infer<typeof ProductUpdateSchema>) {
 		startUpdateTransition(() => {
 			toast.promise(
-				updateProductAction({
-					id: product.id,
-					...input,
-				}),
+				updateProductAction(
+					product.id,
+					input,
+				),
 				{
 					loading: 'Updating task...',
 					success: () => {

@@ -3,7 +3,7 @@
 import { TABLES } from '@/constants'
 import { createServerClient } from '@/lib/supabase'
 import { ProductCreateSchema, ProductUpdateSchema } from '@/schemas/products'
-import { ProductCreateType, ProductUpdateType } from '@/types'
+import { ProductCreateType, ProductId, ProductUpdateType } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
@@ -29,6 +29,7 @@ export async function insertProduct(
 }
 
 export async function updateProductAction(
+  id: ProductId,
   productToUpdate: ProductUpdateType,
 ): Promise<void> {
   console.log('update', productToUpdate)
@@ -42,7 +43,7 @@ export async function updateProductAction(
       ...productToUpdate,
       updated_at: new Date().toISOString(),
     })
-    .eq('id', productToUpdate.id)
+    .eq('id', id)
 
   if (error) {
     console.log(error)
