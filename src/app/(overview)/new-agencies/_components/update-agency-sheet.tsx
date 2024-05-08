@@ -50,6 +50,7 @@ export function UpdateAgencySheet({
 			ruc: agency.ruc,
 			address: agency.address,
 			phone: agency.phone,
+			destinations: agency.destinations.toString(),
 		},
 	})
 
@@ -132,6 +133,23 @@ export function UpdateAgencySheet({
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Direccion</FormLabel>
+									<FormControl>
+										<Input
+											placeholder='Direccion'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='destinations'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Destinos</FormLabel>
 									<FormControl>
 										<Input
 											placeholder='Direccion'

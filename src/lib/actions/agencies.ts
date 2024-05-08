@@ -9,7 +9,12 @@ export async function createAgencyAction(input: AgencyCreateType) {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
-  const { data, error } = await supabase.from(TABLES.Agencies).insert(input)
+  const { data, error } = await supabase.from(TABLES.Agencies).insert({
+    ...input,
+    destinations: input.destinations
+      .split(',')
+      .map((item: string) => item.trim()),
+  })
   if (error) {
     console.log('ERROR CREATING AGENCY: ', error)
     throw error
@@ -45,6 +50,9 @@ export async function updateAgencyAction(input: AgencyUpdateType) {
     .from(TABLES.Agencies)
     .update({
       ...input,
+      destinations: input.destinations
+        .split(',')
+        .map((item: string) => item.trim()),
       updated_at: new Date().toISOString(),
     })
     .eq('id', input.id)

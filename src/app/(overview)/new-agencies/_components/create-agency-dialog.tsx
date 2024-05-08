@@ -153,6 +153,23 @@ export function CreateAgencyDialog() {
 							)}
 						/>
 
+						<FormField
+							control={form.control}
+							name='destinations'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Destinos</FormLabel>
+									<FormControl>
+										<Input
+											placeholder='Direccion'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
 						<DialogFooter className='gap-2 pt-2 sm:space-x-0'>
 							<DialogClose asChild>
 								<Button type='button' variant='outline'>

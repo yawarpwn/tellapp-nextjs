@@ -153,38 +153,39 @@ export function UpdateProductSheet({
 								</FormItem>
 							)}
 						/>
+						<div className='flex gap-2'>
+							<FormField
+								control={form.control}
+								name='price'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Precio</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 
-						<FormField
-							control={form.control}
-							name='price'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Precio</FormLabel>
-									<FormControl>
-										<Input
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-
-						<FormField
-							control={form.control}
-							name='cost'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Costo</FormLabel>
-									<FormControl>
-										<Input
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+							<FormField
+								control={form.control}
+								name='cost'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Costo</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
 
 						<FormField
 							control={form.control}

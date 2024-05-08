@@ -10,6 +10,16 @@ import { MoreHorizontal } from 'lucide-react'
 import { UpdateAgencySheet } from './update-agency-sheet'
 
 import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
+
+import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
@@ -41,6 +51,36 @@ export const agencyColumns = [
 	columnHelper.accessor('ruc', {
 		header: 'Ruc',
 		cell: props => props.getValue(),
+	}),
+	columnHelper.accessor('phone', {
+		header: 'Teléfono',
+		cell: props => props.getValue(),
+	}),
+	columnHelper.accessor('destinations', {
+		header: 'Destinos',
+		cell: props => {
+			const { destinations } = props.row.original
+			console.log(destinations, props.row.original.company)
+			return (
+				<div>
+					<Select>
+						<SelectTrigger className='w-[180px]'>
+							<SelectValue placeholder={destinations[0]} />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								{destinations.length > 0
+									&& destinations.map((destination: string) => (
+										<SelectItem value={destination} key={destination}>
+											{destination}
+										</SelectItem>
+									))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+				</div>
+			)
+		},
 	}),
 	columnHelper.display({
 		id: 'actions',

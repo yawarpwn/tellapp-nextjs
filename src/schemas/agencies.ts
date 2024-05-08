@@ -8,6 +8,7 @@ export const agency = z.object({
   }),
   address: z.string().nullable(),
   phone: z.coerce.number().nullable(),
+  // destinations: z.array(z.string()),
   destinations: z.string().refine(
     data => {
       if (!data) return false
@@ -26,6 +27,5 @@ export const agencyCreateSchema = agency.omit({
   id: true,
   updated_at: true,
   created_at: true,
-  destinations: true,
 })
 export const agencyUpdateSchema = agency.partial()
