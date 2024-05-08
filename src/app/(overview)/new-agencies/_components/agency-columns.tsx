@@ -60,7 +60,6 @@ export const agencyColumns = [
 		header: 'Destinos',
 		cell: props => {
 			const { destinations } = props.row.original
-			console.log(destinations, props.row.original.company)
 			return (
 				<div>
 					<Select>
