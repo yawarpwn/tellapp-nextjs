@@ -1,26 +1,20 @@
 'use client'
 
 import { DataTablePagination } from '@/components/data-table-pagination'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { DebouncedInput } from '@/components/input-debounce'
 import { EmpetyIcon } from '@/icons'
-import { PlusIcon } from '@/icons'
 import type { ProductType } from '@/types'
 import {
-	type ColumnDef,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
 	type PaginationState,
-	type RowSelectionState,
 	useReactTable,
 } from '@tanstack/react-table'
-import Link from 'next/link'
 import React from 'react'
-import { CreateProductDialog } from './_components/create-product-dialog'
-import { getProductColumns } from './columns-products'
-
-import { DebouncedInput } from '@/components/input-debounce'
+import { CreateProductDialog } from './create-product-dialog'
+import { productColumns } from './product-columns'
 
 import {
 	Table,
@@ -38,19 +32,17 @@ interface Props {
 export function ProductsTable({ data }: Props) {
 	const [globalFilter, setGlobalFilter] = React.useState('')
 	const [pagination, setPagination] = React.useState<PaginationState>({
-		pageSize: 20,
+		pageSize: 14,
 		pageIndex: 0,
 	})
-	const columns = React.useMemo(() => getProductColumns(), [])
 
 	const table = useReactTable({
 		data,
-		columns,
+		columns: productColumns,
 		state: {
 			globalFilter,
 			pagination,
 		},
-		onGlobalFilterChange: setGlobalFilter,
 		getCoreRowModel: getCoreRowModel(),
 		onPaginationChange: setPagination,
 		getFilteredRowModel: getFilteredRowModel(),
@@ -108,7 +100,7 @@ export function ProductsTable({ data }: Props) {
 							<TableRow>
 								<TableCell
 									className='min-h-[500px]'
-									colSpan={columns.length}
+									colSpan={productColumns.length}
 								>
 									<div className='min-h-[500px] flex items-center justify-center'>
 										<div>

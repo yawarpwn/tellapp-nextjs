@@ -78,8 +78,6 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 
 				const openDuplicateModal = () => setShowDuplicateModal(true)
 				const openDeleteModal = () => setShowDeleteModal(true)
-				const closeDeleteModal = () => setShowDeleteModal(false)
-				const closeDuplicateModal = () => setShowDuplicateModal(false)
 
 				return (
 					<DropdownMenu>
@@ -93,7 +91,6 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 									</span>
 								</>
 							}
-							onSuccess={closeDeleteModal}
 							open={showDeleteModal}
 							onOpenChange={setShowDeleteModal}
 							showTrigger={false}
@@ -109,7 +106,6 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 									</span>
 								</>
 							}
-							onSuccess={closeDuplicateModal}
 							open={showDuplicateModal}
 							onOpenChange={setShowDuplicateModal}
 							showTrigger={false}
@@ -125,7 +121,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 							<DropdownMenuItem asChild>
 								<Link href={`/new-quos/${row.original.number}`}>Ver</Link>
 							</DropdownMenuItem>
-							<DropdownMenuItem>
+							<DropdownMenuItem asChild>
 								<Link href={`/new-quos/${row.original.number}/update`}>
 									Editar
 								</Link>

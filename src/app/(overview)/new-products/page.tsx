@@ -2,7 +2,7 @@ import { DataTableSkeleton } from '@/components/skeletons/data-table'
 
 import { fetchProducts } from '@/lib/data/products'
 import { Suspense } from 'react'
-import { ProductsTable } from './table-products'
+import { ProductsTable } from './_components/products-table'
 
 async function ProductTablePage() {
 	const products = await fetchProducts()

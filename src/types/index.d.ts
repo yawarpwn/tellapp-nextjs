@@ -55,6 +55,7 @@ export type SignalCategory = keyof typeof SIGNALS_CATEGORIES
 
 // Product
 export type ProductType = z.infer<typeof ProductSchema>
+export type ProductId = ProductType['id']
 export type ProductCreateType = z.infer<typeof ProductCreateSchema>
 export type ProductUpdateType = z.infer<typeof ProductUpdateSchema>
 

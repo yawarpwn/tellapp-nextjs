@@ -9,65 +9,44 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from '@/components/ui/dialog'
-import { DeleteIcon } from '@/icons'
+import { deleteProductAction } from '@/lib/actions/products'
+import { ProductId } from '@/types'
 import { Loader2 } from 'lucide-react'
 import React from 'react'
 import { toast } from 'sonner'
 
 interface Props extends React.ComponentPropsWithoutRef<typeof Dialog> {
-	showTrigger?: boolean
-	action: () => Promise<void>
-	dialogDescription?: string | React.ReactNode
-	dialogTitle?: string | React.ReactNode
+	id: ProductId
 }
-export function ConfirmActionDialog({
-	showTrigger = true,
-	dialogTitle = 'Esta abssolutamente seguro?',
-	dialogDescription =
-		'Esta accion no se puede deshacer, posteriormente no se podra recuperar',
+export function DeleteProductDialog({
 	onOpenChange,
 	open,
-	action,
-	...props
+	id,
 }: Props) {
 	const [pending, startTranstion] = React.useTransition()
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			{showTrigger && (
-				<DialogTrigger asChild>
-					<Button>
-						<DeleteIcon />
-						<span className='max-md:sr-only ml-2'>
-							eliminar
-						</span>
-					</Button>
-				</DialogTrigger>
-			)}
-
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>{dialogTitle}</DialogTitle>
-					{DialogDescription && (
-						<DialogDescription className='py-4'>
-							{dialogDescription}
-						</DialogDescription>
-					)}
+					<DialogTitle>Borrar Producto</DialogTitle>
+					<DialogDescription className='py-4'>
+						Esta absolutamente seguro de borrar este producto
+					</DialogDescription>
 					<DialogFooter className='gap-y-2'>
 						<DialogClose asChild>
 							<Button>Cancelar</Button>
 						</DialogClose>
 						<Button
-							variant={'primary'}
+							variant='primary'
 							disabled={pending}
 							onClick={() => {
 								startTranstion(async () => {
-									toast.promise(action, {
+									toast.promise(() => deleteProductAction(id), {
 										loading: 'Eliminando',
-										success: (data) => {
+										success: () => {
 											onOpenChange?.(false)
-											return 'Eliminado'
+											return 'Producto Eliminado'
 										},
 										error: 'No se pudo eliminar',
 									})
