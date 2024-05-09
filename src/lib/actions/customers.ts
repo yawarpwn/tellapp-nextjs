@@ -5,6 +5,7 @@ import { createServerClient } from '@/lib/supabase'
 import { CustomerCreateType, CustomerUpdateType } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export async function createCustomerAction(
   input: CustomerCreateType,
@@ -16,7 +17,7 @@ export async function createCustomerAction(
 
   if (error) {
     console.log('ERROR CREATING CUSTOMER: ', error)
-    throw error
+    throw new Error(error.message)
   }
 
   console.log('INSERTED CUSTOMER SUCCESS: ', data)
@@ -34,7 +35,7 @@ export async function deleteCustomerAction(id: string) {
 
   if (error) {
     console.log('ERROR DELETING CUSTOMER: ', error)
-    throw error
+    throw new Error(error.message)
   }
 
   console.log('DELETED CUSTOMER SUCCESS: ', data)
@@ -56,7 +57,7 @@ export async function updateCustomerAction(input: CustomerUpdateType) {
 
   if (error) {
     console.log('ERROR UPDATING CUSTOMER: ', error)
-    throw error
+    throw new Error(error.message)
   }
 
   console.log(' UPDATED CUSTOMER SUCCESS: ', data)

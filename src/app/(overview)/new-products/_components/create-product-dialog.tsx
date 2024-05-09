@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-const getErrorMessage = () => {}
+import { getErrorMessage } from '@/lib/handle-error'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -42,7 +42,7 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 
-import { insertProduct } from '@/lib/actions/products'
+import { createProductAction } from '@/lib/actions/products'
 
 import { ProductCreateSchema } from '@/schemas/products'
 
@@ -53,7 +53,10 @@ export function CreateProductDialog() {
 	function onSubmit(input: ProductCreateType) {
 		startCreateTransition(() => {
 			toast.promise(
-				insertProduct(input),
+				createProductAction({
+					...input,
+					code: input.code.toUpperCase(),
+				}),
 				{
 					loading: 'Creating task...',
 					success: () => {
@@ -62,10 +65,8 @@ export function CreateProductDialog() {
 						return 'Producto Creado'
 					},
 					error: (error) => {
-						setOpen(false)
-						console.log(error)
-						// return getErrorMessage(error)
-						return 'Error al agregar el producto'
+						console.log({ error })
+						return getErrorMessage(error)
 					},
 				},
 			)
@@ -122,6 +123,7 @@ export function CreateProductDialog() {
 									<FormLabel>Codigo</FormLabel>
 									<FormControl>
 										<Input
+											className='uppercase'
 											placeholder='FHIP-123'
 											{...field}
 										/>

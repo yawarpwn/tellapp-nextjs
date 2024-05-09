@@ -1,5 +1,6 @@
 'use client'
 
+import { formatNumberToLocal } from '@/lib/utils'
 import type { ProductType } from '@/types'
 import React from 'react'
 import { ProductRowActions } from './product-row-actions'
@@ -17,19 +18,23 @@ export const productColumns = [
 	}),
 	columnHelper.accessor('code', {
 		header: 'Código',
-		cell: props => props.getValue(),
+		cell: props => (
+			<div className='min-w-[100px]'>
+				{props.getValue().toUpperCase()}
+			</div>
+		),
 	}),
 	columnHelper.accessor('unit_size', {
 		header: 'U/M',
-		cell: props => props.getValue(),
+		cell: props => props.getValue().toLowerCase(),
 	}),
 	columnHelper.accessor('price', {
 		header: 'Precio',
-		cell: props => props.getValue(),
+		cell: props => formatNumberToLocal(props.getValue()),
 	}),
 	columnHelper.accessor('cost', {
 		header: 'Costo',
-		cell: props => props.getValue(),
+		cell: props => formatNumberToLocal(props.getValue()),
 	}),
 	columnHelper.display({
 		id: 'actions',

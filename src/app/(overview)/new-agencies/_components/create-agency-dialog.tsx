@@ -1,13 +1,12 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
+import { getErrorMessage } from '@/lib/handle-error'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-
-const getErrorMessage = () => {}
 
 import { Button } from '@/components/ui/button'
 import {
@@ -52,9 +51,7 @@ export function CreateAgencyDialog() {
 					},
 					error: (error) => {
 						setOpen(false)
-						console.log(error)
-						return 'Error al agregar el Cliente'
-						// return getErrorMessage(error)
+						return getErrorMessage(error)
 					},
 				},
 			)

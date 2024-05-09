@@ -4,6 +4,7 @@ import { createServerClient } from '@/lib/supabase'
 import { AgencyCreateType, AgencyUpdateType } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export async function createAgencyAction(input: AgencyCreateType) {
   const cookieStore = cookies()
@@ -17,7 +18,7 @@ export async function createAgencyAction(input: AgencyCreateType) {
   })
   if (error) {
     console.log('ERROR CREATING AGENCY: ', error)
-    throw error
+    throw new Error(error.message)
   }
 
   revalidatePath('/new-agencies')
@@ -34,7 +35,7 @@ export async function deleteAgencyAction(id: string) {
 
   if (error) {
     console.log('ERROR DELETING AGENCY: ', error)
-    throw error
+    throw new Error(error.message)
   }
 
   console.log('DELETED AGENCY SUCCESS: ', data)
@@ -59,7 +60,7 @@ export async function updateAgencyAction(input: AgencyUpdateType) {
 
   if (error) {
     console.log('ERROR UPDATING AGENCY: ', error)
-    throw error
+    throw new Error(error.message)
   }
 
   console.log(' UPDATED AGENCY SUCCESS: ', data)

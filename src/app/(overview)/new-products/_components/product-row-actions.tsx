@@ -30,16 +30,20 @@ export function ProductRowActions({
 
 	return (
 		<DropdownMenu>
+			{showUpdateDialog && (
+				<UpdateProductSheet
+					open={showUpdateDialog}
+					onOpenChange={setShowUpdateDialog}
+					product={row.original}
+				/>
+			)}
 			<ConfirmActionDialog
+				dialogTitle=<p>¿Eliminar producto {row.original.code} ?</p>
+				dialogDescription={row.original.description}
 				open={showDeleteDialog}
 				onOpenChange={setShowDeleteDialog}
 				action={() => deleteProductAction(row.original.id)}
 				showTrigger={false}
-			/>
-			<UpdateProductSheet
-				open={showUpdateDialog}
-				onOpenChange={setShowUpdateDialog}
-				product={row.original}
 			/>
 
 			<DropdownMenuTrigger asChild>

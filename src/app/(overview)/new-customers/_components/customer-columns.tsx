@@ -50,16 +50,18 @@ export const customerColumns = [
 
 			return (
 				<DropdownMenu>
+					{showUpdateDialog && (
+						<UpdateCustomerSheet
+							open={showUpdateDialog}
+							onOpenChange={setShowUpdateDialog}
+							customer={row.original}
+						/>
+					)}
 					<ConfirmActionDialog
 						open={showDeleteDialog}
 						onOpenChange={setShowDeleteDialog}
 						action={() => deleteCustomerAction(row.original.id)}
 						showTrigger={false}
-					/>
-					<UpdateCustomerSheet
-						open={showUpdateDialog}
-						onOpenChange={setShowUpdateDialog}
-						customer={row.original}
 					/>
 
 					<DropdownMenuTrigger asChild>

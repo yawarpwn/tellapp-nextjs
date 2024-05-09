@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-// import { getErrorMessage } from "@/lib/handle-error"
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -43,6 +42,7 @@ import type { ProductType } from '@/types'
 import type { ProductUpdateType } from '@/types'
 
 import { PRODUCT_CATEGORIES } from '@/constants'
+import { getErrorMessage } from '@/lib/handle-error'
 
 interface UpdateTaskSheetProps
 	extends React.ComponentPropsWithRef<typeof Sheet>
@@ -53,9 +53,12 @@ interface UpdateTaskSheetProps
 export function UpdateProductSheet({
 	product,
 	onOpenChange,
+	open,
 	...props
 }: UpdateTaskSheetProps) {
 	const [isUpdatePending, startUpdateTransition] = React.useTransition()
+
+	console.log({ product })
 
 	const form = useForm<ProductUpdateType>({
 		resolver: zodResolver(ProductUpdateSchema),
@@ -73,18 +76,20 @@ export function UpdateProductSheet({
 			toast.promise(
 				updateProductAction(
 					product.id,
-					input,
+					{
+						...input,
+						code: input?.code?.toUpperCase(),
+					},
 				),
 				{
 					loading: 'Updating task...',
 					success: () => {
 						onOpenChange?.(false)
-						return 'Task updated'
+						return 'Producto actualizado'
 					},
 					error: (error) => {
 						onOpenChange?.(false)
-						// return getErrorMessage(error)
-						return 'Error al agregar el proyecto'
+						return getErrorMessage(error)
 					},
 				},
 			)
@@ -92,7 +97,7 @@ export function UpdateProductSheet({
 	}
 
 	return (
-		<Sheet onOpenChange={onOpenChange} {...props}>
+		<Sheet onOpenChange={onOpenChange} open={open}>
 			<SheetContent className='flex flex-col gap-6 sm:max-w-md'>
 				<SheetHeader className='text-left'>
 					<SheetTitle>Actualizar Producto</SheetTitle>
@@ -130,6 +135,7 @@ export function UpdateProductSheet({
 									<FormLabel>Codigo</FormLabel>
 									<FormControl>
 										<Input
+											className='uppercase'
 											{...field}
 										/>
 									</FormControl>

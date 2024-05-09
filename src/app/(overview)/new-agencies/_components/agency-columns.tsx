@@ -89,16 +89,18 @@ export const agencyColumns = [
 
 			return (
 				<DropdownMenu>
+					{showUpdateDialog && (
+						<UpdateAgencySheet
+							open={showUpdateDialog}
+							onOpenChange={setShowUpdateDialog}
+							agency={row.original}
+						/>
+					)}
 					<ConfirmActionDialog
 						open={showDeleteDialog}
 						onOpenChange={setShowDeleteDialog}
 						action={() => deleteAgencyAction(row.original.id)}
 						showTrigger={false}
-					/>
-					<UpdateAgencySheet
-						open={showUpdateDialog}
-						onOpenChange={setShowUpdateDialog}
-						agency={row.original}
 					/>
 
 					<DropdownMenuTrigger asChild>
