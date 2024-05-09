@@ -24,9 +24,9 @@ export const productColumns = [
 			</div>
 		),
 	}),
-	columnHelper.accessor('unit_size', {
+      columnHelper.accessor('unit_size', {
 		header: 'U/M',
-		cell: props => props.getValue().toLowerCase(),
+		cell: props => props.getValue(),
 	}),
 	columnHelper.accessor('price', {
 		header: 'Precio',

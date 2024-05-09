@@ -9,7 +9,7 @@ export const ProductSchema = z.object({
     })
     .min(10, { message: 'Mínimo 10 caracteres' }),
   code: z
-    .string({ required_error: 'Código es requerido' })
+    .string({ required_error: 'Cóigo es requerido' })
     .min(2, { message: 'Mínimo 3 caracteres' })
     .max(10, {
       message: 'Máximo 60 caracteres',
@@ -31,7 +31,7 @@ export const ProductSchema = z.object({
     .string({
       required_error: 'unidad / medida es requerida',
     })
-    .min(3, { message: 'Mínimo 3 caracteres' }),
+    .min(2, { message: 'Mínimo 3 caracteres' }),
   rank: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }).optional(),
 })
 
