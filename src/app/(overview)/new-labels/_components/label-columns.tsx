@@ -48,8 +48,6 @@ export const customerColumns = [
 
 			const [showUpdateDialog, setShowUpdateDialog] = React.useState(false)
 
-			const template = `<h1>Hello, World!</h1>`
-
 			const printPdf = async () => {
 				console.log('printPdf')
 				try {
@@ -65,7 +63,13 @@ export const customerColumns = [
 						throw new Error(res.statusText)
 					}
 
+					console.log(res)
+
 					const blob = await res.blob()
+
+					if (!blob) {
+						console.log(blob)
+					}
 					const url = URL.createObjectURL(blob)
 
 					window.open(url, '_blank')

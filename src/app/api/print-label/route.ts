@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { LabelTemplate } from '@/components/label-template'
-import { chromium } from 'playwright'
+import chromium from '@sparticuz/chromium'
 
 export const CHROMIUM_EXECUTABLE_PATH =
   'https://github.com/Sparticuz/chromium/releases/download/v119.0.0/chromium-v119.0.0-pack.tar'
@@ -11,31 +10,35 @@ export const TAILWIND_CDN =
 
 export async function POST(request: NextRequest) {
   try {
-    const ReactDOMServer = (await import('react-dom/server')).default
-
-    let browser
-
-    if (process.env.NODE_ENV === 'development') {
-      browser = await chromium.launch()
-    } else if (process.env.NODE_ENV === 'production') {
-      const executablePath = chromium.executablePath()
-      browser = await chromium.launch({
-        executablePath,
-      })
-    }
-
-    if (!browser) {
-      throw new Error('No browser')
-    }
-
-    const page = await browser.newPage()
-
     const label = await request.json()
 
+    const ReactDOMServer = (await import('react-dom/server')).default
     const { LabelTemplate } = await import('@/components/label-template')
     const htmlTemplate = ReactDOMServer.renderToStaticMarkup(
       LabelTemplate({ label }),
     )
+
+    let browser
+    if (process.env.NODE_ENV === 'production') {
+      const puppeteer = await import('puppeteer')
+      browser = await puppeteer.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath(CHROMIUM_EXECUTABLE_PATH),
+        headless: chromium.headless === 'shell' ? false : true,
+      })
+    } else if (process.env.NODE_ENV === 'development') {
+      const puppeteer = await import('puppeteer')
+      browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: 'shell',
+      })
+    }
+
+    if (!browser) throw new Error('No browser')
+
+    console.log('browser version', await browser.version())
+
+    const page = await browser.newPage()
 
     await page.setContent(htmlTemplate)
 
