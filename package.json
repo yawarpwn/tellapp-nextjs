@@ -41,6 +41,7 @@
     "next": "latest",
     "next-themes": "^0.3.0",
     "nextjs-toploader": "1.5.3",
+    "playwright": "^1.44.0",
     "react": "latest",
     "react-day-picker": "^8.10.0",
     "react-dom": "latest",
