@@ -32,6 +32,12 @@ import {
   agencySceham,
 } from '@/schemas/agencies'
 
+import {
+  labelCreateSchema,
+  labelSchema,
+  labelUpdateSchema,
+} from '@/schemas/labels'
+
 export interface Items {
   id: string
   qty: number
@@ -45,6 +51,11 @@ export interface PageProps {
     [key: string]: string | undefined
   }
 }
+
+// Labels
+export type LabelType = z.infer<typeof labelSchema>
+export type LabelCreateType = z.infer<typeof labelCreateSchema>
+export type LabelUpdateType = z.infer<typeof labelUpdateSchema>
 
 // Agency
 export type AgencyType = z.infer<typeof agencySceham>

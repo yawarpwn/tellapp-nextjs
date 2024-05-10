@@ -17,6 +17,7 @@ export const TABLES = {
   Customers: 'customers',
   Gallery: 'gallery',
   Agencies: 'agencies',
+  Labels: 'labels',
 } as const
 
 export const ROW_PER_PAGE = 6
@@ -75,6 +76,12 @@ export const NAVIGATION = [
     title: 'Señales',
     href: '/signals',
     icon: SignalIcon,
+  },
+
+  {
+    title: 'nuevos Rotulos',
+    href: '/new-labels',
+    icon: PrinterIcon,
   },
 ]
 
