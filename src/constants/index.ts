@@ -57,8 +57,8 @@ export const NAVIGATION = [
     icon: CustomersIcon,
   },
   {
-    title: 'Rótulos',
-    href: '/labels',
+    title: 'Rotulos',
+    href: '/new-labels',
     icon: PrinterIcon,
   },
   {
@@ -76,12 +76,6 @@ export const NAVIGATION = [
     title: 'Señales',
     href: '/signals',
     icon: SignalIcon,
-  },
-
-  {
-    title: 'nuevos Rotulos',
-    href: '/new-labels',
-    icon: PrinterIcon,
   },
 ]
 
