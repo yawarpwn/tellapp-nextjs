@@ -12,7 +12,7 @@ export default function NotFoundPage() {
 				</TextGradient>
 				<Link
 					className='text-secondary text-center underline block mt-4 '
-					href='/quotations'
+					href='/new-quos'
 				>
 					<span>
 						Ir al Inicio

@@ -1,36 +1,29 @@
 import { ShippingIcon } from '@/icons/shipping-icons'
 import { LabelType } from '@/types'
+import React from 'react'
 import TellLogo from './tell-logo'
+import './label-print.css'
 
 interface Props {
 	label: LabelType
 }
-export function LabelTemplate(props: Props) {
-	const {
-		recipient = 'Sin Desinatario',
-		dni_ruc = 'Sin ruc',
-		destination = 'Sin destino',
-		phone = 'Sin telefono',
-		address = 'Sin direccion',
-	} = props.label
-	return (
-		<>
-			<link
-				href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css'
-				rel='stylesheet'
-			/>
-			<div className='grid grid-rows-3 h-full'>
+
+export const LabelTemplate = React.forwardRef<HTMLDivElement, Props>(
+	({ label }, ref) => {
+		const { recipient, dni_ruc, destination, phone, agencies } = label
+		return (
+			<div ref={ref} className='labels grid text-black grid-rows-3 h-full'>
 				{[1, 2, 3].map((_, index) => (
 					<article
 						key={index}
-						className='p-4 h-full border border-dashed flex flex-col justify-between'
+						className='p-4 h-full border-b border-dashed flex flex-col justify-between last:border-none'
 					>
 						{/* Top */}
 						<header className='flex items-center border-2 border-black'>
 							<div className='w-1/2 flex flex-row justify-center p-2'>
 								<TellLogo compact={false} />
 							</div>
-							<div className='w-1/2   p-2 '>
+							<div className='p-2 '>
 								<p>Señalizaciones y dispositivos de seguridad</p>
 								<p className='text-center font-semibold'>
 									tellsenales.com
@@ -58,8 +51,8 @@ export function LabelTemplate(props: Props) {
 									<p className='text-xl font-bold uppercase'>
 										Destino:
 									</p>
-									<p>{destination}</p>
 								</div>
+								<p>{destination}</p>
 								<div>
 									<p className='text-xl font-bold uppercase'>
 										Teléfono:
@@ -71,11 +64,11 @@ export function LabelTemplate(props: Props) {
 						<section>
 							<p>
 								<strong>Agencia Sugerida:</strong>
-								<span className='ml-2'>Shalom</span>
+								<span className='ml-2'>{agencies?.company}</span>
 							</p>
 							<p>
 								<strong>Dirección:</strong>
-								<span className='ml-2'>Av. Mexico</span>
+								<span className='ml-2'>{agencies?.address}</span>
 							</p>
 						</section>
 						{/* Bottom */}
@@ -85,6 +78,7 @@ export function LabelTemplate(props: Props) {
 					</article>
 				))}
 			</div>
-		</>
-	)
-}
+		)
+	},
+)
+LabelTemplate.displayName = 'LabelTemplate'

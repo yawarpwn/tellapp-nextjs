@@ -29,7 +29,7 @@ import {
 import {
   agencieCreateSchema,
   agencieUpdateSchema,
-  agencySceham,
+  agencySchema,
 } from '@/schemas/agencies'
 
 import {
@@ -58,7 +58,7 @@ export type LabelCreateType = z.infer<typeof labelCreateSchema>
 export type LabelUpdateType = z.infer<typeof labelUpdateSchema>
 
 // Agency
-export type AgencyType = z.infer<typeof agencySceham>
+export type AgencyType = z.infer<typeof agencySchema>
 export type AgencyCreateType = z.infer<typeof agencieCreateSchema>
 export type AgencyUpdateType = z.infer<typeof agencieUpdateSchema>
 

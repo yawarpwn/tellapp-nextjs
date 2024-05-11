@@ -1,5 +1,8 @@
 'use client'
 
+import { TABLES } from '@/constants'
+import { createClient } from '@/lib/supabase/client'
+import { AgencyType } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
@@ -7,6 +10,7 @@ import { toast } from 'sonner'
 
 // import { getErrorMessage } from "@/lib/handle-error"
 import { Button } from '@/components/ui/button'
+
 import {
 	Form,
 	FormControl,
@@ -16,6 +20,15 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 import {
 	Sheet,
 	SheetClose,
@@ -42,6 +55,30 @@ export function UpdateLabelSheet({
 	...props
 }: UpdateTaskSheetProps) {
 	const [isUpdatePending, startUpdateTransition] = React.useTransition()
+
+	const [agencies, setAgencies] = React.useState<AgencyType[]>([])
+
+	const suggestedAgency = label.agency_id
+		? agencies.find((agency) => agency.id === label.agency_id)
+		: null
+
+	console.log(suggestedAgency?.company)
+
+	React.useEffect(() => {
+		const supabase = createClient()
+		supabase
+			.from(TABLES.Agencies)
+			.select()
+			.then(
+				({ data, error }) => {
+					if (error) {
+						console.log(error)
+					} else {
+						setAgencies(data)
+					}
+				},
+			)
+	}, [])
 
 	const form = useForm<LabelUpdateType>({
 		resolver: zodResolver(labelUpdateSchema),
@@ -94,10 +131,10 @@ export function UpdateLabelSheet({
 					>
 						<FormField
 							control={form.control}
-							name='recipient'
+							name='dni_ruc'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Destinatario</FormLabel>
+									<FormLabel>Dni/Ruc</FormLabel>
 									<FormControl>
 										<Input
 											{...field}
@@ -107,13 +144,12 @@ export function UpdateLabelSheet({
 								</FormItem>
 							)}
 						/>
-
 						<FormField
 							control={form.control}
-							name='dni_ruc'
+							name='recipient'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Dni/Ruc</FormLabel>
+									<FormLabel>Destinatario</FormLabel>
 									<FormControl>
 										<Input
 											{...field}
@@ -142,6 +178,22 @@ export function UpdateLabelSheet({
 
 						<FormField
 							control={form.control}
+							name='phone'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Telefono</FormLabel>
+									<FormControl>
+										<Input
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
 							name='address'
 							render={({ field }) => (
 								<FormItem>
@@ -151,6 +203,39 @@ export function UpdateLabelSheet({
 											{...field}
 										/>
 									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='agency_id'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Agencia Sugerida</FormLabel>
+									<Select
+										defaultValue={suggestedAgency?.company ?? ''}
+										onValueChange={field.onChange}
+									>
+										<FormControl>
+											<SelectTrigger className='capitalize'>
+												<SelectValue placeholder='Seleciona una categoria' />
+											</SelectTrigger>
+										</FormControl>
+										<SelectContent className='w-[380px]'>
+											<SelectGroup>
+												{Object.values(agencies).map((agency) => (
+													<SelectItem
+														key={agency.id}
+														value={agency.id}
+														className='capitalize'
+													>
+														{agency.company}
+													</SelectItem>
+												))}
+											</SelectGroup>
+										</SelectContent>
+									</Select>
 									<FormMessage />
 								</FormItem>
 							)}

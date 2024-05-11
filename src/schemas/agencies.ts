@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const agency = z.object({
+export const agencySchema = z.object({
   id: z.string(),
   company: z.string(),
   ruc: z.coerce.number().positive().min(10000000000, {
@@ -23,9 +23,9 @@ export const agency = z.object({
   created_at: z.string(),
 })
 
-export const agencyCreateSchema = agency.omit({
+export const agencyCreateSchema = agencySchema.omit({
   id: true,
   updated_at: true,
   created_at: true,
 })
-export const agencyUpdateSchema = agency.partial()
+export const agencyUpdateSchema = agencySchema.partial()

@@ -1,6 +1,7 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { TABLES } from '@/constants'
 import { createClient } from '@/lib/supabase/server'
+import { LabelType } from '@/types'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
@@ -8,7 +9,11 @@ export async function fetchLabels() {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
-  const { data, error } = await supabase.from(TABLES.Labels).select()
+  const { data, error } = await supabase
+    .from(TABLES.Labels)
+    .select('*, agencies(*)')
+    .order('updated_at', { ascending: false })
+    .returns<LabelType[]>()
 
   if (error) {
     console.log(error)

@@ -4,9 +4,11 @@ import type { LabelType } from '@/types'
 import React from 'react'
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
+import { LabelTemplate } from '@/components/label-template'
 import { Button } from '@/components/ui/button'
 import { deleteLabelAction } from '@/lib/actions/labels'
 import { MoreHorizontal } from 'lucide-react'
+import { useReactToPrint } from 'react-to-print'
 import { UpdateLabelSheet } from './update-label-sheet'
 
 import {
@@ -21,62 +23,52 @@ import {
 import {
 	createColumnHelper,
 } from '@tanstack/react-table'
-import jsPDF from 'jspdf'
 
 const columnHelper = createColumnHelper<LabelType>()
 
 export const customerColumns = [
 	columnHelper.accessor('recipient', {
 		header: 'Destinatario',
-		cell: props => props.getValue(),
+		cell: props => (
+			<div className='min-w-[250px]'>
+				<p>
+					{props.getValue()}
+				</p>
+				<p>
+					{props.row.original.dni_ruc}
+				</p>
+			</div>
+		),
 	}),
-
-	columnHelper.accessor('dni_ruc', {
-		header: 'Ruc/Dni',
-		cell: props => props.getValue(),
-	}),
-
 	columnHelper.accessor('destination', {
 		header: 'Destino',
 		cell: props => props.getValue(),
+	}),
+	columnHelper.accessor('phone', {
+		header: 'Teléfono',
+		cell: props => props.getValue(),
+	}),
+	columnHelper.accessor('agency_id', {
+		header: 'Agencia',
+		cell: ({ row }) => {
+			const agency = row.original.agencies
+				? row.original.agencies.company
+				: 'Ninguna'
+			return <span>{agency}</span>
+		},
 	}),
 
 	columnHelper.display({
 		id: 'actions',
 		cell: function Cell({ row }) {
 			const [showDeleteDialog, setShowDeleteDialog] = React.useState(false)
-
 			const [showUpdateDialog, setShowUpdateDialog] = React.useState(false)
+			const containerRef = React.useRef(null)
 
-			const printPdf = async () => {
-				console.log('printPdf')
-				try {
-					const res = await fetch('api/print-label', {
-						method: 'POST',
-						body: JSON.stringify(row.original),
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					})
+			const printPdf = useReactToPrint({
+				content: () => containerRef.current,
+			})
 
-					if (!res.ok) {
-						throw new Error(res.statusText)
-					}
-
-					console.log(res)
-
-					const blob = await res.blob()
-
-					if (!blob) {
-						console.log(blob)
-					}
-					const url = URL.createObjectURL(blob)
-
-					window.open(url, '_blank')
-				} catch (error) {
-					console.log(error)
-				}
-			}
 			return (
 				<DropdownMenu>
 					{showUpdateDialog && (
@@ -86,6 +78,9 @@ export const customerColumns = [
 							label={row.original}
 						/>
 					)}
+					<div className='hidden'>
+						<LabelTemplate label={row.original} ref={containerRef} />
+					</div>
 					<ConfirmActionDialog
 						open={showDeleteDialog}
 						onOpenChange={setShowDeleteDialog}

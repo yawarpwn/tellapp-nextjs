@@ -1,12 +1,26 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
+import { TABLES } from '@/constants'
+import { SearchIcon } from '@/icons'
 import { getErrorMessage } from '@/lib/handle-error'
+import { createClient } from '@/lib/supabase/client'
+import { AgencyType } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -23,6 +37,7 @@ import {
 import {
 	Form,
 	FormControl,
+	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -30,12 +45,30 @@ import {
 } from '@/components/ui/form'
 
 import { createLabelAction } from '@/lib/actions/labels'
+import { getDni, getRuc } from '@/lib/sunat'
 import { labelCreateSchema } from '@/schemas/labels'
 import type { LabelCreateType } from '@/types'
 
 export function CreateLabelDialog() {
 	const [open, setOpen] = React.useState(false)
 	const [isCreatePending, startCreateTransition] = React.useTransition()
+	const [agencies, setAgencies] = React.useState<AgencyType[]>([])
+
+	React.useEffect(() => {
+		const supabase = createClient()
+		supabase
+			.from(TABLES.Agencies)
+			.select()
+			.then(
+				({ data, error }) => {
+					if (error) {
+						console.log(error)
+					} else {
+						setAgencies(data)
+					}
+				},
+			)
+	}, [])
 
 	function onSubmit(input: LabelCreateType) {
 		console.log({ input })
@@ -62,6 +95,52 @@ export function CreateLabelDialog() {
 		resolver: zodResolver(labelCreateSchema),
 	})
 
+	const searchCompany = async () => {
+		const dniRuc = form.getValues('dni_ruc')
+		console.log(dniRuc)
+
+		if (dniRuc.length !== 8 && dniRuc.length !== 11) {
+			toast.warning('Ingresa un dni o ruc válido')
+			return
+		}
+
+		if (dniRuc.length === 8) {
+			console.log('is Dni')
+
+			toast.promise(getDni(dniRuc), {
+				loading: 'Buscando DNI...',
+				success: ([error, data]) => {
+					if (data) {
+						form.setValue('recipient', data.company)
+						form.setFocus('destination')
+					}
+					return 'Ruc encontrado'
+				},
+				error: () => {
+					return 'Error al buscar DNI'
+				},
+			})
+		}
+
+		if (dniRuc.length === 11) {
+			console.log('isRuc')
+
+			toast.promise(getRuc(dniRuc), {
+				loading: 'Buscando ruc...',
+				success: ([error, data]) => {
+					if (data) {
+						form.setValue('recipient', data.company)
+						form.setFocus('destination')
+					}
+					return 'Ruc encontrado'
+				},
+				error: () => {
+					return 'Error al buscar Ruc'
+				},
+			})
+		}
+	}
+
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
@@ -72,7 +151,7 @@ export function CreateLabelDialog() {
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Crear Cliente</DialogTitle>
+					<DialogTitle>Crear Rotulo</DialogTitle>
 					<DialogDescription>
 						LLena el formulario para crear un nuevo Cliente
 					</DialogDescription>
@@ -84,26 +163,36 @@ export function CreateLabelDialog() {
 					>
 						<FormField
 							control={form.control}
-							name='recipient'
+							name='dni_ruc'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Destinatario</FormLabel>
+									<FormLabel>Dni/Ruc</FormLabel>
 									<FormControl>
-										<Input
-											{...field}
-										/>
+										<div className='relative'>
+											<Input
+												{...field}
+											/>
+											<Button
+												onClick={searchCompany}
+												size='icon'
+												type='button'
+												variant='secondary'
+												className='absolute h-full w-8 right-0 top-0'
+											>
+												<SearchIcon className='size-4' />
+											</Button>
+										</div>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
-
 						<FormField
 							control={form.control}
-							name='dni_ruc'
+							name='recipient'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Dni/Ruc</FormLabel>
+									<FormLabel>Destinatario</FormLabel>
 									<FormControl>
 										<Input
 											{...field}
@@ -132,6 +221,22 @@ export function CreateLabelDialog() {
 
 						<FormField
 							control={form.control}
+							name='phone'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Telefono</FormLabel>
+									<FormControl>
+										<Input
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
 							name='address'
 							render={({ field }) => (
 								<FormItem>
@@ -141,6 +246,38 @@ export function CreateLabelDialog() {
 											{...field}
 										/>
 									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='agency_id'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Agencia Sugerida</FormLabel>
+									<Select
+										onValueChange={field.onChange}
+									>
+										<FormControl>
+											<SelectTrigger className='capitalize'>
+												<SelectValue placeholder='Seleciona una categoria' />
+											</SelectTrigger>
+										</FormControl>
+										<SelectContent>
+											<SelectGroup>
+												{Object.values(agencies).map((agency) => (
+													<SelectItem
+														key={agency.id}
+														value={agency.id}
+														className='capitalize'
+													>
+														{agency.company}
+													</SelectItem>
+												))}
+											</SelectGroup>
+										</SelectContent>
+									</Select>
 									<FormMessage />
 								</FormItem>
 							)}
