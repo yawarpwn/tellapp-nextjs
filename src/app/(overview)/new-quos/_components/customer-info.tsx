@@ -9,9 +9,10 @@ import {
 	useQuotationContext,
 	useQuotationStore,
 } from '@/hooks/use-quotation-store'
+import { SearchIcon } from '@/icons'
 import { insertQuotation, setQuotation } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
-import { getRuc } from '@/lib/sunat'
+import { getDni, getRuc } from '@/lib/sunat'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -91,32 +92,95 @@ export function QuotationCustomerInfo() {
 	}
 
 	// Manjedor para buscar cliente por Ruc
-	const handleRucBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
-		const value = event.target.value
-		if (value.length === 11) {
-			toast.promise(() => getRuc(value), {
-				loading: 'Buscando...',
+	const handleRucBlur = async () => {
+		const dniRuc = quo.ruc
+		console.log(dniRuc)
+
+		if (!dniRuc) return
+
+		if (dniRuc.length !== 8 && dniRuc.length !== 11) {
+			toast.warning('Ingresa un dni o ruc válido')
+			return
+		}
+
+		if (dniRuc.length === 8) {
+			console.log('is Dni')
+
+			setLoading(true)
+			toast.promise(getDni(dniRuc), {
+				loading: 'Buscando DNI...',
 				success: ([error, data]) => {
-					if (error) {
-						throw new Error(error.message)
+					if (error) throw error
+
+					if (!data) {
+						throw new Error('No se encontro el ruc')
 					}
 
-					if (data) {
-						const { ruc, company, address } = data
-						setQuo({
-							ruc,
-							company,
-							address,
-						})
-						return 'Ruc encontrado'
-					}
+					setQuo({
+						...quo,
+						company: data.company,
+						address: data.address,
+					})
+					setLoading(false)
+					return 'Dni encontrado con exito'
 				},
-				error: (error) => {
-					console.log(error)
-					return 'Ruc encontrado'
+				error: () => {
+					setLoading(false)
+					return 'Error al buscar DNI'
 				},
 			})
 		}
+
+		if (dniRuc.length === 11) {
+			console.log('isRuc')
+
+			setLoading(true)
+			toast.promise(getRuc(dniRuc), {
+				loading: 'Buscando ruc...',
+				success: ([error, data]) => {
+					if (error) throw error
+
+					if (!data) {
+						throw new Error('No se encontro el ruc')
+					}
+					setLoading(false)
+					setQuo({
+						...quo,
+						company: data.company,
+						address: data.address,
+					})
+					return 'Ruc encontrado'
+				},
+				error: () => {
+					setLoading(false)
+					return 'Error al buscar Ruc'
+				},
+			})
+		}
+		// if (value.length === 11) {
+		// 	toast.promise(() => getRuc(value), {
+		// 		loading: 'Buscando...',
+		// 		success: ([error, data]) => {
+		// 			if (error) {
+		// 				throw new Error(error.message)
+		// 			}
+		//
+		// 			if (data) {
+		// 				const { ruc, company, address } = data
+		// 				setQuo({
+		// 					ruc,
+		// 					company,
+		// 					address,
+		// 				})
+		// 				return 'Ruc encontrado'
+		// 			}
+		// 		},
+		// 		error: (error) => {
+		// 			console.log(error)
+		// 			return 'Ruc encontrado'
+		// 		},
+		// 	})
+		// }
 	}
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,19 +201,29 @@ export function QuotationCustomerInfo() {
 				</div>
 			</header>
 			<article className='flex flex-col gap-4 mt-4'>
-				<div className='grid grid-cols-2 gap-4 '>
+				<div className='grid md:grid-cols-2 gap-4 '>
 					<div className='grid gap-2'>
 						<Label htmlFor='ruc'>Ruc</Label>
-						<Input
-							required
-							id='ruc'
-							value={quo.ruc ?? ''}
-							type='text'
-							name='ruc'
-							onBlur={handleRucBlur}
-							disabled={loading}
-							onChange={handleInputChange}
-						/>
+						<div className='relative'>
+							<Input
+								required
+								id='ruc'
+								value={quo.ruc ?? ''}
+								type='text'
+								name='ruc'
+								disabled={loading}
+								onChange={handleInputChange}
+							/>
+							<Button
+								size='icon'
+								type='button'
+								onClick={handleRucBlur}
+								className='absolute top-1 right-1.5 size-7'
+								variant='secondary'
+							>
+								<SearchIcon className='size-4' />
+							</Button>
+						</div>
 					</div>
 					<div className='grid gap-2'>
 						<Label htmlFor='deadline'>

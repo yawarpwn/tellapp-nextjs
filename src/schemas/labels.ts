@@ -1,9 +1,14 @@
 import { z } from 'zod'
 import { agencySchema } from './agencies'
+
 export const labelSchema = z.object({
   id: z.string(),
-  recipient: z.string(),
-  destination: z.string(),
+  recipient: z.string({
+    required_error: 'El destinatario es requerido',
+  }),
+  destination: z.string({
+    required_error: 'El destino es requerido',
+  }),
   dni_ruc: z
     .string({
       required_error: 'El Dni/Ruc es requerido',
