@@ -42,7 +42,12 @@ export const customerColumns = [
 	}),
 	columnHelper.accessor('destination', {
 		header: 'Destino',
-		cell: props => props.getValue(),
+		cell: props => (
+			<div>
+				<p>{props.getValue()}</p>
+				{props.row.original.address && <p>{props.row.original.address}</p>}
+			</div>
+		),
 	}),
 	columnHelper.accessor('phone', {
 		header: 'Teléfono',

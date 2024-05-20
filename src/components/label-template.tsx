@@ -10,21 +10,23 @@ interface Props {
 
 export const LabelTemplate = React.forwardRef<HTMLDivElement, Props>(
 	({ label }, ref) => {
-		const { recipient, dni_ruc, destination, phone, agencies } = label
+		const { recipient, dni_ruc, destination, phone, agencies, address } = label
 		return (
-			<div ref={ref} className='labels grid text-black grid-rows-3 h-full'>
+			<div ref={ref} className='grid text-black grid-rows-3 h-full'>
 				{[1, 2, 3].map((_, index) => (
 					<article
 						key={index}
-						className='p-4 h-full border-b border-dashed flex flex-col justify-between last:border-none'
+						className='p-4 h-full border-b border-dashed flex gap-4 flex-col justify-between bg-white last:border-none'
 					>
 						{/* Top */}
 						<header className='flex items-center border-2 border-black'>
-							<div className='w-1/2 flex flex-row justify-center p-2'>
+							<div className='w-1/2 flex flex-row justify-center'>
 								<TellLogo compact={false} />
 							</div>
-							<div className='p-2 '>
-								<p>Señalizaciones y dispositivos de seguridad</p>
+							<div className=''>
+								<p>
+									Señalizaciones y dispositivos de seguridad
+								</p>
 								<p className='text-center font-semibold'>
 									tellsenales.com
 								</p>
@@ -51,8 +53,11 @@ export const LabelTemplate = React.forwardRef<HTMLDivElement, Props>(
 									<p className='text-xl font-bold uppercase'>
 										Destino:
 									</p>
+									<div>
+										<p className='uppercase'>{destination}</p>
+										{address && <p className='m-0 text-sm'>{address}</p>}
+									</div>
 								</div>
-								<p>{destination}</p>
 								<div>
 									<p className='text-xl font-bold uppercase'>
 										Teléfono:
@@ -72,7 +77,7 @@ export const LabelTemplate = React.forwardRef<HTMLDivElement, Props>(
 							</p>
 						</section>
 						{/* Bottom */}
-						<footer className='flex justify-center items-center  p-3 '>
+						<footer className='flex justify-center items-center'>
 							<ShippingIcon className='h-14' />
 						</footer>
 					</article>

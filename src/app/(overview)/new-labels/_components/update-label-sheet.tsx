@@ -85,6 +85,7 @@ export function UpdateLabelSheet({
 		defaultValues: {
 			destination: label.destination,
 			dni_ruc: label.dni_ruc,
+			phone: label.phone,
 			address: label.address,
 			recipient: label.recipient,
 		},
