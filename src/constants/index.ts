@@ -50,16 +50,15 @@ export const NAVIGATION = [
     href: '/new-products',
     icon: ProductsIcon,
   },
-
-  {
-    title: 'Clientes',
-    href: '/new-customers',
-    icon: CustomersIcon,
-  },
   {
     title: 'Rotulos',
     href: '/new-labels',
     icon: PrinterIcon,
+  },
+  {
+    title: 'Clientes',
+    href: '/new-customers',
+    icon: CustomersIcon,
   },
   {
     title: 'Agencias',

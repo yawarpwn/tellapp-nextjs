@@ -39,7 +39,7 @@ border-r border-r-[rgb(47_48_55)] z-20 overflow-y-auto text-sm`,
 			</div>
 			<ul className='flex flex-col pt-2 mb-1 '>
 				{NAVIGATION.map(({ href, title, icon: Icon }) => {
-					const isAtive = pathname === href
+					const isAtive = pathname.startsWith(href)
 					return (
 						<li key={title}>
 							<Link href={href} legacyBehavior>
