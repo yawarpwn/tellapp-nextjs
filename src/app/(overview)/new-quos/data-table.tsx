@@ -29,6 +29,7 @@ import { PlusIcon } from '@/icons'
 import { DebouncedInput } from '@/components/input-debounce'
 import type { QuotationType } from '@/types'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { FloatingBar } from './_components/floating-bar'
 import { getColumns } from './columns'
 
@@ -40,7 +41,9 @@ interface Props {
 export function DataTable(props: Props) {
 	const { data } = props
 
-	const [globalFilter, setGlobalFilter] = React.useState('')
+	const params = useSearchParams()
+	const query = params.get('q')
+	const [globalFilter, setGlobalFilter] = React.useState(query || '')
 	const [pagination, setPagination] = React.useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 14,

@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { SearchIcon } from '@/icons'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
 export function DebouncedInput({
@@ -18,13 +19,29 @@ export function DebouncedInput({
 		setValue(initialValue)
 	}, [initialValue])
 
+	const searchParams = useSearchParams()
+	const pathname = usePathname()
+	const router = useRouter()
+
+	React.useEffect(() => {
+		const params = new URLSearchParams(searchParams.toString())
+		if (value) {
+			params.set('q', String(value))
+		} else {
+			params.delete('q')
+		}
+
+		const url = `${pathname}?${params.toString()}`
+		router.replace(url)
+	}, [value, searchParams, pathname, router])
+
 	React.useEffect(() => {
 		const timeout = setTimeout(() => {
 			onChange(value)
 		}, debounce)
 
 		return () => clearTimeout(timeout)
-	}, [value, onChange, debounce])
+	}, [value, onChange, debounce, searchParams])
 
 	return (
 		<div className='flex items-center gap-2 bg-background200 py-1 px-2 rounded-md border [&:has(input:focus)]:border-primary '>
