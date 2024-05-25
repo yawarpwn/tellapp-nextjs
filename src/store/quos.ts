@@ -1,82 +1,82 @@
 import {
-	CustomerType,
-	ProductType,
-	QuotationCreateType,
-	QuotationItemType,
-	QuotationType,
-	QuotationUpdateType,
+  CustomerType,
+  ProductType,
+  QuotationCreateType,
+  QuotationItemType,
+  QuotationType,
+  QuotationUpdateType,
 } from '@/types'
 import { createStore } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
 export interface QuotationState {
-	quoNumber: number
-	isUpdate: boolean
-	quo: QuotationCreateType | QuotationUpdateType
-	items: QuotationItemType[]
-	products: ProductType[]
-	customers: CustomerType[]
+  quoNumber: number
+  isUpdate: boolean
+  quo: QuotationCreateType | QuotationUpdateType
+  items: QuotationItemType[]
+  products: ProductType[]
+  customers: CustomerType[]
 }
 
 export interface QuotationActions {
-	setQuo: (quo: Partial<QuotationCreateType>) => void
-	setItems: (item: QuotationItemType[]) => void
-	addItem: (item: QuotationItemType) => void
-	deleteItem: (id: string) => void
-	duplicateItem: (item: QuotationItemType) => void
-	editItem: (item: QuotationItemType) => void
-	onPickCustomer: (customer: CustomerType) => void
-	reset: () => void
+  setQuo: (quo: Partial<QuotationCreateType>) => void
+  setItems: (item: QuotationItemType[]) => void
+  addItem: (item: QuotationItemType) => void
+  deleteItem: (id: string) => void
+  duplicateItem: (item: QuotationItemType) => void
+  editItem: (item: QuotationItemType) => void
+  onPickCustomer: (customer: CustomerType) => void
+  reset: () => void
 }
 
 export type QuotationStore = QuotationState & QuotationActions
 
 export const initQuotationStore = ({
-	quoNumber,
-	customers,
-	products,
-	items,
-	quo,
-	isUpdate,
+  quoNumber,
+  customers,
+  products,
+  items,
+  quo,
+  isUpdate,
 }: {
-	isUpdate?: boolean
-	quoNumber: number
-	customers: CustomerType[]
-	products: ProductType[]
-	quo: QuotationCreateType | QuotationType
-	items?: QuotationItemType[]
+  isUpdate?: boolean
+  quoNumber: number
+  customers: CustomerType[]
+  products: ProductType[]
+  quo: QuotationCreateType | QuotationType
+  items?: QuotationItemType[]
 }): QuotationState => {
-	return {
-		quoNumber,
-		isUpdate: isUpdate || false,
-		quo: quo || {
-			ruc: '',
-			company: '',
-			address: '',
-			deadline: 0,
-			include_igv: true,
-			is_regular_customer: false,
-		},
-		items: items || [],
-		products: products,
-		customers: customers,
-	}
+  return {
+    quoNumber,
+    isUpdate: isUpdate || false,
+    quo: quo || {
+      ruc: '',
+      company: '',
+      address: '',
+      deadline: 0,
+      include_igv: true,
+      is_regular_customer: false,
+    },
+    items: items || [],
+    products: products,
+    customers: customers,
+  }
 }
 
 const DEFAULT_PROPS: QuotationState = {
-	quoNumber: 0,
-	isUpdate: false,
-	quo: {
-		ruc: '',
-		company: '',
-		address: '',
-		deadline: 0,
-		include_igv: true,
-		is_regular_customer: false,
-	},
-	items: [],
-	products: [],
-	customers: [],
+  quoNumber: 0,
+  isUpdate: false,
+  quo: {
+    ruc: '',
+    company: '',
+    address: '',
+    deadline: 0,
+    include_igv: true,
+    is_regular_customer: false,
+  },
+  items: [],
+  products: [],
+  customers: [],
 }
 
 // TODO:
@@ -85,69 +85,72 @@ const DEFAULT_PROPS: QuotationState = {
 // )
 
 export const createQuotationStore = (
-	initProps: QuotationState = DEFAULT_PROPS,
+  initProps: QuotationState = DEFAULT_PROPS,
 ) => {
-	const res = createStore<QuotationStore>()(
-		devtools(
-			persist(
-				(set) => ({
-					...initProps,
-					selectedIdItem: null,
-					itemToEdit: null,
-					setQuo: (quo) => set((state) => ({ quo: { ...state.quo, ...quo } })),
-					setItems: (items) => set((state) => ({ items })),
-					reset: () => set({ ...initProps }),
-					addItem: (item) =>
-						set((state) => ({ items: [...state.items, item] })),
-					duplicateItem: (item) =>
-						set(state => ({
-							items: [...state.items, {
-								...item,
-								id: crypto.randomUUID(),
-							}],
-						})),
-					deleteItem: (id) =>
-						set((state) => ({
-							items: state.items.filter(item => item.id !== id),
-						})),
-					editItem: (item) =>
-						set((state) => ({
-							items: state.items.map(i => i.id === item.id ? item : i),
-						})),
-					onPickCustomer: (customer) =>
-						set(state => ({
-							quo: {
-								...state.quo,
-								ruc: customer.ruc,
-								company: customer.name,
-								address: customer.address,
-							},
-						})),
-				}),
-				{
-					name: 'TELL_QUO',
-					partialize: (state) =>
-						Object.fromEntries(
-							Object.entries(state).filter(([key]) =>
-								!['products', 'customers'].includes(key)
-							),
-						),
-					onRehydrateStorage: (state) => {
-						console.log('Hydratations starts', state)
-						// optional
-						return (state, error) => {
-							if (error) {
-								console.log('an error happened during hydration', error)
-							} else {
-								console.log('hydration finished')
-							}
-						}
-					},
-					skipHydration: true,
-				},
-			),
-		),
-	)
+  const res = createStore<QuotationStore>()(
+    devtools(
+      persist(
+        set => ({
+          ...initProps,
+          selectedIdItem: null,
+          itemToEdit: null,
+          setQuo: quo => set(state => ({ quo: { ...state.quo, ...quo } })),
+          setItems: items => set(state => ({ items })),
+          reset: () => set({ ...initProps }),
+          addItem: item => set(state => ({ items: [...state.items, item] })),
+          duplicateItem: item =>
+            set(state => ({
+              items: [
+                ...state.items,
+                {
+                  ...item,
+                  id: crypto.randomUUID(),
+                },
+              ],
+            })),
+          deleteItem: id =>
+            set(state => ({
+              items: state.items.filter(item => item.id !== id),
+            })),
+          editItem: item =>
+            set(state => ({
+              items: state.items.map(i => (i.id === item.id ? item : i)),
+            })),
+          onPickCustomer: customer =>
+            set(state => ({
+              quo: {
+                ...state.quo,
+                ruc: customer.ruc,
+                company: customer.name,
+                address: customer.address,
+                is_regular_customer: true,
+              },
+            })),
+        }),
+        {
+          name: 'TELL_QUO',
+          partialize: state =>
+            Object.fromEntries(
+              Object.entries(state).filter(
+                ([key]) => !['products', 'customers'].includes(key),
+              ),
+            ),
+          onRehydrateStorage: state => {
+            console.log('Hydratations starts', state)
+            // optional
+            return (state, error) => {
+              if (error) {
+                console.log('an error happened during hydration', error)
+              } else {
+                console.log('hydration finished')
+              }
+            }
+          },
+          skipHydration: true,
+        },
+      ),
+    ),
+  )
 
-	return res
+  return res
 }

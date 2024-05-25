@@ -45,7 +45,7 @@ export function QuotationCustomerInfo() {
 						quo,
 						items,
 					), {
-					loading: 'Creando',
+					loading: 'Actualizando...',
 					success: ([error, data]) => {
 						if (error) throw new Error('Error Update')
 						if (!data) return
@@ -70,6 +70,7 @@ export function QuotationCustomerInfo() {
 						deadline: quo.deadline as number,
 						include_igv: quo.include_igv as boolean,
 						is_regular_customer: quo.is_regular_customer as boolean,
+						credit: quo.credit,
 					}, items), {
 					loading: 'Creando',
 					success: ([error, data]) => {
@@ -157,30 +158,6 @@ export function QuotationCustomerInfo() {
 				},
 			})
 		}
-		// if (value.length === 11) {
-		// 	toast.promise(() => getRuc(value), {
-		// 		loading: 'Buscando...',
-		// 		success: ([error, data]) => {
-		// 			if (error) {
-		// 				throw new Error(error.message)
-		// 			}
-		//
-		// 			if (data) {
-		// 				const { ruc, company, address } = data
-		// 				setQuo({
-		// 					ruc,
-		// 					company,
-		// 					address,
-		// 				})
-		// 				return 'Ruc encontrado'
-		// 			}
-		// 		},
-		// 		error: (error) => {
-		// 			console.log(error)
-		// 			return 'Ruc encontrado'
-		// 		},
-		// 	})
-		// }
 	}
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -241,12 +218,6 @@ export function QuotationCustomerInfo() {
 						/>
 					</div>
 				</div>
-				{/* <div> */}
-				{/* 	<p className='text-green-300 text-sm'>{quo.company}</p> */}
-				{/* </div> */}
-				{/* <div> */}
-				{/* 	<p className='text-xs text-muted-foreground'>{quo.address}</p> */}
-				{/* </div> */}
 
 				<div className='grid gap-2'>
 					<Label htmlFor='company'>Cliente</Label>
@@ -259,16 +230,39 @@ export function QuotationCustomerInfo() {
 					/>
 				</div>
 
-				<div className='grid gap-2'>
-					<Label htmlFor='ruc'>Dirección</Label>
-					<Input
-						id='address'
-						name='address'
-						type='text'
-						value={quo.address ?? ''}
-						disabled={true}
-					/>
+				<div className='gri grid-gap-2'>
+					<Label>Direccion</Label>
+					<p className='text-green-300 text-sm mt-2 ml-2'>{quo.address}</p>
 				</div>
+
+				<div className='grid gap-2'>
+					<Label htmlFor='credit'>Credito</Label>
+					<div className='flex gap-2 items-center'>
+						<Input
+							id='credit'
+							name='credit'
+							type='number'
+							className='max-w-xs'
+							value={quo.credit ?? ''}
+							onChange={e => {
+								const { value } = e.target
+								const credit = value ? Number(value) : null
+								setQuo({ ...quo, credit })
+							}}
+						/>
+						<p>Dias</p>
+					</div>
+				</div>
+				{/* <div className='grid gap-2'> */}
+				{/* 	<Label htmlFor='ruc'>Dirección</Label> */}
+				{/* 	<Input */}
+				{/* 		id='address' */}
+				{/* 		name='address' */}
+				{/* 		type='text' */}
+				{/* 		value={quo.address ?? ''} */}
+				{/* 		disabled={true} */}
+				{/* 	/> */}
+				{/* </div> */}
 				<div className='flex gap-4'>
 					<div className='flex space-x-2 items-start '>
 						<Checkbox

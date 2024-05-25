@@ -36,6 +36,7 @@ type QuotationProviderProps = {
 	quo?: QuotationCreateType | QuotationUpdateType
 	items?: QuotationItemType[]
 	isUpdate?: boolean | undefined
+	credit?: number | null
 }
 
 export function QuotationStoreProvider(

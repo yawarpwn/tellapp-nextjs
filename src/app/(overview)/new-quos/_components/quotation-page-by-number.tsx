@@ -80,12 +80,23 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
 								)}
 							</dd>
 						</dl>
+
 						<dl className='grid sm:grid-cols-6 gap-x-3'>
 							<dt className='col-span-3 font-semibold '>
 								Tiempo de entrega:
 							</dt>
 							<dd className='col-span-3 '>
 								{quotation.deadline} día(s)
+							</dd>
+						</dl>
+						<dl className='grid sm:grid-cols-6 gap-x-3'>
+							<dt className='col-span-3 font-semibold '>
+								Codición de Pago
+							</dt>
+							<dd className='col-span-3 '>
+								{quotation.credit
+									? `${quotation.credit} días`
+									: '50% Adelanto '}
 							</dd>
 						</dl>
 					</div>

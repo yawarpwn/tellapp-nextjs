@@ -146,16 +146,16 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
 									})
 								}}
 							>
-								<div className='p-0 flex bg-card items-center gap-x-2 rounded-md hover:bg-zinc-800 overflow-hidden'>
-									<span className='h-full bg-secondary inline-flex items-center '>
+								<div className='p-0 flex items-center gap-x-2 rounded-md w-full hover:bg-zinc-800 overflow-hidden'>
+									<div className='h-full bg-indigo-700 inline-flex items-center '>
 										<span
 											style={{ writingMode: 'vertical-lr' }}
-											className='text-white uppercase'
+											className='text-white uppercase text-sm py-1'
 										>
 											{product.code}
 										</span>
-									</span>
-									<span className='p-1'>{product.description}</span>
+									</div>
+									<div className='p-1'>{product.description}</div>
 								</div>
 							</li>
 						))}

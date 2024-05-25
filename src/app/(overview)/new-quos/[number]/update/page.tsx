@@ -41,6 +41,7 @@ export default async function Page(
 					is_regular_customer: quotation.is_regular_customer,
 					created_at: quotation.created_at,
 					updated_at: quotation.updated_at,
+					credit: quotation.credit,
 				}}
 				items={quotation.items}
 			>

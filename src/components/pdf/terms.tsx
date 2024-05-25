@@ -25,8 +25,12 @@ const styles = StyleSheet.create({
 
 type Props = {
 	deadline: number
+	credit?: number | null
 }
-export default function QuoTerms({ deadline }: Props) {
+export default function QuoTerms({ deadline, credit }: Props) {
+	const payMethodText = credit
+		? `Crédito ${credit} días`
+		: '50% adelanto , 50% contraentrega'
 	return (
 		<View style={styles.container}>
 			<View style={{ width: '70%' }}>
@@ -41,7 +45,7 @@ export default function QuoTerms({ deadline }: Props) {
 				</View>
 				<View style={styles.row}>
 					<Text style={styles.left}>FORMA DE PAGO</Text>
-					<Text style={styles.right}>: 50% adelanto , 50% contraentrega</Text>
+					<Text style={styles.right}>: {payMethodText}</Text>
 				</View>
 				<View style={styles.row}>
 					<Text style={styles.left}>VALIDEZ</Text>
