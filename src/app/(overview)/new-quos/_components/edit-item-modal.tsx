@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
@@ -23,7 +22,7 @@ type Props = {
 const initialQuoItem = {
 	price: 1,
 	qty: 1,
-	unit_size: 'und',
+	unit_size: '',
 	description: '',
 	cost: 1,
 }
@@ -42,6 +41,8 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
 
 	const handleChangeItem = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.currentTarget
+
+		console.log([name, value])
 
 		if (name == 'price' || name == 'qty') {
 			setQuoItem({
@@ -117,20 +118,6 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
 						/>
 					</div>
 					<ul className='flex flex-col gap-2 overflow-y-auto'>
-						{/* <li */}
-						{/* 	onClick={() => handleProductClick(item)} */}
-						{/* 	className='flex gap-x-1 ' */}
-						{/* 	key={item.id} */}
-						{/* > */}
-						{/* 	<div className='p-0 flex items-center gap-x-2'> */}
-						{/* 		<span className='btn btn-primary btn-xs h-full '> */}
-						{/* 			<p style={{ writingMode: 'vertical-lr' }}> */}
-						{/* 				{item.code} */}
-						{/* 			</p> */}
-						{/* 		</span> */}
-						{/* 		<span className='p-0'>{item.description}</span> */}
-						{/* 	</div> */}
-						{/* </li> */}
 						{results.map(product => (
 							<li
 								key={product.id}
