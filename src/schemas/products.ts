@@ -11,8 +11,8 @@ export const ProductSchema = z.object({
   code: z
     .string({ required_error: 'Cóigo es requerido' })
     .min(2, { message: 'Mínimo 3 caracteres' })
-    .max(10, {
-      message: 'Máximo 60 caracteres',
+    .max(15, {
+      message: 'Máximo 15 caracteres',
     }),
   price: z.coerce
     .number({
