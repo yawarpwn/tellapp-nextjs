@@ -8,6 +8,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 import { generatePdfDoc } from '@/lib/pdf-doc/pdf-doc'
+import 'pdfmake/build/vfs_fonts'
 
 export function ShareQuotationButton({
   quotation,
