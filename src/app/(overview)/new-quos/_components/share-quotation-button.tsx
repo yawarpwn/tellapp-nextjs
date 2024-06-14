@@ -1,9 +1,8 @@
 'use client'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { DownloadIcon, ShareIcon } from '@/icons'
+import { Button } from '@/components/ui/button'
+import { ShareIcon } from '@/icons'
 import { generatePdfDoc } from '@/lib/pdf-doc/pdf-doc'
 import { type QuotationType } from '@/types'
-import 'pdfmake/build/vfs_fonts'
 import * as pdfMake from 'pdfmake/build/pdfmake'
 // import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 

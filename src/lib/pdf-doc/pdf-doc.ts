@@ -3,7 +3,6 @@ import { QuotationType } from '@/types'
 import { TDocumentDefinitions } from 'pdfmake/interfaces'
 import { companyInfo } from './company-info'
 import { getItemsTable } from './items-table'
-// import quotation from './quotation.json'
 
 export function generatePdfDoc(quotation: QuotationType) {
   const pdfDoc: TDocumentDefinitions = {
