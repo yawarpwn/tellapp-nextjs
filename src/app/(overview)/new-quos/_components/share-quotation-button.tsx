@@ -2,15 +2,13 @@
 import { Button, buttonVariants } from '@/components/ui/button'
 import { DownloadIcon, ShareIcon } from '@/icons'
 import { type QuotationType } from '@/types'
-import { usePDF } from '@react-pdf/renderer'
-import PDFGenerator from './pdf-generator'
 
 import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
 import { generatePdfDoc } from '@/lib/pdf-doc/pdf-doc'
 
-export default function DownloadPDF({
+export function ShareQuotationButton({
   quotation,
 }: {
   quotation: QuotationType
@@ -56,29 +54,10 @@ export default function DownloadPDF({
     )
   }
 
-  const downloadPdf = () => {
-    const dd = pdfMake.createPdf(
-      generatePdfDoc(quotation),
-      undefined,
-      undefined,
-      pdfFonts.pdfMake.vfs,
-    )
-    dd.download()
-  }
-
   return (
-    <>
-      <Button onClick={handleShare} variant="secondary">
-        <ShareIcon size={20} />
-        <span className="ml-2 hidden lg:block">Compartir</span>
-      </Button>
-      <Button
-        onClick={downloadPdf}
-        className={buttonVariants({ variant: 'secondary' })}
-      >
-        <DownloadIcon size={20} />
-        <span className="ml-2 hidden lg:block">Descargar</span>
-      </Button>
-    </>
+    <Button onClick={handleShare} variant="secondary">
+      <ShareIcon size={20} />
+      <span className="ml-2 hidden lg:block">Compartir</span>
+    </Button>
   )
 }
