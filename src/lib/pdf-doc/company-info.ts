@@ -49,7 +49,7 @@ export const companyInfo: Content = {
             },
             {
               marginTop: 5,
-              text: '2061055536',
+              text: '20610555536',
               border: [false, true, false, false],
               alignment: 'right',
             },
