@@ -9,11 +9,11 @@ export function getItemsTable(quotation: QuotationType) {
 
   const itemsTable: Content = {
     table: {
-      widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto', 'auto'],
+      widths: ['auto', '*', 'auto', 'auto', 35, 35, 'auto'],
       headerRows: 1,
       body: [
         [
-          { text: 'No', color: '#fff' },
+          { text: 'No', color: '#fff', alignment: 'center' },
           {
             text: 'DESCRIPCION',
             alignment: 'center',
@@ -24,10 +24,10 @@ export function getItemsTable(quotation: QuotationType) {
             alignment: 'center',
             color: '#fff',
           },
-          { text: 'CANT', color: '#fff' },
-          { text: 'BASE', color: '#fff' },
-          { text: 'P.UNT', color: '#fff' },
-          { text: 'MONTO', color: '#fff' },
+          { text: 'CANT', color: '#fff', alignment: 'center' },
+          { text: 'P. BASE', color: '#fff', alignment: 'center' },
+          { text: 'P. UNT', color: '#fff', alignment: 'center' },
+          { text: 'MONTO', color: '#fff', alignment: 'center' },
         ],
         ...quotation.items.map((item, index) => {
           return [
@@ -63,16 +63,16 @@ export function getItemsTable(quotation: QuotationType) {
 
             // Base
             {
-              text: Number(item.price).toFixed(2),
+              text: quotation.include_igv
+                ? Number(item.price / 1.18).toFixed(2)
+                : Number(item.price).toFixed(2),
               alignment: 'center',
               margin: [0, 5],
             },
 
             // Precio Unitario
             {
-              text: quotation.include_igv
-                ? Number(item.price / 1.18).toFixed(2)
-                : Number(item.price).toFixed(2),
+              text: Number(item.price).toFixed(2),
               alignment: 'center',
               margin: [0, 5],
             },
