@@ -3,7 +3,9 @@ import { Button } from '@/components/ui/button'
 import { ShareIcon } from '@/icons'
 import { generatePdfDoc } from '@/lib/pdf-doc/pdf-doc'
 import { type QuotationType } from '@/types'
-import * as pdfMake from 'pdfmake/build/pdfmake'
+import pdfMake from 'pdfmake/build/pdfmake'
+// import * as fullPdfMake from 'pdfmake/build/pdfmake.min'
+
 // import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
 export function ShareQuotationButton({

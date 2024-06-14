@@ -3,7 +3,8 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { DownloadIcon } from '@/icons'
 import { type QuotationType } from '@/types'
 
-import * as pdfMake from 'pdfmake/build/pdfmake'
+// import * as pdfMake from 'pdfmake/build/pdfmake'
+import pdfMake from 'pdfmake/build/pdfmake'
 // import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
 import { generatePdfDoc } from '@/lib/pdf-doc/pdf-doc'
