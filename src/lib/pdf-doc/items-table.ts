@@ -36,36 +36,30 @@ export function getItemsTable(quotation: QuotationType) {
               text: index + 1,
               alignment: 'center',
               margin: [0, 5],
-              fillColor: isEven ? evenBackground : oddBackground,
             },
             {
               text: item.description,
               margin: [0, 5],
-              fillColor: isEven ? evenBackground : oddBackground,
             },
             {
               text: item.unit_size,
               alignment: 'center',
               margin: [0, 5],
-              fillColor: isEven ? evenBackground : oddBackground,
             },
             {
-              text: item.qty,
+              text: item.qty / 1.18,
               alignment: 'center',
               margin: [0, 5],
-              fillColor: isEven ? evenBackground : oddBackground,
             },
             {
-              text: Number(item.price).toFixed(2),
+              text: Number(item.price / 1.18).toFixed(2),
               alignment: 'center',
               margin: [0, 5],
-              fillColor: isEven ? evenBackground : oddBackground,
             },
             {
               text: (Number(item.price) * Number(item.qty)).toFixed(2),
               alignment: 'center',
               margin: [0, 5],
-              fillColor: isEven ? evenBackground : oddBackground,
             },
           ]
         }),
@@ -150,7 +144,13 @@ export function getItemsTable(quotation: QuotationType) {
         ],
       ],
     },
-    layout: 'headerLineOnly',
+    // layout: {
+    //   fillColor: function (rowIndex, node, columnIndex) {
+    //     return rowIndex % 2 === 0 ? '#CCCCCC' : null
+    //   },
+    // },
+    layout: 'lightHorizontalLines',
+
     marginBottom: 10,
   }
 

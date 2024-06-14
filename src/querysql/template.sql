@@ -11,12 +11,11 @@ CREATE TABLE quotations (
   address TEXT NOT NULL,
   deadline INT NOT NULL DEFAULT 1,
   phone text,
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  created_at  WITH TIME ZONE NOT NULL DEFAULT NOW(),
   items JSONB NOT NULL
 );
 
 ALTER SEQUENCE quotations_number_seq RESTART WITH 4000;
-
 
 
 CREATE TABLE staff (
@@ -84,5 +83,3 @@ VALUES (
 
 -- Seleccionar todos los datos de la tabla quotations
 SELECT * FROM quotations;
-
-

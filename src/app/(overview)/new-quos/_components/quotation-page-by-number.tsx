@@ -13,9 +13,8 @@ import { fetchQuotationByNumber } from '@/lib/data/quotations'
 import { formatDateToLocal, formatNumberToLocal } from '@/lib/utils'
 import { getIgv } from '@/lib/utils'
 import Link from 'next/link'
-import { DownloadQuotationButton } from '../_components/download-quotation-button'
-import { ShareQuotationButton } from '../_components/share-quotation-button'
 import { DeleteButton } from './delete-button'
+import { DownloadAndShareButtons } from './download-and-share-buttons'
 import { DuplicateButton } from './duplicate-button'
 export async function QuotationPageByNumber({ number }: { number: number }) {
   const quotation = await fetchQuotationByNumber({ number })
@@ -34,8 +33,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <EditIcon size={20} />
             <span className="ml-2 hidden lg:block">Editar</span>
           </Link>
-          <DownloadQuotationButton quotation={quotation} />
-          <ShareQuotationButton quotation={quotation} />
+          <DownloadAndShareButtons quotation={quotation} />
           <DuplicateButton id={quotation.id} />
           <DeleteButton id={quotation.id} />
           {/* <DuplicateQuotation number={number} /> */}

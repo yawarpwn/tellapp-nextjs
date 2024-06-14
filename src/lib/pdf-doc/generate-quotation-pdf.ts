@@ -4,7 +4,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces'
 import { companyInfo } from './company-info'
 import { getItemsTable } from './items-table'
 
-export function generatePdfDoc(quotation: QuotationType) {
+export function generateQuotationPdf(quotation: QuotationType) {
   const pdfDoc: TDocumentDefinitions = {
     content: [
       // Company info
@@ -75,7 +75,7 @@ export function generatePdfDoc(quotation: QuotationType) {
       // Term and coditions
       {
         text: 'Terminos y Condiciones',
-        color: 'indigo',
+        color: '#7e2ee1',
         marginBottom: 10,
         bold: true,
       },
