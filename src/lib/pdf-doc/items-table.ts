@@ -47,7 +47,7 @@ export function getItemsTable(quotation: QuotationType) {
               margin: [0, 5],
             },
             {
-              text: item.qty / 1.18,
+              text: item.qty,
               alignment: 'center',
               margin: [0, 5],
             },
@@ -144,12 +144,13 @@ export function getItemsTable(quotation: QuotationType) {
         ],
       ],
     },
-    // layout: {
-    //   fillColor: function (rowIndex, node, columnIndex) {
-    //     return rowIndex % 2 === 0 ? '#CCCCCC' : null
-    //   },
-    // },
-    layout: 'lightHorizontalLines',
+    layout: {
+      fillColor: function (rowIndex, node, columnIndex) {
+        return rowIndex % 2 === 0 ? '#ededed' : null
+      },
+      defaultBorder: false,
+    },
+    // layout: 'lightHorizontalLines',
 
     marginBottom: 10,
   }

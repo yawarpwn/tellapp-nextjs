@@ -65,8 +65,8 @@ export function DownloadAndShareButtons({
   }
 
   const downloadPdf = () => {
-    // dd.open()
-    dd.download(pdfFileName)
+    dd.open()
+    // dd.download(pdfFileName)
   }
 
   return (
