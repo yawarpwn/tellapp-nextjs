@@ -56,13 +56,13 @@ export function getItemsTable(quotation: QuotationType) {
               fillColor: isEven ? evenBackground : oddBackground,
             },
             {
-              text: item.price.toFixed(2),
+              text: Number(item.price).toFixed(2),
               alignment: 'center',
               margin: [0, 5],
               fillColor: isEven ? evenBackground : oddBackground,
             },
             {
-              text: (item.price * item.qty).toFixed(2),
+              text: (Number(item.price) * Number(item.qty)).toFixed(2),
               alignment: 'center',
               margin: [0, 5],
               fillColor: isEven ? evenBackground : oddBackground,
