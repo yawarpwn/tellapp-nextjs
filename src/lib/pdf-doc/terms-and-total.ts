@@ -11,12 +11,13 @@ export function getTermAndTotal(quotation: QuotationType) {
   const deadlineText =
     quotation.deadline < 1
       ? `${quotation.deadline} día útil`
-      : `${quotation.deadline} dias utiles`
+      : `${quotation.deadline} dias útiles`
 
   const content: Content = {
     columns: [
       {
         table: {
+          widths: [70, 'auto', '*'],
           body: [
             [
               {
@@ -33,7 +34,7 @@ export function getTermAndTotal(quotation: QuotationType) {
               'Tiempo de entrega',
               {
                 text: ':',
-                margin: [4, 0],
+                margin: [2, 0],
               },
               {
                 text: [
@@ -41,20 +42,20 @@ export function getTermAndTotal(quotation: QuotationType) {
                     text: deadlineText,
                     bold: true,
                   },
-                  ', una vez recepcionada la Orden de Compra',
+                  ', una vez recepcionada la OC',
                 ],
               },
             ],
             [
               'Forma de pago',
-              { text: ':', margin: [4, 0] },
+              { text: ':', margin: [2, 0] },
               {
                 text: quotation.credit
                   ? `${quotation.credit} dias credito`
                   : '50% adelanto , 50% contraentrega',
               },
             ],
-            ['Validez ', { text: ':', margin: [4, 0] }, '35 días'],
+            ['Validez ', { text: ':', margin: [2, 0] }, '35 días'],
           ],
         },
         layout: {
@@ -84,7 +85,7 @@ export function getTermAndTotal(quotation: QuotationType) {
                 alignment: 'right',
               },
               {
-                text: formatedSubTotal,
+                text: quotation.include_igv ? formatedSubTotal : 'S/ 0.00',
                 alignment: 'right',
               },
             ],
@@ -95,7 +96,7 @@ export function getTermAndTotal(quotation: QuotationType) {
                 alignment: 'right',
               },
               {
-                text: formatedIgv,
+                text: quotation.include_igv ? formatedIgv : 'S/ 0.00',
                 alignment: 'right',
               },
             ],

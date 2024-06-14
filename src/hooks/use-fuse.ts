@@ -1,6 +1,8 @@
 import Fuse from 'fuse.js'
 import { useDebounce } from 'use-debounce'
 
+import debounce from 'just-debounce-it'
+
 import { useCallback, useMemo, useState } from 'react'
 
 interface Options<T> extends Fuse.IFuseOptions<T> {
@@ -30,11 +32,14 @@ export function useFuse<T>(list: T[], options: Options<T>) {
     return fuse.search(query, { limit: 10 })
   }, [query, fuse])
 
-  const onSearch = useCallback(
-    (value: string) => {
-      setQuery(value)
-    },
-    [setQuery],
+  const onSearch = debounce(
+    useCallback(
+      (value: string) => {
+        setQuery(value)
+      },
+      [setQuery],
+    ),
+    300,
   )
 
   return {

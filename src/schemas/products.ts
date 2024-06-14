@@ -27,6 +27,7 @@ export const ProductSchema = z.object({
   category: z.nativeEnum(PRODUCT_CATEGORIES, {
     required_error: 'La categoria es requerida',
   }),
+  link: z.string().optional().nullable(),
   unit_size: z
     .string({
       required_error: 'unidad / medida es requerida',

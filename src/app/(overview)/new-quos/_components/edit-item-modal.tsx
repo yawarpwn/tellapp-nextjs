@@ -48,14 +48,10 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
     ],
   })
 
-  console.log(hits)
-
   const handleChangeItem = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget
 
-    console.log([name, value])
-
-    if (name == 'price' || name == 'qty') {
+    if (name == 'price' || name == 'qty' || name == 'cost') {
       setQuoItem({
         ...quoItem,
         [name]: Number(value),

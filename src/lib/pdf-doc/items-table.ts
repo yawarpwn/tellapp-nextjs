@@ -36,8 +36,11 @@ export function getItemsTable(quotation: QuotationType) {
               margin: [0, 5],
             },
             {
-              text: item.description,
-              margin: [0, 5],
+              text: [
+                {
+                  text: item.description,
+                },
+              ],
             },
             {
               text: item.unit_size,
@@ -50,7 +53,9 @@ export function getItemsTable(quotation: QuotationType) {
               margin: [0, 5],
             },
             {
-              text: Number(item.price / 1.18).toFixed(2),
+              text: quotation.include_igv
+                ? Number(item.price / 1.18).toFixed(2)
+                : Number(item.price).toFixed(2),
               alignment: 'center',
               margin: [0, 5],
             },
