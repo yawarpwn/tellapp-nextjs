@@ -4,11 +4,9 @@ import { DownloadIcon } from '@/icons'
 import { type QuotationType } from '@/types'
 
 import * as pdfMake from 'pdfmake/build/pdfmake'
-import * as pdfFonts from 'pdfmake/build/vfs_fonts'
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
 import { generatePdfDoc } from '@/lib/pdf-doc/pdf-doc'
-pdfMake.vfs = pdfFonts.pdfMake.vfs
-import 'pdfmake/build/vfs_fonts'
 
 export function DownloadQuotationButton({
   quotation,
@@ -16,12 +14,17 @@ export function DownloadQuotationButton({
   quotation: QuotationType
 }) {
   const downloadPdf = () => {
-    const dd = pdfMake.createPdf(
-      generatePdfDoc(quotation),
-      undefined,
-      undefined,
-      pdfFonts.pdfMake.vfs,
-    )
+    const dd = pdfMake.createPdf(generatePdfDoc(quotation), undefined, {
+      Roboto: {
+        normal:
+          'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+        bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+        italics:
+          'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
+        bolditalics:
+          'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf',
+      },
+    })
     dd.download()
   }
 
