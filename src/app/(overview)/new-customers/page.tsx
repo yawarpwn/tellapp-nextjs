@@ -6,29 +6,29 @@ import { CreateCustomerDialog } from './_components/create-customer-dialog'
 import { customerColumns } from './_components/customer-columns'
 
 async function ProductTable() {
-	const customers = await fetchCustomers()
+  const customers = await fetchCustomers()
 
-	return (
-		<DataTable
-			createComponent={<CreateCustomerDialog />}
-			columns={customerColumns}
-			data={customers}
-		/>
-	)
+  return (
+    <DataTable
+      createComponent={<CreateCustomerDialog />}
+      columns={customerColumns}
+      data={customers}
+    />
+  )
 }
 
 export default async function Page() {
-	return (
-		<Suspense
-			fallback={
-				<DataTableSkeleton
-					columnCount={5}
-					rowCount={20}
-					searchableColumnCount={1}
-				/>
-			}
-		>
-			<ProductTable />
-		</Suspense>
-	)
+  return (
+    <Suspense
+      fallback={
+        <DataTableSkeleton
+          columnCount={5}
+          rowCount={20}
+          searchableColumnCount={1}
+        />
+      }
+    >
+      <ProductTable />
+    </Suspense>
+  )
 }
