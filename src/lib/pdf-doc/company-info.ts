@@ -18,19 +18,25 @@ const logo = `
 `
 export const companyInfo: Content = {
   columns: [
-    [
-      {
-        svg: logo,
-        marginBottom: 10,
-      },
-      {
-        text: 'Maquinaria 325 Urb. Villa Señor de los Milagros',
-        marginBottom: 5,
-      },
-      {
-        text: 'Carmen de la Legua - Reynoso - Callao',
-      },
-    ],
+    {
+      stack: [
+        {
+          svg: logo,
+          marginBottom: 6,
+        },
+        {
+          text: 'SEÑALIZACIONES Y DISPOSITIVOS DE SEGURIDAD',
+          fontSize: 8.5,
+        },
+        {
+          text: 'Maquinaria #325 - Carmen de la Legua - Callao',
+          marginLeft: 15,
+          italics: true,
+          marginBottom: 2,
+        },
+      ],
+    },
+
     {
       table: {
         widths: ['*', 30, 'auto', 100],
@@ -63,7 +69,9 @@ export const companyInfo: Content = {
             ':',
             {
               text: 'ventas@tellsenales.com',
+              link: 'mailto:tellsenales@gmail.com?Subject=Estoy interesado en adquirir: ',
               alignment: 'right',
+              style: 'linkText',
             },
           ],
 
@@ -77,6 +85,7 @@ export const companyInfo: Content = {
               text: 'tellsenales.com',
               link: 'https://tellsenales.com',
               alignment: 'right',
+              style: 'linkText',
             },
           ],
 

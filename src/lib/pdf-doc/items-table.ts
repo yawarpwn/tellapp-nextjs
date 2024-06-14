@@ -13,24 +13,22 @@ export function getItemsTable(quotation: QuotationType) {
       headerRows: 1,
       body: [
         [
-          'No',
+          { text: 'No', color: '#fff' },
           {
             text: 'DESCRIPCION',
             alignment: 'center',
+            color: '#fff',
           },
           {
             text: 'U/M',
             alignment: 'center',
+            color: '#fff',
           },
-          'CANT',
-          'P.UNT',
-          'MONTO',
+          { text: 'CANT', color: '#fff' },
+          { text: 'P.UNT', color: '#fff' },
+          { text: 'MONTO', color: '#fff' },
         ],
         ...quotation.items.map((item, index) => {
-          const itemNumber = index + 1
-          const isEven = itemNumber % 2 === 0
-          const evenBackground = '#ededed'
-          const oddBackground = '#fff'
           return [
             {
               text: index + 1,
@@ -63,91 +61,15 @@ export function getItemsTable(quotation: QuotationType) {
             },
           ]
         }),
-        [
-          {
-            text: 'Descuentos',
-            colSpan: 4,
-            alignment: 'right',
-            margin: [0, 4],
-          },
-          {},
-          {},
-          {},
-          {
-            text: 'S/ 0.00',
-            colSpan: 2,
-            alignment: 'right',
-            margin: [0, 4],
-          },
-          {},
-        ],
-
-        [
-          {
-            text: 'Total Ventas Gravadas',
-            colSpan: 4,
-            alignment: 'right',
-            margin: [0, 4],
-          },
-          {},
-          {},
-          {},
-          {
-            text: formatedSubTotal,
-            colSpan: 2,
-            alignment: 'right',
-            margin: [0, 4],
-          },
-          {},
-        ],
-
-        [
-          {
-            text: 'Total IGV (18%)',
-            colSpan: 4,
-            alignment: 'right',
-            margin: [0, 4],
-          },
-          {},
-          {},
-          {},
-          {
-            text: formatedIgv,
-            colSpan: 2,
-            alignment: 'right',
-            margin: [0, 4],
-          },
-          {},
-        ],
-
-        [
-          {},
-          {},
-          {
-            text: 'Total',
-            alignment: 'right',
-            colSpan: 2,
-            margin: [0, 4],
-            fillColor: '#000',
-            color: '#fff',
-          },
-          {},
-          {
-            text: formatedTotal,
-            colSpan: 2,
-            alignment: 'right',
-            margin: [0, 4],
-            fillColor: '#000',
-            color: '#fff',
-          },
-          {},
-        ],
       ],
     },
     layout: {
       fillColor: function (rowIndex, node, columnIndex) {
+        if (rowIndex === 0) return '#7d2de0'
+
         return rowIndex % 2 === 0 ? '#ededed' : null
       },
+
       defaultBorder: false,
     },
     // layout: 'lightHorizontalLines',
