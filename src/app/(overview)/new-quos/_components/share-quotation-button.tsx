@@ -6,6 +6,7 @@ import { type QuotationType } from '@/types'
 import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
+pdfMake.vfs = pdfFonts.pdfMake.vfs
 import { generatePdfDoc } from '@/lib/pdf-doc/pdf-doc'
 
 export function ShareQuotationButton({

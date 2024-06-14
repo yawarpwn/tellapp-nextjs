@@ -7,6 +7,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
 import { generatePdfDoc } from '@/lib/pdf-doc/pdf-doc'
+pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 export function DownloadQuotationButton({
   quotation,

@@ -1,4 +1,3 @@
-import DownloadPDF from '@/components/pdf/download-pdf'
 import { buttonVariants } from '@/components/ui/button'
 import {
   Table,
