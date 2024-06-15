@@ -93,7 +93,14 @@ export function getItemsTable(quotation: QuotationType) {
 
         return rowIndex % 2 === 0 ? '#ededed' : null
       },
-
+      hLineColor: (index, node) => (index == 1 ? '#000' : '#aaa'),
+      // paddingTop: index => (index === 0 ? 4 : 8),
+      // paddingBottom: index => (index === 0 ? 4 : 8),
+      hLineWidth: index => (index === 0 ? 5 : 10),
+      vLineWidth: () => 1,
+      vLineColor: '#0d3',
+      hLineColor: '#a23',
+      vLineStyle: (index, node) => null,
       defaultBorder: false,
     },
     // layout: 'lightHorizontalLines',
