@@ -11,7 +11,7 @@ export function getTermAndTotal(quotation: QuotationType) {
   const deadlineText =
     quotation.deadline < 1
       ? `${quotation.deadline} día útil`
-      : `${quotation.deadline} dias útiles`
+      : `${quotation.deadline} días útiles`
 
   const content: Content = {
     columns: [
@@ -41,8 +41,9 @@ export function getTermAndTotal(quotation: QuotationType) {
                   {
                     text: deadlineText,
                     bold: true,
+                    italics: true,
                   },
-                  ', una vez recepcionada la OC',
+                  { text: ', una vez recepcionada la OC', italics: true },
                 ],
               },
             ],
@@ -53,9 +54,17 @@ export function getTermAndTotal(quotation: QuotationType) {
                 text: quotation.credit
                   ? `${quotation.credit} dias credito`
                   : '50% adelanto , 50% contraentrega',
+                italics: true,
               },
             ],
-            ['Validez ', { text: ':', margin: [2, 0] }, '35 días'],
+            [
+              'Validez ',
+              { text: ':', margin: [2, 0] },
+              {
+                text: '30 días',
+                italics: true,
+              },
+            ],
           ],
         },
         layout: {
