@@ -9,7 +9,7 @@ export function getTermAndTotal(quotation: QuotationType) {
   )
 
   const deadlineText =
-    quotation.deadline < 1
+    quotation.deadline === 1
       ? `${quotation.deadline} día útil`
       : `${quotation.deadline} días útiles`
 
