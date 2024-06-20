@@ -51,10 +51,12 @@ export const customerColumns = [
   columnHelper.accessor('agency_id', {
     header: 'Agencia',
     cell: ({ row }) => {
-      const agency = row.original.agencies
-        ? row.original.agencies.company
-        : 'Ninguna'
-      return <span>{agency}</span>
+      return (
+        <div>
+          <p>{row.original.agencies?.company || ''}</p>
+          <p>{row.original.agencies?.ruc || ''}</p>
+        </div>
+      )
     },
   }),
 
@@ -103,6 +105,22 @@ export const customerColumns = [
             >
               Imprimir
             </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                generateLabelPdf(row.original).download()
+              }}
+            >
+              Descargar
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={() => {
+                generateLabelPdf(row.original).open()
+              }}
+            >
+              Ver
+            </DropdownMenuItem>
+
             {/* <DropdownMenuItem onSelect={printPdf}>Imprimir</DropdownMenuItem> */}
             <DropdownMenuItem onSelect={() => setShowUpdateDialog(true)}>
               Edit
