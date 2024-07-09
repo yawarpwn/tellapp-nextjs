@@ -94,7 +94,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <TableHead>DESCRIPCION</TableHead>
             <TableHead>U/M</TableHead>
             <TableHead>CANT</TableHead>
-            <TableHead>BASE</TableHead>
+            <TableHead>P.BASE</TableHead>
             <TableHead>P.UNIT</TableHead>
             <TableHead>MONTO</TableHead>
           </TableRow>
@@ -106,8 +106,10 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
                 <div className="min-w-[250px]">{item.description}</div>
               </TableCell>
               <TableCell>{item.unit_size}</TableCell>
-              <TableCell>{item.qty}</TableCell>
-              <TableCell>{(item.price / 1.18).toFixed(2)}</TableCell>
+              <TableCell className="text-center">{item.qty}</TableCell>
+              <TableCell className="text-center">
+                {(item.price / 1.18).toFixed(4)}
+              </TableCell>
               <TableCell>{formatNumberToLocal(item.price)}</TableCell>
               <TableCell className="text-right">
                 {formatNumberToLocal(item.price * item.qty)}
