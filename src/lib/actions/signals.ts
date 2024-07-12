@@ -4,7 +4,7 @@ import { destroyResource, uploadImageFile } from '@/lib/cloudinary'
 import { type SignalUpdate } from '@/schemas/signal'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
-import { createClient } from '../supabase/server'
+import { createServerClient } from '../supabase/server'
 
 export async function updateSignal(formData: FormData) {
 	const data = Object.fromEntries(formData.entries())
@@ -46,7 +46,7 @@ export async function updateSignal(formData: FormData) {
 
 		// update to Database
 		const cookieStore = cookies()
-		const supabase = createClient(cookieStore)
+		const supabase = createServerClient(cookieStore)
 		const { error } = await supabase.from(TABLES.Signals).update(dataToUpdate)
 			.eq('id', id)
 
@@ -89,7 +89,7 @@ export async function createSignal(formData: FormData) {
 
 		// update to Database
 		const cookieStore = cookies()
-		const supabase = createClient(cookieStore)
+		const supabase = createServerClient(cookieStore)
 		const { error } = await supabase.from(TABLES.Signals).insert(dataTopInsert)
 
 		if (error) throw error
@@ -107,7 +107,7 @@ export async function deleteSignal(_: undefined, formData: FormData) {
 	console.log({ id, publicId })
 
 	const cookieStore = cookies()
-	const supabase = createClient(cookieStore)
+	const supabase = createServerClient(cookieStore)
 
 	// destroy image in cloudinary
 	await destroyResource(publicId)

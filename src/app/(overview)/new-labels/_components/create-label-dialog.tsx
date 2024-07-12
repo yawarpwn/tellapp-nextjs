@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { TABLES } from '@/constants'
 import { SearchIcon } from '@/icons'
 import { getErrorMessage } from '@/lib/handle-error'
-import { createClient } from '@/lib/supabase/client'
+import { createBrowserClient } from '@/lib/supabase/client'
 import { AgencyType } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from '@radix-ui/react-icons'
@@ -55,7 +55,7 @@ export function CreateLabelDialog() {
 	const [agencies, setAgencies] = React.useState<AgencyType[]>([])
 
 	React.useEffect(() => {
-		const supabase = createClient()
+		const supabase = createBrowserClient()
 		supabase
 			.from(TABLES.Agencies)
 			.select()

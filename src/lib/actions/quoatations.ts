@@ -1,7 +1,7 @@
 'use server'
 
 import { TABLES } from '@/constants'
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@/lib/supabase/server'
 import {
   QuotationCreateSchema,
   QuotationUpdateSchema,
@@ -26,7 +26,7 @@ export async function setQuotation(
   items: QuotationItemType[],
 ): Promise<[Error?, QuotationType?]> {
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   console.log({ quotation })
 
@@ -87,7 +87,7 @@ export async function insertQuotation(
   items: QuotationItemType[],
 ): Promise<[Error?, QuotationType?]> {
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   if (quotation.is_regular_customer) {
     const { data: customerFounds, error: customerFoundError } = await supabase
@@ -168,7 +168,7 @@ export async function createQuotation(_: undefined, formData: FormData) {
 
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const { company, ruc, address, deadline, include_igv, is_regular_customer } =
     validatedFields.data
@@ -276,7 +276,7 @@ export async function updateQuotation(_: undefined, formData: FormData) {
 
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   // Si esta marco como cliente regular agregamos a la DB
   if (is_regular_customer) {
@@ -346,7 +346,7 @@ export async function deleteQuotation(_: undefined, formData: FormData) {
 
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   await supabase.from(TABLES.Quotations).delete().eq('number', number)
   redirect('/quotations')
@@ -355,7 +355,7 @@ export async function deleteQuotation(_: undefined, formData: FormData) {
 export async function deleteQuotationAction(id: string) {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
   const { error, data } = await supabase
     .from(TABLES.Quotations)
     .delete()
@@ -378,7 +378,7 @@ export async function deleteQuotationAction(id: string) {
 export async function duplicateQuotationAction(id: string) {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const quotation = await fetchQuotationById(id)
   const { is_regular_customer, ...restQuotation } = quotation
@@ -414,7 +414,7 @@ export async function duplicateQuotation(_: undefined, formData: FormData) {
 
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const quotation = await fetchQuotationByNumber({ number })
   const { number: lastQuotation } = await fetchLastQuotation()

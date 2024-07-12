@@ -6,7 +6,7 @@ import {
 	destroyResource,
 	uploadImageFile,
 } from '../cloudinary'
-import { createClient } from '../supabase/server'
+import { createServerClient } from '../supabase/server'
 
 // export async function uploadFiles(
 // 	formData: FormData,
@@ -86,7 +86,7 @@ export async function createGalleryImage(formData: FormData) {
 
 		// update to Database
 		const cookieStore = cookies()
-		const supabase = createClient(cookieStore)
+		const supabase = createServerClient(cookieStore)
 		const { error } = await supabase.from(TABLES.Gallery).insert(dataTopInsert)
 
 		if (error) throw error
@@ -137,7 +137,7 @@ export async function updateGalleryImage(formData: FormData) {
 
 		// update to Database
 		const cookieStore = cookies()
-		const supabase = createClient(cookieStore)
+		const supabase = createServerClient(cookieStore)
 		const { error } = await supabase.from(TABLES.Gallery).update(dataToUpdate)
 			.eq('id', id)
 
@@ -154,7 +154,7 @@ export async function deleteGalleryImage(_: undefined, formData: FormData) {
 	const publicId = formData.get('publicId') as string
 
 	const cookieStore = cookies()
-	const supabase = createClient(cookieStore)
+	const supabase = createServerClient(cookieStore)
 
 	// destroy image in cloudinary
 	await destroyResource(publicId)

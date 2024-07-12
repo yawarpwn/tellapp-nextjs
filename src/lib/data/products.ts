@@ -1,14 +1,14 @@
 // import { ITEMS_PER_PAGE } from '@/constants'
 import { ITEMS_PER_PAGE } from '@/constants'
 import { TABLES } from '@/constants'
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@/lib/supabase/server'
 import { ProductType } from '@/types'
 import { cookies } from 'next/headers'
 
 export async function fetchProducts() {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
   const { data: products, error } = await supabase
     .from(TABLES.Products)
     .select()
@@ -31,7 +31,7 @@ export async function fetchFilteredProducts({
 }) {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
   const { data: products, error } = await supabase
@@ -51,7 +51,7 @@ export async function fetchFilteredProducts({
 export async function fetchProductsPages(query: string) {
   // crate supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const { count, error } = await supabase
     .from('products')
@@ -72,7 +72,7 @@ export async function fetchProductsPages(query: string) {
 export async function fetchProductById({ id }: { id: string }) {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   // get product from DB by id
   const { data: products, error } = await supabase

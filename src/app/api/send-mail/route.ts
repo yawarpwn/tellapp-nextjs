@@ -56,13 +56,13 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       message: 'Email enviado correctamente',
+      data: userInfo,
     })
   } catch (error) {
     console.log(error)
     return NextResponse.json({
       success: false,
       message: 'No se pudo enviar el email',
-      data: userInfo,
     })
   }
 }

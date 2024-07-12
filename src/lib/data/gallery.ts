@@ -3,7 +3,7 @@ const ITEMS_PER_PAGE = 8
 import { TABLES } from '@/constants'
 import { GalleryImage } from '@/types'
 import { cookies } from 'next/headers'
-import { createClient } from '../supabase/server'
+import { createServerClient } from '../supabase/server'
 
 const SIGNALS_TABLE = 'signals'
 
@@ -23,7 +23,7 @@ const SIGNALS_TABLE = 'signals'
 export async function fetchGalleryPages(query = '') {
 	// create supabase client
 	const cookieStore = cookies()
-	const supabase = createClient(cookieStore)
+	const supabase = createServerClient(cookieStore)
 
 	const { count, error } = await supabase
 		.from(TABLES.Gallery)
@@ -40,7 +40,7 @@ export async function fetchGalleryPages(query = '') {
 export async function fetchFilteredGallery(query: string, currentPage: number) {
 	// create supabase client
 	const cookieStore = cookies()
-	const supabase = createClient(cookieStore)
+	const supabase = createServerClient(cookieStore)
 
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE
 

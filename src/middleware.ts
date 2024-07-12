@@ -1,10 +1,10 @@
 // import { NextResponse } from 'next/server'
-import { createMiddlewareClient } from './lib/supabase'
+import { NextRequest } from 'next/server'
+import { createMiddlewareClient } from '@/lib/supabase/middleware'
 
-export async function middleware(req) {
-  console.log('middleware-----------------')
-  console.log(req)
+export async function middleware(req: NextRequest) {
   // Create a Supabase client configured to use cookies
+  // const { supabase, response } = createMiddlewareClient(req)
   const { supabase, response } = createMiddlewareClient(req)
 
   // Refresh session if expired - required for Server Components

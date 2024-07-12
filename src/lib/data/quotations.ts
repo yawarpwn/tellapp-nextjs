@@ -1,7 +1,7 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { TABLES } from '@/constants'
 import { fetchCustomers } from '@/lib/data/customers'
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@/lib/supabase/server'
 import { isValidNumber } from '@/lib/utils'
 import type { QuotationType } from '@/types'
 import { cookies } from 'next/headers'
@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation'
 
 export async function fetchQuotations() {
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const { data: quotations, error } = await supabase
     .from(TABLES.Quotations)
@@ -48,7 +48,7 @@ export async function fetchFilteredQuotations({
 
   // Create supabaseClient
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
@@ -91,7 +91,7 @@ export async function fetchFilteredQuotations({
 export async function fetchQuotationsPages({ query }: { query: string }) {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const { count, error } = await supabase
     .from(TABLES.Quotations)
@@ -115,7 +115,7 @@ export async function fetchQuotationsPages({ query }: { query: string }) {
 export async function fetchQuotationByNumber({ number }: { number: number }) {
   // create supabase Client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
   const { data: quotations, error } = await supabase
     .from(TABLES.Quotations)
     .select()
@@ -142,7 +142,7 @@ export async function fetchQuotationByNumber({ number }: { number: number }) {
 
 export async function fetchQuotationById(id: string) {
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const { data: quotations, error } = await supabase
     .from(TABLES.Quotations)
@@ -171,7 +171,7 @@ export async function fetchQuotationById(id: string) {
 export async function fetchLastQuotation() {
   // create supabase Client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const { data: quotations, error } = await supabase
     .from(TABLES.Quotations)
