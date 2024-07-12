@@ -21,5 +21,5 @@ export const config = {
    * - favicon.ico (favicon file)
    * Feel free to modify this pattern to include more paths.
    */
-  matcher: ['/((?!api|_next/static|api/send-mail|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }
