@@ -4,59 +4,70 @@ import quotationsJson from '../backup/quotations.json'
 import customersJson from '../backup/customers.json'
 
 async function main() {
-  const filteredQuotations = quotationsJson.filter(quo => {
-    const customer = customersJson.find(c => c.ruc === quo.ruc)
-    if (!customer) return false
-    return true
-  })
-
-  const filteredEmpetyQuotations = filteredQuotations.filter(
-    quo => quo.company && quo.ruc.length === 11,
-  )
-
-  const customers = filteredEmpetyQuotations.map(quo => ({
-    name: quo.company,
-    ruc: quo.ruc,
-    address: quo.address,
-  }))
-
-  const arr = {}
-  for (const customer of customers) {
-    arr[customer.ruc] = customer
-  }
-
-  const uniqueCustomers = Object.values(arr)
-  console.log(uniqueCustomers)
-}
-/*
-async function main() {
   const { data, error } = await supabase
-    .from('quotations')
-    .select('*')
-    .order('number', { ascending: false })
-  // const quotations = quotationsJson.map(quo => {
-  //   const customer = customersJson.find(c => c.ruc === quo.ruc)
-  //
-  //   return {
-  //     id: quo.id,
-  //     number: quo.number,
-  //     deadline: quo.deadline,
-  //     items: quo.items,
-  //     include_igv: quo.include_igv,
-  //     credit: quo.credit,
-  //     customer_id: customer?.id,
-  //     created_at: customer?.created_at ?? new Date().toISOString(),
-  //     updated_at: customer?.updated_at,
-  //   }
-  // })
-  // const { data, error } = await supabase
-  //   .from('quotations_duplicate')
-  //   .insert(quotations)
-  //
-  // if (error) throw error
-  // console.log('inserted quotations')
+    .from('quotations_duplicate')
+    .select(
+      `
+*,
+customer:customers(*) -> name,
+
+`,
+    )
+    .limit(500)
+
+  console.log(data)
 }
-*/
+
+// async function main() {
+//   const customersRucs = customersJson.map(c => c.ruc)
+//
+//   console.log(customersRucs)
+//
+//   const customers = new Set()
+//
+//   for (const quotation of quotationsJson) {
+//     if (
+//       quotation.ruc &&
+//       quotation.ruc.length === 11 &&
+//       !customersRucs.includes(quotation.ruc)
+//     ) {
+//       customers.add({
+//         ruc: quotation.ruc,
+//         name: quotation.company,
+//         address: quotation.address,
+//       })
+//     }
+//   }
+//
+//   const { data, error } = await supabase
+//     .from('custoemrs')
+//     .insert(Array.from(customers))
+//
+//   console.log('insert all customers')
+// }
+// async function main() {
+//   const quotations = quotationsJson.map(quo => {
+//     const customer = customersJson.find(c => c.ruc === quo.ruc)
+//
+//     return {
+//       id: quo.id,
+//       number: quo.number,
+//       deadline: quo.deadline,
+//       items: quo.items,
+//       include_igv: quo.include_igv,
+//       credit: quo.credit,
+//       customer_id: customer?.id,
+//       created_at: quo.created_at,
+//       updated_at: customer?.updated_at ?? quo.created_at,
+//     }
+//   })
+//   const { data, error } = await supabase
+//     .from('quotations_duplicate_duplicate')
+//     .insert(quotations)
+//
+//   if (error) throw error
+//   console.log('inserted quotations')
+// }
 
 main()
   .then(() => console.log('Success Script'))
