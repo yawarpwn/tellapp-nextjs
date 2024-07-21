@@ -4,6 +4,32 @@ import quotationsJson from '../backup/quotations.json'
 import customersJson from '../backup/customers.json'
 
 async function main() {
+  const filteredQuotations = quotationsJson.filter(quo => {
+    const customer = customersJson.find(c => c.ruc === quo.ruc)
+    if (!customer) return false
+    return true
+  })
+
+  const filteredEmpetyQuotations = filteredQuotations.filter(
+    quo => quo.company && quo.ruc.length === 11,
+  )
+
+  const customers = filteredEmpetyQuotations.map(quo => ({
+    name: quo.company,
+    ruc: quo.ruc,
+    address: quo.address,
+  }))
+
+  const arr = {}
+  for (const customer of customers) {
+    arr[customer.ruc] = customer
+  }
+
+  const uniqueCustomers = Object.values(arr)
+  console.log(uniqueCustomers)
+}
+/*
+async function main() {
   const { data, error } = await supabase
     .from('quotations')
     .select('*')
@@ -30,6 +56,7 @@ async function main() {
   // if (error) throw error
   // console.log('inserted quotations')
 }
+*/
 
 main()
   .then(() => console.log('Success Script'))
