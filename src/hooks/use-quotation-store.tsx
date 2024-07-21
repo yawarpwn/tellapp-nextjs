@@ -1,76 +1,72 @@
 'use client'
 import {
-	type CustomerType,
-	type ProductType,
-	type QuotationCreateType,
-	type QuotationItemType,
-	type QuotationType,
-	type QuotationUpdateType,
+  type CustomerType,
+  type ProductType,
+  type QuotationCreateType,
+  type QuotationItemType,
+  type QuotationType,
+  type QuotationUpdateType,
 } from '@/types'
 
 import {
-	createQuotationStore,
-	initQuotationStore,
-	type QuotationStore,
+  createQuotationStore,
+  initQuotationStore,
+  type QuotationStore,
 } from '@/store/quos'
 import React from 'react'
 import { StoreApi, useStore } from 'zustand'
 
 type QuoStore = ReturnType<typeof createQuotationStore>
 
-export const QuotationContext = React.createContext<
-	QuoStore | null
->(null)
+export const QuotationContext = React.createContext<QuoStore | null>(null)
 
 export function useQuotationStore() {
-	const store = React.useContext(QuotationContext)
-	return store
+  const store = React.useContext(QuotationContext)
+  return store
 }
 
 // type QuotationProviderProps =  React.PropsWithChildren<Partial<QuotationStore>>
 type QuotationProviderProps = {
-	children: React.ReactNode
-	customers: CustomerType[]
-	products: ProductType[]
-	quoNumber: number
-	quo?: QuotationCreateType | QuotationUpdateType
-	items?: QuotationItemType[]
-	isUpdate?: boolean | undefined
-	credit?: number | null
+  children: React.ReactNode
+  customers: CustomerType[]
+  products: ProductType[]
+  quoNumber: number
+  quo?: QuotationCreateType | QuotationUpdateType
+  items?: QuotationItemType[]
+  isUpdate?: boolean | undefined
+  credit?: number | null
 }
 
-export function QuotationStoreProvider(
-	props: QuotationProviderProps,
-) {
-	const { children, customers, products, quo, items, isUpdate, quoNumber } =
-		props
-	const storeRef = React.useRef<QuoStore>()
-	if (!storeRef.current) {
-		storeRef.current = createQuotationStore(
-			initQuotationStore({
-				customers,
-				products,
-				quo,
-				items,
-				isUpdate,
-				quoNumber,
-			}),
-		)
-	}
+export function QuotationStoreProvider(props: QuotationProviderProps) {
+  const { children, customers, products, quo, items, isUpdate, quoNumber } =
+    props
+  const storeRef = React.useRef<QuoStore>()
+  if (!storeRef.current) {
+    storeRef.current = createQuotationStore(
+      initQuotationStore({
+        customers,
+        products,
+        quo,
+        items,
+        isUpdate,
+        quoNumber,
+      }),
+    )
+  }
 
-	return (
-		<QuotationContext.Provider value={storeRef.current}>
-			{children}
-		</QuotationContext.Provider>
-	)
+  return (
+    <QuotationContext.Provider value={storeRef.current}>
+      {children}
+    </QuotationContext.Provider>
+  )
 }
 
 export function useQuotationContext<T>(
-	selector: (state: QuotationStore) => T,
+  selector: (state: QuotationStore) => T,
 ): T {
-	const store = React.useContext(QuotationContext)
+  const store = React.useContext(QuotationContext)
 
-	if (!store) throw new Error('Missing QuotationContext.Provider in the tree')
+  if (!store) throw new Error('Missing QuotationContext.Provider in the tree')
 
-	return useStore(store, selector)
+  return useStore(store, selector)
 }
