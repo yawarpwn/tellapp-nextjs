@@ -12,6 +12,7 @@ export async function fetchCustomers() {
   const { data: customers, error } = await supabase
     .from(TABLES.Customers)
     .select()
+    // .is('is_regular', true)
     .order('updated_at', { ascending: false })
     .returns<CustomerType[]>()
   if (error) {
