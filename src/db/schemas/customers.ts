@@ -8,7 +8,7 @@ import {
   integer,
 } from 'drizzle-orm/pg-core'
 
-export const customers = pgTable('_customers', {
+export const customersTable = pgTable('_customers', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   name: text('name').notNull().unique(),
   ruc: text('ruc').notNull().unique(),
@@ -21,4 +21,4 @@ export const customers = pgTable('_customers', {
     .$onUpdate(() => new Date()),
 })
 
-export type Customer = typeof customers.$inferSelect
+export type Customer = typeof customersTable.$inferSelect
