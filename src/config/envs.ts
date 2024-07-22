@@ -7,4 +7,5 @@ export const envs = {
     .required()
     .asString(),
   CLOUDINARY_API_SECRET: env.get('CLOUDINARY_API_SECRET').required().asString(),
+  DATABASE_URL: env.get('DATABASE_URL').required().asString(),
 }
