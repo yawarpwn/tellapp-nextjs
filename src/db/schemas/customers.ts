@@ -22,3 +22,4 @@ export const customersTable = pgTable('_customers', {
 })
 
 export type Customer = typeof customersTable.$inferSelect
+export type CustomerInsert = typeof customersTable.$inferInsert

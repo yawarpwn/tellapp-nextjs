@@ -12,6 +12,7 @@ import {
   type QuotationType,
   type QuotationUpdateType,
 } from '@/types'
+import { Quotations, Customers } from '@/models'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -25,61 +26,32 @@ export async function setQuotation(
   quotation: QuotationUpdateType,
   items: QuotationItemType[],
 ): Promise<[Error?, QuotationType?]> {
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
+  try {
+    let customerId = null
 
-  console.log({ quotation })
-
-  if (quotation.is_regular_customer) {
-    const { data: customerFounds, error: customerFoundError } = await supabase
-      .from(TABLES.Customers)
-      .select('ruc')
-      .eq('ruc', quotation.ruc)
-
-    console.log('Customers Founds', customerFounds)
-
-    if (customerFoundError) {
-      console.log('ERROR: SEARCHING frecuently customer', customerFoundError)
+    //insert customer to DB
+    if (quotation.ruc && quotation.company) {
+      const rows = await Customers.create({
+        name: quotation.company,
+        ruc: quotation.ruc,
+        address: quotation.address,
+      })
     }
 
-    if (customerFounds?.length === 0) {
-      const { data: customers, error: errorCustomers } = await supabase
-        .from(TABLES.Customers)
-        .insert({
-          name: quotation.company,
-          ruc: quotation.ruc,
-          address: quotation.address,
-        })
+    //update quotation
+    const rows = await Quotations.update(quotation.id!, {
+      deadline: quotation.deadline,
+      includeIgv: quotation.include_igv,
+      updatedAt: new Date(),
+      credit: null,
+      items: items,
+    })
 
-      if (errorCustomers) {
-        throw errorCustomers
-      }
-    }
+    revalidatePath(`/new-quos/${rows[0].number}`)
+    return [undefined, rows[0]]
+  } catch (error) {
+    return [new Error('Error al Actualizar')]
   }
-
-  const quotationToUpdate = {
-    ruc: quotation.ruc,
-    company: quotation.company,
-    address: quotation.address,
-    deadline: quotation.deadline,
-    include_igv: quotation.include_igv,
-    updated_at: new Date().toISOString(),
-    credit: quotation.credit ? Number(quotation.credit) : null,
-    items: items,
-  }
-
-  const { data, error } = await supabase
-    .from(TABLES.Quotations)
-    .update(quotationToUpdate)
-    .eq('id', quotation.id)
-    .select()
-
-  if (error) {
-    console.log('error updating quotation', error)
-    return [new Error('Error actualizando cotización')]
-  }
-  revalidatePath(`/new-quos/${data[0].number}`)
-  return [undefined, data[0]]
 }
 
 export async function insertQuotation(
