@@ -12,6 +12,7 @@ import {
   QuotationCreateSchema,
   QuotationSchema,
   QuotationUpdateSchema,
+  QuotationItemSchema,
 } from '@/schemas/quotations'
 
 import {
@@ -74,7 +75,7 @@ export type QuotationCreateWithItems = QuotationCreateType & {
 }
 export type QuotationType = z.infer<typeof QuotationSchema>
 export type QuotationUpdateType = z.infer<typeof QuotationUpdateSchema>
-export type QuotationItemType = z.infer<typeof QuotationSchema>['items'][0]
+export type QuotationItemType = z.infer<typeof QuotationItemSchema>
 
 // Signals
 export type SignalType = z.infer<typeof SignalSchema>

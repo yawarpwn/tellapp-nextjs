@@ -1,16 +1,7 @@
-type Item = {
-  id: string
-  price: number
-  qty: number
-  cost: number
-  unit_size: string
-  description: string
-}
+import type { QuotationItemType } from '@/types'
 
 import {
-  text,
   pgTable,
-  serial,
   timestamp,
   uuid,
   boolean,
@@ -23,11 +14,11 @@ export const quotationsTable = pgTable('_quotations', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   number: integer('number').notNull().unique(),
   deadline: integer('deadline').notNull(),
-  credit: text('credit'),
-  includeIgv: boolean('include_igv').default(false),
+  credit: integer('credit'),
+  includeIgv: boolean('include_igv').default(false).notNull(),
   customerId: uuid('customer_id').references(() => customersTable.id),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  items: jsonb('items').$type<Item[]>().notNull(),
+  items: jsonb('items').$type<QuotationItemType[]>().notNull(),
   updatedAt: timestamp('updated_at')
     .defaultNow()
     .notNull()

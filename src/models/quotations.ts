@@ -1,5 +1,6 @@
 import { db } from '@/db'
 import { eq, asc, desc } from 'drizzle-orm'
+import type { QuotationType } from '@/types'
 import {
   quotationsTable,
   customersTable,
@@ -8,19 +9,19 @@ import {
 } from '@/db'
 
 export class Quotations {
-  static async getAll() {
+  static async getAll(): Promise<QuotationType[]> {
     const result = await db
       .select({
         id: quotationsTable.id,
         number: quotationsTable.number,
         deadline: quotationsTable.deadline,
-        items: quotationsTable.items,
         credit: quotationsTable.credit,
         include_igv: quotationsTable.includeIgv,
         company: customersTable.name,
         ruc: customersTable.ruc,
         address: customersTable.address,
         is_regular_customer: customersTable.isRegular,
+        items: quotationsTable.items,
         created_at: quotationsTable.createdAt,
         updated_at: quotationsTable.updatedAt,
       })

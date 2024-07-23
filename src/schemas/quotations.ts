@@ -1,35 +1,30 @@
 import { z } from 'zod'
+
+export const QuotationItemSchema = z.object({
+  id: z.string(),
+  price: z.number(),
+  qty: z.number(),
+  cost: z.number(),
+  unit_size: z.string(),
+  description: z.string(),
+})
+
 export const QuotationSchema = z.object({
   number: z.number(),
   id: z.string(),
   include_igv: z.coerce.boolean(),
-  is_regular_customer: z.coerce.boolean(),
-  ruc: z.optional(z.string()),
-  company: z.string().optional(),
-  address: z.string().optional(),
+  is_regular_customer: z.coerce.boolean().default(false).optional().nullable(),
+  ruc: z.string().optional().nullable(),
+  company: z.string().optional().nullable(),
+  address: z.string().optional().nullable(),
   deadline: z.coerce.number().gt(0, {
     message: 'Debe ser mayor a 0',
   }),
-  items: z
-    .array(
-      z.object({
-        id: z.string(),
-        price: z.number(),
-        qty: z.number(),
-        cost: z.number(),
-        unit_size: z.string(),
-        description: z.string(),
-      }),
-    )
-    .nonempty({
-      message: 'Debe tener al menos un Producto',
-    }),
-  created_at: z.string(),
-  updated_at: z.string(),
   credit: z.coerce.number().optional().nullable(),
+  items: z.array(QuotationItemSchema),
+  created_at: z.date(),
+  updated_at: z.date(),
 })
-
-export const QuotationItemsSchema = QuotationSchema.pick({ items: true })
 
 export const QuotationCreateSchema = QuotationSchema.omit({
   id: true,

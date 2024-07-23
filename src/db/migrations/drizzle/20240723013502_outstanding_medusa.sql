@@ -1,0 +1,1 @@
+ALTER TABLE "_quotations" ALTER COLUMN "credit" SET DATA TYPE integer;
