@@ -3,10 +3,6 @@
 import { TABLES } from '@/constants'
 import { createServerClient } from '@/lib/supabase/server'
 import {
-  QuotationCreateSchema,
-  QuotationUpdateSchema,
-} from '@/schemas/quotations'
-import {
   type QuotationCreateType,
   type QuotationItemType,
   type QuotationType,
@@ -22,22 +18,27 @@ import {
   fetchQuotationByNumber,
 } from '../data/quotations'
 
-export async function setQuotation(
+export async function updateQuotationAction(
   quotation: QuotationUpdateType,
   items: QuotationItemType[],
-): Promise<[Error?, QuotationType?]> {
+): Promise<{ number: number }> {
   try {
     let customerId = null
 
     //insert customer to DB
     if (quotation.ruc && quotation.company) {
-      const createdCustomer = await Customers.create({
-        name: quotation.company,
-        ruc: quotation.ruc,
-        address: quotation.address,
-      })
+      //verify is custom already exists/
+      const foundCustomer = await Customers.getByRuc(quotation.ruc)
 
-      customerId = createdCustomer.id
+      if (!foundCustomer) {
+        const createdCustomer = await Customers.create({
+          name: quotation.company,
+          ruc: quotation.ruc,
+          address: quotation.address,
+        })
+
+        customerId = createdCustomer.id
+      }
     }
 
     //update quotation
@@ -52,34 +53,40 @@ export async function setQuotation(
     })
 
     revalidatePath(`/new-quos/${quotation.number}`)
-    return [undefined, updatedQuotation]
+    return { number: updatedQuotation.number }
   } catch (error) {
-    return [new Error('Error al Actualizar')]
+    throw new Error('Error al Actualizar cotizacion')
   }
 }
 
-export async function insertQuotation(
+export async function createQuotationAction(
   quotation: QuotationCreateType,
   items: QuotationItemType[],
-): Promise<[Error?, QuotationType?]> {
+) {
   try {
     let customerId = null
     if (quotation.ruc && quotation.company) {
-      const createdCustomer = await Customers.create({
-        name: quotation.company,
-        ruc: quotation.ruc,
-        address: quotation.address,
-      })
+      //search customer if already exists in DB
+      const customerFound = await Customers.getByRuc(quotation.ruc)
 
-      customerId = createdCustomer.id
+      //if not exists add in DB
+      if (!customerFound) {
+        const createdCustomer = await Customers.create({
+          name: quotation.company,
+          ruc: quotation.ruc,
+          address: quotation.address,
+        })
+
+        customerId = createdCustomer.id
+      }
     }
 
     const lastQuotation = await Quotations.getLastQuotation()
 
-    const quotationToCreate = {}
+    const quoNumber = lastQuotation.number + 1
 
-    const createdQuotation = await Quotations.create({
-      number: lastQuotation.number + 1,
+    await Quotations.create({
+      number: quoNumber,
       deadline: quotation.deadline,
       includeIgv: quotation.include_igv,
       credit: quotation.credit ? Number(quotation.credit) : null,
@@ -88,9 +95,10 @@ export async function insertQuotation(
     })
 
     revalidatePath('/new-quos')
-    return [undefined, createdQuotation]
+    return { number: quoNumber }
   } catch (error) {
-    return [new Error('Error creando cotizacion')]
+    console.log(error)
+    throw new Error('Error creando cotizacion')
   }
 }
 

@@ -18,19 +18,21 @@ type Props = {
     active?: boolean
   }[]
 }
-export function Breadcrumbs({ breadcrumbs }: Props) {
+function Breadcrumbs({ breadcrumbs }: Props) {
   return (
     <Breadcrumb className="breadcrumbs  text-sm">
       <BreadcrumbList>
         {breadcrumbs.map(({ label, href, active }, index) =>
-          href ? (
-            <BreadcrumbItem key={href} aria-current={active}>
-              <span>{label}</span>
-            </BreadcrumbItem>
+          active ? (
+            <React.Fragment key={href}>
+              <BreadcrumbItem aria-current={active}>
+                <span>{label}</span>
+              </BreadcrumbItem>
+            </React.Fragment>
           ) : (
-            <React.Fragment key={index}>
+            <React.Fragment key={href}>
               <BreadcrumbItem>
-                <BreadcrumbPage>{label}</BreadcrumbPage>
+                <Link href={href}>{label}</Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
             </React.Fragment>

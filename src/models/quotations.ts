@@ -30,6 +30,8 @@ export class Quotations {
         customersTable,
         eq(quotationsTable.customerId, customersTable.id),
       )
+      .orderBy(desc(quotationsTable.updatedAt))
+      .limit(1000)
 
     return result
   }

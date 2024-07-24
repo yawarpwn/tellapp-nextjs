@@ -35,6 +35,22 @@ export class Customers {
     return result[0]
   }
 
+  static async getByRuc(ruc: Customer['ruc']) {
+    const result = await db
+      .select({
+        id: customersTable.id,
+        name: customersTable.name,
+        ruc: customersTable.ruc,
+        address: customersTable.address,
+        is_regular_customer: customersTable.isRegular,
+        created_at: customersTable.createdAt,
+        updated_at: customersTable.updatedAt,
+      })
+      .from(customersTable)
+      .where(eq(customersTable.ruc, ruc))
+    return result[0]
+  }
+
   static async create(value: CustomerInsert): Promise<{ id: Customer['id'] }> {
     const rows = await db.insert(customersTable).values(value).returning({
       id: customersTable.id,

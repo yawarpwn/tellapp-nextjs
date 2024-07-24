@@ -23,14 +23,6 @@ export async function fetchLastQuotation() {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
-  const { data: quotations, error } = await supabase
-    .from(TABLES.Quotations)
-    .select('number')
-    .order('number', { ascending: false })
-    .limit(1)
-
-  // handle error
-  if (error) throw new Error('Failed to fetch last quotation')
-
-  return quotations[0]
+  const lastQuotation = await Quotations.getLastQuotation()
+  return lastQuotation
 }
