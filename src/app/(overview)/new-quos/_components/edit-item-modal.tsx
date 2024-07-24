@@ -140,8 +140,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                 <div className="flex w-full items-center gap-x-2 overflow-hidden rounded-md p-0 hover:bg-zinc-800">
                   <div className="inline-flex h-full items-center bg-indigo-700 "></div>
                   <div className="p-1">
-                    {/* {hit.item.description} */}
-                    <FuseHighLight hit={hit} attribute="description" />
+                    {hit.item.description}
                     <Badge className="ml-2">{hit.item.unit_size}</Badge>
                   </div>
                 </div>

@@ -74,7 +74,7 @@ export function QuotationCustomerInfo() {
             ),
           {
             loading: 'Creando...',
-            success: ({ number }) => {
+            success: ({ number }: { number: number }) => {
               store?.persist.clearStorage()
               shootCoffeti()
               router.push(`/new-quos/${number}`)

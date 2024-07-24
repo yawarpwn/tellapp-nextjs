@@ -1,5 +1,5 @@
 import { db } from '@/db'
-import { eq, asc, desc } from 'drizzle-orm'
+import { eq, desc } from 'drizzle-orm'
 import type { QuotationType } from '@/types'
 import {
   quotationsTable,

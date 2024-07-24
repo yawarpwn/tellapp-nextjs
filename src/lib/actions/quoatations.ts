@@ -55,7 +55,7 @@ export async function updateQuotationAction(
 export async function createQuotationAction(
   quotation: QuotationCreateType,
   items: QuotationItemType[],
-) {
+): Promise<{ number: number }> {
   try {
     let customerId = null
     if (quotation.ruc && quotation.company) {

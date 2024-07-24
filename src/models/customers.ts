@@ -1,5 +1,5 @@
 import { db } from '@/db'
-import { eq, asc, desc } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { customersTable, type CustomerInsert, type Customer } from '@/db'
 
 export class Customers {

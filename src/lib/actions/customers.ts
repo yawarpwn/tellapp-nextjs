@@ -6,7 +6,6 @@ import { CustomerCreateType, CustomerUpdateType } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { Customers } from '@/models'
-import { redirect } from 'next/navigation'
 
 export async function createCustomerAction(
   input: CustomerCreateType,
