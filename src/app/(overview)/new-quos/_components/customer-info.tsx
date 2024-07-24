@@ -67,7 +67,6 @@ export function QuotationCustomerInfo() {
                 address: quo.address,
                 deadline: quo.deadline as number,
                 include_igv: quo.include_igv as boolean,
-                is_regular_customer: quo.is_regular_customer as boolean,
                 credit: quo.credit,
               },
               items,
@@ -241,16 +240,6 @@ export function QuotationCustomerInfo() {
               checked={quo.include_igv}
             />
             <Label htmlFor="include_igv">Incluir IGV</Label>
-          </div>
-          <div className="flex items-start space-x-2 ">
-            <Checkbox
-              id="is_regular_customer"
-              checked={quo.is_regular_customer}
-              onCheckedChange={e =>
-                setQuo({ ...quo, is_regular_customer: Boolean(e) })
-              }
-            />
-            <Label htmlFor="is_regular_customer">Cliente frecuente</Label>
           </div>
         </div>
 

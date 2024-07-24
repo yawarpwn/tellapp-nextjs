@@ -1,7 +1,5 @@
 'use server'
 
-import { TABLES } from '@/constants'
-import { createServerClient } from '@/lib/supabase/server'
 import {
   type QuotationCreateType,
   type QuotationItemType,
@@ -10,13 +8,7 @@ import {
 } from '@/types'
 import { Quotations, Customers } from '@/models'
 import { revalidatePath, revalidateTag } from 'next/cache'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import {
-  fetchLastQuotation,
-  fetchQuotationById,
-  fetchQuotationByNumber,
-} from '../data/quotations'
 
 export async function updateQuotationAction(
   quotation: QuotationUpdateType,
@@ -66,11 +58,13 @@ export async function createQuotationAction(
   try {
     let customerId = null
     if (quotation.ruc && quotation.company) {
-      //search customer if already exists in DB
+      //search customer by ruc in DB
       const customerFound = await Customers.getByRuc(quotation.ruc)
 
-      //if not exists add in DB
-      if (!customerFound) {
+      if (customerFound) {
+        customerId = customerFound.id
+      } else {
+        //if not exists add in DB
         const createdCustomer = await Customers.create({
           name: quotation.company,
           ruc: quotation.ruc,
@@ -110,68 +104,27 @@ export async function deleteQuotationAction(id: string) {
   redirect(`/new-quos`)
 }
 
-export async function duplicateQuotationAction(id: string) {
-  // create supabase client
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
+export async function duplicateQuotationAction(
+  id: string,
+): Promise<{ number: number }> {
+  try {
+    const quotation = await Quotations.getById(id)
 
-  const quotation = await fetchQuotationById(id)
-  const { is_regular_customer, ...restQuotation } = quotation
+    const lastQuotation = await Quotations.getLastQuotation()
+    const quoNumber = lastQuotation.number + 1
+    await Quotations.create({
+      ...quotation,
+      id: crypto.randomUUID(),
+      number: quoNumber,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
 
-  const quotationToDuplicate = {
-    ...restQuotation,
-    id: crypto.randomUUID(),
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  }
-
-  const { data, error } = await supabase
-    .from(TABLES.Quotations)
-    .insert(quotationToDuplicate)
-    .select()
-
-  if (error) {
-    console.log('error duplicating', error)
-    throw new Error('Error duplicando cotización')
-  }
-
-  if (!data) {
-    console.log('no data')
-    return
-  }
-
-  revalidateTag('/new-quos')
-  redirect(`/new-quos/${data[0].number}`)
-}
-
-export async function duplicateQuotation(_: undefined, formData: FormData) {
-  const number = Number(formData.get('number'))
-
-  // create supabase client
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  const quotation = await fetchQuotationByNumber({ number })
-  const { number: lastQuotation } = await fetchLastQuotation()
-
-  const dataToDuplicate = {
-    number: lastQuotation + 1,
-    company: quotation.company,
-    ruc: quotation.ruc,
-    address: quotation.address,
-    deadline: quotation.deadline,
-    items: quotation.items,
-    include_igv: quotation.include_igv,
-  }
-
-  const { data, error } = await supabase
-    .from(TABLES.Quotations)
-    .insert(dataToDuplicate)
-
-  if (error) {
+    revalidateTag('/new-quos')
+    return { number: quoNumber }
+    // redirect(`/new-quos/${lastQuotation.number}`)
+  } catch (error) {
     console.log(error)
-    throw new Error('Error duplicando cotización')
+    throw new Error('Error duplicando cotizacion')
   }
-
-  redirect('/quotations')
 }
