@@ -28,17 +28,35 @@ import { type ColumnDef } from '@tanstack/react-table'
 export function getColumns(): ColumnDef<QuotationType>[] {
   return [
     {
+      id: 'favorite',
+
+      cell: function Cell({ row }) {
+        const [isRegularCustomer, setIsRegularCustomer] = React.useState(
+          row.original.is_regular_customer,
+        )
+
+        const toggleIsRegularCustomer = () => {
+          setIsRegularCustomer(!isRegularCustomer)
+        }
+
+        return (
+          <Button onClick={toggleIsRegularCustomer}>
+            {isRegularCustomer ? (
+              <StartIcon filled className="size-4" />
+            ) : (
+              <StartIcon className="size-4" />
+            )}
+          </Button>
+        )
+      },
+    },
+    {
       header: 'Nro',
       accessorKey: 'number',
       enableGlobalFilter: true,
       filterFn: 'inNumberRange',
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
-          {row.original.is_regular_customer ? (
-            <StartIcon filled className="size-4" />
-          ) : (
-            <StartIcon className="size-4" />
-          )}
           <span>{row.original.number}</span>
         </div>
       ),

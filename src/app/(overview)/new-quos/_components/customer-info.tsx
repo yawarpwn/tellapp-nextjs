@@ -67,6 +67,7 @@ export function QuotationCustomerInfo() {
                 address: quo.address,
                 deadline: quo.deadline as number,
                 include_igv: quo.include_igv as boolean,
+                is_regular_customer: quo.is_regular_customer as boolean,
                 credit: quo.credit,
               },
               items,

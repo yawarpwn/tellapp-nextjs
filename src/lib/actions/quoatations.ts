@@ -22,13 +22,14 @@ export async function updateQuotationAction(
       //verify is custom already exists/
       const foundCustomer = await Customers.getByRuc(quotation.ruc)
 
-      if (!foundCustomer) {
+      if (foundCustomer) {
+        customerId = foundCustomer.id
+      } else {
         const createdCustomer = await Customers.create({
           name: quotation.company,
           ruc: quotation.ruc,
           address: quotation.address,
         })
-
         customerId = createdCustomer.id
       }
     }
