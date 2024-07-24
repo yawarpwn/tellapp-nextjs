@@ -2,6 +2,7 @@
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button } from '@/components/ui/button'
+import { toggleIsRegularCustomer } from '@/lib/actions/customers'
 import { StartIcon } from '@/icons'
 import {
   deleteQuotationAction,
@@ -28,25 +29,31 @@ import { type ColumnDef } from '@tanstack/react-table'
 export function getColumns(): ColumnDef<QuotationType>[] {
   return [
     {
-      id: 'favorite',
+      id: 'regular-customer',
 
       cell: function Cell({ row }) {
-        const [isRegularCustomer, setIsRegularCustomer] = React.useState(
+        const [optimisticState, updateOptimistic] = React.useState(
           row.original.is_regular_customer,
         )
 
-        const toggleIsRegularCustomer = () => {
-          setIsRegularCustomer(!isRegularCustomer)
-        }
-
+        if (!row.original.customerId) return null
         return (
-          <Button onClick={toggleIsRegularCustomer}>
-            {isRegularCustomer ? (
-              <StartIcon filled className="size-4" />
-            ) : (
-              <StartIcon className="size-4" />
-            )}
-          </Button>
+          <form
+            action={async (formData: FormData) => {
+              const id = formData.get('id') as string
+              updateOptimistic(!optimisticState)
+              await toggleIsRegularCustomer(id, !optimisticState)
+            }}
+          >
+            <input type="hidden" name="id" value={row.original.customerId} />
+            <button type="submit">
+              {optimisticState ? (
+                <StartIcon filled className="size-4" />
+              ) : (
+                <StartIcon className="size-4" />
+              )}
+            </button>
+          </form>
         )
       },
     },
@@ -90,11 +97,6 @@ export function getColumns(): ColumnDef<QuotationType>[] {
       id: 'actions',
       cell: function Cell({ row }) {
         const [showDeleteModal, setShowDeleteModal] = React.useState(false)
-        // const [showDuplicateModal, setShowDuplicateModal] = React.useState(
-        // 	false,
-        // )
-
-        // const openDuplicateModal = () => setShowDuplicateModal(true)
         const openDeleteModal = () => setShowDeleteModal(true)
 
         return (

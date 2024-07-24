@@ -5,6 +5,7 @@ import { createServerClient } from '@/lib/supabase'
 import { CustomerCreateType, CustomerUpdateType } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
+import { Customers } from '@/models'
 import { redirect } from 'next/navigation'
 
 export async function createCustomerAction(
@@ -62,4 +63,13 @@ export async function updateCustomerAction(input: CustomerUpdateType) {
 
   console.log(' UPDATED CUSTOMER SUCCESS: ', data)
   revalidatePath('/new-customers')
+}
+
+export async function toggleIsRegularCustomer(id: string, value: boolean) {
+  try {
+    await Customers.toggleIsRegular(id, value)
+    console.log('customer updated')
+  } catch (error) {
+    console.log('ERROR UPDATING CUSTOMER: ', error)
+  }
 }

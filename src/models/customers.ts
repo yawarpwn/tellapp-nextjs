@@ -62,6 +62,18 @@ export class Customers {
     await db.delete(customersTable).where(eq(customersTable.id, id))
   }
 
+  static async toggleIsRegular(
+    id: Customer['id'],
+    value: boolean,
+  ): Promise<void> {
+    await db
+      .update(customersTable)
+      .set({
+        isRegular: value,
+      })
+      .where(eq(customersTable.id, id))
+  }
+
   static async update(
     id: Customer['id'],
     value: Partial<Omit<Customer, 'id' | 'createdAt'>>,

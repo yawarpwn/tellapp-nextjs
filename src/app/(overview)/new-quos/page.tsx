@@ -5,6 +5,7 @@ import { DataTable } from './data-table'
 
 async function TableQuotationWrap() {
   const quotations = await fetchQuotations()
+  // console.log(quotations)
   return <DataTable data={quotations} />
 }
 
