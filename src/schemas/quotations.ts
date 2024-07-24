@@ -14,6 +14,7 @@ export const QuotationSchema = z.object({
   id: z.string(),
   include_igv: z.coerce.boolean(),
   is_regular_customer: z.coerce.boolean().default(false).optional().nullable(),
+  customerId: z.string().optional().nullable(),
   ruc: z.string().optional().nullable(),
   company: z.string().optional().nullable(),
   address: z.string().optional().nullable(),

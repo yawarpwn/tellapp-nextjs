@@ -35,11 +35,11 @@ export class Customers {
     return result[0]
   }
 
-  static async create(value: CustomerInsert) {
+  static async create(value: CustomerInsert): Promise<{ id: Customer['id'] }> {
     const rows = await db.insert(customersTable).values(value).returning({
-      insertedId: customersTable.id,
+      id: customersTable.id,
     })
-    return rows
+    return rows[0]
   }
 
   static async delete(id: Customer['id']) {

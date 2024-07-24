@@ -34,7 +34,7 @@ export class Quotations {
     return result
   }
 
-  static async getById(id: Quotation['id']) {
+  static async getById(id: Quotation['id']): Promise<QuotationType> {
     const result = await db
       .select({
         id: quotationsTable.id,
@@ -46,6 +46,7 @@ export class Quotations {
         company: customersTable.name,
         ruc: customersTable.ruc,
         address: customersTable.address,
+        customerId: customersTable.id,
         is_regular_customer: customersTable.isRegular,
         created_at: quotationsTable.createdAt,
         updated_at: quotationsTable.updatedAt,
@@ -60,7 +61,9 @@ export class Quotations {
     return result[0]
   }
 
-  static async getByNumber(number: Quotation['number']) {
+  static async getByNumber(
+    number: Quotation['number'],
+  ): Promise<QuotationType> {
     const result = await db
       .select({
         id: quotationsTable.id,
@@ -86,7 +89,7 @@ export class Quotations {
     return result[0]
   }
 
-  static async getLastQuotation() {
+  static async getLastQuotation(): Promise<{ number: number }> {
     const quotations = await db
       .select({
         number: quotationsTable.number,
@@ -98,12 +101,20 @@ export class Quotations {
     return quotations[0]
   }
 
-  static async create(value: InsertQuotation) {
-    await db.insert(quotationsTable).values(value)
+  static async create(
+    value: InsertQuotation,
+  ): Promise<{ id: Quotation['id'] }[]> {
+    return await db.insert(quotationsTable).values(value).returning({
+      id: quotationsTable.id,
+    })
   }
 
   static async delete(id: Quotation['id']) {
     await db.delete(quotationsTable).where(eq(quotationsTable.id, id))
+  }
+
+  static async deleteByNumber(number: Quotation['number']) {
+    await db.delete(quotationsTable).where(eq(quotationsTable.number, number))
   }
 
   static async update(
@@ -126,6 +137,6 @@ export class Quotations {
         updated_at: quotationsTable.updatedAt,
       })
 
-    return rows
+    return rows[0]
   }
 }
