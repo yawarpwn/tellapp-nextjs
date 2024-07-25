@@ -1,7 +1,7 @@
 'use client'
 
 import { TABLES } from '@/constants'
-import { createClient } from '@/lib/supabase/client'
+import { createBrowserClient } from '@/lib/supabase/client'
 import { AgencyType } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as React from 'react'
@@ -65,7 +65,7 @@ export function UpdateLabelSheet({
 	console.log(suggestedAgency?.company)
 
 	React.useEffect(() => {
-		const supabase = createClient()
+		const supabase = createBrowserClient()
 		supabase
 			.from(TABLES.Agencies)
 			.select()

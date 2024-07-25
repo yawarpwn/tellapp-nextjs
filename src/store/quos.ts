@@ -123,7 +123,6 @@ export const createQuotationStore = (
                 ruc: customer.ruc,
                 company: customer.name,
                 address: customer.address,
-                is_regular_customer: true,
               },
             })),
         }),

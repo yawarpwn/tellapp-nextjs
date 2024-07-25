@@ -1,17 +1,18 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { TABLES } from '@/constants'
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@/lib/supabase/server'
 import { type CustomerType } from '@/types'
 import { cookies } from 'next/headers'
 
 export async function fetchCustomers() {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const { data: customers, error } = await supabase
     .from(TABLES.Customers)
     .select()
+    // .is('is_regular', true)
     .order('updated_at', { ascending: false })
     .returns<CustomerType[]>()
   if (error) {
@@ -23,7 +24,7 @@ export async function fetchCustomers() {
 export async function fetchFilteredCustomers({ query = '', currentPage = 1 }) {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
   const { data: customers, error } = await supabase
@@ -43,7 +44,7 @@ export async function fetchFilteredCustomers({ query = '', currentPage = 1 }) {
 export async function fetchCustomersPages(query = '') {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
   const { count, error } = await supabase
     .from('customers')
     .select('*', {

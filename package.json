@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "migrate": "drizzle-kit generate --config=./src/db/drizzle.config.ts && tsx ./src/db/migrations/migrate.ts",
+    "seed": "tsx ./src/db/seed.ts",
+    "backup": "tsx ./scripts/backup.ts",
     "lint": "next lint"
   },
   "dependencies": {
@@ -34,6 +37,7 @@
     "clsx": "2.0.0",
     "cmdk": "1.0.0",
     "date-fns": "^3.6.0",
+    "drizzle-orm": "^0.32.0",
     "env-var": "^7.5.0",
     "fuse.js": "6.6.2",
     "just-compare": "2.3.0",
@@ -47,6 +51,7 @@
     "nextjs-toploader": "1.5.3",
     "nodemailer": "6.9.14",
     "pdfmake": "^0.2.10",
+    "postgres": "^3.4.4",
     "react": "latest",
     "react-day-picker": "^8.10.0",
     "react-dom": "latest",
@@ -64,6 +69,8 @@
     "@types/react": "18.2.55",
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "latest",
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.23.0",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "eslint-plugin-react": "^7.33.2",
@@ -71,7 +78,8 @@
     "prettier": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "latest",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.16.2"
   },
   "engines": {
     "node": ">=20.0.0"

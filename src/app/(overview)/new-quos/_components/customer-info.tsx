@@ -11,7 +11,10 @@ import {
   useQuotationStore,
 } from '@/hooks/use-quotation-store'
 import { SearchIcon } from '@/icons'
-import { insertQuotation, setQuotation } from '@/lib/actions/quoatations'
+import {
+  createQuotationAction,
+  updateQuotationAction,
+} from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { getDni, getRuc } from '@/lib/sunat'
 import { shouldAutoRemoveFilter } from '@tanstack/react-table'
@@ -43,15 +46,13 @@ export function QuotationCustomerInfo() {
     startTransition(async () => {
       if ('id' in quo) {
         // Update Quotation
-        toast.promise(() => setQuotation(quo, items), {
+        toast.promise(() => updateQuotationAction(quo, items), {
           loading: 'Actualizando...',
-          success: ([error, data]) => {
-            if (error) throw new Error('Error Update')
-            if (!data) return
+          success: ({ number }) => {
             store?.persist.clearStorage()
-            router.push(`/new-quos/${data.number}`)
+            router.push(`/new-quos/${number}`)
 
-            return <p>Cotizacion {data.number} Actualizando correctamente</p>
+            return <p>Cotizacion {number} Actualizando correctamente</p>
           },
           error: 'Error Actualizando cotizacion',
         })
@@ -59,7 +60,7 @@ export function QuotationCustomerInfo() {
         // Insert Quotation
         toast.promise(
           () =>
-            insertQuotation(
+            createQuotationAction(
               {
                 ruc: quo.ruc,
                 company: quo.company,
@@ -72,17 +73,15 @@ export function QuotationCustomerInfo() {
               items,
             ),
           {
-            loading: 'Creando',
-            success: ([error, data]) => {
-              if (error) throw new Error('Error creando Cotizacion')
-              if (!data) return
+            loading: 'Creando...',
+            success: ({ number }: { number: number }) => {
               store?.persist.clearStorage()
               shootCoffeti()
-              router.push(`/new-quos/${data.number}`)
+              router.push(`/new-quos/${number}`)
 
-              return <p>Cotizacion {data.number} Creado correctamente</p>
+              return <p>Cotizacion {number} Creado correctamente</p>
             },
-            error: 'Error creando',
+            error: 'Error creando cotizacion',
           },
         )
       }
@@ -92,7 +91,6 @@ export function QuotationCustomerInfo() {
   // Manjedor para buscar cliente por Ruc
   const handleRucBlur = async () => {
     const dniRuc = quo.ruc
-    console.log(dniRuc)
 
     if (!dniRuc) return
 
@@ -102,8 +100,6 @@ export function QuotationCustomerInfo() {
     }
 
     if (dniRuc.length === 8) {
-      console.log('is Dni')
-
       setLoading(true)
       toast.promise(getDni(dniRuc), {
         loading: 'Buscando DNI...',
@@ -245,16 +241,6 @@ export function QuotationCustomerInfo() {
               checked={quo.include_igv}
             />
             <Label htmlFor="include_igv">Incluir IGV</Label>
-          </div>
-          <div className="flex items-start space-x-2 ">
-            <Checkbox
-              id="is_regular_customer"
-              checked={quo.is_regular_customer}
-              onCheckedChange={e =>
-                setQuo({ ...quo, is_regular_customer: Boolean(e) })
-              }
-            />
-            <Label htmlFor="is_regular_customer">Cliente frecuente</Label>
           </div>
         </div>
 

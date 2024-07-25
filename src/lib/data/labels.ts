@@ -1,13 +1,13 @@
 import { ITEMS_PER_PAGE } from '@/constants'
 import { TABLES } from '@/constants'
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@/lib/supabase/server'
 import { LabelType } from '@/types'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 export async function fetchLabels() {
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   const { data, error } = await supabase
     .from(TABLES.Labels)
@@ -26,7 +26,7 @@ export async function fetchLabels() {
 export async function fetchFilteredLabels({ query = '', currentPage = 1 }) {
   // create supbase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   // fetch filtered labels
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
@@ -47,7 +47,7 @@ export async function fetchFilteredLabels({ query = '', currentPage = 1 }) {
 export async function fetchLabelsPages(query = '') {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   // fetch total pages
   const { count, error } = await supabase
@@ -71,7 +71,7 @@ export async function fetchLabelsPages(query = '') {
 export async function fetchLabelsById({ id }) {
   // create supabase client
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createServerClient(cookieStore)
 
   // fetch label by id
   const { data: labels, error } = await supabase

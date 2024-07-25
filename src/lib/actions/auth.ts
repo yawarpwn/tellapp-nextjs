@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
@@ -31,7 +31,7 @@ export async function signIn(_prevState: FormState, formData: FormData) {
 	const { email, password } = validateFields.data
 
 	const storeCookie = cookies()
-	const supabase = createClient(storeCookie)
+	const supabase = createServerClient(storeCookie)
 
 	const { error } = await supabase.auth.signInWithPassword({
 		email,
@@ -47,7 +47,7 @@ export async function signIn(_prevState: FormState, formData: FormData) {
 
 export async function signOut() {
 	const storeCookie = cookies()
-	const supabase = createClient(storeCookie)
+	const supabase = createServerClient(storeCookie)
 	await supabase.auth.signOut()
 	redirect('/')
 }

@@ -1,8 +1,11 @@
-import { type CookieOptions, createServerClient } from '@supabase/ssr'
+import {
+  type CookieOptions,
+  createServerClient as createServerClientSupabase,
+} from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-export const createClient = (cookieStore: ReturnType<typeof cookies>) => {
-  return createServerClient(
+export const createServerClient = (cookieStore: ReturnType<typeof cookies>) => {
+  return createServerClientSupabase(
     'https://mluiozpgwvyzpnbzfkwm.supabase.co',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
