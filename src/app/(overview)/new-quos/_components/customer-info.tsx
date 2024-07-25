@@ -13,11 +13,10 @@ import {
 import { SearchIcon } from '@/icons'
 import {
   createQuotationAction,
+  searchRucAction,
   updateQuotationAction,
 } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
-import { getDni, getRuc } from '@/lib/sunat'
-import { shouldAutoRemoveFilter } from '@tanstack/react-table'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -26,12 +25,12 @@ import { toast } from 'sonner'
 import { QuotationAddItems } from './add-items'
 
 export function QuotationCustomerInfo() {
-  const [loading, setLoading] = React.useState(false)
   const quo = useQuotationContext(state => state.quo)
   const setQuo = useQuotationContext(state => state.setQuo)
   const items = useQuotationContext(state => state.items)
   const isUpdate = useQuotationContext(state => state.isUpdate)
   const [pending, startTransition] = React.useTransition()
+  const [pendingRuc, startTransitionRuc] = React.useTransition()
   const [showCreditOption, setShowCreditOption] = React.useState(false)
   const store = useQuotationStore()
   const router = useRouter()
@@ -90,67 +89,34 @@ export function QuotationCustomerInfo() {
 
   // Manjedor para buscar cliente por Ruc
   const handleRucBlur = async () => {
-    const dniRuc = quo.ruc
+    const ruc = quo.ruc
 
-    if (!dniRuc) return
-
-    if (dniRuc.length !== 8 && dniRuc.length !== 11) {
-      toast.warning('Ingresa un dni o ruc válido')
+    if (!ruc) {
+      toast.warning('Ingresa un ruc válido')
       return
     }
 
-    if (dniRuc.length === 8) {
-      setLoading(true)
-      toast.promise(getDni(dniRuc), {
-        loading: 'Buscando DNI...',
-        success: ([error, data]) => {
-          if (error) throw error
-
-          if (!data) {
-            throw new Error('No se encontro el ruc')
-          }
-
-          setQuo({
-            ...quo,
-            company: data.company,
-            address: data.address,
-          })
-          setLoading(false)
-          return 'Dni encontrado con exito'
-        },
-        error: () => {
-          setLoading(false)
-          return 'Error al buscar DNI'
-        },
-      })
+    if (ruc.length !== 11) {
+      toast.warning('Ingresa  un Ruc de 11 digitos')
+      return
     }
 
-    if (dniRuc.length === 11) {
-      console.log('isRuc')
-
-      setLoading(true)
-      toast.promise(getRuc(dniRuc), {
+    startTransitionRuc(async () => {
+      toast.promise(searchRucAction(ruc), {
         loading: 'Buscando ruc...',
-        success: ([error, data]) => {
-          if (error) throw error
-
-          if (!data) {
-            throw new Error('No se encontro el ruc')
-          }
-          setLoading(false)
+        success: data => {
           setQuo({
             ...quo,
             company: data.company,
             address: data.address,
           })
-          return 'Ruc encontrado'
+          return `Ruc ${quo.ruc} encontrado`
         },
-        error: () => {
-          setLoading(false)
-          return 'Error al buscar Ruc'
+        error: error => {
+          return error.message
         },
       })
-    }
+    })
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,7 +146,7 @@ export function QuotationCustomerInfo() {
                 value={quo.ruc ?? ''}
                 type="text"
                 name="ruc"
-                disabled={loading}
+                disabled={pendingRuc}
                 onChange={handleInputChange}
               />
               <Button
@@ -202,7 +168,7 @@ export function QuotationCustomerInfo() {
               type="number"
               id="deadline"
               value={quo.deadline}
-              disabled={loading}
+              disabled={pendingRuc}
               onChange={e =>
                 setQuo({ ...quo, deadline: Number(e.target.value) })
               }
@@ -217,7 +183,7 @@ export function QuotationCustomerInfo() {
             name="company"
             type="text"
             value={quo.company ?? ''}
-            disabled={loading}
+            disabled={pendingRuc}
             onChange={e => setQuo({ ...quo, company: e.target.value })}
           />
         </div>
@@ -229,7 +195,7 @@ export function QuotationCustomerInfo() {
             name="address"
             type="text"
             value={quo.address ?? ''}
-            disabled={loading}
+            disabled={pendingRuc}
             onChange={e => setQuo({ ...quo, address: e.target.value })}
           />
         </div>

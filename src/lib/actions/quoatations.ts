@@ -3,12 +3,12 @@
 import {
   type QuotationCreateType,
   type QuotationItemType,
-  type QuotationType,
   type QuotationUpdateType,
 } from '@/types'
 import { Quotations, Customers } from '@/models'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { getRuc } from '../sunat'
 
 export async function updateQuotationAction(
   quotation: QuotationUpdateType,
@@ -127,5 +127,28 @@ export async function duplicateQuotationAction(
   } catch (error) {
     console.log(error)
     throw new Error('Error duplicando cotizacion')
+  }
+}
+
+export async function searchRucAction(ruc: string) {
+  //search in customers Db
+  const customer = await Customers.getByRuc(ruc)
+
+  if (customer) {
+    return {
+      company: customer.name,
+      address: customer.address,
+      ruc: customer.ruc,
+      customerIsFromDb: true,
+    }
+  }
+
+  const data = await getRuc(ruc)
+
+  return {
+    company: data.company,
+    address: data.address,
+    ruc: data.ruc,
+    customerIsFromDb: false,
   }
 }
