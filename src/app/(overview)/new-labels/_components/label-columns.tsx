@@ -25,7 +25,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 
 const columnHelper = createColumnHelper<LabelType>()
 
-export const customerColumns = [
+export const labelColumns = [
   columnHelper.accessor('recipient', {
     header: 'Destinatario',
     cell: props => (

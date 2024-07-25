@@ -10,7 +10,7 @@ class HttpError extends Error {
   }
 }
 
-export async function getRuc(ruc: string) {
+export async function getRuc(ruc: string): Promise<Company> {
   console.log('ruc', ruc)
   const URL = 'https://dniruc.apisperu.com/api/v1'
   const TOKEN =
@@ -45,7 +45,7 @@ export async function getRuc(ruc: string) {
   }
 }
 
-export async function getDni(dni: string): Promise<[Error?, Company?]> {
+export async function getDni(dni: string): Promise<Company> {
   const URL = `https://apiperu.dev/api/dni/${dni}`
   const token =
     '66ec9b5c4d6e359a3ca2117ce321ceddbd1aa54b5ea29a38e0a6eed061308dc1'
@@ -59,19 +59,26 @@ export async function getDni(dni: string): Promise<[Error?, Company?]> {
   })
   try {
     if (!res.ok) {
-      throw new Error('Error de petición')
+      throw new HttpError('Error al realizar la petición')
     }
 
     const json = await res.json()
+
+    if (json.success === false) {
+      throw new HttpError('No se encontraron registros')
+    }
+
     const { nombres, apellido_materno, apellido_paterno, ruc } = json.data
 
-    const personFound = {
+    return {
       ruc: String(ruc),
       company: `${nombres} ${apellido_paterno} ${apellido_materno}`,
       address: '',
     }
-    return [undefined, personFound]
   } catch (error) {
-    return [new Error('Error de petición')]
+    if (error instanceof HttpError) {
+      throw error
+    }
+    throw new Error('Error no se puede identificar la empresa')
   }
 }
