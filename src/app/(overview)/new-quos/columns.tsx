@@ -131,9 +131,9 @@ export function getColumns(): ColumnDef<QuotationType>[] {
                   Editar
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onSelect={openDeleteModal}>
-                Borrar
-              </DropdownMenuItem>
+              {/* <DropdownMenuItem onSelect={openDeleteModal}> */}
+              {/*   Borrar */}
+              {/* </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
         )
