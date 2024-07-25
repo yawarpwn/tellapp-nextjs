@@ -8,6 +8,7 @@
     "start": "next start",
     "migrate": "drizzle-kit generate --config=./src/db/drizzle.config.ts && tsx ./src/db/migrations/migrate.ts",
     "seed": "tsx ./src/db/seed.ts",
+    "backup": "tsx ./scripts/backup.ts",
     "lint": "next lint"
   },
   "dependencies": {

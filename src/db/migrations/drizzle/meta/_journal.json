@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1721619400509,
-      "tag": "20240722033640_flimsy_cable",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1721698502141,
-      "tag": "20240723013502_outstanding_medusa",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1721863197346,
-      "tag": "20240724231957_curly_strong_guy",
+      "when": 1721876931850,
+      "tag": "20240725030851_lush_wallflower",
       "breakpoints": true
     }
   ]

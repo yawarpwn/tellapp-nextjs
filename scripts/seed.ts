@@ -4,19 +4,6 @@ import quotationsJson from '../backup/quotations.json'
 import customersJson from '../backup/customers.json'
 
 async function main() {
-  const { data, error } = await supabase
-    .from('quotations_duplicate')
-    .select(
-      `
-*,
-customer:customers(*) -> name,
-
-`,
-    )
-    .limit(500)
-
-  console.log(data)
-}
 
 // async function main() {
 //   const customersRucs = customersJson.map(c => c.ruc)

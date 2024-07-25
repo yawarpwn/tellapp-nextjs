@@ -3,22 +3,35 @@ CREATE TABLE IF NOT EXISTS "_customers" (
 	"name" text NOT NULL,
 	"ruc" text NOT NULL,
 	"address" text,
-	"is_regular" boolean DEFAULT false,
+	"is_regular" boolean DEFAULT false NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "_customers_name_unique" UNIQUE("name"),
 	CONSTRAINT "_customers_ruc_unique" UNIQUE("ruc")
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "_products" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"description" text NOT NULL,
+	"code" text NOT NULL,
+	"unit_size" text NOT NULL,
+	"link" text,
+	"rank" integer DEFAULT 0 NOT NULL,
+	"price" integer NOT NULL,
+	"cost" integer NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "_quotations" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"number" integer NOT NULL,
 	"deadline" integer NOT NULL,
-	"credit" text,
-	"include_igv" boolean DEFAULT false,
+	"credit" integer,
+	"include_igv" boolean DEFAULT false NOT NULL,
 	"customer_id" uuid,
-	"created_at" timestamp DEFAULT now() NOT NULL,
 	"items" jsonb NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "_quotations_number_unique" UNIQUE("number")
 );
