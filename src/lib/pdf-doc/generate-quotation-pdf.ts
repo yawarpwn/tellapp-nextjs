@@ -57,7 +57,7 @@ export function generateQuotationPdf(quotation: QuotationType) {
                   {},
                   ':',
                   {
-                    text: formatDateToLocal(quotation.created_at),
+                    text: formatDateToLocal(quotation.updated_at),
                     alignment: 'right',
                   },
                 ],

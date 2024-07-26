@@ -13,8 +13,18 @@ export function DownloadAndShareButtons({
 }: {
   quotation: QuotationType
 }) {
-  const ruc = `-${quotation?.ruc}` || ''
-  const pdfFileName = `COT-2024-${quotation.number}${ruc}.pdf`
+  //WARN: Mejorar legibilidad
+  const date = Intl.DateTimeFormat('es-PE')
+    .format(quotation.updated_at)
+    .replace(/\//g, '-')
+  const ruc = quotation.company
+    ? `-${quotation.company.replace(/\./g, '').split(' ').join('-')}`
+    : `-${date}-SIN-RUC`
+  const diferenceTime =
+    Number(quotation.updated_at) - Number(quotation.created_at)
+  const isUpdate = diferenceTime > 0
+
+  const pdfFileName = `${quotation.number}-COT${ruc}${isUpdate ? '-ACTUALIZADO' : ''}.pdf`
 
   const dd = useMemo(
     () =>
