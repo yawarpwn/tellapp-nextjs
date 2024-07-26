@@ -4,12 +4,10 @@ import type { LabelType } from '@/types'
 import React from 'react'
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
-import { LabelTemplate } from '@/components/label-template'
 import { Button } from '@/components/ui/button'
 import { deleteLabelAction } from '@/lib/actions/labels'
 import { generateLabelPdf } from '@/lib/pdf-doc/generate-label-pdf'
 import { MoreHorizontal } from 'lucide-react'
-// import { useReactToPrint } from 'react-to-print'
 import { UpdateLabelSheet } from './update-label-sheet'
 
 import {
@@ -25,7 +23,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 
 const columnHelper = createColumnHelper<LabelType>()
 
-export const customerColumns = [
+export const labelColumns = [
   columnHelper.accessor('recipient', {
     header: 'Destinatario',
     cell: props => (
@@ -65,11 +63,6 @@ export const customerColumns = [
     cell: function Cell({ row }) {
       const [showDeleteDialog, setShowDeleteDialog] = React.useState(false)
       const [showUpdateDialog, setShowUpdateDialog] = React.useState(false)
-      // const containerRef = React.useRef(null)
-
-      // const printPdf = useReactToPrint({
-      //   content: () => containerRef.current,
-      // })
 
       return (
         <DropdownMenu>
@@ -80,9 +73,6 @@ export const customerColumns = [
               label={row.original}
             />
           )}
-          {/* <div className="hidden"> */}
-          {/*   <LabelTemplate label={row.original} ref={containerRef} /> */}
-          {/* </div> */}
           <ConfirmActionDialog
             open={showDeleteDialog}
             onOpenChange={setShowDeleteDialog}
@@ -121,7 +111,6 @@ export const customerColumns = [
               Ver
             </DropdownMenuItem>
 
-            {/* <DropdownMenuItem onSelect={printPdf}>Imprimir</DropdownMenuItem> */}
             <DropdownMenuItem onSelect={() => setShowUpdateDialog(true)}>
               Edit
             </DropdownMenuItem>

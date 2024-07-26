@@ -1,4 +1,5 @@
 import { buttonVariants } from '@/components/ui/button'
+import { StartIcon } from '@/icons'
 import {
   Table,
   TableBody,
@@ -16,6 +17,7 @@ import Link from 'next/link'
 import { DeleteButton } from './delete-button'
 import { DownloadAndShareButtons } from './download-and-share-buttons'
 import { DuplicateButton } from './duplicate-button'
+import { IsRegularButton } from './is-regular-button'
 export async function QuotationPageByNumber({ number }: { number: number }) {
   const quotation = await fetchQuotationByNumber({ number })
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(
@@ -34,28 +36,43 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <span className="ml-2 hidden lg:block">Editar</span>
           </Link>
           <DownloadAndShareButtons quotation={quotation} />
-          <DuplicateButton id={quotation.id} />
-          <DeleteButton id={quotation.id} />
-          {/* <DuplicateQuotation number={number} /> */}
+          <DuplicateButton showTrigger id={quotation.id} />
+          <DeleteButton showTrigger id={quotation.id} />
+          {quotation.customerId && (
+            <IsRegularButton
+              id={quotation.customerId}
+              isRegular={Boolean(quotation.is_regular_customer)}
+              quotationNumber={quotation.number}
+            />
+          )}
         </div>
       </header>
 
       <div className="flex justify-end">
         <div className="text-right">
           <h2 className="text-2xl font-semibold md:text-3xl">Cotización</h2>
-          <span className="mt-1 block text-xl text-yellow-500">
-            # {quotation.number}
-          </span>
+          <div className="mt-1 flex justify-end gap-1 text-xl text-yellow-500">
+            {quotation.is_regular_customer ? (
+              <StartIcon filled />
+            ) : (
+              <span>#</span>
+            )}
+            <span className="font-bold">{quotation.number}</span>
+          </div>
         </div>
       </div>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
         <div>
-          <h3 className="text-lg font-semibold ">{quotation.company}</h3>
+          <h3 className="text-lg font-semibold ">
+            {quotation.company ?? 'SIN NOMBRE'}
+          </h3>
           <address className="mt-2 not-italic text-muted-foreground ">
             {quotation.address}
           </address>
-          <p className="mt-2 text-muted-foreground">{quotation.ruc}</p>
+          <p className="mt-2 text-muted-foreground">
+            {quotation.ruc ?? 'SIN RUC'}
+          </p>
         </div>
         <div className="space-y-2 sm:text-right">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-1 sm:gap-2">

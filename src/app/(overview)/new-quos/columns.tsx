@@ -2,7 +2,7 @@
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button } from '@/components/ui/button'
-import { toggleIsRegularCustomer } from '@/lib/actions/customers'
+import { setIsRegularCustomerAction } from '@/lib/actions/customers'
 import { StartIcon } from '@/icons'
 import {
   deleteQuotationAction,
@@ -42,7 +42,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
             action={async (formData: FormData) => {
               const id = formData.get('id') as string
               updateOptimistic(!optimisticState)
-              await toggleIsRegularCustomer(id, !optimisticState)
+              await setIsRegularCustomerAction(id, !optimisticState)
             }}
           >
             <input type="hidden" name="id" value={row.original.customerId} />

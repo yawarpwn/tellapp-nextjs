@@ -10,6 +10,7 @@ import { createStore } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
 export interface QuotationState {
+  isCustomerServed: boolean
   quoNumber: number
   isUpdate: boolean
   quo: QuotationCreateType | QuotationUpdateType
@@ -23,6 +24,7 @@ export interface QuotationActions {
   setItems: (item: QuotationItemType[]) => void
   addItem: (item: QuotationItemType) => void
   deleteItem: (id: string) => void
+  setIsCustomerServed: () => void
   duplicateItem: (item: QuotationItemType) => void
   editItem: (item: QuotationItemType) => void
   onPickCustomer: (customer: CustomerType) => void
@@ -41,6 +43,7 @@ export const initQuotationStore = ({
 }: {
   isUpdate?: boolean
   quoNumber: number
+  isCustomerServed: boolean
   customers: CustomerType[]
   products: ProductType[]
   quo: QuotationCreateType | QuotationType
@@ -49,6 +52,7 @@ export const initQuotationStore = ({
   return {
     quoNumber,
     isUpdate: isUpdate || false,
+    isCustomerServed: false,
     quo: quo || {
       ruc: '',
       company: '',
@@ -65,6 +69,7 @@ export const initQuotationStore = ({
 
 const DEFAULT_PROPS: QuotationState = {
   quoNumber: 0,
+  isCustomerServed: false,
   isUpdate: false,
   quo: {
     ruc: '',
@@ -96,6 +101,8 @@ export const createQuotationStore = (
           itemToEdit: null,
           setQuo: quo => set(state => ({ quo: { ...state.quo, ...quo } })),
           setItems: items => set(state => ({ items })),
+          setIsCustomerServed: () =>
+            set(state => ({ ...state, isCustomerServed: true })),
           reset: () => set({ ...initProps }),
           addItem: item => set(state => ({ items: [...state.items, item] })),
           duplicateItem: item =>
@@ -118,6 +125,7 @@ export const createQuotationStore = (
             })),
           onPickCustomer: customer =>
             set(state => ({
+              isCustomerServed: true,
               quo: {
                 ...state.quo,
                 ruc: customer.ruc,

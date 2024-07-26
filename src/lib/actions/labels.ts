@@ -8,6 +8,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import z from 'zod'
+import { getDni, getRuc } from '../sunat'
 
 export async function createLabelAction(input: LabelCreateType) {
   const cookieStore = cookies()
@@ -166,7 +167,7 @@ export async function updateLabel(_, formData) {
   redirect('/labels')
 }
 
-export async function deleteLabel(_, formData) {
+export async function deleteLabel(_: any, formData: FormData) {
   const id = formData.get('id')
 
   // createa supabase client
@@ -175,4 +176,13 @@ export async function deleteLabel(_, formData) {
   await supabase.from(TABLE).delete().eq('id', id)
 
   revalidatePath('/labels')
+}
+
+export async function searchByRucOrDni(dniRuc: string) {
+  //DNI
+  if (dniRuc.length === 8) {
+    return getDni(dniRuc)
+  } else {
+    return getRuc(dniRuc)
+  }
 }

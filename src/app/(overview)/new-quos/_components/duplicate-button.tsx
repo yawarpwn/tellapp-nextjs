@@ -35,9 +35,9 @@ export function DuplicateButton({
       <Dialog open={open} onOpenChange={setOpen}>
         {showTrigger && (
           <DialogTrigger asChild>
-            <Button>
-              <DeleteIcon />
-              <span className="ml-2 max-md:sr-only">eliminar</span>
+            <Button variant={'secondary'}>
+              <DocumentDuplicateIcon size={20} />
+              <span className="ml-2 max-md:sr-only">Duplicar</span>
             </Button>
           </DialogTrigger>
         )}
@@ -77,9 +77,6 @@ export function DuplicateButton({
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <Button variant="secondary" onClick={() => setOpen(true)}>
-        <DocumentDuplicateIcon size={20} />
-      </Button>
     </>
   )
 }

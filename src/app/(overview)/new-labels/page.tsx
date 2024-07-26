@@ -3,7 +3,7 @@ import { DataTableSkeleton } from '@/components/skeletons/data-table'
 import { fetchLabels } from '@/lib/data/labels'
 import { Suspense } from 'react'
 import { CreateLabelDialog } from './_components/create-label-dialog'
-import { customerColumns } from './_components/label-columns'
+import { labelColumns } from './_components/label-columns'
 
 async function ProductTable() {
   const labels = await fetchLabels()
@@ -11,7 +11,7 @@ async function ProductTable() {
   return (
     <DataTable
       createComponent={<CreateLabelDialog />}
-      columns={customerColumns}
+      columns={labelColumns}
       data={labels}
     />
   )
