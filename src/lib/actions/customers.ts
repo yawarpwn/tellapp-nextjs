@@ -64,9 +64,20 @@ export async function updateCustomerAction(input: CustomerUpdateType) {
   revalidatePath('/new-customers')
 }
 
-export async function toggleIsRegularCustomer(id: string, value: boolean) {
+export async function setIsRegularCustomerAction({
+  id,
+  value,
+  quoationNumber,
+}: {
+  id: string
+  value: boolean
+  quoationNumber?: number
+}) {
   try {
     await Customers.toggleIsRegular(id, value)
+    if (quoationNumber) {
+      revalidatePath(`/new-quos/${quoationNumber}`)
+    }
     console.log('customer updated')
   } catch (error) {
     console.log('ERROR UPDATING CUSTOMER: ', error)

@@ -11,7 +11,6 @@ class HttpError extends Error {
 }
 
 export async function getRuc(ruc: string): Promise<Company> {
-  console.log('ruc', ruc)
   const URL = 'https://dniruc.apisperu.com/api/v1'
   const TOKEN =
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5leWRhLm1pbGkxMUBnbWFpbC5jb20ifQ.UtiFRViVJrO2YGQ5H3alRcFBhnSwuE5yKU9PYuojgq0'

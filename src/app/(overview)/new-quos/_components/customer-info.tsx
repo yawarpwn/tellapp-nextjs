@@ -10,7 +10,7 @@ import {
   useQuotationContext,
   useQuotationStore,
 } from '@/hooks/use-quotation-store'
-import { SearchIcon } from '@/icons'
+import { SearchIcon, StartIcon } from '@/icons'
 import {
   createQuotationAction,
   searchRucAction,
@@ -29,12 +29,15 @@ export function QuotationCustomerInfo() {
   const setQuo = useQuotationContext(state => state.setQuo)
   const items = useQuotationContext(state => state.items)
   const isUpdate = useQuotationContext(state => state.isUpdate)
+  const isCustomerServed = useQuotationContext(state => state.isCustomerServed)
+  const setIsCustomerServed = useQuotationContext(
+    state => state.setIsCustomerServed,
+  )
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
   const [showCreditOption, setShowCreditOption] = React.useState(false)
   const store = useQuotationStore()
   const router = useRouter()
-
   const hastItems = items.length > 0
 
   const handleSubmit = () => {
@@ -110,6 +113,11 @@ export function QuotationCustomerInfo() {
             company: data.company,
             address: data.address,
           })
+
+          if (data.customerIsFromDb) {
+            setIsCustomerServed()
+          }
+
           return `Ruc ${quo.ruc} encontrado`
         },
         error: error => {
@@ -200,13 +208,30 @@ export function QuotationCustomerInfo() {
           />
         </div>
         <div className="flex h-6 items-center gap-4">
-          <div className="flex items-start space-x-2 ">
-            <Checkbox
-              id="include_igv"
-              onCheckedChange={e => setQuo({ ...quo, include_igv: Boolean(e) })}
-              checked={quo.include_igv}
-            />
-            <Label htmlFor="include_igv">Incluir IGV</Label>
+          <div
+            className="flex w-full items-center justify-between 
+            "
+          >
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="include_igv"
+                onCheckedChange={e =>
+                  setQuo({ ...quo, include_igv: Boolean(e) })
+                }
+                checked={quo.include_igv}
+              />
+              <Label htmlFor="include_igv">Incluir IGV</Label>
+            </div>
+
+            {isCustomerServed && (
+              <div
+                className="flex 
+                  items-center gap-2"
+              >
+                <StartIcon filled />
+                <span className="text-sm">Cliente Atendido</span>
+              </div>
+            )}
           </div>
         </div>
 

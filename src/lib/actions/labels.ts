@@ -167,7 +167,7 @@ export async function updateLabel(_, formData) {
   redirect('/labels')
 }
 
-export async function deleteLabel(_, formData) {
+export async function deleteLabel(_: any, formData: FormData) {
   const id = formData.get('id')
 
   // createa supabase client
