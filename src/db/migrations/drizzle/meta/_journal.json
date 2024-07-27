@@ -15,6 +15,13 @@
       "when": 1722106711340,
       "tag": "20240727185831_plain_dormammu",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1722109652933,
+      "tag": "20240727194732_light_madripoor",
+      "breakpoints": true
     }
   ]
 }

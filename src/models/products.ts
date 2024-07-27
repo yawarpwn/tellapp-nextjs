@@ -1,6 +1,12 @@
 import { db } from '@/db'
-import { eq } from 'drizzle-orm'
-import { productsTable, type ProductInsert, type Product } from '@/db'
+import { eq, desc } from 'drizzle-orm'
+import {
+  productsTable,
+  type ProductInsert,
+  type Product,
+  type ProductUpdate,
+} from '@/db'
+import { getDatabaseErrorMessage } from '@/lib/utils'
 
 export class ProductsModel {
   static async getAll() {
@@ -8,52 +14,48 @@ export class ProductsModel {
       .select({
         id: productsTable.id,
         description: productsTable.description,
+        category: productsTable.category,
         code: productsTable.code,
         price: productsTable.price,
         cost: productsTable.cost,
         link: productsTable.link,
-        unit_size: productsTable.unitSize,
-        created_at: productsTable.createdAt,
-        updated_at: productsTable.updatedAt,
+        unitSize: productsTable.unitSize,
+        createdAt: productsTable.createdAt,
+        updatedAt: productsTable.updatedAt,
       })
       .from(productsTable)
+      .orderBy(desc(productsTable.updatedAt))
 
     return result
   }
 
-  static async getById(id: Product['id']) {
-    const result = await db
-      .select({
-        id: productsTable.id,
-        description: productsTable.description,
-        code: productsTable.code,
-        price: productsTable.price,
-        cost: productsTable.cost,
-        link: productsTable.link,
-        unit_size: productsTable.unitSize,
-        created_at: productsTable.createdAt,
-        updated_at: productsTable.updatedAt,
-      })
-      .from(productsTable)
-      .where(eq(productsTable.id, id))
-    return result[0]
-  }
+  static async create(values: ProductInsert) {
+    try {
+      await db.insert(productsTable).values(values)
 
-  static async create(values: ProductInsert): Promise<{ id: Product['id'] }> {
-    const rows = await db.insert(productsTable).values(values).returning({
-      id: productsTable.id,
-    })
-    return rows[0]
+      return {
+        success: true,
+        message: 'Producto Creado',
+      }
+    } catch (error) {
+      const errorMessage = getDatabaseErrorMessage(error)
+      return {
+        success: false,
+        message: errorMessage,
+      }
+    }
   }
 
   static async delete(id: Product['id']) {
     await db.delete(productsTable).where(eq(productsTable.id, id))
   }
 
-  static async update(
-    id: Product['id'],
-    value: Partial<Omit<Product, 'id' | 'createdAt'>>,
-  ) {
-    await db.update(productsTable).set(value).where(eq(productsTable.id, id))
+  static async update(id: Product['id'], value: ProductUpdate) {
+    try {
+      await db.update(productsTable).set(value).where(eq(productsTable.id, id))
+    } catch (error) {
+      console.log(error)
+      getDatabaseErrorMessage(error)
+    }
   }
 }

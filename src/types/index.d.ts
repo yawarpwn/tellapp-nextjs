@@ -1,5 +1,13 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 import { GalleryImageSchema } from '@/schemas/gallery'
+
+//Product
+export type {
+  Product,
+  ProductUpdate,
+  ProductInsert,
+} from '@/db/schemas/products'
+
 import { z } from 'zod'
 
 import {
@@ -84,10 +92,10 @@ export type SignalCreateType = z.infer<typeof SignalCreateSchema>
 export type SignalCategory = keyof typeof SIGNALS_CATEGORIES
 
 // Product
-export type ProductType = z.infer<typeof ProductSchema>
-export type ProductId = ProductType['id']
-export type ProductCreateType = z.infer<typeof ProductCreateSchema>
-export type ProductUpdateType = z.infer<typeof ProductUpdateSchema>
+// export type ProductType = z.infer<typeof ProductSchema>
+// export type ProductId = ProductType['id']
+// export type ProductCreateType = z.infer<typeof ProductCreateSchema>
+// export type ProductUpdateType = z.infer<typeof ProductUpdateSchema>
 
 // Gallery
 export type GalleryImageType = z.infer<typeof GalleryImageSchema>

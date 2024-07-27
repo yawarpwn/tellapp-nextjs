@@ -1,3 +1,5 @@
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { z } from 'zod'
 import { PRODUCT_CATEGORIES } from '@/constants'
 import {
   text,
@@ -13,7 +15,7 @@ type Categories = (typeof PRODUCT_CATEGORIES)[keyof typeof PRODUCT_CATEGORIES]
 export const productsTable = pgTable('_products', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   description: text('description').notNull(),
-  code: text('code').notNull(),
+  code: text('code').unique().notNull(),
   unitSize: text('unit_size').notNull(),
   category: text('category').$type<Categories>().notNull(),
   link: text('link'),
@@ -24,5 +26,19 @@ export const productsTable = pgTable('_products', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
-export type Product = typeof productsTable.$inferSelect
-export type ProductInsert = typeof productsTable.$inferInsert
+// export type Product = typeof productsTable.$inferSelect
+// export type ProductInsert = typeof productsTable.$inferInsert
+
+export const ProductSchema = createSelectSchema(productsTable, {})
+export const ProductInsertSchema = createInsertSchema(productsTable, {
+  cost: () => z.coerce.number(),
+  price: () => z.coerce.number(),
+  category: () => z.nativeEnum(PRODUCT_CATEGORIES),
+})
+
+export type Product = z.infer<typeof ProductSchema>
+export type ProductInsert = z.infer<typeof ProductInsertSchema>
+export type ProductUpdate = Partial<
+  Omit<ProductInsert, 'id' | 'createdAt' | 'updatedAt'>
+>
+export type ProductIdType = Product['id']

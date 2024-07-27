@@ -1,14 +1,13 @@
 import Breadcrumbs from '@/components/breadcrumbs'
 import { QuotationStoreProvider } from '@/hooks/use-quotation-store'
-import { fetchCustomers } from '@/lib/data/customers'
-import { fetchProducts } from '@/lib/data/products'
 import { fetchLastQuotation } from '@/lib/data/quotations'
 import { CreateUpdatePage } from '../_components/create-update-page'
+import { CustomersModel, ProductsModel } from '@/models'
 
 export default async function Page() {
   const [customers, products, lastQuotation] = await Promise.all([
-    fetchCustomers(),
-    fetchProducts(),
+    CustomersModel.getAll(),
+    ProductsModel.getAll(),
     fetchLastQuotation(),
   ])
 

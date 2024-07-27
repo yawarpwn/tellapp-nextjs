@@ -33,10 +33,18 @@ export const ProductSchema = z.object({
       required_error: 'unidad / medida es requerida',
     })
     .min(2, { message: 'Mínimo 3 caracteres' }),
-  rank: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }).optional(),
-  inserted_at: z.date(),
+  rank: z.coerce
+    .number()
+    .gt(0, { message: 'Debe ser mayor a 0' })
+    .optional()
+    .nullable(),
+  created_at: z.date(),
   updated_at: z.date(),
 })
 
-export const ProductCreateSchema = ProductSchema.omit({ id: true })
+export const ProductCreateSchema = ProductSchema.omit({
+  id: true,
+  created_at: true,
+  updated_at: true,
+})
 export const ProductUpdateSchema = ProductSchema.partial()

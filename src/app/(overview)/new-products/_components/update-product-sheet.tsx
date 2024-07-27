@@ -71,23 +71,17 @@ export function UpdateProductSheet({
 
   function onSubmit(input: z.infer<typeof ProductUpdateSchema>) {
     startUpdateTransition(() => {
-      toast.promise(
-        updateProductAction(product.id, {
-          ...input,
-          code: input?.code?.toUpperCase(),
-        }),
-        {
-          loading: 'Updating task...',
-          success: () => {
-            onOpenChange?.(false)
-            return 'Producto actualizado'
-          },
-          error: error => {
-            onOpenChange?.(false)
-            return getErrorMessage(error)
-          },
+      toast.promise(updateProductAction(product.id, input), {
+        loading: 'Actualizando producto..',
+        success: () => {
+          onOpenChange?.(false)
+          return 'Producto actualizado'
         },
-      )
+        error: error => {
+          onOpenChange?.(false)
+          return getErrorMessage(error)
+        },
+      })
     })
   }
 
