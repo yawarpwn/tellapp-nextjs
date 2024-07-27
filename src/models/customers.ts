@@ -1,5 +1,5 @@
 import { db } from '@/db'
-import { eq } from 'drizzle-orm'
+import { eq, desc } from 'drizzle-orm'
 import { customersTable, type CustomerInsert, type Customer } from '@/db'
 
 export class CustomersModel {
@@ -15,6 +15,7 @@ export class CustomersModel {
         updated_at: customersTable.updatedAt,
       })
       .from(customersTable)
+      .orderBy(desc(customersTable.updatedAt))
 
     return result
   }

@@ -1,12 +1,12 @@
 import { DataTable } from '@/components/data-table'
 import { DataTableSkeleton } from '@/components/skeletons/data-table'
-import { fetchCustomers } from '@/lib/data/customers'
 import { Suspense } from 'react'
+import { CustomersModel } from '@/models'
 import { CreateCustomerDialog } from './_components/create-customer-dialog'
 import { customerColumns } from './_components/customer-columns'
 
 async function ProductTable() {
-  const customers = await fetchCustomers()
+  const customers = await CustomersModel.getAll()
 
   return (
     <DataTable
