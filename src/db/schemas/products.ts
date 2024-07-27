@@ -1,4 +1,11 @@
-import { text, pgTable, timestamp, uuid, integer } from 'drizzle-orm/pg-core'
+import {
+  text,
+  pgTable,
+  timestamp,
+  uuid,
+  integer,
+  real,
+} from 'drizzle-orm/pg-core'
 
 export const productsTable = pgTable('_products', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
@@ -6,9 +13,9 @@ export const productsTable = pgTable('_products', {
   code: text('code').notNull(),
   unitSize: text('unit_size').notNull(),
   link: text('link'),
-  rank: integer('rank').default(0).notNull(),
-  price: integer('price').notNull(),
-  cost: integer('cost').notNull(),
+  rank: real('rank').default(0).notNull(),
+  price: real('price').notNull(), //must be 1, 2,  0.5, 5.5
+  cost: integer('cost').notNull(), //must be 1, 2, 0.5. 55
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at')
     .defaultNow()
@@ -17,4 +24,4 @@ export const productsTable = pgTable('_products', {
 })
 
 export type Product = typeof productsTable.$inferSelect
-export type productInsert = typeof productsTable.$inferInsert
+export type ProductInsert = typeof productsTable.$inferInsert

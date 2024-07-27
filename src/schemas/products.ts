@@ -34,6 +34,8 @@ export const ProductSchema = z.object({
     })
     .min(2, { message: 'Mínimo 3 caracteres' }),
   rank: z.coerce.number().gt(0, { message: 'Debe ser mayor a 0' }).optional(),
+  inserted_at: z.date(),
+  updated_at: z.date(),
 })
 
 export const ProductCreateSchema = ProductSchema.omit({ id: true })
