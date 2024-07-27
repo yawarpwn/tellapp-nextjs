@@ -1,6 +1,6 @@
 {
-  "id": "4c8dd2be-345d-4fc1-8c5a-a85f79ca49b2",
-  "prevId": "84451bd8-a6b6-486c-a0ff-3433d18d7c5c",
+  "id": "4dda9c9f-a88b-4e05-ae8c-5a2e889a82be",
+  "prevId": "11336e57-9451-431a-a7a8-265830edab32",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -104,6 +104,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "link": {
           "name": "link",
           "type": "text",
@@ -125,7 +131,7 @@
         },
         "cost": {
           "name": "cost",
-          "type": "integer",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         },

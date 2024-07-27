@@ -1,5 +1,5 @@
 {
-  "id": "245aefe8-4226-47ae-a912-af337761c21c",
+  "id": "11336e57-9451-431a-a7a8-265830edab32",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -100,6 +100,12 @@
         },
         "unit_size": {
           "name": "unit_size",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
           "type": "text",
           "primaryKey": false,
           "notNull": true

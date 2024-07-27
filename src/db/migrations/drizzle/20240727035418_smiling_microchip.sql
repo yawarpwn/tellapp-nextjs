@@ -1,1 +1,0 @@
-ALTER TABLE "_products" DROP COLUMN IF EXISTS "link";

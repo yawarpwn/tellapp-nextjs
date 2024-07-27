@@ -39,8 +39,8 @@ export class ProductsModel {
     return result[0]
   }
 
-  static async create(value: ProductInsert): Promise<{ id: Product['id'] }> {
-    const rows = await db.insert(productsTable).values(value).returning({
+  static async create(values: ProductInsert): Promise<{ id: Product['id'] }> {
+    const rows = await db.insert(productsTable).values(values).returning({
       id: productsTable.id,
     })
     return rows[0]

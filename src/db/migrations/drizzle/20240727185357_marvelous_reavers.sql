@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS "_products" (
 	"description" text NOT NULL,
 	"code" text NOT NULL,
 	"unit_size" text NOT NULL,
+	"category" text NOT NULL,
 	"link" text,
 	"rank" real DEFAULT 0 NOT NULL,
 	"price" real NOT NULL,

@@ -2,7 +2,7 @@ import { PRODUCT_CATEGORIES } from '@/constants'
 import { z } from 'zod'
 
 export const ProductSchema = z.object({
-  id: z.number(),
+  id: z.string().uuid(),
   description: z
     .string({
       required_error: 'Descripción es requerida',
