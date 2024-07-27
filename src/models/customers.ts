@@ -2,7 +2,7 @@ import { db } from '@/db'
 import { eq } from 'drizzle-orm'
 import { customersTable, type CustomerInsert, type Customer } from '@/db'
 
-export class Customers {
+export class CustomersModel {
   static async getAll() {
     const result = await db
       .select({

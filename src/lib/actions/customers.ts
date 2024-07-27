@@ -5,7 +5,7 @@ import { createServerClient } from '@/lib/supabase'
 import { CustomerCreateType, CustomerUpdateType } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
-import { Customers } from '@/models'
+import { CustomersModel } from '@/models'
 
 export async function createCustomerAction(
   input: CustomerCreateType,
@@ -74,7 +74,7 @@ export async function setIsRegularCustomerAction({
   quoationNumber?: number
 }) {
   try {
-    await Customers.toggleIsRegular(id, value)
+    await CustomersModel.toggleIsRegular(id, value)
     if (quoationNumber) {
       revalidatePath(`/new-quos/${quoationNumber}`)
     }

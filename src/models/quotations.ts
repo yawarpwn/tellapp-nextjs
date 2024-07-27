@@ -8,7 +8,7 @@ import {
   type Quotation,
 } from '@/db'
 
-export class Quotations {
+export class QuotationsModel {
   static async getAll(): Promise<QuotationType[]> {
     const result = await db
       .select({
