@@ -17,10 +17,7 @@ export const productsTable = pgTable('_products', {
   price: real('price').notNull(), //must be 1, 2,  0.5, 5.5
   cost: integer('cost').notNull(), //must be 1, 2, 0.5. 55
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at')
-    .defaultNow()
-    .notNull()
-    .$onUpdate(() => new Date()),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 export type Product = typeof productsTable.$inferSelect

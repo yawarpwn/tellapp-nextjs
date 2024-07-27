@@ -7,10 +7,7 @@ export const customersTable = pgTable('_customers', {
   address: text('address'),
   isRegular: boolean('is_regular').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at')
-    .defaultNow()
-    .notNull()
-    .$onUpdate(() => new Date()),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 export type Customer = typeof customersTable.$inferSelect

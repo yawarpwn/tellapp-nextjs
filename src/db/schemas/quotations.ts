@@ -19,10 +19,7 @@ export const quotationsTable = pgTable('_quotations', {
   customerId: uuid('customer_id').references(() => customersTable.id),
   items: jsonb('items').$type<QuotationItemType[]>().notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at')
-    .defaultNow()
-    .notNull()
-    .$onUpdate(() => new Date()),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 export type Quotation = typeof quotationsTable.$inferSelect

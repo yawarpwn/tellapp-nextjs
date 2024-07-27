@@ -1,0 +1,1 @@
+ALTER TABLE "_products" ADD COLUMN "link" text;

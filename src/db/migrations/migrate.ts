@@ -13,6 +13,7 @@ if (!connectionString) {
 const pushMigration = async () => {
   const migrationClient = postgres(connectionString, {
     max: 1,
+    prepare: false,
   })
 
   const migrationDb = drizzle(migrationClient)

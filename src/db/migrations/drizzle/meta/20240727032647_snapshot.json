@@ -1,5 +1,5 @@
 {
-  "id": "2922cdb1-63aa-4f69-a27d-03e0657242eb",
+  "id": "245aefe8-4226-47ae-a912-af337761c21c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -112,14 +112,14 @@
         },
         "rank": {
           "name": "rank",
-          "type": "integer",
+          "type": "real",
           "primaryKey": false,
           "notNull": true,
           "default": 0
         },
         "price": {
           "name": "price",
-          "type": "integer",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         },
