@@ -1,18 +1,18 @@
 'use server'
 
-import { CustomerCreateType, CustomerUpdateType } from '@/types'
+import { CustomerInsert, CustomerUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { CustomersModel } from '@/models'
 
 export async function createCustomerAction(
-  input: CustomerCreateType,
+  input: CustomerInsert,
 ): Promise<void> {
-  try {
-    const { id } = await CustomersModel.create(input)
-    revalidatePath('/new-customers')
-  } catch (error) {
-    console.log('ERROR CREATING CUSTOMER: ', error)
+  const { data, message } = await CustomersModel.create(input)
+
+  if (!data) {
+    throw new Error(message)
   }
+  revalidatePath('/new-customers')
 }
 
 export async function deleteCustomerAction(id: string) {
@@ -24,10 +24,7 @@ export async function deleteCustomerAction(id: string) {
   }
 }
 
-export async function updateCustomerAction(
-  id: string,
-  input: CustomerUpdateType,
-) {
+export async function updateCustomerAction(id: string, input: CustomerUpdate) {
   try {
     await CustomersModel.update(id, input)
     revalidatePath('/new-customers')

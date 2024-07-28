@@ -6,7 +6,7 @@ export const customersTable = pgTable('_customers', {
   ruc: text('ruc').notNull().unique(),
   phone: text('phone'),
   address: text('address'),
-  email: text('email'),
+  email: text('email').unique(),
   isRegular: boolean('is_regular').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),

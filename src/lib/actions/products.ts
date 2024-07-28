@@ -25,6 +25,7 @@ export async function updateProductAction(
   id: string,
   productToUpdate: ProductUpdate,
 ) {
+  console.log('update product ' + id)
   await ProductsModel.update(id, {
     description: productToUpdate.description,
     code: productToUpdate.code?.toUpperCase(),
@@ -33,7 +34,6 @@ export async function updateProductAction(
     category: productToUpdate.category,
     link: productToUpdate.link,
     unitSize: productToUpdate.unitSize,
-    updatedAt: new Date(),
   })
   revalidatePath('/new-products')
 }

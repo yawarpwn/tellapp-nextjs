@@ -9,7 +9,6 @@ import { useFormState } from 'react-dom'
 export function LoginForm({ message }: { message: string }) {
   const [state, dispatch] = useFormState(signIn, { message: '', errors: {} })
 
-  console.log({ state })
   return (
     <>
       <form action={dispatch}>
