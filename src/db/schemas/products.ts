@@ -37,7 +37,6 @@ export const ProductInsertSchema = createInsertSchema(productsTable, {
 })
 export const ProductUpdateSchema = ProductSchema.omit({
   id: true,
-  updatedAt: true,
   createdAt: true,
 })
 

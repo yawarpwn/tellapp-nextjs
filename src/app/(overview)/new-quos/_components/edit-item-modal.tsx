@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useQuotationContext } from '@/hooks/use-quotation-store'
 import { createBrowserClient } from '@/lib/supabase/client'
-import { type ProductType } from '@/types'
+import { type Product } from '@/types'
 // import { useSearch } from '@/hooks/use-search'
 import { useFuse } from '@/hooks/use-fuse'
 import { XIcon } from '@/icons'
@@ -35,7 +35,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
     item || initialQuoItem,
   )
 
-  const { hits, onSearch } = useFuse<ProductType>(products, {
+  const { hits, onSearch } = useFuse<Product>(products, {
     keys: [
       {
         name: 'code',
@@ -132,7 +132,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                     description: hit.item.description,
                     cost: hit.item.cost,
                     price: hit.item.price,
-                    unit_size: hit.item.unit_size,
+                    unit_size: hit.item.unitSize,
                     qty: 1,
                   })
                 }}
@@ -141,7 +141,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                   <div className="inline-flex h-full items-center bg-indigo-700 "></div>
                   <div className="p-1">
                     {hit.item.description}
-                    <Badge className="ml-2">{hit.item.unit_size}</Badge>
+                    <Badge className="ml-2">{hit.item.unitSize}</Badge>
                   </div>
                 </div>
               </li>

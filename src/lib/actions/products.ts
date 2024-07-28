@@ -1,10 +1,10 @@
 'use server'
 
-import { ProductInsertType, ProductUpdateType } from '@/types'
+import { ProductInsert, ProductUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { ProductsModel } from '@/models/products'
 
-export async function createProductAction(productToInsert: ProductInsertType) {
+export async function createProductAction(productToInsert: ProductInsert) {
   const result = await ProductsModel.create({
     id: crypto.randomUUID(),
     description: productToInsert.description,
@@ -23,8 +23,8 @@ export async function createProductAction(productToInsert: ProductInsertType) {
 
 export async function updateProductAction(
   id: string,
-  productToUpdate: ProductUpdateType,
-): Promise<void> {
+  productToUpdate: ProductUpdate,
+) {
   await ProductsModel.update(id, {
     description: productToUpdate.description,
     code: productToUpdate.code?.toUpperCase(),
