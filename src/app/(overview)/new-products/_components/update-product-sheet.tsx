@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -37,16 +36,16 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { updateProductAction } from '@/lib/actions/products'
 
-import { ProductUpdateSchema } from '@/schemas/products'
-import type { ProductType } from '@/types'
-import type { ProductUpdateType } from '@/types'
+import { ProductUpdateSchema } from '@/db/schemas/products'
+import type { Product } from '@/types'
+import type { ProductUpdate } from '@/types'
 
 import { PRODUCT_CATEGORIES } from '@/constants'
 import { getErrorMessage } from '@/lib/handle-error'
 
 interface UpdateTaskSheetProps
   extends React.ComponentPropsWithRef<typeof Sheet> {
-  product: ProductType
+  product: Product
 }
 
 export function UpdateProductSheet({
@@ -57,19 +56,19 @@ export function UpdateProductSheet({
 }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
-  const form = useForm<ProductUpdateType>({
+  const form = useForm<ProductUpdate>({
     resolver: zodResolver(ProductUpdateSchema),
     defaultValues: {
       description: product.description,
       code: product.code,
       price: product.price,
-      unit_size: product.unit_size,
+      unitSize: product.unitSize,
       cost: product.cost,
       link: product.link ?? '',
     },
   })
 
-  function onSubmit(input: z.infer<typeof ProductUpdateSchema>) {
+  function onSubmit(input: ProductUpdate) {
     startUpdateTransition(() => {
       toast.promise(updateProductAction(product.id, input), {
         loading: 'Actualizando producto..',
@@ -129,7 +128,7 @@ export function UpdateProductSheet({
 
             <FormField
               control={form.control}
-              name="unit_size"
+              name="unitSize"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>U/M</FormLabel>
@@ -177,7 +176,10 @@ export function UpdateProductSheet({
                 <FormItem>
                   <FormLabel>Link</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      placeholder="https://tellsenales.com/producto/enlace-product/"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

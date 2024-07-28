@@ -5,7 +5,7 @@ import {
   type ProductInsert,
   type Product,
   type ProductUpdate,
-} from '@/db'
+} from '@/db/schemas'
 import { getDatabaseErrorMessage } from '@/lib/utils'
 
 export class ProductsModel {

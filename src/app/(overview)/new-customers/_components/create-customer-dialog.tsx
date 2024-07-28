@@ -30,14 +30,14 @@ import {
 } from '@/components/ui/form'
 
 import { createCustomerAction } from '@/lib/actions/customers'
-import { customerCreateSchema } from '@/schemas/customers'
-import type { CustomerCreateType } from '@/types'
+import type { CustomerInsert } from '@/types'
+import { CustomerInsertSchema } from '@/db/schemas'
 
 export function CreateCustomerDialog() {
   const [open, setOpen] = React.useState(false)
   const [isCreatePending, startCreateTransition] = React.useTransition()
 
-  function onSubmit(input: CustomerCreateType) {
+  function onSubmit(input: CustomerInsert) {
     startCreateTransition(() => {
       toast.promise(createCustomerAction(input), {
         loading: 'Creando cliente...',
@@ -54,8 +54,8 @@ export function CreateCustomerDialog() {
     })
   }
 
-  const form = useForm<CustomerCreateType>({
-    resolver: zodResolver(customerCreateSchema),
+  const form = useForm<CustomerInsert>({
+    resolver: zodResolver(CustomerInsertSchema),
   })
 
   return (
@@ -108,12 +108,34 @@ export function CreateCustomerDialog() {
 
             <FormField
               control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Direccion</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="99999999"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="address"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
-                    <Input placeholder="20610555536" {...field} />
+                    <Input
+                      placeholder="Ejemplo: Calle 123"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -27,12 +27,12 @@ import {
 } from '@/components/ui/sheet'
 
 import { updateCustomerAction } from '@/lib/actions/customers'
-import { customerUpdateSchema } from '@/schemas/customers'
-import type { CustomerType, CustomerUpdateType } from '@/types'
+import { CustomerUpdateSchema } from '@/db/schemas/customers'
+import type { Customer, CustomerUpdate } from '@/types'
 
 interface UpdateTaskSheetProps
   extends React.ComponentPropsWithRef<typeof Sheet> {
-  customer: CustomerType
+  customer: Customer
 }
 
 export function UpdateCustomerSheet({
@@ -42,16 +42,17 @@ export function UpdateCustomerSheet({
 }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
-  const form = useForm<CustomerUpdateType>({
-    resolver: zodResolver(customerUpdateSchema),
+  const form = useForm<CustomerUpdate>({
+    resolver: zodResolver(CustomerUpdateSchema),
     defaultValues: {
       name: customer.name,
       ruc: customer.ruc,
-      address: customer.address,
+      address: customer.address ?? '',
+      phone: customer.phone ?? '',
     },
   })
 
-  function onSubmit(input: CustomerUpdateType) {
+  function onSubmit(input: CustomerUpdate) {
     startUpdateTransition(() => {
       toast.promise(updateCustomerAction(customer.id, input), {
         loading: 'Actualizando...',
@@ -112,12 +113,35 @@ export function UpdateCustomerSheet({
 
             <FormField
               control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Télefono</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="99999999"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="address"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      placeholder="Ejemplo: Calle 123"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

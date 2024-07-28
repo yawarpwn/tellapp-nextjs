@@ -1,4 +1,9 @@
-export * from './db'
-export * from './schemas/customers'
-export * from './schemas/quotations'
-export * from './schemas/products'
+export { db, client } from './db'
+export {
+  CustomerSchema,
+  CustomerInsertSchema,
+  CustomerUpdateSchema,
+  ProductSchema,
+  ProductInsertSchema,
+  ProductUpdateSchema,
+} from './schemas'

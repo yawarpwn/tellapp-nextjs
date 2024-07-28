@@ -8,6 +8,13 @@ export type {
   ProductInsert,
 } from '@/db/schemas/products'
 
+//Customer
+export type {
+  Customer,
+  CustomerInsert,
+  CustomerUpdate,
+} from '@/db/schemas/customers'
+
 import { z } from 'zod'
 
 import {
@@ -72,9 +79,9 @@ export type AgencyCreateType = z.infer<typeof agencieCreateSchema>
 export type AgencyUpdateType = z.infer<typeof agencieUpdateSchema>
 
 // Customer
-export type CustomerType = z.infer<typeof customerSchema>
-export type CustomerCreateType = z.infer<typeof customerCreateSchema>
-export type CustomerUpdateType = z.infer<typeof customerUpdateSchema>
+// export type CustomerType = z.infer<typeof customerSchema>
+// export type CustomerCreateType = z.infer<typeof customerCreateSchema>
+// export type CustomerUpdateType = z.infer<typeof customerUpdateSchema>
 
 // Quotations
 export type QuotationCreateType = z.infer<typeof QuotationCreateSchema>
