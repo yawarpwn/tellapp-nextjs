@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/sheet'
 
 import { updateCustomerAction } from '@/lib/actions/customers'
-import { CustomerUpdateSchema } from '@/db/schemas/customers'
+import { CustomerUpdateSchema } from '@/schemas/customers'
 import type { Customer, CustomerUpdate } from '@/types'
 
 interface UpdateTaskSheetProps

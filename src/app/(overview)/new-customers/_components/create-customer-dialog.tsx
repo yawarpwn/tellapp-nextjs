@@ -31,7 +31,7 @@ import {
 
 import { createCustomerAction } from '@/lib/actions/customers'
 import type { CustomerInsert } from '@/types'
-import { CustomerInsertSchema } from '@/db/schemas'
+import { CustomerInsertSchema } from '@/schemas'
 
 export function CreateCustomerDialog() {
   const [open, setOpen] = React.useState(false)

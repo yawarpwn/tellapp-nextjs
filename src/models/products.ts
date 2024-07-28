@@ -1,11 +1,7 @@
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
-import {
-  productsTable,
-  type ProductInsert,
-  type Product,
-  type ProductUpdate,
-} from '@/db/schemas'
+import { type ProductInsert, type Product, type ProductUpdate } from '@/schemas'
+import { productsTable } from '@/db/schemas'
 import { getDatabaseErrorMessage } from '@/lib/utils'
 
 export class ProductsModel {

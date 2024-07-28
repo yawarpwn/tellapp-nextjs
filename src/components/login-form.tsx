@@ -3,12 +3,13 @@
 import { SubmitButton } from '@/components/submit-button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { signIn, signOut } from '@/lib/actions/auth'
+import { signIn } from '@/lib/actions/auth'
 import { useFormState } from 'react-dom'
 
 export function LoginForm({ message }: { message: string }) {
   const [state, dispatch] = useFormState(signIn, { message: '', errors: {} })
 
+  console.log({ state })
   return (
     <>
       <form action={dispatch}>
@@ -48,6 +49,9 @@ export function LoginForm({ message }: { message: string }) {
               <p className=" text-xs text-destructive">
                 {state?.errors?.password[0]}
               </p>
+            )}
+            {state?.message && (
+              <p className=" text-xs text-destructive">*{state.message}</p>
             )}
             <p className="text-xs text-[#6b66ff]">
               <a href="#">Olvidates tu contraseña ?</a>

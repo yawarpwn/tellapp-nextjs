@@ -1,10 +1,7 @@
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
-import {
-  customersTable,
-  type CustomerInsert,
-  type Customer,
-} from '@/db/schemas'
+import { type CustomerInsert, type Customer } from '@/schemas'
+import { customersTable } from '@/db/schemas'
 
 export class CustomersModel {
   static async getAll() {

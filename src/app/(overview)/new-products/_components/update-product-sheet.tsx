@@ -36,7 +36,7 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { updateProductAction } from '@/lib/actions/products'
 
-import { ProductUpdateSchema } from '@/db/schemas/products'
+import { ProductUpdateSchema } from '@/schemas/products'
 import type { Product } from '@/types'
 import type { ProductUpdate } from '@/types'
 
@@ -177,8 +177,9 @@ export function UpdateProductSheet({
                   <FormLabel>Link</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="https://tellsenales.com/producto/enlace-product/"
                       {...field}
+                      placeholder="https://tellsenales.com/producto/enlace-product/"
+                      value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormMessage />

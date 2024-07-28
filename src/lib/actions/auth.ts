@@ -1,14 +1,12 @@
 'use server'
 
-const email = 'tellsenales@gmail.com'
-const password = 'Ts071020'
-
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { z } from 'zod'
 import { envs } from '@/config'
-import { UserInsertSchema } from '@/db/schemas/users'
+import { UserInsertSchema } from '@/schemas/users'
+import { UsersModel } from '@/models/users'
 
 type FormState = {
   message?: string
@@ -25,6 +23,8 @@ export async function signIn(_prevState: FormState, formData: FormData) {
   const validateFields = UserInsertSchema.safeParse(entries)
 
   if (!validateFields.success) {
+    console.log('zod error', validateFields.error)
+
     return {
       message: 'Faltan completar campos',
       errors: validateFields.error.flatten().fieldErrors,
@@ -33,7 +33,21 @@ export async function signIn(_prevState: FormState, formData: FormData) {
 
   const { email, password } = validateFields.data
 
-  //TODO: Validate user in DB
+  //Validate is user by email exists in Db
+  const { data } = await UsersModel.getUserByEmail(email)
+
+  if (!data) {
+    redirect('/?message=Email invalido')
+  }
+
+  //validate password
+  const isValidPassword = bcrypt.compareSync(password, data.password)
+
+  console.log(data.password, password, isValidPassword)
+
+  if (!isValidPassword) {
+    redirect('/?message=Password invalido')
+  }
 
   const authToken = jwt.sign(
     {

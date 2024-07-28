@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/input'
 import { PRODUCT_CATEGORIES } from '@/constants'
-import type { ProductInsertType } from '@/types'
+import type { ProductInsert } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
@@ -43,13 +43,13 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { createProductAction } from '@/lib/actions/products'
 
-import { ProductInsertSchema } from '@/db/schemas/products'
+import { ProductInsertSchema } from '@/schemas/products'
 
 export function CreateProductDialog() {
   const [open, setOpen] = React.useState(false)
   const [isCreatePending, startCreateTransition] = React.useTransition()
 
-  function onSubmit(input: ProductInsertType) {
+  function onSubmit(input: ProductInsert) {
     console.log('submit')
     startCreateTransition(() => {
       toast.promise(createProductAction(input), {
@@ -66,7 +66,7 @@ export function CreateProductDialog() {
     })
   }
 
-  const form = useForm<ProductInsertType>({
+  const form = useForm<ProductInsert>({
     resolver: zodResolver(ProductInsertSchema),
   })
 
@@ -148,8 +148,9 @@ export function CreateProductDialog() {
                   <FormLabel>Enlace de producto</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="https://tellsenales.com/enlace-producto"
                       {...field}
+                      placeholder="https://tellsenales.com/enlace-producto"
+                      value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormMessage />

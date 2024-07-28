@@ -1,27 +1,16 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 import { GalleryImageSchema } from '@/schemas/gallery'
+import { z } from 'zod'
 
 //Product
 export type {
   Product,
   ProductUpdate,
   ProductInsert,
-} from '@/db/schemas/products'
-
-//Customer
-export type {
   Customer,
   CustomerInsert,
   CustomerUpdate,
-} from '@/db/schemas/customers'
-
-import { z } from 'zod'
-
-import {
-  ProductCreateSchema,
-  ProductSchema,
-  ProductUpdateSchema,
-} from '@/schemas/products'
+} from '@/schemas'
 
 import {
   QuotationCreateSchema,
