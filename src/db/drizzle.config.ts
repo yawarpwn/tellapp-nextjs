@@ -1,18 +1,12 @@
 import { defineConfig } from 'drizzle-kit'
-import dotenv from 'dotenv'
-dotenv.config({ path: '.env.local' })
-
-const connectString = process.env.DB_CONNECTION_STRING
-if (!connectString) {
-  throw new Error('DB_CONNECTION_STRING is not defined')
-}
+import { envs } from '@/config'
 
 export default defineConfig({
   schema: './src/db/schemas/*.ts',
   dialect: 'postgresql',
   out: './src/db/migrations/drizzle',
   dbCredentials: {
-    url: connectString,
+    url: envs.DB_CONNECTION_STRING,
   },
   migrations: {
     prefix: 'supabase',

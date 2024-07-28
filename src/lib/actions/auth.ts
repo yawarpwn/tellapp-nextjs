@@ -1,53 +1,67 @@
 'use server'
 
-import { createServerClient } from '@/lib/supabase/server'
+const email = 'tellsenales@gmail.com'
+const password = 'Ts071020'
+
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import jwt from 'jsonwebtoken'
 import { z } from 'zod'
-const AuthSchema = z.object({
-	password: z.string(),
-	email: z.string().email(),
-})
+import { envs } from '@/config'
+import { UserInsertSchema } from '@/db/schemas/users'
 
 type FormState = {
-	message?: string
-	errors?: {
-		email?: string[]
-		password?: string[]
-	}
+  message?: string
+  errors?: {
+    email?: string[]
+    password?: string[]
+  }
 }
 
 export async function signIn(_prevState: FormState, formData: FormData) {
-	const entries = Object.fromEntries(formData)
-	const validateFields = AuthSchema.safeParse(entries)
+  const entries = Object.fromEntries(formData)
 
-	if (!validateFields.success) {
-		return {
-			message: 'Faltan completar campos',
-			errors: validateFields.error.flatten().fieldErrors,
-		}
-	}
+  //validate fields
+  const validateFields = UserInsertSchema.safeParse(entries)
 
-	const { email, password } = validateFields.data
+  if (!validateFields.success) {
+    return {
+      message: 'Faltan completar campos',
+      errors: validateFields.error.flatten().fieldErrors,
+    }
+  }
 
-	const storeCookie = cookies()
-	const supabase = createServerClient(storeCookie)
+  const { email, password } = validateFields.data
 
-	const { error } = await supabase.auth.signInWithPassword({
-		email,
-		password,
-	})
+  //TODO: Validate user in DB
 
-	if (error) {
-		redirect('/?message=Password or Email invalido')
-	}
+  const authToken = jwt.sign(
+    {
+      email,
+    },
+    envs.JWT_SECRET,
+    {
+      expiresIn: '1d',
+    },
+  )
 
-	redirect('/new-quos')
+  const oneDay = 24 * 60 * 60 * 1000
+  cookies().set('auth-token', authToken, {
+    expires: oneDay, // 1 day
+    maxAge: oneDay, // 1 day
+    httpOnly: false,
+    secure: false,
+    sameSite: 'lax',
+  })
+
+  // if (error) {
+  // 	redirect('/?message=Password or Email invalido')
+  // }
+
+  redirect('/new-quos')
 }
 
 export async function signOut() {
-	const storeCookie = cookies()
-	const supabase = createServerClient(storeCookie)
-	await supabase.auth.signOut()
-	redirect('/')
+  cookies().delete('auth-token')
+  redirect('/')
 }
