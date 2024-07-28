@@ -1,67 +1,39 @@
 'use server'
 
-import { TABLES } from '@/constants'
-import { createServerClient } from '@/lib/supabase'
 import { CustomerCreateType, CustomerUpdateType } from '@/types'
 import { revalidatePath } from 'next/cache'
-import { cookies } from 'next/headers'
-import { Customers } from '@/models'
+import { CustomersModel } from '@/models'
 
 export async function createCustomerAction(
   input: CustomerCreateType,
 ): Promise<void> {
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  const { data, error } = await supabase.from(TABLES.Customers).insert(input)
-
-  if (error) {
+  try {
+    const { id } = await CustomersModel.create(input)
+    revalidatePath('/new-customers')
+  } catch (error) {
     console.log('ERROR CREATING CUSTOMER: ', error)
-    throw new Error(error.message)
   }
-
-  console.log('INSERTED CUSTOMER SUCCESS: ', data)
-  revalidatePath('/new-customers')
 }
 
 export async function deleteCustomerAction(id: string) {
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  const { data, error } = await supabase
-    .from(TABLES.Customers)
-    .delete()
-    .eq('id', id)
-
-  if (error) {
+  try {
+    await CustomersModel.delete(id)
+    revalidatePath('/new-customers')
+  } catch (error) {
     console.log('ERROR DELETING CUSTOMER: ', error)
-    throw new Error(error.message)
   }
-
-  console.log('DELETED CUSTOMER SUCCESS: ', data)
-  revalidatePath('/new-customers')
 }
 
-export async function updateCustomerAction(input: CustomerUpdateType) {
-  console.log({ input })
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  const { data, error } = await supabase
-    .from(TABLES.Customers)
-    .update({
-      ...input,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', input.id)
-
-  if (error) {
+export async function updateCustomerAction(
+  id: string,
+  input: CustomerUpdateType,
+) {
+  try {
+    await CustomersModel.update(id, input)
+    revalidatePath('/new-customers')
+  } catch (error) {
     console.log('ERROR UPDATING CUSTOMER: ', error)
-    throw new Error(error.message)
   }
-
-  console.log(' UPDATED CUSTOMER SUCCESS: ', data)
-  revalidatePath('/new-customers')
 }
 
 export async function setIsRegularCustomerAction({
@@ -74,7 +46,7 @@ export async function setIsRegularCustomerAction({
   quoationNumber?: number
 }) {
   try {
-    await Customers.toggleIsRegular(id, value)
+    await CustomersModel.toggleIsRegular(id, value)
     if (quoationNumber) {
       revalidatePath(`/new-quos/${quoationNumber}`)
     }

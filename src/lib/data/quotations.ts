@@ -1,20 +1,20 @@
 import { TABLES } from '@/constants'
 import { createServerClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
-import { Quotations } from '@/models'
+import { QuotationsModel } from '@/models'
 
 export async function fetchQuotations() {
-  const quotations = await Quotations.getAll()
+  const quotations = await QuotationsModel.getAll()
   return quotations
 }
 
 export async function fetchQuotationByNumber({ number }: { number: number }) {
-  const quotation = await Quotations.getByNumber(number)
+  const quotation = await QuotationsModel.getByNumber(number)
   return quotation
 }
 
 export async function fetchQuotationById(id: string) {
-  const quotation = await Quotations.getById(id)
+  const quotation = await QuotationsModel.getById(id)
   return quotation
 }
 
@@ -23,6 +23,6 @@ export async function fetchLastQuotation() {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
-  const lastQuotation = await Quotations.getLastQuotation()
+  const lastQuotation = await QuotationsModel.getLastQuotation()
   return lastQuotation
 }

@@ -15,9 +15,10 @@ CREATE TABLE IF NOT EXISTS "_products" (
 	"description" text NOT NULL,
 	"code" text NOT NULL,
 	"unit_size" text NOT NULL,
+	"category" text NOT NULL,
 	"link" text,
-	"rank" integer DEFAULT 0 NOT NULL,
-	"price" integer NOT NULL,
+	"rank" real DEFAULT 0 NOT NULL,
+	"price" real NOT NULL,
 	"cost" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL

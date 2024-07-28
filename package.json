@@ -6,9 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "migrate": "drizzle-kit generate --config=./src/db/drizzle.config.ts && tsx ./src/db/migrations/migrate.ts",
+    "migrate": "drizzle-kit check --config=./src/db/drizzle.config.ts && drizzle-kit generate --config=./src/db/drizzle.config.ts && tsx ./src/db/migrations/migrate.ts",
     "seed": "tsx ./src/db/seed.ts",
     "backup": "tsx ./scripts/backup.ts",
+    "orm:check": "drizzle-kit check --config=./src/db/drizzle.config.ts",
     "lint": "next lint"
   },
   "dependencies": {
@@ -38,6 +39,7 @@
     "cmdk": "1.0.0",
     "date-fns": "^3.6.0",
     "drizzle-orm": "^0.32.0",
+    "drizzle-zod": "0.5.1",
     "env-var": "^7.5.0",
     "fuse.js": "6.6.2",
     "just-compare": "2.3.0",

@@ -1,8 +1,12 @@
 import { db } from '@/db'
-import { eq } from 'drizzle-orm'
-import { customersTable, type CustomerInsert, type Customer } from '@/db'
+import { eq, desc } from 'drizzle-orm'
+import {
+  customersTable,
+  type CustomerInsert,
+  type Customer,
+} from '@/db/schemas'
 
-export class Customers {
+export class CustomersModel {
   static async getAll() {
     const result = await db
       .select({
@@ -10,11 +14,12 @@ export class Customers {
         name: customersTable.name,
         ruc: customersTable.ruc,
         address: customersTable.address,
-        is_regular_customer: customersTable.isRegular,
-        created_at: customersTable.createdAt,
-        updated_at: customersTable.updatedAt,
+        isRegular: customersTable.isRegular,
+        createdAt: customersTable.createdAt,
+        updatedAt: customersTable.updatedAt,
       })
       .from(customersTable)
+      .orderBy(desc(customersTable.updatedAt))
 
     return result
   }
@@ -26,9 +31,9 @@ export class Customers {
         name: customersTable.name,
         ruc: customersTable.ruc,
         address: customersTable.address,
-        is_regular_customer: customersTable.isRegular,
-        created_at: customersTable.createdAt,
-        updated_at: customersTable.updatedAt,
+        isRegular: customersTable.isRegular,
+        createdAt: customersTable.createdAt,
+        updatedAt: customersTable.updatedAt,
       })
       .from(customersTable)
       .where(eq(customersTable.id, id))
@@ -42,9 +47,9 @@ export class Customers {
         name: customersTable.name,
         ruc: customersTable.ruc,
         address: customersTable.address,
-        is_regular_customer: customersTable.isRegular,
-        created_at: customersTable.createdAt,
-        updated_at: customersTable.updatedAt,
+        isRegular: customersTable.isRegular,
+        createdAt: customersTable.createdAt,
+        updatedAt: customersTable.updatedAt,
       })
       .from(customersTable)
       .where(eq(customersTable.ruc, ruc))

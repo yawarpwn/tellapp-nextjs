@@ -1,5 +1,5 @@
 {
-  "id": "2922cdb1-63aa-4f69-a27d-03e0657242eb",
+  "id": "11336e57-9451-431a-a7a8-265830edab32",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -104,6 +104,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "link": {
           "name": "link",
           "type": "text",
@@ -112,14 +118,14 @@
         },
         "rank": {
           "name": "rank",
-          "type": "integer",
+          "type": "real",
           "primaryKey": false,
           "notNull": true,
           "default": 0
         },
         "price": {
           "name": "price",
-          "type": "integer",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         },

@@ -6,9 +6,9 @@ import {
   customersTable,
   type InsertQuotation,
   type Quotation,
-} from '@/db'
+} from '@/db/schemas'
 
-export class Quotations {
+export class QuotationsModel {
   static async getAll(): Promise<QuotationType[]> {
     const result = await db
       .select({

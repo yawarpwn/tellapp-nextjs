@@ -1,6 +1,6 @@
 import {
-  CustomerType,
-  ProductType,
+  Customer,
+  Product,
   QuotationCreateType,
   QuotationItemType,
   QuotationType,
@@ -15,8 +15,8 @@ export interface QuotationState {
   isUpdate: boolean
   quo: QuotationCreateType | QuotationUpdateType
   items: QuotationItemType[]
-  products: ProductType[]
-  customers: CustomerType[]
+  products: Product[]
+  customers: Customer[]
 }
 
 export interface QuotationActions {
@@ -27,7 +27,7 @@ export interface QuotationActions {
   setIsCustomerServed: () => void
   duplicateItem: (item: QuotationItemType) => void
   editItem: (item: QuotationItemType) => void
-  onPickCustomer: (customer: CustomerType) => void
+  onPickCustomer: (customer: Customer) => void
   reset: () => void
 }
 
@@ -44,8 +44,8 @@ export const initQuotationStore = ({
   isUpdate?: boolean
   quoNumber: number
   isCustomerServed: boolean
-  customers: CustomerType[]
-  products: ProductType[]
+  customers: Customer[]
+  products: Product[]
   quo: QuotationCreateType | QuotationType
   items?: QuotationItemType[]
 }): QuotationState => {
