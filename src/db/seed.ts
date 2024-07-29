@@ -1,11 +1,12 @@
 import { db, client } from '../db'
-import { ProductType } from '@/types'
+import { eq } from 'drizzle-orm'
+import bcrypt from 'bcrypt'
 
 import dotenv from 'dotenv'
 dotenv.config()
 
 import { createClient } from '@supabase/supabase-js'
-import { productsTable, ProductInsert } from './schemas/products'
+import { usersTable } from './schemas'
 
 const supabaseKey = process.env.SUPABASE_SECRET_KEY
 
@@ -18,30 +19,7 @@ const supabase = createClient(
   supabaseKey,
 )
 
-async function seed() {
-  const { data: products } = await supabase
-    .from('products')
-    .select()
-    .returns<ProductType[]>()
-
-  const mappedProducts = products!.map(prod => {
-    return {
-      description: prod.description,
-      code: prod.code,
-      unitSize: prod.unit_size,
-      category: prod.category,
-      link: prod.link,
-      rank: prod.rank,
-      price: prod.price,
-      cost: prod.cost,
-      createdAt: new Date(prod.inserted_at),
-      updatedAt: new Date(prod.updated_at),
-    }
-  })
-
-  const res = await db.insert(productsTable).values(mappedProducts)
-  console.log(res)
-}
+async function seed() {}
 seed()
   .then(() => {
     client.end()

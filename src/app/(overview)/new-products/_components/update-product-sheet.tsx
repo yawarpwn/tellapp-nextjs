@@ -36,7 +36,7 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { updateProductAction } from '@/lib/actions/products'
 
-import { ProductUpdateSchema } from '@/db/schemas/products'
+import { ProductUpdateSchema } from '@/schemas/products'
 import type { Product } from '@/types'
 import type { ProductUpdate } from '@/types'
 
@@ -52,7 +52,6 @@ export function UpdateProductSheet({
   product,
   onOpenChange,
   open,
-  ...props
 }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
@@ -63,6 +62,7 @@ export function UpdateProductSheet({
       code: product.code,
       price: product.price,
       unitSize: product.unitSize,
+      category: product.category,
       cost: product.cost,
       link: product.link ?? '',
     },
@@ -73,10 +73,12 @@ export function UpdateProductSheet({
       toast.promise(updateProductAction(product.id, input), {
         loading: 'Actualizando producto..',
         success: () => {
+          console.log('success')
           onOpenChange?.(false)
           return 'Producto actualizado'
         },
         error: error => {
+          console.log(error)
           onOpenChange?.(false)
           return getErrorMessage(error)
         },
@@ -177,8 +179,9 @@ export function UpdateProductSheet({
                   <FormLabel>Link</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="https://tellsenales.com/producto/enlace-product/"
                       {...field}
+                      placeholder="https://tellsenales.com/producto/enlace-product/"
+                      value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormMessage />

@@ -31,7 +31,7 @@ import {
 
 import { createCustomerAction } from '@/lib/actions/customers'
 import type { CustomerInsert } from '@/types'
-import { CustomerInsertSchema } from '@/db/schemas'
+import { CustomerInsertSchema } from '@/schemas'
 
 export function CreateCustomerDialog() {
   const [open, setOpen] = React.useState(false)
@@ -47,7 +47,6 @@ export function CreateCustomerDialog() {
           return 'Cliente Creado'
         },
         error: error => {
-          setOpen(false)
           return getErrorMessage(error)
         },
       })
@@ -108,14 +107,14 @@ export function CreateCustomerDialog() {
 
             <FormField
               control={form.control}
-              name="phone"
+              name="address"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="99999999"
                       {...field}
+                      placeholder="Ejemplo: Calle 123"
                       value={field.value ?? ''}
                     />
                   </FormControl>
@@ -126,15 +125,35 @@ export function CreateCustomerDialog() {
 
             <FormField
               control={form.control}
-              name="address"
+              name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Direccion</FormLabel>
+                  <FormLabel>Telefono</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Ejemplo: Calle 123"
                       {...field}
+                      placeholder="99999999"
                       value={field.value ?? ''}
+                      type="number"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Correo</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="cliente@example.com"
+                      value={field.value ?? ''}
+                      type="email"
                     />
                   </FormControl>
                   <FormMessage />

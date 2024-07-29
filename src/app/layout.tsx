@@ -10,27 +10,29 @@ import React from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-	title: {
-		default: siteConfig.name,
-		template: `%s | ${siteConfig.name}`,
-	},
-	description: siteConfig.description,
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
 }
 
-export default async function RootLayout(
-	{ children }: { children: React.ReactNode },
-) {
-	return (
-		<html data-theme='dark' lang='en'>
-			<body
-				suppressHydrationWarning={true}
-				className={`${inter.className} min-h-dvh relative font-sans antialiased overflow-x-hidden`}
-			>
-				<NextTopLoader showSpinner={false} color='oklch(var(--primary))' />
-				<Toaster />
-				<ToasterSonner />
-				{children}
-			</body>
-		</html>
-	)
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html data-theme="dark" lang="en">
+      <body
+        suppressHydrationWarning={true}
+        className={`${inter.className} relative min-h-dvh overflow-x-hidden font-sans antialiased`}
+      >
+        <NextTopLoader showSpinner={false} color="oklch(var(--primary))" />
+        <Toaster />
+        <ToasterSonner />
+        {children}
+      </body>
+    </html>
+  )
 }

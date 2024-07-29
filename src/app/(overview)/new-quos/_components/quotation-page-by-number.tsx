@@ -18,8 +18,12 @@ import { DeleteButton } from './delete-button'
 import { DownloadAndShareButtons } from './download-and-share-buttons'
 import { DuplicateButton } from './duplicate-button'
 import { IsRegularButton } from './is-regular-button'
+import { notFound } from 'next/navigation'
 export async function QuotationPageByNumber({ number }: { number: number }) {
   const quotation = await fetchQuotationByNumber({ number })
+  if (!quotation) {
+    notFound()
+  }
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(
     quotation.items,
   )

@@ -1,10 +1,8 @@
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
-import {
-  customersTable,
-  type CustomerInsert,
-  type Customer,
-} from '@/db/schemas'
+import { type CustomerInsert, type Customer } from '@/schemas'
+import { customersTable } from '@/db/schemas'
+import postgres from 'postgres'
 
 export class CustomersModel {
   static async getAll() {
@@ -56,11 +54,33 @@ export class CustomersModel {
     return result[0]
   }
 
-  static async create(value: CustomerInsert): Promise<{ id: Customer['id'] }> {
-    const rows = await db.insert(customersTable).values(value).returning({
-      id: customersTable.id,
-    })
-    return rows[0]
+  static async create(
+    value: CustomerInsert,
+  ): Promise<{ success: boolean; data: Customer | null; message: string }> {
+    try {
+      const rows = await db.insert(customersTable).values(value).returning()
+
+      return {
+        success: true,
+        data: rows[0],
+        message: 'Cliente Creado',
+      }
+    } catch (error) {
+      console.log(error)
+      let errorMessage = 'Error al intentar crear el cliente'
+
+      if (error instanceof postgres.PostgresError) {
+        if (error.constraint_name === '_customers_ruc_unique') {
+          errorMessage = 'Ruc Ingresado  ya existe'
+        }
+      }
+
+      return {
+        success: false,
+        data: null,
+        message: errorMessage,
+      }
+    }
   }
 
   static async delete(id: Customer['id']) {

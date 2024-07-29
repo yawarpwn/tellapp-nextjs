@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/sheet'
 
 import { updateCustomerAction } from '@/lib/actions/customers'
-import { CustomerUpdateSchema } from '@/db/schemas/customers'
+import { CustomerUpdateSchema } from '@/schemas/customers'
 import type { Customer, CustomerUpdate } from '@/types'
 
 interface UpdateTaskSheetProps
@@ -49,6 +49,7 @@ export function UpdateCustomerSheet({
       ruc: customer.ruc,
       address: customer.address ?? '',
       phone: customer.phone ?? '',
+      email: customer.email ?? '',
     },
   })
 
@@ -88,7 +89,7 @@ export function UpdateCustomerSheet({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Codigo</FormLabel>
+                  <FormLabel>Razon Social</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -105,6 +106,24 @@ export function UpdateCustomerSheet({
                   <FormLabel>Ruc</FormLabel>
                   <FormControl>
                     <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Direccion</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Ejemplo: Calle 123"
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,15 +151,16 @@ export function UpdateCustomerSheet({
 
             <FormField
               control={form.control}
-              name="address"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Direccion</FormLabel>
+                  <FormLabel>Correo</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Ejemplo: Calle 123"
                       {...field}
+                      placeholder="cliente@example.com"
                       value={field.value ?? ''}
+                      type="email"
                     />
                   </FormControl>
                   <FormMessage />

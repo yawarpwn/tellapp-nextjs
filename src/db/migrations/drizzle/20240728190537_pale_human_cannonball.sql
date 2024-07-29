@@ -2,7 +2,9 @@ CREATE TABLE IF NOT EXISTS "_customers" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
 	"ruc" text NOT NULL,
+	"phone" text,
 	"address" text,
+	"email" text,
 	"is_regular" boolean DEFAULT false NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
@@ -19,9 +21,10 @@ CREATE TABLE IF NOT EXISTS "_products" (
 	"link" text,
 	"rank" real DEFAULT 0 NOT NULL,
 	"price" real NOT NULL,
-	"cost" integer NOT NULL,
+	"cost" real NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "_products_code_unique" UNIQUE("code")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "_quotations" (
@@ -35,6 +38,16 @@ CREATE TABLE IF NOT EXISTS "_quotations" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "_quotations_number_unique" UNIQUE("number")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "_users" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"email" text NOT NULL,
+	"password" text NOT NULL,
+	"text" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "_users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 DO $$ BEGIN

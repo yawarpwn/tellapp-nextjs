@@ -25,12 +25,16 @@ export async function updateQuotationAction(
       if (foundCustomer) {
         customerId = foundCustomer.id
       } else {
-        const createdCustomer = await CustomersModel.create({
+        const { data } = await CustomersModel.create({
           name: quotation.company,
           ruc: quotation.ruc,
           address: quotation.address,
         })
-        customerId = createdCustomer.id
+
+        if (!data) {
+          throw new Error('Error al crear cliente')
+        }
+        customerId = data.id
       }
     }
 
@@ -66,13 +70,17 @@ export async function createQuotationAction(
         customerId = customerFound.id
       } else {
         //if not exists add in DB
-        const createdCustomer = await CustomersModel.create({
+        const { data } = await CustomersModel.create({
           name: quotation.company,
           ruc: quotation.ruc,
           address: quotation.address,
         })
 
-        customerId = createdCustomer.id
+        if (!data) {
+          throw new Error('Error al crear cliente')
+        }
+
+        customerId = data.id
       }
     }
 

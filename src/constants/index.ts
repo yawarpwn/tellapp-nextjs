@@ -1,5 +1,4 @@
 export const QUOTATION_LOCALSTORAGE_NAME = 'TELL_QUO'
-
 import {
   CustomersIcon,
   GalleryIcon,

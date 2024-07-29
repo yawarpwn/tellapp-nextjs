@@ -1,16 +1,17 @@
-// import { NextResponse } from 'next/server'
-import { NextRequest } from 'next/server'
-import { createMiddlewareClient } from '@/lib/supabase/middleware'
-
+import { NextRequest, NextResponse } from 'next/server'
 export async function middleware(req: NextRequest) {
-  // Create a Supabase client configured to use cookies
-  // const { supabase, response } = createMiddlewareClient(req)
-  const { supabase, response } = createMiddlewareClient(req)
+  const authToken = req.cookies.get('auth-token')
+  const { pathname } = req.nextUrl
 
-  // Refresh session if expired - required for Server Components
-  await supabase.auth.getSession()
+  if (!authToken && pathname !== '/') {
+    return NextResponse.redirect(new URL('/', req.url))
+  }
 
-  return response
+  if (authToken && pathname === '/') {
+    return NextResponse.redirect(new URL('/new-quos', req.url))
+  }
+
+  NextResponse.next()
 }
 
 export const config = {
@@ -21,5 +22,7 @@ export const config = {
    * - favicon.ico (favicon file)
    * Feel free to modify this pattern to include more paths.
    */
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|collage-johneyder.avif).*)',
+  ],
 }

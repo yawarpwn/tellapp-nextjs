@@ -1,6 +1,6 @@
 {
-  "id": "adfac68b-1e34-492b-8651-06e3011d3f44",
-  "prevId": "4dda9c9f-a88b-4e05-ae8c-5a2e889a82be",
+  "id": "094ec399-4d15-46c4-8338-76468a2b3d24",
+  "prevId": "39a96f72-f2ec-4f61-86a6-a013679eb470",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -27,8 +27,20 @@
           "primaryKey": false,
           "notNull": true
         },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "address": {
           "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -71,6 +83,13 @@
           "nullsNotDistinct": false,
           "columns": [
             "ruc"
+          ]
+        },
+        "_customers_email_unique": {
+          "name": "_customers_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
           ]
         }
       }
@@ -249,6 +268,63 @@
           "nullsNotDistinct": false,
           "columns": [
             "number"
+          ]
+        }
+      }
+    },
+    "public._users": {
+      "name": "_users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "_users_email_unique": {
+          "name": "_users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
           ]
         }
       }

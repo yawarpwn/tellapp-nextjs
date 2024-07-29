@@ -1,53 +1,79 @@
 'use server'
 
-import { createServerClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { z } from 'zod'
-const AuthSchema = z.object({
-	password: z.string(),
-	email: z.string().email(),
-})
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { envs } from '@/config'
+import { UserInsertSchema } from '@/schemas/users'
+import { UsersModel } from '@/models/users'
 
 type FormState = {
-	message?: string
-	errors?: {
-		email?: string[]
-		password?: string[]
-	}
+  message?: string
+  errors?: {
+    email?: string[]
+    password?: string[]
+  }
 }
 
 export async function signIn(_prevState: FormState, formData: FormData) {
-	const entries = Object.fromEntries(formData)
-	const validateFields = AuthSchema.safeParse(entries)
+  const entries = Object.fromEntries(formData)
 
-	if (!validateFields.success) {
-		return {
-			message: 'Faltan completar campos',
-			errors: validateFields.error.flatten().fieldErrors,
-		}
-	}
+  //validate fields
+  const validateFields = UserInsertSchema.safeParse(entries)
 
-	const { email, password } = validateFields.data
+  if (!validateFields.success) {
+    console.log('zod error', validateFields.error)
 
-	const storeCookie = cookies()
-	const supabase = createServerClient(storeCookie)
+    return {
+      message: 'Faltan completar campos',
+      errors: validateFields.error.flatten().fieldErrors,
+    }
+  }
 
-	const { error } = await supabase.auth.signInWithPassword({
-		email,
-		password,
-	})
+  const { email, password } = validateFields.data
 
-	if (error) {
-		redirect('/?message=Password or Email invalido')
-	}
+  //Validate is user by email exists in Db
+  const { data } = await UsersModel.getUserByEmail(email)
 
-	redirect('/new-quos')
+  if (!data) {
+    redirect('/?message=Email invalido')
+  }
+
+  //validate password
+  const isValidPassword = bcrypt.compareSync(password, data.password)
+
+  if (!isValidPassword) {
+    redirect('/?message=Password invalido')
+  }
+
+  const authToken = jwt.sign(
+    {
+      email,
+    },
+    envs.JWT_SECRET,
+    {
+      expiresIn: '1d',
+    },
+  )
+
+  const oneDay = 24 * 60 * 60 * 1000
+  cookies().set('auth-token', authToken, {
+    expires: oneDay, // 1 day
+    maxAge: oneDay, // 1 day
+    httpOnly: false,
+    secure: false,
+    sameSite: 'lax',
+  })
+
+  // if (error) {
+  // 	redirect('/?message=Password or Email invalido')
+  // }
+
+  redirect('/new-quos')
 }
 
 export async function signOut() {
-	const storeCookie = cookies()
-	const supabase = createServerClient(storeCookie)
-	await supabase.auth.signOut()
-	redirect('/')
+  cookies().delete('auth-token')
+  redirect('/')
 }
