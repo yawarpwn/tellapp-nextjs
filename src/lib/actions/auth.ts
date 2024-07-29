@@ -43,8 +43,6 @@ export async function signIn(_prevState: FormState, formData: FormData) {
   //validate password
   const isValidPassword = bcrypt.compareSync(password, data.password)
 
-  console.log(data.password, password, isValidPassword)
-
   if (!isValidPassword) {
     redirect('/?message=Password invalido')
   }

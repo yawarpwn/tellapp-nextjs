@@ -10,6 +10,8 @@ export async function middleware(req: NextRequest) {
   if (authToken && pathname === '/') {
     return NextResponse.redirect(new URL('/new-quos', req.url))
   }
+
+  NextResponse.next()
 }
 
 export const config = {

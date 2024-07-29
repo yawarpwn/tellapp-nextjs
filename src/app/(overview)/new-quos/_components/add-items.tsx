@@ -13,7 +13,6 @@ import { EditItemModal } from './edit-item-modal'
 import { QuotationSearchProduct } from './search-product'
 export function QuotationAddItems() {
   const items = useQuotationContext(state => state.items)
-  console.log(items)
   const duplicateItem = useQuotationContext(state => state.duplicateItem)
   const setItems = useQuotationContext(state => state.setItems)
   const addItem = useQuotationContext(state => state.addItem)
