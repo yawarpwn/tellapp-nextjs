@@ -12,8 +12,8 @@ export default async function Home({
     <div className="relative bg-black">
       <div className="absolute h-full min-h-screen w-full"></div>
       <img
-        width={4096}
-        height={2304}
+        width={1500}
+        height={830}
         decoding="async"
         className="absolute left-0 top-0 h-full min-h-screen w-full object-cover opacity-25"
         loading="lazy"
@@ -36,8 +36,8 @@ export default async function Home({
           {/* Image Layer */}
           <div className="relative hidden w-full justify-end md:inline-flex ">
             <img
-              width={4096}
-              height={2304}
+              width={1500}
+              height={846}
               decoding="async"
               loading="lazy"
               className="absolute left-0 top-0 h-full w-full object-cover"
