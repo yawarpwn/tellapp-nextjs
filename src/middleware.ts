@@ -23,6 +23,6 @@ export const config = {
    * Feel free to modify this pattern to include more paths.
    */
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|collage-johneyder.avif).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|collage-johneyder.avif|johneyder-photo.avif|johneyder-yoshi.webp).*)',
   ],
 }

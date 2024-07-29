@@ -1,4 +1,4 @@
-import { type Items } from '@/types'
+import { type QuotationItem } from '@/types'
 export const formatDateToLocal = (
   dateStr: string | Date,
   locale = 'es-US',
@@ -35,7 +35,7 @@ export const getFormatedDate = (date: string | Date) => {
   return formatedDate
 }
 
-export function getIgv(items: Items[]) {
+export function getIgv(items: QuotationItem[]) {
   if (!items) {
     return { total: 0, subTotal: 0, igv: 0 }
   }

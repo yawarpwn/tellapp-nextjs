@@ -5,7 +5,7 @@ import { productsTable } from '@/db/schemas'
 import { getDatabaseErrorMessage } from '@/lib/utils'
 
 export class ProductsModel {
-  static async getAll() {
+  static async getAll(): Promise<Product[]> {
     const result = await db
       .select({
         id: productsTable.id,
@@ -15,6 +15,7 @@ export class ProductsModel {
         price: productsTable.price,
         cost: productsTable.cost,
         link: productsTable.link,
+        rank: productsTable.rank,
         unitSize: productsTable.unitSize,
         createdAt: productsTable.createdAt,
         updatedAt: productsTable.updatedAt,

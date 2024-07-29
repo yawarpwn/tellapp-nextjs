@@ -9,7 +9,7 @@ import {
 	DialogTitle,
 } from '@/components/ui/dialog'
 import { QUOTATION_LOCALSTORAGE_NAME } from '@/constants'
-import { useQuotationContext } from '@/hooks/use-quotation-store'
+import { useQuotationCreateStore } from '@/hooks/use-quotation-store'
 import { useQuotationStore } from '@/hooks/use-quotation-store'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import React from 'react'
@@ -19,7 +19,7 @@ export function CreateUpdatePage() {
 	const [confirmModalOpen, setConfirmModalOpen] = React.useState(false)
 	const store = useQuotationStore()
 
-	const isUpdate = useQuotationContext(state => state.isUpdate)
+	const isUpdate = useQuotationCreateStore(state => state.isUpdate)
 
 	React.useEffect(() => {
 		if (

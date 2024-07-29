@@ -1,5 +1,5 @@
 import Breadcrumbs from '@/components/breadcrumbs'
-import { QuotationStoreProvider } from '@/hooks/use-quotation-store'
+import { QuotationCreateStoreProvider } from '@/hooks/use-quotation-store'
 import { fetchQuotationByNumber } from '@/lib/data/quotations'
 import { CreateUpdatePage } from '../../_components/create-update-page'
 import { CustomersModel, ProductsModel } from '@/models'
@@ -27,7 +27,7 @@ export default async function Page({
           },
         ]}
       />
-      <QuotationStoreProvider
+      <QuotationCreateStoreProvider
         customers={customers}
         products={products}
         isUpdate
@@ -47,7 +47,7 @@ export default async function Page({
         items={quotation.items}
       >
         <CreateUpdatePage />
-      </QuotationStoreProvider>
+      </QuotationCreateStoreProvider>
     </>
   )
 }

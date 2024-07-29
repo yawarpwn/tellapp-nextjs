@@ -1,6 +1,8 @@
 import { SIGNALS_CATEGORIES } from '@/constants'
 import { GalleryImageSchema } from '@/schemas/gallery'
 import { z } from 'zod'
+//Quotations
+export { Quotation, QuotationInsert, QuotationItem } from '@/schemas/quotations'
 
 //Product
 export type {
@@ -12,12 +14,12 @@ export type {
   CustomerUpdate,
 } from '@/schemas'
 
-import {
-  QuotationCreateSchema,
-  QuotationSchema,
-  QuotationUpdateSchema,
-  QuotationItemSchema,
-} from '@/schemas/quotations'
+// import {
+//   QuotationCreateSchema,
+//   QuotationSchema,
+//   QuotationUpdateSchema,
+//   QuotationItemSchema,
+// } from '@/schemas/quotations'
 
 import {
   SignalCreateSchema,
@@ -43,14 +45,6 @@ import {
   labelUpdateSchema,
 } from '@/schemas/labels'
 
-export interface Items {
-  id: string
-  qty: number
-  price: number
-  unit_size: string
-  description: string
-}
-
 export interface PageProps {
   searchParams?: {
     [key: string]: string | undefined
@@ -73,13 +67,13 @@ export type AgencyUpdateType = z.infer<typeof agencieUpdateSchema>
 // export type CustomerUpdateType = z.infer<typeof customerUpdateSchema>
 
 // Quotations
-export type QuotationCreateType = z.infer<typeof QuotationCreateSchema>
-export type QuotationCreateWithItems = QuotationCreateType & {
-  items: QuotationItemType[]
-}
-export type QuotationType = z.infer<typeof QuotationSchema>
-export type QuotationUpdateType = z.infer<typeof QuotationUpdateSchema>
-export type QuotationItemType = z.infer<typeof QuotationItemSchema>
+// export type QuotationCreateType = z.infer<typeof QuotationCreateSchema>
+// export type QuotationCreateWithItems = QuotationCreateType & {
+//   items: QuotationItemType[]
+// }
+// export type QuotationType = z.infer<typeof QuotationSchema>
+// export type QuotationUpdateType = z.infer<typeof QuotationUpdateSchema>
+// export type QuotationItem = z.infer<typeof QuotationItemSchema>
 
 // Signals
 export type SignalType = z.infer<typeof SignalSchema>

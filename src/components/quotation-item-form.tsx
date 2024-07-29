@@ -7,7 +7,7 @@ import React from 'react'
 import { Input } from './input'
 import { Textarea } from './textarea'
 
-import { useQuotationContext } from '@/hooks/use-quotation-store'
+import { useQuotationCreateStore } from '@/hooks/use-quotation-store'
 
 const initialState = {
 	price: 0,
@@ -18,7 +18,7 @@ const initialState = {
 }
 
 export function QuotationItemForm() {
-	const products = useQuotationContext(state => state.products)
+	const products = useQuotationCreateStore(state => state.products)
 	return (
 		<div>
 			{JSON.stringify(products)}

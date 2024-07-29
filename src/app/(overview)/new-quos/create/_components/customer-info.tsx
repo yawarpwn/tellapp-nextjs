@@ -6,15 +6,11 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import {
-  useQuotationContext,
-  useQuotationStore,
-} from '@/hooks/use-quotation-store'
+import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { SearchIcon, StartIcon } from '@/icons'
 import {
   createQuotationAction,
   searchRucAction,
-  updateQuotationAction,
 } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { Loader2 } from 'lucide-react'
@@ -22,21 +18,21 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'sonner'
-import { QuotationAddItems } from './add-items'
+import { QuotationAddItems } from '../../_components/add-items'
 
 export function QuotationCustomerInfo() {
-  const quo = useQuotationContext(state => state.quo)
-  const setQuo = useQuotationContext(state => state.setQuo)
-  const items = useQuotationContext(state => state.items)
-  const isUpdate = useQuotationContext(state => state.isUpdate)
-  const isCustomerServed = useQuotationContext(state => state.isCustomerServed)
-  const setIsCustomerServed = useQuotationContext(
+  const quo = useQuotationCreateStore(state => state.quo)
+  const setQuo = useQuotationCreateStore(state => state.setQuo)
+  const items = useQuotationCreateStore(state => state.items)
+  const isCustomerServed = useQuotationCreateStore(
+    state => state.isCustomerServed,
+  )
+  const setIsCustomerServed = useQuotationCreateStore(
     state => state.setIsCustomerServed,
   )
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
   const [showCreditOption, setShowCreditOption] = React.useState(false)
-  const store = useQuotationStore()
   const router = useRouter()
   const hastItems = items.length > 0
 
@@ -46,47 +42,25 @@ export function QuotationCustomerInfo() {
       return
     }
     startTransition(async () => {
-      if ('id' in quo) {
-        // Update Quotation
-        toast.promise(() => updateQuotationAction(quo, items), {
-          loading: 'Actualizando...',
-          success: ({ number }) => {
-            store?.persist.clearStorage()
+      // Insert Quotation
+      toast.promise(
+        createQuotationAction({
+          deadline: 1,
+          includeIgv: false,
+          items: items,
+          credit: 20,
+        }),
+        {
+          loading: 'Creando...',
+          success: ({ number }: { number: number }) => {
+            shootCoffeti()
             router.push(`/new-quos/${number}`)
 
-            return <p>Cotizacion {number} Actualizando correctamente</p>
+            return <p>Cotizacion Creado correctamente</p>
           },
-          error: 'Error Actualizando cotizacion',
-        })
-      } else {
-        // Insert Quotation
-        toast.promise(
-          () =>
-            createQuotationAction(
-              {
-                ruc: quo.ruc,
-                company: quo.company,
-                address: quo.address,
-                deadline: quo.deadline as number,
-                include_igv: quo.include_igv as boolean,
-                is_regular_customer: quo.is_regular_customer as boolean,
-                credit: quo.credit,
-              },
-              items,
-            ),
-          {
-            loading: 'Creando...',
-            success: ({ number }: { number: number }) => {
-              store?.persist.clearStorage()
-              shootCoffeti()
-              router.push(`/new-quos/${number}`)
-
-              return <p>Cotizacion {number} Creado correctamente</p>
-            },
-            error: 'Error creando cotizacion',
-          },
-        )
-      }
+          error: 'Error creando cotizacion',
+        },
+      )
     })
   }
 
@@ -275,7 +249,7 @@ export function QuotationCustomerInfo() {
             type="submit"
           >
             {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isUpdate ? 'Actualizar' : 'Crear'}
+            Crear
           </Button>
         </footer>
       </article>

@@ -1,32 +1,32 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { useQuotationContext } from '@/hooks/use-quotation-store'
+import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { DeleteIcon, DocumentDuplicateIcon, EditIcon } from '@/icons'
 import { getIgv } from '@/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { NoResult } from './no-result'
 
 import { PlusIcon } from '@/icons'
-import { QuotationItemType } from '@/types'
-import React from 'react'
+import { QuotationItem } from '@/types'
+import React, { useState } from 'react'
 import { EditItemModal } from './edit-item-modal'
 import { QuotationSearchProduct } from './search-product'
 export function QuotationAddItems() {
-  const items = useQuotationContext(state => state.items)
-  const duplicateItem = useQuotationContext(state => state.duplicateItem)
-  const setItems = useQuotationContext(state => state.setItems)
-  const addItem = useQuotationContext(state => state.addItem)
+  //global states
+  const items = useQuotationCreateStore(state => state.items)
+  const duplicateItem = useQuotationCreateStore(state => state.duplicateItem)
+  const setItems = useQuotationCreateStore(state => state.setItems)
+  const addItem = useQuotationCreateStore(state => state.addItem)
+  const editItem = useQuotationCreateStore(state => state.editItem)
+  const deleteItem = useQuotationCreateStore(state => state.deleteItem)
 
-  const editItem = useQuotationContext(state => state.editItem)
-  const deleteItem = useQuotationContext(state => state.deleteItem)
-  const [seletedProductId, setSelectedProductId] = React.useState<
-    string | null
-  >(null)
-
+  //Estados
+  const [seletedProductId, setSelectedProductId] = useState<string | null>(null)
   const productItem = items.find(item => item.id == seletedProductId)
-  const [open, setOpen] = React.useState(false)
-  const closeItemModal = () => setOpen(false)
+  const [open, setOpen] = useState(false)
 
+  //functions
+  const closeItemModal = () => setOpen(false)
   const move = (currentIndex: number, nextIndex: number) => {
     const newItems = [...items]
     newItems[currentIndex] = items[nextIndex]
@@ -48,7 +48,7 @@ export function QuotationAddItems() {
 
   const onChangeValue = (
     e: React.ChangeEvent<HTMLInputElement>,
-    item: QuotationItemType,
+    item: QuotationItem,
   ) => {
     const { name, value } = e.target
     if (name == 'price' || name == 'qty') {

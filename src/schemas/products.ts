@@ -19,7 +19,8 @@ export const ProductUpdateSchema = ProductSchema.omit({
   updatedAt: true,
 })
 
-export type Product = z.infer<typeof ProductSchema>
+export type Product = typeof productsTable.$inferSelect
+// export type Product = z.infer<typeof ProductSchema>
 export type ProductInsert = z.infer<typeof ProductInsertSchema>
 export type ProductUpdate = Partial<z.infer<typeof ProductUpdateSchema>>
 export type ProductIdType = Product['id']

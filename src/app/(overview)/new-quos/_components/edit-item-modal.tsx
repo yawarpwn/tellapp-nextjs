@@ -1,26 +1,25 @@
-import { FuseHighLight } from '@/components/fuse-highlight'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { useQuotationContext } from '@/hooks/use-quotation-store'
-import { createBrowserClient } from '@/lib/supabase/client'
+import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { type Product } from '@/types'
 // import { useSearch } from '@/hooks/use-search'
 import { useFuse } from '@/hooks/use-fuse'
 import { XIcon } from '@/icons'
-import { type QuotationItemType } from '@/types'
+import { type QuotationItem } from '@/types'
 import React, { useMemo } from 'react'
 
 type Props = {
   open: boolean
   onClose: () => void
-  item?: QuotationItemType
-  onSubmit: (item: Omit<QuotationItemType, 'id'>) => void
+  item?: QuotationItem
+  onSubmit: (item: Omit<QuotationItem, 'id'>) => void
 }
 
 const initialQuoItem = {
+  id: crypto.randomUUID(),
   price: 1,
   qty: 1,
   unit_size: '',
@@ -29,9 +28,9 @@ const initialQuoItem = {
 }
 
 export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
-  const products = useQuotationContext(state => state.products)
+  const products = useQuotationCreateStore(state => state.products)
 
-  const [quoItem, setQuoItem] = React.useState<typeof initialQuoItem>(
+  const [quoItem, setQuoItem] = React.useState<QuotationItem>(
     item || initialQuoItem,
   )
 

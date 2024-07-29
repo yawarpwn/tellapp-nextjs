@@ -3,7 +3,7 @@ import {
   type CustomerType,
   type ProductType,
   type QuotationCreateType,
-  type QuotationItemType,
+  type QuotationItem,
   type QuotationType,
   type QuotationUpdateType,
 } from '@/types'
