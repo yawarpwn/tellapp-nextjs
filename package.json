@@ -86,8 +86,5 @@
     "tailwindcss": "latest",
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.16.2"
-  },
-  "engines": {
-    "node": ">=20.0.0"
   }
 }

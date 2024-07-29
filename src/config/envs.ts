@@ -11,7 +11,6 @@ export const envs = {
     .required()
     .asString(),
   CLOUDINARY_API_SECRET: env.get('CLOUDINARY_API_SECRET').required().asString(),
-  DATABASE_URL: env.get('DATABASE_URL').required().asString(),
   JWT_SECRET: env.get('JWT_SECRET').default('SUPER_SECRET').asString(),
   DB_CONNECTION_STRING: env.get('DB_CONNECTION_STRING').required().asString(),
 }
