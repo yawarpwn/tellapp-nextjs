@@ -9,7 +9,7 @@ import { type Product } from '@/types'
 import { useFuse } from '@/hooks/use-fuse'
 import { XIcon } from '@/icons'
 import { type QuotationItem } from '@/types'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 
 type Props = {
   open: boolean
@@ -18,21 +18,18 @@ type Props = {
   onSubmit: (item: Omit<QuotationItem, 'id'>) => void
 }
 
-const initialQuoItem = {
+const initialQuoItem: QuotationItem = {
   id: crypto.randomUUID(),
   price: 1,
   qty: 1,
-  unit_size: '',
+  unitSize: '',
   description: '',
   cost: 1,
 }
 
-export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
+export function CreateEditItemModal({ open, onClose, item, onSubmit }: Props) {
   const products = useQuotationCreateStore(state => state.products)
-
-  const [quoItem, setQuoItem] = React.useState<QuotationItem>(
-    item || initialQuoItem,
-  )
+  const [quoItem, setQuoItem] = useState<QuotationItem>(item ?? initialQuoItem)
 
   const { hits, onSearch } = useFuse<Product>(products, {
     keys: [
@@ -95,10 +92,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent
-        showCloseButton={false}
-        className="h-[98svh] max-w-sm p-2 md:max-w-3xl"
-      >
+      <DialogContent showCloseButton={false} className="h-[98svh]">
         <form onSubmit={handleSubmit} className="flex h-[93svh] flex-col gap-4">
           <div className="relative grid gap-2">
             {/* <Label htmlFor='description'>Descripcion</Label> */}
@@ -131,7 +125,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                     description: hit.item.description,
                     cost: hit.item.cost,
                     price: hit.item.price,
-                    unit_size: hit.item.unitSize,
+                    unitSize: hit.item.unitSize,
                     qty: 1,
                   })
                 }}
@@ -165,7 +159,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                 type="text"
                 name="unit_size"
                 onChange={handleChangeItem}
-                defaultValue={quoItem.unit_size}
+                defaultValue={quoItem.unitSize}
               />
             </div>
           </div>
@@ -187,7 +181,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                 disabled
                 name="cost"
                 onChange={handleChangeItem}
-                value={quoItem.cost}
+                value={quoItem.cost ?? ''}
               />
             </div>
           </div>

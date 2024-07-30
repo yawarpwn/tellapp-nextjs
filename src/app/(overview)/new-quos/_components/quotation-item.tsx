@@ -9,9 +9,8 @@ import { NoResult } from './no-result'
 import { PlusIcon } from '@/icons'
 import { QuotationItem } from '@/types'
 import React, { useState } from 'react'
-import { EditItemModal } from './edit-item-modal'
-import { QuotationSearchProduct } from './search-product'
-export function QuotationAddItems() {
+import { CreateEditItemModal } from './create-edit-item-modal'
+export function QuotationItems() {
   //global states
   const items = useQuotationCreateStore(state => state.items)
   const duplicateItem = useQuotationCreateStore(state => state.duplicateItem)
@@ -47,18 +46,16 @@ export function QuotationAddItems() {
   }
 
   const onChangeValue = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>,
     item: QuotationItem,
   ) => {
-    const { name, value } = e.target
+    const { name, value } = event.target
     if (name == 'price' || name == 'qty') {
-      editItem({
-        ...item,
+      editItem(item.id, {
         [name]: Number(value),
       })
     } else {
-      editItem({
-        ...item,
+      editItem(item.id, {
         [name]: value,
       })
     }
@@ -69,10 +66,10 @@ export function QuotationAddItems() {
   return (
     <section>
       {open && (
-        <EditItemModal
+        <CreateEditItemModal
           onSubmit={item => {
             if (seletedProductId) {
-              editItem(item)
+              editItem(seletedProductId, item)
             } else {
               addItem({
                 ...item,
@@ -99,7 +96,6 @@ export function QuotationAddItems() {
           >
             <PlusIcon size={20} />
           </Button>
-          <QuotationSearchProduct />
         </div>
       </header>
       {items.length > 0 ? (
@@ -154,7 +150,7 @@ export function QuotationAddItems() {
                         type="text"
                         onChange={e => onChangeValue(e, item)}
                         name="unit_size"
-                        value={item.unit_size}
+                        value={item.unitSize}
                       />
                       <input
                         className="col-span-2 rounded border border-transparent bg-transparent bg-zinc-800 px-2 py-1 outline-none focus:border-primary"

@@ -147,7 +147,7 @@ export class QuotationsModel {
         items: quotationsTable.items,
         credit: quotationsTable.credit,
         customerId: quotationsTable.customerId,
-        include_igv: quotationsTable.includeIgv,
+        includeIgv: quotationsTable.includeIgv,
         created_at: quotationsTable.createdAt,
         updated_at: quotationsTable.updatedAt,
       })

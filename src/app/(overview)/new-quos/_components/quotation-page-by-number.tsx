@@ -45,7 +45,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
           {quotation.customerId && (
             <IsRegularButton
               id={quotation.customerId}
-              isRegular={Boolean(quotation.is_regular_customer)}
+              isRegular={Boolean(quotation.isRegularCustomer)}
               quotationNumber={quotation.number}
             />
           )}
@@ -56,7 +56,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
         <div className="text-right">
           <h2 className="text-2xl font-semibold md:text-3xl">Cotización</h2>
           <div className="mt-1 flex justify-end gap-1 text-xl text-yellow-500">
-            {quotation.is_regular_customer ? (
+            {quotation.isRegularCustomer ? (
               <StartIcon filled />
             ) : (
               <span>#</span>

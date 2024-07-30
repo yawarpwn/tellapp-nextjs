@@ -63,7 +63,7 @@ export function getItemsTable(quotation: QuotationType) {
 
             // Base
             {
-              text: quotation.include_igv
+              text: quotation.includeIgv
                 ? Number(item.price / 1.18).toFixed(2)
                 : Number(item.price).toFixed(4),
               alignment: 'center',

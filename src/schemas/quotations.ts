@@ -11,6 +11,32 @@ export const QuotationItemSchema = z.object({
   description: z.string(),
 })
 
+export const QuotationClientSchema = z.object({
+  number: z.number(),
+  id: z.string(),
+  includeIgv: z.coerce.boolean(),
+  isRegularCustomer: z.coerce.boolean().default(false).optional().nullable(),
+  customerId: z.string().optional().nullable(),
+  ruc: z.string().optional().nullable(),
+  company: z.string().optional().nullable(),
+  address: z.string().optional().nullable(),
+  deadline: z.coerce.number().gt(0, {
+    message: 'Debe ser mayor a 0',
+  }),
+  credit: z.coerce.number().optional().nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+})
+
+export const QuotationClientCreateSchema = QuotationClientSchema.omit({
+  id: true,
+  number: true,
+  updatedAt: true,
+  createdAt: true,
+})
+
+export const QuotationClientUpdateSchema = QuotationClientSchema.partial()
+
 export const QuotationSchema = createSelectSchema(quotationsTable)
 export const QuotationInsertSchema = createInsertSchema(quotationsTable)
 
@@ -18,32 +44,6 @@ export type Quotation = z.infer<typeof QuotationSchema>
 export type QuotationInsert = typeof quotationsTable.$inferInsert
 export type QuotationItem = z.infer<typeof QuotationItemSchema>
 
-//
-// export const QuotationSchema = z.object({
-//   number: z.number(),
-//   id: z.string(),
-//   include_igv: z.coerce.boolean(),
-//   is_regular_customer: z.coerce.boolean().default(false).optional().nullable(),
-//   customerId: z.string().optional().nullable(),
-//   ruc: z.string().optional().nullable(),
-//   company: z.string().optional().nullable(),
-//   address: z.string().optional().nullable(),
-//   deadline: z.coerce.number().gt(0, {
-//     message: 'Debe ser mayor a 0',
-//   }),
-//   credit: z.coerce.number().optional().nullable(),
-//   items: z.array(QuotationItemSchema),
-//   created_at: z.date(),
-//   updated_at: z.date(),
-// })
-//
-// export const QuotationCreateSchema = QuotationSchema.omit({
-//   id: true,
-//   number: true,
-//   updated_at: true,
-//   items: true,
-//   created_at: true,
-// })
-// export const QuotationUpdateSchema = QuotationSchema.partial().omit({
-//   items: true,
-// })
+export type QuotationClient = z.infer<typeof QuotationClientSchema>
+export type QuotationClientCreate = z.infer<typeof QuotationClientCreateSchema>
+export type QuotationClientUpdate = z.infer<typeof QuotationClientUpdateSchema>

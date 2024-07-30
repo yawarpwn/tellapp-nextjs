@@ -33,7 +33,7 @@ export function getColumns(): ColumnDef<QuotationType>[] {
 
       cell: function Cell({ row }) {
         const [optimisticState, updateOptimistic] = React.useState(
-          row.original.is_regular_customer,
+          row.original.isRegularCustomer,
         )
 
         if (!row.original.customerId) return null

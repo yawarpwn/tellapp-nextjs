@@ -18,9 +18,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'sonner'
-import { QuotationAddItems } from '../../_components/add-items'
+import { QuotationItems } from '../../_components/quotation-item'
 
-export function QuotationCustomerInfo() {
+export function QuotationCreate() {
   const quo = useQuotationCreateStore(state => state.quo)
   const setQuo = useQuotationCreateStore(state => state.setQuo)
   const items = useQuotationCreateStore(state => state.items)
@@ -188,13 +188,13 @@ export function QuotationCustomerInfo() {
           >
             <div className="flex items-center gap-2">
               <Checkbox
-                id="include_igv"
+                id="includeIgv"
                 onCheckedChange={e =>
-                  setQuo({ ...quo, include_igv: Boolean(e) })
+                  setQuo({ ...quo, includeIgv: Boolean(e) })
                 }
-                checked={quo.include_igv}
+                checked={quo.includeIgv}
               />
-              <Label htmlFor="include_igv">Incluir IGV</Label>
+              <Label htmlFor="includeIgv">Incluir IGV</Label>
             </div>
 
             {isCustomerServed && (
@@ -236,7 +236,7 @@ export function QuotationCustomerInfo() {
             </div>
           )}
         </div>
-        <QuotationAddItems />
+        <QuotationItems />
         <footer className="flex items-center justify-between">
           <Button disabled={pending} type="button" className="px-12" asChild>
             <Link href="/new-quos">Anterior</Link>

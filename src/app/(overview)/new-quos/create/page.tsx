@@ -1,7 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs'
 import { QuotationCreateStoreProvider } from '@/providers/quotation-create-store-provider'
 import { CustomersModel, ProductsModel } from '@/models'
-import { QuotationCustomerInfo } from './_components/customer-info'
+import { QuotationCreate } from './_components/quotation-create'
 
 export default async function Page() {
   const [customers, products] = await Promise.all([
@@ -25,7 +25,7 @@ export default async function Page() {
         ]}
       />
       <QuotationCreateStoreProvider products={products} customers={customers}>
-        <QuotationCustomerInfo />
+        <QuotationCreate />
       </QuotationCreateStoreProvider>
     </div>
   )

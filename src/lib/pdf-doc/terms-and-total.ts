@@ -94,7 +94,7 @@ export function getTermAndTotal(quotation: QuotationType) {
                 alignment: 'right',
               },
               {
-                text: quotation.include_igv ? formatedSubTotal : 'S/ 0.00',
+                text: quotation.includeIgv ? formatedSubTotal : 'S/ 0.00',
                 alignment: 'right',
               },
             ],
@@ -105,7 +105,7 @@ export function getTermAndTotal(quotation: QuotationType) {
                 alignment: 'right',
               },
               {
-                text: quotation.include_igv ? formatedIgv : 'S/ 0.00',
+                text: quotation.includeIgv ? formatedIgv : 'S/ 0.00',
                 alignment: 'right',
               },
             ],
