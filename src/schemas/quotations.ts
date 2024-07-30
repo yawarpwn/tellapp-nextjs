@@ -7,7 +7,7 @@ export const QuotationItemSchema = z.object({
   price: z.number(),
   qty: z.number(),
   cost: z.number().optional().nullable(),
-  unitSize: z.string(),
+  unit_size: z.string(),
   description: z.string(),
 })
 
@@ -23,6 +23,7 @@ export const QuotationClientSchema = z.object({
   deadline: z.coerce.number().gt(0, {
     message: 'Debe ser mayor a 0',
   }),
+  items: z.array(QuotationItemSchema),
   credit: z.coerce.number().optional().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -31,6 +32,7 @@ export const QuotationClientSchema = z.object({
 export const QuotationClientCreateSchema = QuotationClientSchema.omit({
   id: true,
   number: true,
+  items: true,
   updatedAt: true,
   createdAt: true,
 })

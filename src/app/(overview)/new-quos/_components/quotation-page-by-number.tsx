@@ -24,6 +24,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
   if (!quotation) {
     notFound()
   }
+
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(
     quotation.items,
   )
@@ -83,14 +84,13 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <dl className="grid gap-x-3 sm:grid-cols-6">
               <dt className="col-span-3 font-semibold ">Fecha:</dt>
               <dd className="col-span-3 ">
-                {formatDateToLocal(new Date(quotation.created_at))}
+                {formatDateToLocal(quotation.createdAt)}
               </dd>
             </dl>
             <dl className="grid gap-x-3 sm:grid-cols-6">
               <dt className="col-span-3 font-semibold ">Actualizado:</dt>
               <dd className="col-span-3 ">
-                {quotation.updated_at &&
-                  formatDateToLocal(quotation.updated_at)}
+                {quotation.updatedAt && formatDateToLocal(quotation.updatedAt)}
               </dd>
             </dl>
 

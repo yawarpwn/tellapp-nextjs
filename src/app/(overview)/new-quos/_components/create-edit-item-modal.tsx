@@ -15,21 +15,22 @@ type Props = {
   open: boolean
   onClose: () => void
   item?: QuotationItem
-  onSubmit: (item: Omit<QuotationItem, 'id'>) => void
 }
 
 const initialQuoItem: QuotationItem = {
   id: crypto.randomUUID(),
   price: 1,
   qty: 1,
-  unitSize: '',
+  unit_size: '',
   description: '',
   cost: 1,
 }
 
-export function CreateEditItemModal({ open, onClose, item, onSubmit }: Props) {
+export function CreateEditItemModal({ open, onClose, item }: Props) {
   const products = useQuotationCreateStore(state => state.products)
   const [quoItem, setQuoItem] = useState<QuotationItem>(item ?? initialQuoItem)
+  const addItem = useQuotationCreateStore(state => state.addItem)
+  const editItem = useQuotationCreateStore(state => state.editItem)
 
   const { hits, onSearch } = useFuse<Product>(products, {
     keys: [
@@ -79,7 +80,12 @@ export function CreateEditItemModal({ open, onClose, item, onSubmit }: Props) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    onSubmit(quoItem)
+    //edit
+    if (item) {
+      editItem(item.id, quoItem)
+    } else {
+      addItem(quoItem)
+    }
     onClose()
   }
 
@@ -125,7 +131,7 @@ export function CreateEditItemModal({ open, onClose, item, onSubmit }: Props) {
                     description: hit.item.description,
                     cost: hit.item.cost,
                     price: hit.item.price,
-                    unitSize: hit.item.unitSize,
+                    unit_size: hit.item.unitSize,
                     qty: 1,
                   })
                 }}
@@ -159,7 +165,7 @@ export function CreateEditItemModal({ open, onClose, item, onSubmit }: Props) {
                 type="text"
                 name="unit_size"
                 onChange={handleChangeItem}
-                defaultValue={quoItem.unitSize}
+                defaultValue={quoItem.unit_size}
               />
             </div>
           </div>

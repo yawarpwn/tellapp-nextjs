@@ -1,11 +1,9 @@
 import { type QuotationItem } from '@/types'
 export const formatDateToLocal = (
-  dateStr: string | Date,
+  date: Date,
   locale = 'es-US',
   options?: Intl.DateTimeFormatOptions,
 ) => {
-  const date = new Date(dateStr)
-
   const defaultOptions: Intl.DateTimeFormatOptions = {
     day: 'numeric',
     month: 'numeric',

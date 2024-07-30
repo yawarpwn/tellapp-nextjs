@@ -1,8 +1,8 @@
-import { formatNumberToLocal, getIgv } from '@/lib/utils'
-import type { QuotationType } from '@/types'
-import { Content, Table } from 'pdfmake/interfaces'
+import { getIgv } from '@/lib/utils'
+import type { QuotationClient } from '@/types'
+import { Content } from 'pdfmake/interfaces'
 
-export function getItemsTable(quotation: QuotationType) {
+export function getItemsTable(quotation: QuotationClient) {
   const { formatedIgv, formatedSubTotal, formatedTotal } = getIgv(
     quotation.items,
   )
@@ -49,6 +49,7 @@ export function getItemsTable(quotation: QuotationType) {
 
             // unidad medidad
             {
+              //@ts-ignore
               text: item.unit_size,
               alignment: 'center',
               margin: [0, 5],
@@ -65,7 +66,7 @@ export function getItemsTable(quotation: QuotationType) {
             {
               text: quotation.includeIgv
                 ? Number(item.price / 1.18).toFixed(2)
-                : Number(item.price).toFixed(4),
+                : Number(item.price).toFixed(2),
               alignment: 'center',
               margin: [0, 5],
             },
@@ -99,7 +100,6 @@ export function getItemsTable(quotation: QuotationType) {
       hLineWidth: index => (index === 0 ? 5 : 10),
       vLineWidth: () => 1,
       vLineColor: '#0d3',
-      hLineColor: '#a23',
       vLineStyle: (index, node) => null,
       defaultBorder: false,
     },

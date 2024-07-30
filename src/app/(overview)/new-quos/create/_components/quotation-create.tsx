@@ -44,12 +44,14 @@ export function QuotationCreate() {
     startTransition(async () => {
       // Insert Quotation
       toast.promise(
-        createQuotationAction({
-          deadline: 1,
-          includeIgv: false,
-          items: items,
-          credit: 20,
-        }),
+        createQuotationAction(
+          {
+            deadline: 1,
+            includeIgv: false,
+            credit: 20,
+          },
+          items,
+        ),
         {
           loading: 'Creando...',
           success: ({ number }: { number: number }) => {

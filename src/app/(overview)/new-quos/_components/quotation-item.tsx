@@ -15,7 +15,6 @@ export function QuotationItems() {
   const items = useQuotationCreateStore(state => state.items)
   const duplicateItem = useQuotationCreateStore(state => state.duplicateItem)
   const setItems = useQuotationCreateStore(state => state.setItems)
-  const addItem = useQuotationCreateStore(state => state.addItem)
   const editItem = useQuotationCreateStore(state => state.editItem)
   const deleteItem = useQuotationCreateStore(state => state.deleteItem)
 
@@ -67,17 +66,6 @@ export function QuotationItems() {
     <section>
       {open && (
         <CreateEditItemModal
-          onSubmit={item => {
-            if (seletedProductId) {
-              editItem(seletedProductId, item)
-            } else {
-              addItem({
-                ...item,
-                id: crypto.randomUUID(),
-              })
-            }
-            setSelectedProductId(null)
-          }}
           item={productItem}
           open={open}
           onClose={closeItemModal}
@@ -150,7 +138,7 @@ export function QuotationItems() {
                         type="text"
                         onChange={e => onChangeValue(e, item)}
                         name="unit_size"
-                        value={item.unitSize}
+                        value={item.unit_size}
                       />
                       <input
                         className="col-span-2 rounded border border-transparent bg-transparent bg-zinc-800 px-2 py-1 outline-none focus:border-primary"

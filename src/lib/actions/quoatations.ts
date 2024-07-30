@@ -1,40 +1,63 @@
 'use server'
 
 import { QuotationsModel, CustomersModel } from '@/models'
-import type { Quotation, QuotationInsert, CustomerInsert } from '@/types'
+import type { QuotationClientCreate, QuotationItem } from '@/types'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getRuc } from '../sunat'
-// type QuotationInsert = {}
+
+// export async function updateQuotationAction(
+//   quotation: QuotationInsert,
+//   customer: CustomerInsert,
+// ): Promise<{ number: number }> {}
 
 export async function createQuotationAction(
-  quotation: Omit<QuotationInsert, 'number'>,
-  customer?: CustomerInsert,
+  quotation: QuotationClientCreate,
+  items: QuotationItem[],
 ): Promise<{ number: number }> {
   let customerId = null
+  if (quotation.ruc && quotation.company) {
+    //search customer by ruc in DB
+    const customerFound = await CustomersModel.getByRuc(quotation.ruc)
 
-  if (customer) {
-    const { data, message } = await CustomersModel.create(customer)
-    if (!data) throw new Error(message)
-    customerId = data.id
+    if (customerFound) {
+      customerId = customerFound.id
+    } else {
+      //if not exists add in DB
+      const { data } = await CustomersModel.create({
+        name: quotation.company,
+        ruc: quotation.ruc,
+        address: quotation.address,
+      })
+
+      if (!data) {
+        throw new Error('Error al crear cliente')
+      }
+
+      customerId = data.id
+    }
   }
 
   const lastQuotation = await QuotationsModel.getLastQuotation()
-  const { data, message } = await QuotationsModel.create({
-    ...quotation,
-    number: lastQuotation.number + 1,
+
+  const quoNumber = lastQuotation.number + 1
+
+  const { data } = await QuotationsModel.create({
+    number: quoNumber,
+    deadline: quotation.deadline,
+    includeIgv: quotation.includeIgv,
+    credit: quotation.credit ? Number(quotation.credit) : null,
     customerId,
+    items,
   })
 
-  if (!data) throw new Error(message)
+  if (!data) {
+    throw new Error('Error creando cotizacion')
+  }
 
-  return data
+  revalidatePath('/new-quos')
+  return { number: quoNumber }
 }
-
-export async function updateQuotationAction(
-  quotation: QuotationInsert,
-  customer: CustomerInsert,
-) {}
 
 export async function deleteQuotationAction(id: string) {
   // create supabase client
