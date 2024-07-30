@@ -6,7 +6,7 @@ import {
   type QuotationUpdateType,
 } from '@/types'
 import { QuotationsModel, CustomersModel } from '@/models'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getRuc } from '../sunat'
 
@@ -109,7 +109,7 @@ export async function deleteQuotationAction(id: string) {
   // create supabase client
   await QuotationsModel.delete(id)
 
-  revalidateTag('/new-quos')
+  revalidatePath('/new-quos')
   redirect(`/new-quos`)
 }
 
@@ -129,7 +129,7 @@ export async function duplicateQuotationAction(
       updatedAt: new Date(),
     })
 
-    revalidateTag('/new-quos')
+    revalidatePath('/new-quos')
     return { number: quoNumber }
     // redirect(`/new-quos/${lastQuotation.number}`)
   } catch (error) {
