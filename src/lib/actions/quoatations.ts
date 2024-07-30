@@ -1,15 +1,51 @@
 'use server'
 
 import { QuotationsModel, CustomersModel } from '@/models'
-import type { QuotationClientCreate, QuotationItem } from '@/types'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import type {
+  QuotationClientCreate,
+  QuotationClientUpdate,
+  QuotationItem,
+} from '@/types'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getRuc } from '../sunat'
 
-// export async function updateQuotationAction(
-//   quotation: QuotationInsert,
-//   customer: CustomerInsert,
-// ): Promise<{ number: number }> {}
+export async function updateQuotationAction(
+  id: string,
+  quotation: QuotationClientUpdate,
+  items: QuotationItem[],
+): Promise<{ number: number }> {
+  let customerId = quotation.customerId
+
+  if (quotation.ruc && quotation.company && !customerId) {
+    const { data } = await CustomersModel.create({
+      name: quotation.company,
+      ruc: quotation.ruc,
+      address: quotation.address,
+    })
+
+    if (!data) {
+      throw new Error('Error al crear cliente')
+    }
+
+    customerId = data.id
+  }
+
+  const { data } = await QuotationsModel.update(id, {
+    deadline: quotation.deadline,
+    includeIgv: quotation.includeIgv,
+    credit: quotation.credit,
+    customerId,
+    items,
+  })
+
+  if (!data) {
+    throw new Error('Error creando cotizacion')
+  }
+
+  revalidatePath(`/new-quos/${data.number}`)
+  return { number: data.number }
+}
 
 export async function createQuotationAction(
   quotation: QuotationClientCreate,
@@ -95,6 +131,7 @@ export async function searchRucAction(ruc: string) {
       address: customer.address,
       ruc: customer.ruc,
       customerIsFromDb: true,
+      customerId: customer.id,
     }
   }
 

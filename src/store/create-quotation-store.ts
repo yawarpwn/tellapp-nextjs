@@ -93,6 +93,7 @@ export const createQuotationStore = (initProps: QuotationState) => {
               ruc: customer.ruc,
               address: customer.address,
               customerId: customer.id,
+              isRegularCustomer: customer.isRegular,
             },
           })),
       }),

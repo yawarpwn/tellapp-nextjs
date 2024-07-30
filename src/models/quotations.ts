@@ -136,22 +136,34 @@ export class QuotationsModel {
     id: Quotation['id'],
     value: Partial<Omit<Quotation, 'id' | 'createdAt'>>,
   ) {
-    const rows = await db
-      .update(quotationsTable)
-      .set(value)
-      .where(eq(quotationsTable.id, id))
-      .returning({
-        id: quotationsTable.id,
-        number: quotationsTable.number,
-        deadline: quotationsTable.deadline,
-        items: quotationsTable.items,
-        credit: quotationsTable.credit,
-        customerId: quotationsTable.customerId,
-        includeIgv: quotationsTable.includeIgv,
-        created_at: quotationsTable.createdAt,
-        updated_at: quotationsTable.updatedAt,
-      })
+    try {
+      const rows = await db
+        .update(quotationsTable)
+        .set(value)
+        .where(eq(quotationsTable.id, id))
+        .returning({
+          id: quotationsTable.id,
+          number: quotationsTable.number,
+          deadline: quotationsTable.deadline,
+          items: quotationsTable.items,
+          credit: quotationsTable.credit,
+          customerId: quotationsTable.customerId,
+          includeIgv: quotationsTable.includeIgv,
+          created_at: quotationsTable.createdAt,
+          updated_at: quotationsTable.updatedAt,
+        })
 
-    return rows[0]
+      return {
+        success: true,
+        data: rows[0],
+        message: `Cotizacion actualizada correctamente`,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        data: null,
+        message: 'Error actualizando cotizacion',
+      }
+    }
   }
 }

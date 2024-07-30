@@ -76,14 +76,22 @@ export function QuotationCreate() {
       toast.promise(searchRucAction(ruc), {
         loading: 'Buscando ruc...',
         success: data => {
-          setQuo({
-            ...quo,
-            company: data.company,
-            address: data.address,
-          })
-
           if (data.customerIsFromDb) {
-            setIsCustomerServed()
+            setQuo({
+              ...quo,
+              company: data.company,
+              address: data.address,
+              isRegularCustomer: true,
+              customerId: data.customerId,
+            })
+          } else {
+            setQuo({
+              ...quo,
+              company: data.company,
+              address: data.address,
+              isRegularCustomer: false,
+              customerId: null,
+            })
           }
 
           return `Ruc ${quo.ruc} encontrado`
