@@ -25,12 +25,6 @@ export function QuotationCreate() {
   const setQuo = useQuotationCreateStore(state => state.setQuo)
   const items = useQuotationCreateStore(state => state.items)
 
-  const isCustomerServed = useQuotationCreateStore(
-    state => state.isCustomerServed,
-  )
-  const setIsCustomerServed = useQuotationCreateStore(
-    state => state.setIsCustomerServed,
-  )
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
   const [showCreditOption, setShowCreditOption] = React.useState(false)
@@ -199,7 +193,7 @@ export function QuotationCreate() {
               <Label htmlFor="includeIgv">Incluir IGV</Label>
             </div>
 
-            {isCustomerServed && (
+            {quo.customerId && (
               <div
                 className="flex 
                   items-center gap-2"

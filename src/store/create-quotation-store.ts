@@ -8,7 +8,6 @@ import { createStore, create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export interface QuotationState {
-  isCustomerServed: boolean
   quo: QuotationClientCreate
   products: Product[]
   customers: Customer[]
@@ -20,7 +19,6 @@ export interface QuotationActions {
   setItems: (item: QuotationItem[]) => void
   addItem: (item: QuotationItem) => void
   deleteItem: (id: string) => void
-  setIsCustomerServed: () => void
   duplicateItem: (item: QuotationItem) => void
   editItem: (id: string, item: Partial<QuotationItem>) => void
   onPickCustomer: (customer: Customer) => void
@@ -36,13 +34,11 @@ export const initQuotationStore = ({
   products: Product[]
 }): QuotationState => {
   return {
-    isCustomerServed: false,
     quo: {
       customerId: null,
-      deadline: 1,
+      deadline: 0,
       includeIgv: true,
       isRegularCustomer: false,
-      credit: null,
     },
     products: products,
     customers: customers,
