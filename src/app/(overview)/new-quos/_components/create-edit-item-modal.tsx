@@ -1,15 +1,19 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { type Product } from '@/types'
-// import { useSearch } from '@/hooks/use-search'
 import { useFuse } from '@/hooks/use-fuse'
 import { XIcon } from '@/icons'
 import { type QuotationItem } from '@/types'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 
 type Props = {
   open: boolean
@@ -68,9 +72,7 @@ export function CreateEditItemModal({ open, onClose, item }: Props) {
   ) => {
     const { value } = event.currentTarget
 
-    // if (canSearch) {
     onSearch(value)
-    // }
 
     setQuoItem({
       ...quoItem,
@@ -99,6 +101,7 @@ export function CreateEditItemModal({ open, onClose, item }: Props) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent showCloseButton={false} className="h-[98svh]">
+        <DialogTitle>Agregar</DialogTitle>
         <form onSubmit={handleSubmit} className="flex h-[93svh] flex-col gap-4">
           <div className="relative grid gap-2">
             {/* <Label htmlFor='description'>Descripcion</Label> */}

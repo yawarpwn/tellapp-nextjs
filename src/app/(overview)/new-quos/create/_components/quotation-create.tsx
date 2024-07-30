@@ -24,6 +24,7 @@ export function QuotationCreate() {
   const quo = useQuotationCreateStore(state => state.quo)
   const setQuo = useQuotationCreateStore(state => state.setQuo)
   const items = useQuotationCreateStore(state => state.items)
+
   const isCustomerServed = useQuotationCreateStore(
     state => state.isCustomerServed,
   )
@@ -33,6 +34,7 @@ export function QuotationCreate() {
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
   const [showCreditOption, setShowCreditOption] = React.useState(false)
+
   const router = useRouter()
   const hastItems = items.length > 0
 
@@ -43,26 +45,16 @@ export function QuotationCreate() {
     }
     startTransition(async () => {
       // Insert Quotation
-      toast.promise(
-        createQuotationAction(
-          {
-            deadline: 1,
-            includeIgv: false,
-            credit: 20,
-          },
-          items,
-        ),
-        {
-          loading: 'Creando...',
-          success: ({ number }: { number: number }) => {
-            shootCoffeti()
-            router.push(`/new-quos/${number}`)
+      toast.promise(createQuotationAction(quo, items), {
+        loading: 'Creando...',
+        success: ({ number }: { number: number }) => {
+          shootCoffeti()
+          router.push(`/new-quos/${number}`)
 
-            return <p>Cotizacion Creado correctamente</p>
-          },
-          error: 'Error creando cotizacion',
+          return <p>Cotizacion Creado correctamente</p>
         },
-      )
+        error: 'Error creando cotizacion',
+      })
     })
   }
 

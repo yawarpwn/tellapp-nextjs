@@ -4,8 +4,8 @@ import {
   QuotationItem,
   QuotationClientCreate,
 } from '@/types'
-import { createStore } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { createStore, create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export interface QuotationState {
   isCustomerServed: boolean
@@ -24,7 +24,6 @@ export interface QuotationActions {
   duplicateItem: (item: QuotationItem) => void
   editItem: (id: string, item: Partial<QuotationItem>) => void
   onPickCustomer: (customer: Customer) => void
-  reset: () => void
 }
 
 export type QuotationStore = QuotationState & QuotationActions
@@ -33,7 +32,6 @@ export const initQuotationStore = ({
   customers,
   products,
 }: {
-  // isCustomerServed: boolean
   customers: Customer[]
   products: Product[]
 }): QuotationState => {
@@ -44,6 +42,7 @@ export const initQuotationStore = ({
       deadline: 1,
       includeIgv: true,
       isRegularCustomer: false,
+      credit: null,
     },
     products: products,
     customers: customers,
@@ -52,49 +51,64 @@ export const initQuotationStore = ({
 }
 
 export const createQuotationStore = (initProps: QuotationState) => {
-  const res = createStore<QuotationStore>()(set => ({
-    ...initProps,
-    selectedIdItem: null,
-    itemToEdit: null,
-    setQuo: quo => set(state => ({ quo: { ...state.quo, ...quo } })),
-    setItems: items => set({ items }),
-    setIsCustomerServed: () =>
-      set(state => ({ ...state, isCustomerServed: true })),
-    reset: () => set({ ...initProps }),
-    addItem: item =>
-      set(state => ({
-        items: [...state.items, item],
-      })),
-    deleteItem: id =>
-      set(state => ({
-        items: state.items.filter(item => item.id !== id),
-      })),
-    editItem: (id, itemToEdit) =>
-      set(state => ({
-        items: state.items.map(item =>
-          item.id === id ? { ...item, ...itemToEdit } : item,
-        ),
-      })),
-    duplicateItem: item =>
-      set(state => ({
-        items: [
-          ...state.items,
-          {
-            ...item,
-            id: crypto.randomUUID(),
-          },
-        ],
-      })),
-    onPickCustomer: customer =>
-      set(state => ({
-        quo: {
-          ...state.quo,
-          company: customer.name,
-          ruc: customer.ruc,
-          address: customer.address,
-        },
-      })),
-  }))
+  const res = create<QuotationStore>()(
+    persist(
+      (set, get) => ({
+        ...initProps,
+        selectedIdItem: null,
+        itemToEdit: null,
+        setQuo: quo => set(state => ({ quo: { ...state.quo, ...quo } })),
+        setItems: items => set({ items }),
+        setIsCustomerServed: () =>
+          set(state => ({ ...state, isCustomerServed: true })),
+        addItem: item =>
+          set(state => ({
+            items: [...state.items, item],
+          })),
+        deleteItem: id =>
+          set(state => ({
+            items: state.items.filter(item => item.id !== id),
+          })),
+        editItem: (id, itemToEdit) =>
+          set(state => ({
+            items: state.items.map(item =>
+              item.id === id ? { ...item, ...itemToEdit } : item,
+            ),
+          })),
+        duplicateItem: item =>
+          set(state => ({
+            items: [
+              ...state.items,
+              {
+                ...item,
+                id: crypto.randomUUID(),
+              },
+            ],
+          })),
+        onPickCustomer: customer =>
+          set(state => ({
+            quo: {
+              ...state.quo,
+              company: customer.name,
+              ruc: customer.ruc,
+              address: customer.address,
+              customerId: customer.id,
+            },
+          })),
+      }),
+      {
+        name: 'TELL',
+
+        partialize: state =>
+          Object.fromEntries(
+            Object.entries(state).filter(
+              ([key]) => !['customers', 'products'].includes(key),
+            ),
+          ),
+        skipHydration: true,
+      },
+    ),
+  )
 
   return res
 }

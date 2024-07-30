@@ -15,27 +15,20 @@ export async function createQuotationAction(
   quotation: QuotationClientCreate,
   items: QuotationItem[],
 ): Promise<{ number: number }> {
-  let customerId = null
-  if (quotation.ruc && quotation.company) {
-    //search customer by ruc in DB
-    const customerFound = await CustomersModel.getByRuc(quotation.ruc)
+  let customerId = quotation.customerId
 
-    if (customerFound) {
-      customerId = customerFound.id
-    } else {
-      //if not exists add in DB
-      const { data } = await CustomersModel.create({
-        name: quotation.company,
-        ruc: quotation.ruc,
-        address: quotation.address,
-      })
+  if (quotation.ruc && quotation.company && !customerId) {
+    const { data } = await CustomersModel.create({
+      name: quotation.company,
+      ruc: quotation.ruc,
+      address: quotation.address,
+    })
 
-      if (!data) {
-        throw new Error('Error al crear cliente')
-      }
-
-      customerId = data.id
+    if (!data) {
+      throw new Error('Error al crear cliente')
     }
+
+    customerId = data.id
   }
 
   const lastQuotation = await QuotationsModel.getLastQuotation()
@@ -46,7 +39,7 @@ export async function createQuotationAction(
     number: quoNumber,
     deadline: quotation.deadline,
     includeIgv: quotation.includeIgv,
-    credit: quotation.credit ? Number(quotation.credit) : null,
+    credit: quotation.credit,
     customerId,
     items,
   })
@@ -63,7 +56,7 @@ export async function deleteQuotationAction(id: string) {
   // create supabase client
   await QuotationsModel.delete(id)
 
-  revalidateTag('/new-quos')
+  revalidatePath('/new-quos')
   redirect(`/new-quos`)
 }
 
@@ -83,7 +76,7 @@ export async function duplicateQuotationAction(
       updatedAt: new Date(),
     })
 
-    revalidateTag('/new-quos')
+    revalidatePath('/new-quos')
     return { number: quoNumber }
     // redirect(`/new-quos/${lastQuotation.number}`)
   } catch (error) {
