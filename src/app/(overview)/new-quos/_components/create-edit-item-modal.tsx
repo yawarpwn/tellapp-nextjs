@@ -101,7 +101,7 @@ export function CreateEditItemModal({ open, onClose, item }: Props) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent showCloseButton={false} className="h-[98svh]">
-        <DialogTitle>Agregar</DialogTitle>
+        <DialogTitle className="sr-only">Agregar / Editar products</DialogTitle>
         <form onSubmit={handleSubmit} className="flex h-[93svh] flex-col gap-4">
           <div className="relative grid gap-2">
             {/* <Label htmlFor='description'>Descripcion</Label> */}
