@@ -21,8 +21,7 @@ type Props = {
   item?: QuotationItem
 }
 
-const initialQuoItem: QuotationItem = {
-  id: crypto.randomUUID(),
+const initialQuoItem = {
   price: 1,
   qty: 1,
   unit_size: '',
@@ -32,7 +31,9 @@ const initialQuoItem: QuotationItem = {
 
 export function CreateEditItemModal({ open, onClose, item }: Props) {
   const products = useQuotationCreateStore(state => state.products)
-  const [quoItem, setQuoItem] = useState<QuotationItem>(item ?? initialQuoItem)
+  const [quoItem, setQuoItem] = useState<
+    Omit<QuotationItem, 'id'> | QuotationItem
+  >(item ?? initialQuoItem)
   const addItem = useQuotationCreateStore(state => state.addItem)
   const editItem = useQuotationCreateStore(state => state.editItem)
 

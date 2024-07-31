@@ -51,15 +51,19 @@ export const createQuotationStore = (initProps: QuotationState) => {
     persist(
       (set, get) => ({
         ...initProps,
-        selectedIdItem: null,
-        itemToEdit: null,
         setQuo: quo => set(state => ({ quo: { ...state.quo, ...quo } })),
         setItems: items => set({ items }),
         setIsCustomerServed: () =>
           set(state => ({ ...state, isCustomerServed: true })),
         addItem: item =>
           set(state => ({
-            items: [...state.items, item],
+            items: [
+              ...state.items,
+              {
+                ...item,
+                id: crypto.randomUUID(),
+              },
+            ],
           })),
         deleteItem: id =>
           set(state => ({
