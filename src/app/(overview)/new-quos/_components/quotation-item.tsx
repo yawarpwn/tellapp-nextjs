@@ -10,13 +10,17 @@ import { PlusIcon } from '@/icons'
 import { QuotationItem } from '@/types'
 import React, { useState } from 'react'
 import { CreateEditItemModal } from './create-edit-item-modal'
-export function QuotationItems() {
-  //global states
-  const items = useQuotationCreateStore(state => state.items)
-  const duplicateItem = useQuotationCreateStore(state => state.duplicateItem)
-  const setItems = useQuotationCreateStore(state => state.setItems)
-  const editItem = useQuotationCreateStore(state => state.editItem)
-  const deleteItem = useQuotationCreateStore(state => state.deleteItem)
+interface Props {
+  items: QuotationItem[]
+  duplicateItem: (item: QuotationItem) => void
+  setItems: (item: QuotationItem[]) => void
+  editItem: (id: string, item: Partial<QuotationItem>) => void
+  deleteItem: (id: string) => void
+  addItem: (item: Omit<QuotationItem, 'id'>) => void
+}
+export function QuotationItems(props: Props) {
+  const { items, duplicateItem, setItems, editItem, deleteItem, addItem } =
+    props
 
   //Estados
   const [seletedProductId, setSelectedProductId] = useState<string | null>(null)
@@ -66,6 +70,8 @@ export function QuotationItems() {
     <section>
       {open && (
         <CreateEditItemModal
+          addItem={addItem}
+          editItem={editItem}
           item={productItem}
           open={open}
           onClose={closeItemModal}

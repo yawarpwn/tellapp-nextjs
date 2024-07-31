@@ -11,13 +11,16 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
+import { Customer } from '@/schemas'
 
-export function CustomersPicker() {
+interface Props {
+  customers: Customer[]
+  onPickCustomer: (customer: Customer) => void
+}
+export function CustomersPicker({ customers, onPickCustomer }: Props) {
   const [open, setOpen] = React.useState(false)
 
   const [filterValue, setFilterValue] = React.useState('')
-  const customers = useQuotationCreateStore(state => state.customers)
-  const onPickCustomer = useQuotationCreateStore(state => state.onPickCustomer)
 
   const filteredCustomers = React.useMemo(() => {
     if (!filterValue) return customers

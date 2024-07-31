@@ -38,11 +38,8 @@ export const QuotationClientCreateSchema = QuotationClientSchema.omit({
 })
 
 export const QuotationClientUpdateSchema = QuotationClientSchema.omit({
-  id: true,
-  createdAt: true,
   items: true,
-  number: true,
-}).partial()
+})
 
 export const QuotationSchema = createSelectSchema(quotationsTable)
 export const QuotationInsertSchema = createInsertSchema(quotationsTable)

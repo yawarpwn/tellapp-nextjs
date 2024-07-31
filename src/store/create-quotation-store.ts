@@ -3,51 +3,74 @@ import {
   Product,
   QuotationItem,
   QuotationClientCreate,
+  QuotationClientUpdate,
 } from '@/types'
 import { createStore, create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export interface QuotationState {
-  quo: QuotationClientCreate
+// Tipos de cliente de cotización
+type QuotationClientType = QuotationClientCreate | QuotationClientUpdate
+
+// Tipo de estado con inferencia
+export interface QuotationState<T extends QuotationClientType> {
+  quo: T
   products: Product[]
   customers: Customer[]
   items: QuotationItem[]
 }
 
-export interface QuotationActions {
+// Acciones que no dependen del tipo de quo
+export interface CommonQuotationActions {
   setQuo: (quo: QuotationClientCreate) => void
   setItems: (item: QuotationItem[]) => void
-  addItem: (item: QuotationItem) => void
+  addItem: (item: Omit<QuotationItem, 'id'>) => void
   deleteItem: (id: string) => void
   duplicateItem: (item: QuotationItem) => void
   editItem: (id: string, item: Partial<QuotationItem>) => void
   onPickCustomer: (customer: Customer) => void
 }
 
-export type QuotationStore = QuotationState & QuotationActions
+// Acciones específicas que dependen del tipo de quo
+export interface QuotationActions<T extends QuotationClientType> {
+  setQuo: (quo: Partial<T>) => void
+}
 
+// Combinamos el estado y las acciones
+export type QuotationStore<T extends QuotationClientType> = QuotationState<T> &
+  QuotationActions<T> &
+  CommonQuotationActions
+
+// Función para inicializar el estado de la tienda
 export const initQuotationStore = ({
   customers,
   products,
+  quo,
+  items,
 }: {
   customers: Customer[]
   products: Product[]
-}): QuotationState => {
+  quo?: QuotationClientUpdate
+  items?: QuotationItem[]
+}): QuotationState<QuotationClientType> => {
+  const quotation = quo || {
+    customerId: null,
+    deadline: 0,
+    includeIgv: true,
+    isRegularCustomer: false,
+  }
   return {
-    quo: {
-      customerId: null,
-      deadline: 0,
-      includeIgv: true,
-      isRegularCustomer: false,
-    },
+    quo: quotation,
     products: products,
     customers: customers,
-    items: [],
+    items: items ?? [],
   }
 }
 
-export const createQuotationStore = (initProps: QuotationState) => {
-  const res = create<QuotationStore>()(
+// Función para crear la tienda de cotización
+export const createQuotationStore = <T extends QuotationClientType>(
+  initProps: QuotationState<T>,
+) => {
+  const res = create<QuotationStore<T>>()(
     persist(
       (set, get) => ({
         ...initProps,

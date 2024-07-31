@@ -6,10 +6,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
+import { useQuotationUpdateStore } from '@/providers/quotation-update-store-provider'
 import { SearchIcon, StartIcon } from '@/icons'
 import {
-  createQuotationAction,
+  updateQuotationAction,
   searchRucAction,
 } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
@@ -18,20 +18,19 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'sonner'
-import { QuotationItems } from '../../_components/quotation-item'
+import { QuotationItems } from '../../../_components/quotation-item'
 
-export function QuotationCreate() {
-  const quo = useQuotationCreateStore(state => state.quo)
-  const setQuo = useQuotationCreateStore(state => state.setQuo)
-  const items = useQuotationCreateStore(state => state.items)
-
-  const customers = useQuotationCreateStore(state => state.customers)
-  const onPickCustomer = useQuotationCreateStore(state => state.onPickCustomer)
-  const duplicateItem = useQuotationCreateStore(state => state.duplicateItem)
-  const setItems = useQuotationCreateStore(state => state.setItems)
-  const editItem = useQuotationCreateStore(state => state.editItem)
-  const deleteItem = useQuotationCreateStore(state => state.deleteItem)
-  const addItem = useQuotationCreateStore(state => state.addItem)
+export function QuotationUpdate() {
+  const quo = useQuotationUpdateStore(state => state.quo)
+  const setQuo = useQuotationUpdateStore(state => state.setQuo)
+  const items = useQuotationUpdateStore(state => state.items)
+  const customers = useQuotationUpdateStore(state => state.customers)
+  const onPickCustomer = useQuotationUpdateStore(state => state.onPickCustomer)
+  const duplicateItem = useQuotationUpdateStore(state => state.duplicateItem)
+  const setItems = useQuotationUpdateStore(state => state.setItems)
+  const editItem = useQuotationUpdateStore(state => state.editItem)
+  const deleteItem = useQuotationUpdateStore(state => state.deleteItem)
+  const addItem = useQuotationUpdateStore(state => state.addItem)
 
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
@@ -47,7 +46,7 @@ export function QuotationCreate() {
     }
     startTransition(async () => {
       // Insert Quotation
-      toast.promise(createQuotationAction(quo, items), {
+      toast.promise(updateQuotationAction(quo, items), {
         loading: 'Creando...',
         success: ({ number }: { number: number }) => {
           shootCoffeti()
@@ -119,8 +118,8 @@ export function QuotationCreate() {
         <div></div>
         <div className="flex justify-end">
           <CustomersPicker
-            customers={customers}
             onPickCustomer={onPickCustomer}
+            customers={customers}
           />
         </div>
       </header>
@@ -246,10 +245,10 @@ export function QuotationCreate() {
         <QuotationItems
           addItem={addItem}
           items={items}
-          editItem={editItem}
-          deleteItem={deleteItem}
-          duplicateItem={duplicateItem}
           setItems={setItems}
+          deleteItem={deleteItem}
+          editItem={editItem}
+          duplicateItem={duplicateItem}
         />
         <footer className="flex items-center justify-between">
           <Button disabled={pending} type="button" className="px-12" asChild>

@@ -11,7 +11,6 @@ import { redirect } from 'next/navigation'
 import { getRuc } from '../sunat'
 
 export async function updateQuotationAction(
-  id: string,
   quotation: QuotationClientUpdate,
   items: QuotationItem[],
 ): Promise<{ number: number }> {
@@ -31,12 +30,13 @@ export async function updateQuotationAction(
     customerId = data.id
   }
 
-  const { data } = await QuotationsModel.update(id, {
+  const { data } = await QuotationsModel.update(quotation.id, {
     deadline: quotation.deadline,
     includeIgv: quotation.includeIgv,
     credit: quotation.credit,
     customerId,
     items,
+    updatedAt: new Date(),
   })
 
   if (!data) {

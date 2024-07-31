@@ -22,5 +22,5 @@ export const quotationsTable = pgTable('_quotations', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
-export type Quotation = typeof quotationsTable.$inferSelect
-export type InsertQuotation = typeof quotationsTable.$inferInsert
+// export type Quotation = typeof quotationsTable.$inferSelect
+// export type InsertQuotation = typeof quotationsTable.$inferInsert

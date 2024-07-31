@@ -1,7 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs'
-import { QuotationCreateStoreProvider } from '@/hooks/use-quotation-store'
+import { QuotationUpdateStoreProvider } from '@/providers/quotation-update-store-provider'
 import { fetchQuotationByNumber } from '@/lib/data/quotations'
-import { CreateUpdatePage } from '../../_components/create-update-page'
+import { QuotationUpdate } from './_components/quotation-update'
 import { CustomersModel, ProductsModel } from '@/models'
 export default async function Page({
   params,
@@ -9,9 +9,11 @@ export default async function Page({
   params?: { number?: string }
 }) {
   const number = Number(params?.number)
-  const quotation = await fetchQuotationByNumber({ number })
-  const customers = await CustomersModel.getAll()
-  const products = await ProductsModel.getAll()
+  const [quotation, customers, products] = await Promise.all([
+    fetchQuotationByNumber({ number }),
+    CustomersModel.getAll(),
+    ProductsModel.getAll(),
+  ])
   return (
     <>
       <Breadcrumbs
@@ -27,27 +29,13 @@ export default async function Page({
           },
         ]}
       />
-      <QuotationCreateStoreProvider
+      <QuotationUpdateStoreProvider
         customers={customers}
+        quo={quotation}
         products={products}
-        isUpdate
-        quoNumber={quotation.number}
-        quo={{
-          id: quotation.id,
-          ruc: quotation.ruc,
-          company: quotation.company,
-          address: quotation.address,
-          deadline: quotation.deadline,
-          includeIgv: quotation.includeIgv,
-          isRegularCustomer: quotation.isRegularCustomer,
-          created_at: quotation.created_at,
-          updated_at: quotation.updated_at,
-          credit: quotation.credit,
-        }}
-        items={quotation.items}
       >
-        <CreateUpdatePage />
-      </QuotationCreateStoreProvider>
+        <QuotationUpdate />
+      </QuotationUpdateStoreProvider>
     </>
   )
 }

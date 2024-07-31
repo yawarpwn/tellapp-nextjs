@@ -19,6 +19,8 @@ type Props = {
   open: boolean
   onClose: () => void
   item?: QuotationItem
+  addItem: (item: Omit<QuotationItem, 'id'>) => void
+  editItem: (id: string, item: Partial<QuotationItem>) => void
 }
 
 const initialQuoItem = {
@@ -29,13 +31,12 @@ const initialQuoItem = {
   cost: 1,
 }
 
-export function CreateEditItemModal({ open, onClose, item }: Props) {
+export function CreateEditItemModal(props: Props) {
+  const { open, onClose, item, addItem, editItem } = props
   const products = useQuotationCreateStore(state => state.products)
   const [quoItem, setQuoItem] = useState<
     Omit<QuotationItem, 'id'> | QuotationItem
   >(item ?? initialQuoItem)
-  const addItem = useQuotationCreateStore(state => state.addItem)
-  const editItem = useQuotationCreateStore(state => state.editItem)
 
   const { hits, onSearch } = useFuse<Product>(products, {
     keys: [

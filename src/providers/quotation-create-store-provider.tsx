@@ -1,5 +1,10 @@
 'use client'
-import { type Customer, type Product } from '@/types'
+import {
+  QuotationClientUpdate,
+  type Customer,
+  type Product,
+  QuotationClientCreate,
+} from '@/types'
 
 import {
   createQuotationStore,
@@ -36,11 +41,11 @@ export function QuotationCreateStoreProvider(
   const { children, customers, products } = props
   const storeRef = React.useRef<QuotationCreateStoreApi>()
   if (!storeRef.current) {
-    storeRef.current = createQuotationStore(
+    storeRef.current = createQuotationStore<QuotationClientCreate>(
       initQuotationStore({
         customers,
         products,
-      }),
+      }) as QuotationStore<QuotationClientUpdate>,
     )
   }
   const [confirmModalOpen, setConfirmModalOpen] = React.useState(false)
@@ -94,7 +99,7 @@ export function QuotationCreateStoreProvider(
 }
 
 export function useQuotationCreateStore<T>(
-  selector: (state: QuotationStore) => T,
+  selector: (state: QuotationStore<QuotationClientCreate>) => T,
 ): T {
   const quotationCreateStoreContext = React.useContext(
     QuotationCreateStoreContext,
