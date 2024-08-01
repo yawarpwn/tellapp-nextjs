@@ -204,8 +204,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "include_igv": {
-          "name": "include_igv",
+        "includeIgv": {
+          "name": "includeIgv",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,

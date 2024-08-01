@@ -1,23 +1,26 @@
-import { FuseHighLight } from '@/components/fuse-highlight'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { useQuotationContext } from '@/hooks/use-quotation-store'
-import { createBrowserClient } from '@/lib/supabase/client'
+import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { type Product } from '@/types'
-// import { useSearch } from '@/hooks/use-search'
 import { useFuse } from '@/hooks/use-fuse'
 import { XIcon } from '@/icons'
-import { type QuotationItemType } from '@/types'
-import React, { useMemo } from 'react'
+import { type QuotationItem } from '@/types'
+import React, { useState } from 'react'
 
 type Props = {
   open: boolean
   onClose: () => void
-  item?: QuotationItemType
-  onSubmit: (item: Omit<QuotationItemType, 'id'>) => void
+  item?: QuotationItem
+  addItem: (item: Omit<QuotationItem, 'id'>) => void
+  editItem: (id: string, item: Partial<QuotationItem>) => void
 }
 
 const initialQuoItem = {
@@ -28,12 +31,12 @@ const initialQuoItem = {
   cost: 1,
 }
 
-export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
-  const products = useQuotationContext(state => state.products)
-
-  const [quoItem, setQuoItem] = React.useState<typeof initialQuoItem>(
-    item || initialQuoItem,
-  )
+export function CreateEditItemModal(props: Props) {
+  const { open, onClose, item, addItem, editItem } = props
+  const products = useQuotationCreateStore(state => state.products)
+  const [quoItem, setQuoItem] = useState<
+    Omit<QuotationItem, 'id'> | QuotationItem
+  >(item ?? initialQuoItem)
 
   const { hits, onSearch } = useFuse<Product>(products, {
     keys: [
@@ -71,9 +74,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
   ) => {
     const { value } = event.currentTarget
 
-    // if (canSearch) {
     onSearch(value)
-    // }
 
     setQuoItem({
       ...quoItem,
@@ -83,7 +84,12 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    onSubmit(quoItem)
+    //edit
+    if (item) {
+      editItem(item.id, quoItem)
+    } else {
+      addItem(quoItem)
+    }
     onClose()
   }
 
@@ -96,10 +102,8 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent
-        showCloseButton={false}
-        className="h-[98svh] max-w-sm p-2 md:max-w-3xl"
-      >
+      <DialogContent showCloseButton={false} className="h-[98svh]">
+        <DialogTitle className="sr-only">Agregar / Editar products</DialogTitle>
         <form onSubmit={handleSubmit} className="flex h-[93svh] flex-col gap-4">
           <div className="relative grid gap-2">
             {/* <Label htmlFor='description'>Descripcion</Label> */}
@@ -188,7 +192,7 @@ export function EditItemModal({ open, onClose, item, onSubmit }: Props) {
                 disabled
                 name="cost"
                 onChange={handleChangeItem}
-                value={quoItem.cost}
+                value={quoItem.cost ?? ''}
               />
             </div>
           </div>

@@ -1,11 +1,9 @@
-import { type Items } from '@/types'
+import { type QuotationItem } from '@/types'
 export const formatDateToLocal = (
-  dateStr: string | Date,
+  date: Date,
   locale = 'es-US',
   options?: Intl.DateTimeFormatOptions,
 ) => {
-  const date = new Date(dateStr)
-
   const defaultOptions: Intl.DateTimeFormatOptions = {
     day: 'numeric',
     month: 'numeric',
@@ -35,7 +33,7 @@ export const getFormatedDate = (date: string | Date) => {
   return formatedDate
 }
 
-export function getIgv(items: Items[]) {
+export function getIgv(items: QuotationItem[]) {
   if (!items) {
     return { total: 0, subTotal: 0, igv: 0 }
   }

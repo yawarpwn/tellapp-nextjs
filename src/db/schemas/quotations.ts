@@ -1,4 +1,4 @@
-import type { QuotationItemType } from '@/types'
+import type { QuotationItem } from '@/types'
 
 import {
   pgTable,
@@ -17,10 +17,10 @@ export const quotationsTable = pgTable('_quotations', {
   credit: integer('credit'),
   includeIgv: boolean('include_igv').default(false).notNull(),
   customerId: uuid('customer_id').references(() => customersTable.id),
-  items: jsonb('items').$type<QuotationItemType[]>().notNull(),
+  items: jsonb('items').$type<QuotationItem[]>().notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
-export type Quotation = typeof quotationsTable.$inferSelect
-export type InsertQuotation = typeof quotationsTable.$inferInsert
+// export type Quotation = typeof quotationsTable.$inferSelect
+// export type InsertQuotation = typeof quotationsTable.$inferInsert

@@ -6,15 +6,11 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import {
-  useQuotationContext,
-  useQuotationStore,
-} from '@/hooks/use-quotation-store'
+import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { SearchIcon, StartIcon } from '@/icons'
 import {
   createQuotationAction,
   searchRucAction,
-  updateQuotationAction,
 } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { Loader2 } from 'lucide-react'
@@ -22,21 +18,25 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'sonner'
-import { QuotationAddItems } from './add-items'
+import { QuotationItems } from '../../_components/quotation-item'
 
-export function QuotationCustomerInfo() {
-  const quo = useQuotationContext(state => state.quo)
-  const setQuo = useQuotationContext(state => state.setQuo)
-  const items = useQuotationContext(state => state.items)
-  const isUpdate = useQuotationContext(state => state.isUpdate)
-  const isCustomerServed = useQuotationContext(state => state.isCustomerServed)
-  const setIsCustomerServed = useQuotationContext(
-    state => state.setIsCustomerServed,
-  )
+export function QuotationCreate() {
+  const quo = useQuotationCreateStore(state => state.quo)
+  const setQuo = useQuotationCreateStore(state => state.setQuo)
+  const items = useQuotationCreateStore(state => state.items)
+
+  const customers = useQuotationCreateStore(state => state.customers)
+  const onPickCustomer = useQuotationCreateStore(state => state.onPickCustomer)
+  const duplicateItem = useQuotationCreateStore(state => state.duplicateItem)
+  const setItems = useQuotationCreateStore(state => state.setItems)
+  const editItem = useQuotationCreateStore(state => state.editItem)
+  const deleteItem = useQuotationCreateStore(state => state.deleteItem)
+  const addItem = useQuotationCreateStore(state => state.addItem)
+
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
   const [showCreditOption, setShowCreditOption] = React.useState(false)
-  const store = useQuotationStore()
+
   const router = useRouter()
   const hastItems = items.length > 0
 
@@ -46,47 +46,17 @@ export function QuotationCustomerInfo() {
       return
     }
     startTransition(async () => {
-      if ('id' in quo) {
-        // Update Quotation
-        toast.promise(() => updateQuotationAction(quo, items), {
-          loading: 'Actualizando...',
-          success: ({ number }) => {
-            store?.persist.clearStorage()
-            router.push(`/new-quos/${number}`)
+      // Insert Quotation
+      toast.promise(createQuotationAction(quo, items), {
+        loading: 'Creando...',
+        success: ({ number }: { number: number }) => {
+          shootCoffeti()
+          router.push(`/new-quos/${number}`)
 
-            return <p>Cotizacion {number} Actualizando correctamente</p>
-          },
-          error: 'Error Actualizando cotizacion',
-        })
-      } else {
-        // Insert Quotation
-        toast.promise(
-          () =>
-            createQuotationAction(
-              {
-                ruc: quo.ruc,
-                company: quo.company,
-                address: quo.address,
-                deadline: quo.deadline as number,
-                include_igv: quo.include_igv as boolean,
-                is_regular_customer: quo.is_regular_customer as boolean,
-                credit: quo.credit,
-              },
-              items,
-            ),
-          {
-            loading: 'Creando...',
-            success: ({ number }: { number: number }) => {
-              store?.persist.clearStorage()
-              shootCoffeti()
-              router.push(`/new-quos/${number}`)
-
-              return <p>Cotizacion {number} Creado correctamente</p>
-            },
-            error: 'Error creando cotizacion',
-          },
-        )
-      }
+          return <p>Cotizacion Creado correctamente</p>
+        },
+        error: 'Error creando cotizacion',
+      })
     })
   }
 
@@ -108,14 +78,22 @@ export function QuotationCustomerInfo() {
       toast.promise(searchRucAction(ruc), {
         loading: 'Buscando ruc...',
         success: data => {
-          setQuo({
-            ...quo,
-            company: data.company,
-            address: data.address,
-          })
-
           if (data.customerIsFromDb) {
-            setIsCustomerServed()
+            setQuo({
+              ...quo,
+              company: data.company,
+              address: data.address,
+              isRegularCustomer: true,
+              customerId: data.customerId,
+            })
+          } else {
+            setQuo({
+              ...quo,
+              company: data.company,
+              address: data.address,
+              isRegularCustomer: false,
+              customerId: null,
+            })
           }
 
           return `Ruc ${quo.ruc} encontrado`
@@ -140,7 +118,10 @@ export function QuotationCustomerInfo() {
       <header className="flex justify-between">
         <div></div>
         <div className="flex justify-end">
-          <CustomersPicker />
+          <CustomersPicker
+            customers={customers}
+            onPickCustomer={onPickCustomer}
+          />
         </div>
       </header>
       <article className="mt-4 flex flex-col gap-4">
@@ -214,16 +195,16 @@ export function QuotationCustomerInfo() {
           >
             <div className="flex items-center gap-2">
               <Checkbox
-                id="include_igv"
+                id="includeIgv"
                 onCheckedChange={e =>
-                  setQuo({ ...quo, include_igv: Boolean(e) })
+                  setQuo({ ...quo, includeIgv: Boolean(e) })
                 }
-                checked={quo.include_igv}
+                checked={quo.includeIgv}
               />
-              <Label htmlFor="include_igv">Incluir IGV</Label>
+              <Label htmlFor="includeIgv">Incluir IGV</Label>
             </div>
 
-            {isCustomerServed && (
+            {quo.customerId && (
               <div
                 className="flex 
                   items-center gap-2"
@@ -262,7 +243,14 @@ export function QuotationCustomerInfo() {
             </div>
           )}
         </div>
-        <QuotationAddItems />
+        <QuotationItems
+          addItem={addItem}
+          items={items}
+          editItem={editItem}
+          deleteItem={deleteItem}
+          duplicateItem={duplicateItem}
+          setItems={setItems}
+        />
         <footer className="flex items-center justify-between">
           <Button disabled={pending} type="button" className="px-12" asChild>
             <Link href="/new-quos">Anterior</Link>
@@ -275,7 +263,7 @@ export function QuotationCustomerInfo() {
             type="submit"
           >
             {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isUpdate ? 'Actualizar' : 'Crear'}
+            Crear
           </Button>
         </footer>
       </article>

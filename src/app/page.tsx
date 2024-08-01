@@ -1,5 +1,7 @@
 import { LoginForm } from '@/components/login-form'
 import { Logo } from '@/components/logo'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export default async function Home({
   searchParams,
@@ -7,6 +9,10 @@ export default async function Home({
   searchParams?: { message?: string }
 }) {
   const message = searchParams?.message || ''
+
+  const authToken = cookies().get('auth-token')
+
+  if (authToken) redirect('/new-quos')
 
   return (
     <div className="relative bg-black">

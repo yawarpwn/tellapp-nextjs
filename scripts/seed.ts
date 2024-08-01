@@ -41,7 +41,7 @@ async function main() {
 //       number: quo.number,
 //       deadline: quo.deadline,
 //       items: quo.items,
-//       include_igv: quo.include_igv,
+//       includeIgv: quo.includeIgv,
 //       credit: quo.credit,
 //       customer_id: customer?.id,
 //       created_at: quo.created_at,

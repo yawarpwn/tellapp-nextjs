@@ -57,8 +57,8 @@
       "description": "Señal vinil arclad laminado c/ soporte compuesto de aluminio ( sustrato de aluminio ) de 4 mm espesor"
     }
   ],
-  "include_igv": true,
+  "includeIgv": true,
   "updated_at": null,
   "credit": null,
-  "is_regular_customer": false
+  "isRegularCustomer": false
 }

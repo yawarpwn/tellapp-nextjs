@@ -5,13 +5,15 @@ import { customersTable } from '@/db/schemas'
 import postgres from 'postgres'
 
 export class CustomersModel {
-  static async getAll() {
+  static async getAll(): Promise<Customer[]> {
     const result = await db
       .select({
         id: customersTable.id,
         name: customersTable.name,
         ruc: customersTable.ruc,
         address: customersTable.address,
+        phone: customersTable.phone,
+        email: customersTable.email,
         isRegular: customersTable.isRegular,
         createdAt: customersTable.createdAt,
         updatedAt: customersTable.updatedAt,

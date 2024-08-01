@@ -24,6 +24,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
   if (!quotation) {
     notFound()
   }
+
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(
     quotation.items,
   )
@@ -45,7 +46,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
           {quotation.customerId && (
             <IsRegularButton
               id={quotation.customerId}
-              isRegular={Boolean(quotation.is_regular_customer)}
+              isRegular={Boolean(quotation.isRegularCustomer)}
               quotationNumber={quotation.number}
             />
           )}
@@ -56,7 +57,6 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
         <div className="text-right">
           <h2 className="text-2xl font-semibold md:text-3xl">Cotización</h2>
           <div className="mt-1 flex justify-end gap-1 text-xl text-yellow-500">
-            <span>#</span>
             <span className="font-bold">{quotation.number}</span>
           </div>
         </div>
@@ -79,14 +79,13 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <dl className="grid gap-x-3 sm:grid-cols-6">
               <dt className="col-span-3 font-semibold ">Fecha:</dt>
               <dd className="col-span-3 ">
-                {formatDateToLocal(new Date(quotation.created_at))}
+                {formatDateToLocal(quotation.createdAt)}
               </dd>
             </dl>
             <dl className="grid gap-x-3 sm:grid-cols-6">
               <dt className="col-span-3 font-semibold ">Actualizado:</dt>
               <dd className="col-span-3 ">
-                {quotation.updated_at &&
-                  formatDateToLocal(quotation.updated_at)}
+                {quotation.updatedAt && formatDateToLocal(quotation.updatedAt)}
               </dd>
             </dl>
 

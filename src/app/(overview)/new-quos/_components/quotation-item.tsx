@@ -1,32 +1,34 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { useQuotationContext } from '@/hooks/use-quotation-store'
+import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { DeleteIcon, DocumentDuplicateIcon, EditIcon } from '@/icons'
 import { getIgv } from '@/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { NoResult } from './no-result'
 
 import { PlusIcon } from '@/icons'
-import { QuotationItemType } from '@/types'
-import React from 'react'
-import { EditItemModal } from './edit-item-modal'
-import { QuotationSearchProduct } from './search-product'
-export function QuotationAddItems() {
-  const items = useQuotationContext(state => state.items)
-  const duplicateItem = useQuotationContext(state => state.duplicateItem)
-  const setItems = useQuotationContext(state => state.setItems)
-  const addItem = useQuotationContext(state => state.addItem)
+import { QuotationItem } from '@/types'
+import React, { useState } from 'react'
+import { CreateEditItemModal } from './create-edit-item-modal'
+interface Props {
+  items: QuotationItem[]
+  duplicateItem: (item: QuotationItem) => void
+  setItems: (item: QuotationItem[]) => void
+  editItem: (id: string, item: Partial<QuotationItem>) => void
+  deleteItem: (id: string) => void
+  addItem: (item: Omit<QuotationItem, 'id'>) => void
+}
+export function QuotationItems(props: Props) {
+  const { items, duplicateItem, setItems, editItem, deleteItem, addItem } =
+    props
 
-  const editItem = useQuotationContext(state => state.editItem)
-  const deleteItem = useQuotationContext(state => state.deleteItem)
-  const [seletedProductId, setSelectedProductId] = React.useState<
-    string | null
-  >(null)
-
+  //Estados
+  const [seletedProductId, setSelectedProductId] = useState<string | null>(null)
   const productItem = items.find(item => item.id == seletedProductId)
-  const [open, setOpen] = React.useState(false)
-  const closeItemModal = () => setOpen(false)
+  const [open, setOpen] = useState(false)
 
+  //functions
+  const closeItemModal = () => setOpen(false)
   const move = (currentIndex: number, nextIndex: number) => {
     const newItems = [...items]
     newItems[currentIndex] = items[nextIndex]
@@ -47,18 +49,16 @@ export function QuotationAddItems() {
   }
 
   const onChangeValue = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    item: QuotationItemType,
+    event: React.ChangeEvent<HTMLInputElement>,
+    item: QuotationItem,
   ) => {
-    const { name, value } = e.target
+    const { name, value } = event.target
     if (name == 'price' || name == 'qty') {
-      editItem({
-        ...item,
+      editItem(item.id, {
         [name]: Number(value),
       })
     } else {
-      editItem({
-        ...item,
+      editItem(item.id, {
         [name]: value,
       })
     }
@@ -69,18 +69,9 @@ export function QuotationAddItems() {
   return (
     <section>
       {open && (
-        <EditItemModal
-          onSubmit={item => {
-            if (seletedProductId) {
-              editItem(item)
-            } else {
-              addItem({
-                ...item,
-                id: crypto.randomUUID(),
-              })
-            }
-            setSelectedProductId(null)
-          }}
+        <CreateEditItemModal
+          addItem={addItem}
+          editItem={editItem}
           item={productItem}
           open={open}
           onClose={closeItemModal}
@@ -99,7 +90,6 @@ export function QuotationAddItems() {
           >
             <PlusIcon size={20} />
           </Button>
-          <QuotationSearchProduct />
         </div>
       </header>
       {items.length > 0 ? (

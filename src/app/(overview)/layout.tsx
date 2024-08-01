@@ -1,9 +1,13 @@
 import { Logo } from '@/components/logo'
 import { MobileMenu } from '@/components/mobile-menu'
 import { Sidebar } from '@/components/sidebar'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 async function LayoutDashboar({ children }: { children: React.ReactNode }) {
+  const authToken = cookies().get('auth-token')
+  if (!authToken) redirect('/')
   return (
     <>
       {/* Root */}

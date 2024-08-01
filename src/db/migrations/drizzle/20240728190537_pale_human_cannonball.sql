@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS "_quotations" (
 	"number" integer NOT NULL,
 	"deadline" integer NOT NULL,
 	"credit" integer,
-	"include_igv" boolean DEFAULT false NOT NULL,
+	"includeIgv" boolean DEFAULT false NOT NULL,
 	"customer_id" uuid,
 	"items" jsonb NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,

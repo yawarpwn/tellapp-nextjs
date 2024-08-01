@@ -1,14 +1,12 @@
 import Breadcrumbs from '@/components/breadcrumbs'
-import { QuotationStoreProvider } from '@/hooks/use-quotation-store'
-import { fetchLastQuotation } from '@/lib/data/quotations'
-import { CreateUpdatePage } from '../_components/create-update-page'
+import { QuotationCreateStoreProvider } from '@/providers/quotation-create-store-provider'
 import { CustomersModel, ProductsModel } from '@/models'
+import { QuotationCreate } from './_components/quotation-create'
 
 export default async function Page() {
-  const [customers, products, lastQuotation] = await Promise.all([
+  const [customers, products] = await Promise.all([
     CustomersModel.getAll(),
     ProductsModel.getAll(),
-    fetchLastQuotation(),
   ])
 
   return (
@@ -26,13 +24,9 @@ export default async function Page() {
           },
         ]}
       />
-      <QuotationStoreProvider
-        customers={customers}
-        products={products}
-        quoNumber={lastQuotation.number + 1}
-      >
-        <CreateUpdatePage />
-      </QuotationStoreProvider>
+      <QuotationCreateStoreProvider products={products} customers={customers}>
+        <QuotationCreate />
+      </QuotationCreateStoreProvider>
     </div>
   )
 }
