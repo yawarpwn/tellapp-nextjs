@@ -1,17 +1,55 @@
-import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { TableSkeleton } from './table-skeleton'
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { DataTableSkeleton } from './data-table'
-
+export function UpdateCreateQuotationSkeleton() {
+  return (
+    <div>
+      <div className="flex justify-end">
+        <Skeleton className="h-8 w-36" />
+      </div>
+      <div className="mt-8 grid gap-4">
+        <div className="grid gap-2 lg:grid-cols-2">
+          <div className="grid gap-1">
+            <Skeleton className="h-4 w-20" />
+            <Skeleton className="h-6 w-full" />
+          </div>
+          <div className="grid gap-1">
+            <Skeleton className="h-4 w-20" />
+            <Skeleton className="h-6" />
+          </div>
+        </div>
+        <div className="grid gap-1">
+          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-6" />
+        </div>
+        <div className="grid gap-1">
+          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-6" />
+        </div>
+        <div className="flex justify-between">
+          <Skeleton className="h-6 w-20" />
+          <Skeleton className="h-6 w-10" />
+        </div>
+        <Skeleton className="h-6 w-20" />
+        <div className="flex justify-between">
+          <Skeleton className="h-6 w-28" />
+          <Skeleton className="h-6 w-16" />
+        </div>
+        <Skeleton className="h-40 w-full"></Skeleton>
+        <Skeleton className="h-40 w-full"></Skeleton>
+        <Skeleton className="h-40 w-full"></Skeleton>
+        <Skeleton className="h-40 w-full"></Skeleton>
+      </div>
+    </div>
+  )
+}
 export function InvoiceSkeleton() {
   return (
     <div className="flex flex-row items-center justify-between border-b border-gray-800 py-4">
@@ -210,65 +248,5 @@ export function QuotationSkeleton() {
         </div>
       </div>
     </div>
-  )
-}
-
-export function CreateUpdateQuotationSkeleton({ isEdit }) {
-  return (
-    <>
-      {!isEdit && (
-        <div className="flex justify-between">
-          <div />
-          <Skeleton className="- skeleton h-6 w-32"></Skeleton>
-        </div>
-      )}
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12">
-          <Skeleton className="skeleton mb-2 h-4 w-20"></Skeleton>
-          <Skeleton className="skeleton h-10 w-full" />
-        </div>
-        <div className="col-span-6">
-          <Skeleton className="skeleton mb-2 h-4 w-20"></Skeleton>
-          <Skeleton className="skeleton h-10 w-full" />
-        </div>
-        <div className="col-span-6">
-          <Skeleton className="skeleton mb-2 h-4 w-20"></Skeleton>
-          <Skeleton className="skeleton h-10 w-full" />
-        </div>
-        <div className="col-span-12">
-          <Skeleton className="skeleton mb-2 h-4 w-20"></Skeleton>
-          <Skeleton className="skeleton h-10 w-full" />
-        </div>
-
-        <div className="col-span-12">
-          <Skeleton className="skeleton mb-2 h-4 w-20"></Skeleton>
-          <Skeleton className="skeleton h-10 w-full" />
-        </div>
-        <div className="col-span-6 flex items-center gap-4">
-          <Skeleton className="skeleton h-7 w-7 rounded-md " />
-          <Skeleton className="skeleton h-4 w-20 "></Skeleton>
-        </div>
-
-        <div className="col-span-6 flex items-center gap-4">
-          <Skeleton className="skeleton h-7 w-7 rounded-md " />
-          <Skeleton className="skeleton h-4 w-20 "></Skeleton>
-        </div>
-
-        <section className="col-span-12 mt-4">
-          <header className="flex items-center justify-between">
-            <Skeleton className="skeleton h-8 w-32"></Skeleton>
-            <Skeleton className="skeleton h-8 w-36"></Skeleton>
-          </header>
-        </section>
-      </div>
-      <div className="mt-4">
-        <div className="skeleton h-6 w-full"></div>
-        <div className="skeleton mt-4 h-32 w-full"></div>
-        <div className="mt-4 flex justify-between">
-          <Skeleton className="skeleton h-8 w-32"></Skeleton>
-          <Skeleton className="skeleton h-8 w-32"></Skeleton>
-        </div>
-      </div>
-    </>
   )
 }
