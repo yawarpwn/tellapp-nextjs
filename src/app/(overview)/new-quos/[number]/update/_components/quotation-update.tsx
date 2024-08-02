@@ -31,6 +31,7 @@ export function QuotationUpdate() {
   const editItem = useQuotationUpdateStore(state => state.editItem)
   const deleteItem = useQuotationUpdateStore(state => state.deleteItem)
   const addItem = useQuotationUpdateStore(state => state.addItem)
+  const products = useQuotationUpdateStore(state => state.products)
 
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
@@ -243,6 +244,7 @@ export function QuotationUpdate() {
           )}
         </div>
         <QuotationItems
+          products={products}
           addItem={addItem}
           items={items}
           setItems={setItems}

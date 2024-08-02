@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { type Product } from '@/types'
 import { useFuse } from '@/hooks/use-fuse'
 import { XIcon } from '@/icons'
@@ -17,6 +16,7 @@ import React, { useState } from 'react'
 
 type Props = {
   open: boolean
+  products: Product[]
   onClose: () => void
   item?: QuotationItem
   addItem: (item: Omit<QuotationItem, 'id'>) => void
@@ -33,7 +33,7 @@ const initialQuoItem = {
 
 export function CreateEditItemModal(props: Props) {
   const { open, onClose, item, addItem, editItem } = props
-  const products = useQuotationCreateStore(state => state.products)
+  const { products } = props
   const [quoItem, setQuoItem] = useState<
     Omit<QuotationItem, 'id'> | QuotationItem
   >(item ?? initialQuoItem)

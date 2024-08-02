@@ -1,17 +1,17 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { DeleteIcon, DocumentDuplicateIcon, EditIcon } from '@/icons'
 import { getIgv } from '@/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { NoResult } from './no-result'
 
 import { PlusIcon } from '@/icons'
-import { QuotationItem } from '@/types'
+import { Product, QuotationItem } from '@/types'
 import React, { useState } from 'react'
 import { CreateEditItemModal } from './create-edit-item-modal'
 interface Props {
   items: QuotationItem[]
+  products: Product[]
   duplicateItem: (item: QuotationItem) => void
   setItems: (item: QuotationItem[]) => void
   editItem: (id: string, item: Partial<QuotationItem>) => void
@@ -19,8 +19,15 @@ interface Props {
   addItem: (item: Omit<QuotationItem, 'id'>) => void
 }
 export function QuotationItems(props: Props) {
-  const { items, duplicateItem, setItems, editItem, deleteItem, addItem } =
-    props
+  const {
+    products,
+    items,
+    duplicateItem,
+    setItems,
+    editItem,
+    deleteItem,
+    addItem,
+  } = props
 
   //Estados
   const [seletedProductId, setSelectedProductId] = useState<string | null>(null)
@@ -70,6 +77,7 @@ export function QuotationItems(props: Props) {
     <section>
       {open && (
         <CreateEditItemModal
+          products={products}
           addItem={addItem}
           editItem={editItem}
           item={productItem}

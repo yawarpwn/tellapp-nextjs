@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'sonner'
 import { QuotationItems } from '../../_components/quotation-item'
+import { useQuotationUpdateStore } from '@/providers/quotation-update-store-provider'
 
 export function QuotationCreate() {
   const quo = useQuotationCreateStore(state => state.quo)
@@ -32,6 +33,7 @@ export function QuotationCreate() {
   const editItem = useQuotationCreateStore(state => state.editItem)
   const deleteItem = useQuotationCreateStore(state => state.deleteItem)
   const addItem = useQuotationCreateStore(state => state.addItem)
+  const products = useQuotationUpdateStore(state => state.products)
 
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
@@ -244,6 +246,7 @@ export function QuotationCreate() {
           )}
         </div>
         <QuotationItems
+          products={products}
           addItem={addItem}
           items={items}
           editItem={editItem}
