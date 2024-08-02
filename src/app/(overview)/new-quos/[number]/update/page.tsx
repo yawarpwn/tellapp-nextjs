@@ -6,6 +6,7 @@ import { CustomersModel, ProductsModel } from '@/models'
 import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
 
+// export const dynamic = 'force-dynamic'
 export async function QuotationUpdateServer({
   quoNumber,
 }: {

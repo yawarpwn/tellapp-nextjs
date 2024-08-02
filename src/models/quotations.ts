@@ -1,39 +1,39 @@
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
-import {
-  quotationsTable,
-  customersTable,
-  type InsertQuotation,
-  type Quotation,
-} from '@/db/schemas'
+import { quotationsTable, customersTable } from '@/db/schemas'
 
 export class QuotationsModel {
   static async getAll() {
-    const result = await db
-      .select({
-        id: quotationsTable.id,
-        number: quotationsTable.number,
-        deadline: quotationsTable.deadline,
-        credit: quotationsTable.credit,
-        includeIgv: quotationsTable.includeIgv,
-        customerId: customersTable.id,
-        company: customersTable.name,
-        ruc: customersTable.ruc,
-        address: customersTable.address,
-        isRegularCustomer: customersTable.isRegular,
-        items: quotationsTable.items,
-        createdAt: quotationsTable.createdAt,
-        updatedAt: quotationsTable.updatedAt,
-      })
-      .from(quotationsTable)
-      .leftJoin(
-        customersTable,
-        eq(quotationsTable.customerId, customersTable.id),
-      )
-      .orderBy(desc(quotationsTable.updatedAt))
-      .limit(1000)
+    try {
+      const result = await db
+        .select({
+          id: quotationsTable.id,
+          number: quotationsTable.number,
+          deadline: quotationsTable.deadline,
+          credit: quotationsTable.credit,
+          includeIgv: quotationsTable.includeIgv,
+          customerId: customersTable.id,
+          company: customersTable.name,
+          ruc: customersTable.ruc,
+          address: customersTable.address,
+          isRegularCustomer: customersTable.isRegular,
+          items: quotationsTable.items,
+          createdAt: quotationsTable.createdAt,
+          updatedAt: quotationsTable.updatedAt,
+        })
+        .from(quotationsTable)
+        .leftJoin(
+          customersTable,
+          eq(quotationsTable.customerId, customersTable.id),
+        )
+        .orderBy(desc(quotationsTable.updatedAt))
+        .limit(1000)
 
-    return result
+      console.log('all quotations success')
+      return result
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   static async getById(id: string) {
