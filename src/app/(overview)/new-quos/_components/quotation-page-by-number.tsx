@@ -1,5 +1,4 @@
 import { buttonVariants } from '@/components/ui/button'
-import { StartIcon } from '@/icons'
 import {
   Table,
   TableBody,
@@ -57,11 +56,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
         <div className="text-right">
           <h2 className="text-2xl font-semibold md:text-3xl">Cotización</h2>
           <div className="mt-1 flex justify-end gap-1 text-xl text-yellow-500">
-            {quotation.isRegularCustomer ? (
-              <StartIcon filled />
-            ) : (
-              <span>#</span>
-            )}
+            <span>#</span>
             <span className="font-bold">{quotation.number}</span>
           </div>
         </div>
