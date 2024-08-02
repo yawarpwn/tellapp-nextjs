@@ -6,22 +6,28 @@ import postgres from 'postgres'
 
 export class CustomersModel {
   static async getAll(): Promise<Customer[]> {
-    const result = await db
-      .select({
-        id: customersTable.id,
-        name: customersTable.name,
-        ruc: customersTable.ruc,
-        address: customersTable.address,
-        phone: customersTable.phone,
-        email: customersTable.email,
-        isRegular: customersTable.isRegular,
-        createdAt: customersTable.createdAt,
-        updatedAt: customersTable.updatedAt,
-      })
-      .from(customersTable)
-      .orderBy(desc(customersTable.updatedAt))
+    try {
+      const result = await db
+        .select({
+          id: customersTable.id,
+          name: customersTable.name,
+          ruc: customersTable.ruc,
+          address: customersTable.address,
+          phone: customersTable.phone,
+          email: customersTable.email,
+          isRegular: customersTable.isRegular,
+          createdAt: customersTable.createdAt,
+          updatedAt: customersTable.updatedAt,
+        })
+        .from(customersTable)
+        .orderBy(desc(customersTable.updatedAt))
 
-    return result
+      console.log('all customers success')
+
+      return result
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   static async getById(id: Customer['id']) {

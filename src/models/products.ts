@@ -6,24 +6,30 @@ import { getDatabaseErrorMessage } from '@/lib/utils'
 
 export class ProductsModel {
   static async getAll(): Promise<Product[]> {
-    const result = await db
-      .select({
-        id: productsTable.id,
-        description: productsTable.description,
-        category: productsTable.category,
-        code: productsTable.code,
-        price: productsTable.price,
-        cost: productsTable.cost,
-        link: productsTable.link,
-        rank: productsTable.rank,
-        unitSize: productsTable.unitSize,
-        createdAt: productsTable.createdAt,
-        updatedAt: productsTable.updatedAt,
-      })
-      .from(productsTable)
-      .orderBy(desc(productsTable.updatedAt))
+    try {
+      const result = await db
+        .select({
+          id: productsTable.id,
+          description: productsTable.description,
+          category: productsTable.category,
+          code: productsTable.code,
+          price: productsTable.price,
+          cost: productsTable.cost,
+          link: productsTable.link,
+          rank: productsTable.rank,
+          unitSize: productsTable.unitSize,
+          createdAt: productsTable.createdAt,
+          updatedAt: productsTable.updatedAt,
+        })
+        .from(productsTable)
+        .orderBy(desc(productsTable.updatedAt))
 
-    return result
+      console.log('all produccts success')
+
+      return result
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   static async create(values: ProductInsert) {
