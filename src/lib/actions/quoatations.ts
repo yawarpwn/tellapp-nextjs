@@ -144,3 +144,16 @@ export async function searchRucAction(ruc: string) {
     customerIsFromDb: false,
   }
 }
+
+export async function setIsPaymentPending({
+  id,
+  value,
+  quoNumber,
+}: {
+  id: string
+  value: boolean
+  quoNumber: number
+}) {
+  await QuotationsModel.setIsPaymentPending(id, value)
+  revalidatePath(`/new-quos/${quoNumber}`)
+}

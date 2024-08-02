@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1722193537290,
-      "tag": "20240728190537_pale_human_cannonball",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1722207136357,
-      "tag": "20240728225216_volatile_doctor_spectrum",
+      "when": 1722572241905,
+      "tag": "20240802041721_first_kingpin",
       "breakpoints": true
     }
   ]

@@ -18,6 +18,7 @@ import { DownloadAndShareButtons } from './download-and-share-buttons'
 import { DuplicateButton } from './duplicate-button'
 import { IsRegularButton } from './is-regular-button'
 import { notFound } from 'next/navigation'
+import { IsPaymentPendingButton } from './is-payment-pending'
 export async function QuotationPageByNumber({ number }: { number: number }) {
   const quotation = await fetchQuotationByNumber({ number })
   if (!quotation) {
@@ -34,9 +35,9 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
         <div className="flex gap-2">
           <Link
             href={`/new-quos/${number}/update`}
-            className={buttonVariants({ variant: 'secondary' })}
+            className={buttonVariants({ variant: 'secondary', size: 'sm' })}
           >
-            <EditIcon size={20} />
+            <EditIcon size={18} />
             <span className="ml-2 hidden lg:block">Editar</span>
           </Link>
           <DownloadAndShareButtons quotation={quotation} />
@@ -49,6 +50,11 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
               quotationNumber={quotation.number}
             />
           )}
+          <IsPaymentPendingButton
+            id={quotation.id}
+            isPaymentPending={quotation.isPaymentPending}
+            quotationNumber={quotation.number}
+          />
         </div>
       </header>
 

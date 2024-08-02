@@ -1,6 +1,6 @@
 {
-  "id": "094ec399-4d15-46c4-8338-76468a2b3d24",
-  "prevId": "39a96f72-f2ec-4f61-86a6-a013679eb470",
+  "id": "21408e4f-df80-440c-947e-6e464c4dd5f6",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -211,8 +211,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "includeIgv": {
-          "name": "includeIgv",
+        "include_igv": {
+          "name": "include_igv",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
@@ -223,6 +223,13 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
+        },
+        "is_payment_pending": {
+          "name": "is_payment_pending",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "items": {
           "name": "items",

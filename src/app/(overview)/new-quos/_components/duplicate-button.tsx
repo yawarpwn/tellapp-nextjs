@@ -35,7 +35,7 @@ export function DuplicateButton({
       <Dialog open={open} onOpenChange={setOpen}>
         {showTrigger && (
           <DialogTrigger asChild>
-            <Button variant={'secondary'}>
+            <Button variant={'secondary'} size={'sm'}>
               <DocumentDuplicateIcon size={20} />
               <span className="ml-2 max-md:sr-only">Duplicar</span>
             </Button>

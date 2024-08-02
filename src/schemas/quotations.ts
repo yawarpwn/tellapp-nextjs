@@ -16,6 +16,7 @@ export const QuotationClientSchema = z.object({
   id: z.string(),
   includeIgv: z.coerce.boolean(),
   isRegularCustomer: z.coerce.boolean().default(false).optional().nullable(),
+  isPaymentPending: z.coerce.boolean().default(false).optional().nullable(),
   customerId: z.string().optional().nullable(),
   ruc: z.string().optional().nullable(),
   company: z.string().optional().nullable(),

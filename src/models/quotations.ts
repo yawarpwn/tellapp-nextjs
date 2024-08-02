@@ -1,6 +1,11 @@
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
-import { quotationsTable, customersTable } from '@/db/schemas'
+import {
+  quotationsTable,
+  customersTable,
+  Quotation,
+  InsertQuotation,
+} from '@/db/schemas'
 
 export class QuotationsModel {
   static async getAll() {
@@ -16,6 +21,7 @@ export class QuotationsModel {
           company: customersTable.name,
           ruc: customersTable.ruc,
           address: customersTable.address,
+          isPaymentPending: quotationsTable.isPaymentPending,
           isRegularCustomer: customersTable.isRegular,
           items: quotationsTable.items,
           createdAt: quotationsTable.createdAt,
@@ -49,6 +55,7 @@ export class QuotationsModel {
         ruc: customersTable.ruc,
         address: customersTable.address,
         customerId: customersTable.id,
+        isPaymentPending: quotationsTable.isPaymentPending,
         isCustomer: customersTable.isRegular,
         createdAt: quotationsTable.createdAt,
         updatedAt: quotationsTable.updatedAt,
@@ -77,6 +84,7 @@ export class QuotationsModel {
         customerId: customersTable.id,
         address: customersTable.address,
         isRegularCustomer: customersTable.isRegular,
+        isPaymentPending: quotationsTable.isPaymentPending,
         createdAt: quotationsTable.createdAt,
         updatedAt: quotationsTable.updatedAt,
       })
@@ -133,7 +141,7 @@ export class QuotationsModel {
   }
 
   static async update(
-    id: Quotation['id'],
+    id: string,
     value: Partial<Omit<Quotation, 'id' | 'createdAt'>>,
   ) {
     try {
@@ -164,6 +172,17 @@ export class QuotationsModel {
         data: null,
         message: 'Error actualizando cotizacion',
       }
+    }
+  }
+
+  static async setIsPaymentPending(id: string, value: boolean) {
+    try {
+      await db
+        .update(quotationsTable)
+        .set({ isPaymentPending: value })
+        .where(eq(quotationsTable.id, id))
+    } catch (error) {
+      console.log(error)
     }
   }
 }

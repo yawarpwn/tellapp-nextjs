@@ -22,11 +22,12 @@ import {
 import { MoreHorizontal } from 'lucide-react'
 import Link from 'next/link'
 
-import { getFormatedDate, getIgv } from '@/lib/utils'
-import { type QuotationType } from '@/types'
+import { formatDateToLocal, getFormatedDate, getIgv } from '@/lib/utils'
+import { type QuotationClient } from '@/types'
 import { type ColumnDef } from '@tanstack/react-table'
+import { Badge } from '@/components/ui/badge'
 
-export function getColumns(): ColumnDef<QuotationType>[] {
+export function getColumns(): ColumnDef<QuotationClient>[] {
   return [
     {
       id: 'regular-customer',
@@ -42,7 +43,10 @@ export function getColumns(): ColumnDef<QuotationType>[] {
             action={async (formData: FormData) => {
               const id = formData.get('id') as string
               updateOptimistic(!optimisticState)
-              await setIsRegularCustomerAction(id, !optimisticState)
+              await setIsRegularCustomerAction({
+                id,
+                value: !optimisticState,
+              })
             }}
           >
             <input type="hidden" name="id" value={row.original.customerId} />
@@ -88,7 +92,29 @@ export function getColumns(): ColumnDef<QuotationType>[] {
       header: 'Fecha',
       cell: ({ row }) => (
         <div className="w-[max-content]">
-          {getFormatedDate(row.original.created_at)}
+          {formatDateToLocal(row.original.createdAt, {
+            month: 'short',
+          })}
+        </div>
+      ),
+      enableGlobalFilter: false,
+    },
+    {
+      header: 'Estado',
+      accessorKey: 'isPaymentPending',
+      cell: ({ row }) => (
+        <div className="w-[max-content]">
+          {row.original.isPaymentPending ? (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-foreground/50">Pendiente</span>
+              <span className="flex size-2 rounded-full bg-yellow-400"></span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-foreground/50">Pagado</span>
+              <span className="flex size-2 rounded-full bg-green-400"></span>
+            </div>
+          )}
         </div>
       ),
       enableGlobalFilter: false,

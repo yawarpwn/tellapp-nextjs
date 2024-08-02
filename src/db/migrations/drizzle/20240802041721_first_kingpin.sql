@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS "_customers" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "_customers_name_unique" UNIQUE("name"),
-	CONSTRAINT "_customers_ruc_unique" UNIQUE("ruc")
+	CONSTRAINT "_customers_ruc_unique" UNIQUE("ruc"),
+	CONSTRAINT "_customers_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "_products" (
@@ -32,8 +33,9 @@ CREATE TABLE IF NOT EXISTS "_quotations" (
 	"number" integer NOT NULL,
 	"deadline" integer NOT NULL,
 	"credit" integer,
-	"includeIgv" boolean DEFAULT false NOT NULL,
+	"include_igv" boolean DEFAULT false NOT NULL,
 	"customer_id" uuid,
+	"is_payment_pending" boolean DEFAULT false NOT NULL,
 	"items" jsonb NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
