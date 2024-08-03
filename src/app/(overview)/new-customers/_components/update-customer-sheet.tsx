@@ -48,8 +48,8 @@ export function UpdateCustomerSheet({
       name: customer.name,
       ruc: customer.ruc,
       address: customer.address ?? '',
-      phone: customer.phone ?? '',
-      email: customer.email ?? '',
+      phone: customer.phone ?? undefined,
+      email: customer.email ?? undefined,
     },
   })
 

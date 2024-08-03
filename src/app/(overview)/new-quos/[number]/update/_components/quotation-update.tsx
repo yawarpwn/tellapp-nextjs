@@ -254,7 +254,7 @@ export function QuotationUpdate() {
         />
         <footer className="flex items-center justify-between">
           <Button disabled={pending} type="button" className="px-12" asChild>
-            <Link href="/new-quos">Anterior</Link>
+            <Link href="/new-quos">Cancelar</Link>
           </Button>
           <Button
             onClick={handleSubmit}
@@ -264,7 +264,7 @@ export function QuotationUpdate() {
             type="submit"
           >
             {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Crear
+            Actualizar
           </Button>
         </footer>
       </article>

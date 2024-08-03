@@ -10,7 +10,7 @@ export const CustomerInsertSchema = createInsertSchema(customersTable, {
   email: schema => schema.email.email().nullable().optional(),
   phone: () => z.coerce.string().length(9).nullable().optional(),
 })
-export const CustomerUpdateSchema = CustomerInsertSchema.omit({
+export const CustomerUpdateSchema = CustomerInsertSchema.partial().omit({
   id: true,
   updatedAt: true,
   createdAt: true,

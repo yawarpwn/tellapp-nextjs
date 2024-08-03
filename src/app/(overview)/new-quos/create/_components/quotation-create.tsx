@@ -217,7 +217,7 @@ export function QuotationCreate() {
           </div>
         </div>
 
-        <div className="grid h-6 grid-cols-2 items-center gap-2">
+        <div className="grid h-6 grid-cols-2 items-center gap-2 border">
           <div className="flex items-center gap-2">
             <Switch
               checked={showCreditOption}
@@ -255,7 +255,7 @@ export function QuotationCreate() {
         />
         <footer className="flex items-center justify-between">
           <Button disabled={pending} type="button" className="px-12" asChild>
-            <Link href="/new-quos">Anterior</Link>
+            <Link href="/new-quos">Cancelar</Link>
           </Button>
           <Button
             onClick={handleSubmit}

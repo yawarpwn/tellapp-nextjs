@@ -43,71 +43,84 @@ export class QuotationsModel {
   }
 
   static async getById(id: string) {
-    const result = await db
-      .select({
-        id: quotationsTable.id,
-        number: quotationsTable.number,
-        deadline: quotationsTable.deadline,
-        items: quotationsTable.items,
-        credit: quotationsTable.credit,
-        includeIgv: quotationsTable.includeIgv,
-        company: customersTable.name,
-        ruc: customersTable.ruc,
-        address: customersTable.address,
-        customerId: customersTable.id,
-        isPaymentPending: quotationsTable.isPaymentPending,
-        isCustomer: customersTable.isRegular,
-        createdAt: quotationsTable.createdAt,
-        updatedAt: quotationsTable.updatedAt,
-      })
-      .from(quotationsTable)
-      .where(eq(quotationsTable.id, id))
-      .leftJoin(
-        customersTable,
-        eq(quotationsTable.customerId, customersTable.id),
-      )
+    try {
+      const result = await db
+        .select({
+          id: quotationsTable.id,
+          number: quotationsTable.number,
+          deadline: quotationsTable.deadline,
+          items: quotationsTable.items,
+          credit: quotationsTable.credit,
+          includeIgv: quotationsTable.includeIgv,
+          company: customersTable.name,
+          ruc: customersTable.ruc,
+          address: customersTable.address,
+          customerId: customersTable.id,
+          isPaymentPending: quotationsTable.isPaymentPending,
+          isCustomer: customersTable.isRegular,
+          createdAt: quotationsTable.createdAt,
+          updatedAt: quotationsTable.updatedAt,
+        })
+        .from(quotationsTable)
+        .where(eq(quotationsTable.id, id))
+        .leftJoin(
+          customersTable,
+          eq(quotationsTable.customerId, customersTable.id),
+        )
 
-    return result[0]
+      return result[0]
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   static async getByNumber(number: Quotation['number']) {
-    const result = await db
-      .select({
-        id: quotationsTable.id,
-        number: quotationsTable.number,
-        deadline: quotationsTable.deadline,
-        items: quotationsTable.items,
-        credit: quotationsTable.credit,
-        includeIgv: quotationsTable.includeIgv,
-        company: customersTable.name,
-        ruc: customersTable.ruc,
-        customerId: customersTable.id,
-        address: customersTable.address,
-        isRegularCustomer: customersTable.isRegular,
-        isPaymentPending: quotationsTable.isPaymentPending,
-        createdAt: quotationsTable.createdAt,
-        updatedAt: quotationsTable.updatedAt,
-      })
-      .from(quotationsTable)
-      .where(eq(quotationsTable.number, number))
-      .leftJoin(
-        customersTable,
-        eq(quotationsTable.customerId, customersTable.id),
-      )
+    try {
+      const result = await db
+        .select({
+          id: quotationsTable.id,
+          number: quotationsTable.number,
+          deadline: quotationsTable.deadline,
+          items: quotationsTable.items,
+          credit: quotationsTable.credit,
+          includeIgv: quotationsTable.includeIgv,
+          company: customersTable.name,
+          ruc: customersTable.ruc,
+          customerId: customersTable.id,
+          address: customersTable.address,
+          isRegularCustomer: customersTable.isRegular,
+          isPaymentPending: quotationsTable.isPaymentPending,
+          createdAt: quotationsTable.createdAt,
+          updatedAt: quotationsTable.updatedAt,
+        })
+        .from(quotationsTable)
+        .where(eq(quotationsTable.number, number))
+        .leftJoin(
+          customersTable,
+          eq(quotationsTable.customerId, customersTable.id),
+        )
 
-    return result[0]
+      console.log(`getByNumer ${number}  by Number`)
+      return result[0]
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   static async getLastQuotation(): Promise<{ number: number }> {
-    const quotations = await db
-      .select({
-        number: quotationsTable.number,
-      })
-      .from(quotationsTable)
-      .orderBy(desc(quotationsTable.number))
-      .limit(1)
+    try {
+      const quotations = await db
+        .select({
+          number: quotationsTable.number,
+        })
+        .from(quotationsTable)
+        .orderBy(desc(quotationsTable.number))
+        .limit(1)
 
-    return quotations[0]
+      return quotations[0]
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   static async create(value: InsertQuotation) {

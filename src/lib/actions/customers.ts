@@ -7,10 +7,10 @@ import { CustomersModel } from '@/models'
 export async function createCustomerAction(
   input: CustomerInsert,
 ): Promise<void> {
-  const { data, message } = await CustomersModel.create(input)
+  const { error } = await CustomersModel.create(input)
 
-  if (!data) {
-    throw new Error(message)
+  if (error) {
+    throw error
   }
   revalidatePath('/new-customers')
 }
@@ -25,12 +25,10 @@ export async function deleteCustomerAction(id: string) {
 }
 
 export async function updateCustomerAction(id: string, input: CustomerUpdate) {
-  try {
-    await CustomersModel.update(id, input)
-    revalidatePath('/new-customers')
-  } catch (error) {
-    console.log('ERROR UPDATING CUSTOMER: ', error)
-  }
+  const { error } = await CustomersModel.update(id, input)
+  if (error) throw error
+
+  revalidatePath('/new-customers')
 }
 
 export async function setIsRegularCustomerAction({
@@ -42,13 +40,10 @@ export async function setIsRegularCustomerAction({
   value: boolean
   quoationNumber?: number
 }) {
-  try {
-    await CustomersModel.toggleIsRegular(id, value)
-    if (quoationNumber) {
-      revalidatePath(`/new-quos/${quoationNumber}`)
-    }
-    console.log('customer updated')
-  } catch (error) {
-    console.log('ERROR UPDATING CUSTOMER: ', error)
+  const { error } = await CustomersModel.toggleIsRegular(id, value)
+  if (error) throw error
+  if (quoationNumber) {
+    revalidatePath(`/new-quos/${quoationNumber}`)
   }
+  console.log('customer updated')
 }

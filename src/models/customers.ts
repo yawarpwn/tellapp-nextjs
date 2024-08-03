@@ -3,9 +3,11 @@ import { eq, desc } from 'drizzle-orm'
 import { type CustomerInsert, type Customer } from '@/schemas'
 import { customersTable } from '@/db/schemas'
 import postgres from 'postgres'
+import { DatabaseResponse } from '@/types'
+import { DatabaseError } from '@/errors'
 
 export class CustomersModel {
-  static async getAll(): Promise<Customer[]> {
+  static async getAll(): Promise<DatabaseResponse<Customer[]>> {
     try {
       const result = await db
         .select({
@@ -23,55 +25,68 @@ export class CustomersModel {
         .orderBy(desc(customersTable.updatedAt))
 
       console.log('all customers success')
-
-      return result
+      return {
+        data: result,
+        error: null,
+      }
     } catch (error) {
       console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError(),
+      }
     }
   }
 
-  static async getById(id: Customer['id']) {
-    const result = await db
-      .select({
-        id: customersTable.id,
-        name: customersTable.name,
-        ruc: customersTable.ruc,
-        address: customersTable.address,
-        isRegular: customersTable.isRegular,
-        createdAt: customersTable.createdAt,
-        updatedAt: customersTable.updatedAt,
-      })
-      .from(customersTable)
-      .where(eq(customersTable.id, id))
-    return result[0]
+  static async getById(id: string): Promise<DatabaseResponse<Customer>> {
+    try {
+      const result = await db
+        .select()
+        .from(customersTable)
+        .where(eq(customersTable.id, id))
+      return {
+        error: null,
+        data: result[0],
+      }
+    } catch (error) {
+      console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError(),
+      }
+    }
   }
 
-  static async getByRuc(ruc: Customer['ruc']) {
-    const result = await db
-      .select({
-        id: customersTable.id,
-        name: customersTable.name,
-        ruc: customersTable.ruc,
-        address: customersTable.address,
-        isRegular: customersTable.isRegular,
-        createdAt: customersTable.createdAt,
-        updatedAt: customersTable.updatedAt,
-      })
-      .from(customersTable)
-      .where(eq(customersTable.ruc, ruc))
-    return result[0]
+  static async getByRuc(
+    ruc: Customer['ruc'],
+  ): Promise<DatabaseResponse<Customer>> {
+    try {
+      const result = await db
+        .select()
+        .from(customersTable)
+        .where(eq(customersTable.ruc, ruc))
+
+      return {
+        error: null,
+        data: result[0],
+      }
+    } catch (error) {
+      return {
+        error: new Error(`Error al buscar  por Ruc: ${ruc}`),
+        data: null,
+      }
+    }
   }
 
   static async create(
     value: CustomerInsert,
-  ): Promise<{ success: boolean; data: Customer | null; message: string }> {
+  ): Promise<DatabaseResponse<Customer>> {
     try {
       const rows = await db.insert(customersTable).values(value).returning()
 
       return {
-        success: true,
+        error: null,
         data: rows[0],
-        message: 'Cliente Creado',
       }
     } catch (error) {
       console.log(error)
@@ -84,9 +99,8 @@ export class CustomersModel {
       }
 
       return {
-        success: false,
         data: null,
-        message: errorMessage,
+        error: DatabaseError.internalError(errorMessage),
       }
     }
   }
@@ -98,19 +112,47 @@ export class CustomersModel {
   static async toggleIsRegular(
     id: Customer['id'],
     value: boolean,
-  ): Promise<void> {
-    await db
-      .update(customersTable)
-      .set({
-        isRegular: value,
-      })
-      .where(eq(customersTable.id, id))
+  ): Promise<DatabaseResponse<Customer>> {
+    try {
+      const result = await db
+        .update(customersTable)
+        .set({
+          isRegular: value,
+        })
+        .where(eq(customersTable.id, id))
+        .returning()
+
+      return {
+        data: result[0],
+        error: null,
+      }
+    } catch (error) {
+      return {
+        error: DatabaseError.internalError('Error al actualizar el cliente'),
+        data: null,
+      }
+    }
   }
 
   static async update(
     id: Customer['id'],
     value: Partial<Omit<Customer, 'id' | 'createdAt'>>,
-  ) {
-    await db.update(customersTable).set(value).where(eq(customersTable.id, id))
+  ): Promise<DatabaseResponse<Customer>> {
+    try {
+      const result = await db
+        .update(customersTable)
+        .set(value)
+        .where(eq(customersTable.id, id))
+        .returning()
+      return {
+        error: null,
+        data: result[0],
+      }
+    } catch (error) {
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al actualizar el cliente'),
+      }
+    }
   }
 }

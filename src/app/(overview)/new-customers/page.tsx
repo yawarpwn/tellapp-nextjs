@@ -6,7 +6,8 @@ import { CreateCustomerDialog } from './_components/create-customer-dialog'
 import { customerColumns } from './_components/customer-columns'
 
 async function ProductTable() {
-  const customers = await CustomersModel.getAll()
+  const { data: customers } = await CustomersModel.getAll()
+  if (!customers) return
 
   return (
     <DataTable
