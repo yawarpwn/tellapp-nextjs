@@ -50,7 +50,7 @@ export function QuotationUpdate() {
           shootCoffeti()
           router.push(`/new-quos/${number}`)
 
-          return <p>Cotizacion Creado correctamente</p>
+          return <p>Cotización {number} actualizado </p>
         },
         error: 'Error creando cotizacion',
       })
