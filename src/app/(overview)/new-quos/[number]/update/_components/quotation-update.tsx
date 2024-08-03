@@ -32,7 +32,7 @@ export function QuotationUpdate() {
 
   const [pending, startTransition] = React.useTransition()
   const [pendingRuc, startTransitionRuc] = React.useTransition()
-  const [showCreditOption, setShowCreditOption] = React.useState(false)
+  const [showCreditOption, setShowCreditOption] = React.useState(!!quo.credit)
 
   const router = useRouter()
   const hastItems = items.length > 0

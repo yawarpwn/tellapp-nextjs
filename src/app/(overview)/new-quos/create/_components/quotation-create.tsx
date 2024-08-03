@@ -208,7 +208,7 @@ export function QuotationCreate() {
         </div>
 
         {/*Creditto */}
-        <div className="grid grid-cols-2 items-center gap-2 border">
+        <div className="grid grid-cols-2 items-center gap-2 ">
           <div className="flex items-center gap-2">
             <Switch
               checked={showCreditOption}
@@ -224,46 +224,18 @@ export function QuotationCreate() {
                 type="number"
                 className="w-20"
                 value={quo.credit ?? ''}
-                placeholder="200.00"
+                placeholder="30"
                 onChange={e => {
                   const { value } = e.target
                   const credit = value ? Number(value) : null
                   setQuo({ ...quo, credit })
                 }}
               />
-              <span>Soles</span>
+              <span>Días</span>
             </div>
           )}
         </div>
 
-        {/*Descuento */}
-        <div className="grid grid-cols-2 items-center gap-2 border">
-          <div className="flex items-center gap-2">
-            <Switch
-              checked={showCreditOption}
-              onCheckedChange={checked => setShowCreditOption(checked)}
-            />
-            <Label htmlFor="credit">Descuento??</Label>
-          </div>
-          {showCreditOption && (
-            <div className="flex items-center gap-2">
-              <Input
-                id="credit"
-                name="credit"
-                type="number"
-                className="w-20"
-                value={quo.credit ?? ''}
-                placeholder="7"
-                onChange={e => {
-                  const { value } = e.target
-                  const credit = value ? Number(value) : null
-                  setQuo({ ...quo, credit })
-                }}
-              />
-              <span>Dias</span>
-            </div>
-          )}
-        </div>
         <QuotationItems
           products={products}
           addItem={addItem}

@@ -11,7 +11,6 @@ export const quotationsTable = pgTable('_quotations', {
   includeIgv: boolean('include_igv').default(false).notNull(),
   customerId: uuid('customer_id').references(() => customersTable.id),
   isPaymentPending: boolean('is_payment_pending').default(false).notNull(),
-  discount: real('discount'),
   items: jsonb('items').$type<QuotationItem[]>().notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
