@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { ProductsModel } from '@/models/products'
 
 export async function createProductAction(productToInsert: ProductInsert) {
-  const result = await ProductsModel.create({
+  const { error } = await ProductsModel.create({
     id: crypto.randomUUID(),
     description: productToInsert.description,
     code: productToInsert.code.toUpperCase(),
@@ -16,7 +16,7 @@ export async function createProductAction(productToInsert: ProductInsert) {
     unitSize: productToInsert.unitSize,
   })
 
-  if (!result.success) throw new Error(result.message)
+  if (error) throw error
 
   revalidatePath('/new-products', 'page')
 }
@@ -25,8 +25,7 @@ export async function updateProductAction(
   id: string,
   productToUpdate: ProductUpdate,
 ) {
-  console.log('update product ' + id)
-  await ProductsModel.update(id, {
+  const { error } = await ProductsModel.update(id, {
     description: productToUpdate.description,
     code: productToUpdate.code?.toUpperCase(),
     price: productToUpdate.price,
@@ -35,14 +34,14 @@ export async function updateProductAction(
     link: productToUpdate.link,
     unitSize: productToUpdate.unitSize,
   })
+
+  if (error) throw error
+
   revalidatePath('/new-products')
 }
 
 export async function deleteProductAction(id: string): Promise<void> {
-  try {
-    await ProductsModel.delete(id)
-    revalidatePath('/new-products')
-  } catch (error) {
-    console.log('ERROR DELETING PRODUCT: ', error)
-  }
+  const { error } = await ProductsModel.delete(id)
+  if (error) throw error
+  revalidatePath('/new-products')
 }

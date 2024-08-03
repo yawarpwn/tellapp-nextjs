@@ -1,3 +1,5 @@
+import type { DatabaseResponse } from '@/types'
+import { DatabaseError } from '@/errors'
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
 import {
@@ -6,9 +8,11 @@ import {
   Quotation,
   InsertQuotation,
 } from '@/db/schemas'
-
 export class QuotationsModel {
-  static async getAll() {
+  /**
+   * Obtener todas las cotizaciones
+   */
+  static async getAll(): Promise<DatabaseResponse<Quotation[]>> {
     try {
       const result = await db
         .select({
@@ -35,10 +39,16 @@ export class QuotationsModel {
         .orderBy(desc(quotationsTable.updatedAt))
         .limit(1000)
 
-      console.log('all quotations success')
-      return result
+      return {
+        data: result,
+        error: null,
+      }
     } catch (error) {
       console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al obtener las cotizaciones'),
+      }
     }
   }
 
@@ -74,7 +84,9 @@ export class QuotationsModel {
     }
   }
 
-  static async getByNumber(number: Quotation['number']) {
+  static async getByNumber(
+    number: number,
+  ): Promise<DatabaseResponse<Quotation>> {
     try {
       const result = await db
         .select({
@@ -100,14 +112,22 @@ export class QuotationsModel {
           eq(quotationsTable.customerId, customersTable.id),
         )
 
-      console.log(`getByNumer ${number}  by Number`)
-      return result[0]
+      return {
+        data: result[0],
+        error: null,
+      }
     } catch (error) {
       console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al obtener las cotizacion'),
+      }
     }
   }
 
-  static async getLastQuotation(): Promise<{ number: number }> {
+  static async getLastQuotation(): Promise<
+    DatabaseResponse<{ number: number }>
+  > {
     try {
       const quotations = await db
         .select({
@@ -117,13 +137,24 @@ export class QuotationsModel {
         .orderBy(desc(quotationsTable.number))
         .limit(1)
 
-      return quotations[0]
+      return {
+        error: null,
+        data: {
+          number: quotations[0].number,
+        },
+      }
     } catch (error) {
       console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al obtener las cotizaciones'),
+      }
     }
   }
 
-  static async create(value: InsertQuotation) {
+  static async create(
+    value: InsertQuotation,
+  ): Promise<DatabaseResponse<{ id: string; number: number }>> {
     try {
       const result = await db.insert(quotationsTable).values(value).returning({
         id: quotationsTable.id,
@@ -131,22 +162,38 @@ export class QuotationsModel {
       })
 
       return {
-        success: true,
         data: result[0],
-        message: 'Cotizacion Creada',
+        error: null,
       }
     } catch (error) {
       console.log(error)
       return {
-        sucess: false,
         data: null,
-        message: 'Error creando cotizacion',
+        error: DatabaseError.internalError('Error al crear la cotización'),
       }
     }
   }
 
-  static async delete(id: Quotation['id']) {
-    await db.delete(quotationsTable).where(eq(quotationsTable.id, id))
+  static async delete(
+    id: Quotation['id'],
+  ): Promise<DatabaseResponse<{ number: number }>> {
+    try {
+      const result = await db
+        .delete(quotationsTable)
+        .where(eq(quotationsTable.id, id))
+        .returning({
+          number: quotationsTable.number,
+        })
+      return {
+        data: { number: result[0].number },
+        error: null,
+      }
+    } catch (error) {
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al eliminar la cotización'),
+      }
+    }
   }
 
   static async deleteByNumber(number: Quotation['number']) {
@@ -156,46 +203,50 @@ export class QuotationsModel {
   static async update(
     id: string,
     value: Partial<Omit<Quotation, 'id' | 'createdAt'>>,
-  ) {
+  ): Promise<DatabaseResponse<Quotation>> {
     try {
       const rows = await db
         .update(quotationsTable)
         .set(value)
         .where(eq(quotationsTable.id, id))
-        .returning({
-          id: quotationsTable.id,
-          number: quotationsTable.number,
-          deadline: quotationsTable.deadline,
-          items: quotationsTable.items,
-          credit: quotationsTable.credit,
-          customerId: quotationsTable.customerId,
-          includeIgv: quotationsTable.includeIgv,
-          created_at: quotationsTable.createdAt,
-          updated_at: quotationsTable.updatedAt,
-        })
+        .returning()
 
       return {
-        success: true,
+        error: null,
         data: rows[0],
-        message: `Cotizacion actualizada correctamente`,
       }
     } catch (error) {
       return {
-        success: false,
         data: null,
-        message: 'Error actualizando cotizacion',
+        error: DatabaseError.internalError('Error al actualizar la cotización'),
       }
     }
   }
 
-  static async setIsPaymentPending(id: string, value: boolean) {
+  static async setIsPaymentPending(
+    id: string,
+    value: boolean,
+  ): Promise<
+    DatabaseResponse<{
+      number: number
+    }>
+  > {
     try {
-      await db
+      const result = await db
         .update(quotationsTable)
         .set({ isPaymentPending: value })
         .where(eq(quotationsTable.id, id))
+        .returning({ number: quotationsTable.number })
+      return {
+        error: null,
+        data: result[0],
+      }
     } catch (error) {
       console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al actualizar la cotización'),
+      }
     }
   }
 }

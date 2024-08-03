@@ -1,11 +1,12 @@
+import { type ProductInsert, type Product, type ProductUpdate } from '@/schemas'
+import type { DatabaseResponse } from '@/types'
+import { DatabaseError } from '@/errors'
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
-import { type ProductInsert, type Product, type ProductUpdate } from '@/schemas'
 import { productsTable } from '@/db/schemas'
-import { getDatabaseErrorMessage } from '@/lib/utils'
 
 export class ProductsModel {
-  static async getAll(): Promise<Product[]> {
+  static async getAll(): Promise<DatabaseResponse<Product[]>> {
     try {
       const result = await db
         .select({
@@ -26,45 +27,77 @@ export class ProductsModel {
 
       console.log('all produccts success')
 
-      return result
+      return {
+        data: result,
+        error: null,
+      }
     } catch (error) {
       console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al obtener los productos'),
+      }
     }
   }
 
-  static async create(values: ProductInsert) {
+  static async create(
+    values: ProductInsert,
+  ): Promise<DatabaseResponse<Product>> {
     try {
-      await db.insert(productsTable).values(values)
+      const result = await db.insert(productsTable).values(values).returning()
 
       return {
-        success: true,
-        message: 'Producto Creado',
+        data: result[0],
+        error: null,
       }
     } catch (error) {
-      const errorMessage = getDatabaseErrorMessage(error)
       return {
-        success: false,
-        message: errorMessage,
+        data: null,
+        error: DatabaseError.internalError('Error al crear el producto'),
       }
     }
   }
 
-  static async delete(id: Product['id']) {
-    await db.delete(productsTable).where(eq(productsTable.id, id))
+  static async delete(id: Product['id']): Promise<DatabaseResponse<Product>> {
+    try {
+      const result = await db
+        .delete(productsTable)
+        .where(eq(productsTable.id, id))
+      return {
+        data: result[0],
+        error: null,
+      }
+    } catch (error) {
+      console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al eliminar el producto'),
+      }
+    }
   }
 
-  static async update(id: Product['id'], value: ProductUpdate) {
+  static async update(
+    id: Product['id'],
+    value: ProductUpdate,
+  ): Promise<DatabaseResponse<Product>> {
     try {
-      await db
+      const result = await db
         .update(productsTable)
         .set({
           ...value,
           updatedAt: new Date(),
         })
         .where(eq(productsTable.id, id))
+      return {
+        data: result[0],
+        error: null,
+      }
     } catch (error) {
       console.log(error)
-      getDatabaseErrorMessage(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al actualizar el producto'),
+      }
     }
   }
 }
