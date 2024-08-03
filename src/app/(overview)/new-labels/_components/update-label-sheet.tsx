@@ -2,7 +2,7 @@
 
 import { TABLES } from '@/constants'
 import { createBrowserClient } from '@/lib/supabase/client'
-import { AgencyType } from '@/types'
+import { Agency } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
@@ -50,7 +50,7 @@ interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet>
 export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
-  const [agencies, setAgencies] = React.useState<AgencyType[]>([])
+  const [agencies, setAgencies] = React.useState<Agency[]>([])
 
   const suggestedAgency = label.agency_id
     ? agencies.find(agency => agency.id === label.agency_id)

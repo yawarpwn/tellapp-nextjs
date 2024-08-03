@@ -1,6 +1,6 @@
 'use client'
 
-import type { AgencyType } from '@/types'
+import type { Agency } from '@/types'
 import React from 'react'
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
@@ -8,17 +8,6 @@ import { Button } from '@/components/ui/button'
 import { deleteAgencyAction } from '@/lib/actions/agencies'
 import { MoreHorizontal } from 'lucide-react'
 import { UpdateAgencySheet } from './update-agency-sheet'
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,10 +19,10 @@ import {
 
 import { createColumnHelper } from '@tanstack/react-table'
 
-const columnHelper = createColumnHelper<AgencyType>()
+const columnHelper = createColumnHelper<Agency>()
 
 export const agencyColumns = [
-  columnHelper.accessor('company', {
+  columnHelper.accessor('name', {
     header: 'Cliente',
     cell: props => (
       <div className="min-w-[250px]">
@@ -49,31 +38,6 @@ export const agencyColumns = [
   columnHelper.accessor('phone', {
     header: 'Teléfono',
     cell: props => props.getValue(),
-  }),
-  columnHelper.accessor('destinations', {
-    header: 'Destinos',
-    cell: props => {
-      const { destinations } = props.row.original
-      return (
-        <div>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={destinations[0]} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {destinations.length > 0 &&
-                  destinations.map((destination: string) => (
-                    <SelectItem value={destination} key={destination}>
-                      {destination}
-                    </SelectItem>
-                  ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-      )
-    },
   }),
   columnHelper.display({
     id: 'actions',

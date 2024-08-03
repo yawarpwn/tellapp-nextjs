@@ -30,15 +30,15 @@ import {
 } from '@/components/ui/form'
 
 import { createAgencyAction } from '@/lib/actions/agencies'
-import { agencyCreateSchema } from '@/schemas/agencies'
+import { AgencyInsertSchema } from '@/schemas/agencies'
 
-import type { AgencyCreateType } from '@/types'
+import type { AgencyInsert } from '@/types'
 
 export function CreateAgencyDialog() {
   const [open, setOpen] = React.useState(false)
   const [isCreatePending, startCreateTransition] = React.useTransition()
 
-  function onSubmit(input: AgencyCreateType) {
+  function onSubmit(input: AgencyInsert) {
     startCreateTransition(() => {
       toast.promise(createAgencyAction(input), {
         loading: 'Creando cliente...',
@@ -55,8 +55,8 @@ export function CreateAgencyDialog() {
     })
   }
 
-  const form = useForm<AgencyCreateType>({
-    resolver: zodResolver(agencyCreateSchema),
+  const form = useForm<AgencyInsert>({
+    resolver: zodResolver(AgencyInsertSchema),
   })
 
   return (
@@ -76,7 +76,7 @@ export function CreateAgencyDialog() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
-              name="company"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Razon Social</FormLabel>
@@ -123,21 +123,7 @@ export function CreateAgencyDialog() {
                 <FormItem>
                   <FormLabel>Telefono</FormLabel>
                   <FormControl>
-                    <Input placeholder="Telefono" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="destinations"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Destinos</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Direccion" {...field} />
+                    <Input placeholder="Telefono" {...field} value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

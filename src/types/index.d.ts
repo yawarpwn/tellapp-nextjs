@@ -22,11 +22,6 @@ export type LabelType = z.infer<typeof labelSchema>
 export type LabelCreateType = z.infer<typeof labelCreateSchema>
 export type LabelUpdateType = z.infer<typeof labelUpdateSchema>
 
-// Agency
-export type AgencyType = z.infer<typeof agencySchema>
-export type AgencyCreateType = z.infer<typeof agencieCreateSchema>
-export type AgencyUpdateType = z.infer<typeof agencieUpdateSchema>
-
 // Signals
 export type SignalType = z.infer<typeof SignalSchema>
 export type SignalUpdateType = z.infer<typeof SignalUpdateSchema>
