@@ -1,9 +1,8 @@
 import { duplicateQuotation } from '@/lib/actions/quotations'
 export function QuotationDeleteAction() {
-	return (
-		<form>
-			<button>
-			</button>
-		</form>
-	)
+  return (
+    <form>
+      <button></button>
+    </form>
+  )
 }

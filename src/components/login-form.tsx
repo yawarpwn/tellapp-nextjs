@@ -26,9 +26,7 @@ export function LoginForm({ message }: { message: string }) {
               required
             />
             {state?.errors?.email && (
-              <p className="text-xs text-destructive">
-                {state?.errors?.email[0]}
-              </p>
+              <p className="text-xs text-destructive">{state?.errors?.email[0]}</p>
             )}
           </div>
           <div className="grid gap-4">
@@ -45,13 +43,9 @@ export function LoginForm({ message }: { message: string }) {
             />
 
             {state?.errors?.password && (
-              <p className=" text-xs text-destructive">
-                {state?.errors?.password[0]}
-              </p>
+              <p className=" text-xs text-destructive">{state?.errors?.password[0]}</p>
             )}
-            {state?.message && (
-              <p className=" text-xs text-destructive">*{state.message}</p>
-            )}
+            {state?.message && <p className=" text-xs text-destructive">*{state.message}</p>}
             <p className="text-xs text-[#6b66ff]">
               <a href="#">Olvidates tu contraseña ?</a>
             </p>

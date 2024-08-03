@@ -4,9 +4,7 @@ import { CustomerInsert, CustomerUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { CustomersModel } from '@/models'
 
-export async function createCustomerAction(
-  input: CustomerInsert,
-): Promise<void> {
+export async function createCustomerAction(input: CustomerInsert): Promise<void> {
   const { error } = await CustomersModel.create(input)
 
   if (error) {

@@ -1,10 +1,5 @@
 'use client'
-import {
-  QuotationClientUpdate,
-  type Customer,
-  type Product,
-  QuotationClientCreate,
-} from '@/types'
+import { QuotationClientUpdate, type Customer, type Product, QuotationClientCreate } from '@/types'
 
 import {
   createQuotationStore,
@@ -13,20 +8,15 @@ import {
 } from '@/store/create-quotation-store'
 import React from 'react'
 import { useStore } from 'zustand'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { DialogFooter, DialogHeader } from '@/components/ui/dialog'
 
 type QuotationCreateStoreApi = ReturnType<typeof createQuotationStore>
 
-export const QuotationCreateStoreContext = React.createContext<
-  QuotationCreateStoreApi | undefined
->(undefined)
+export const QuotationCreateStoreContext = React.createContext<QuotationCreateStoreApi | undefined>(
+  undefined,
+)
 
 // type QuotationProviderProps =  React.PropsWithChildren<Partial<QuotationStore>>
 type QuotationCreateStoreProviderProps = {
@@ -35,9 +25,7 @@ type QuotationCreateStoreProviderProps = {
   products: Product[]
 }
 
-export function QuotationCreateStoreProvider(
-  props: QuotationCreateStoreProviderProps,
-) {
+export function QuotationCreateStoreProvider(props: QuotationCreateStoreProviderProps) {
   const { children, customers, products } = props
   const storeRef = React.useRef<QuotationCreateStoreApi>()
   if (!storeRef.current) {
@@ -67,8 +55,7 @@ export function QuotationCreateStoreProvider(
             <DialogHeader>
               <DialogTitle>Recupear Cotización</DialogTitle>
               <DialogDescription>
-                Hemos recuperando una cotización no guardarda, ¿Desea
-                restaurarla?
+                Hemos recuperando una cotización no guardarda, ¿Desea restaurarla?
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
@@ -101,14 +88,10 @@ export function QuotationCreateStoreProvider(
 export function useQuotationCreateStore<T>(
   selector: (state: QuotationStore<QuotationClientCreate>) => T,
 ): T {
-  const quotationCreateStoreContext = React.useContext(
-    QuotationCreateStoreContext,
-  )
+  const quotationCreateStoreContext = React.useContext(QuotationCreateStoreContext)
 
   if (!quotationCreateStoreContext)
-    throw new Error(
-      'useQuotationCreateStore must be used within CounterStoreProvider',
-    )
+    throw new Error('useQuotationCreateStore must be used within CounterStoreProvider')
 
   return useStore(quotationCreateStoreContext, selector)
 }

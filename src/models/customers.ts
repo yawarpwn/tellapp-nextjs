@@ -24,7 +24,6 @@ export class CustomersModel {
         .from(customersTable)
         .orderBy(desc(customersTable.updatedAt))
 
-      console.log('all customers success')
       return {
         data: result,
         error: null,
@@ -40,10 +39,7 @@ export class CustomersModel {
 
   static async getById(id: string): Promise<DatabaseResponse<Customer>> {
     try {
-      const result = await db
-        .select()
-        .from(customersTable)
-        .where(eq(customersTable.id, id))
+      const result = await db.select().from(customersTable).where(eq(customersTable.id, id))
       return {
         error: null,
         data: result[0],
@@ -57,14 +53,9 @@ export class CustomersModel {
     }
   }
 
-  static async getByRuc(
-    ruc: Customer['ruc'],
-  ): Promise<DatabaseResponse<Customer>> {
+  static async getByRuc(ruc: Customer['ruc']): Promise<DatabaseResponse<Customer>> {
     try {
-      const result = await db
-        .select()
-        .from(customersTable)
-        .where(eq(customersTable.ruc, ruc))
+      const result = await db.select().from(customersTable).where(eq(customersTable.ruc, ruc))
 
       return {
         error: null,
@@ -78,9 +69,7 @@ export class CustomersModel {
     }
   }
 
-  static async create(
-    value: CustomerInsert,
-  ): Promise<DatabaseResponse<Customer>> {
+  static async create(value: CustomerInsert): Promise<DatabaseResponse<Customer>> {
     try {
       const rows = await db.insert(customersTable).values(value).returning()
 

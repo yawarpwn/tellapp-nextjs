@@ -43,16 +43,11 @@ import { updateLabelAction } from '@/lib/actions/labels'
 import { labelUpdateSchema } from '@/schemas/labels'
 import type { LabelType, LabelUpdateType } from '@/types'
 
-interface UpdateTaskSheetProps
-  extends React.ComponentPropsWithRef<typeof Sheet> {
+interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet> {
   label: LabelType
 }
 
-export function UpdateLabelSheet({
-  label,
-  onOpenChange,
-  ...props
-}: UpdateTaskSheetProps) {
+export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
   const [agencies, setAgencies] = React.useState<AgencyType[]>([])
@@ -116,15 +111,10 @@ export function UpdateLabelSheet({
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
           <SheetTitle>Actualizar</SheetTitle>
-          <SheetDescription>
-            Completa el formulario para actualizar
-          </SheetDescription>
+          <SheetDescription>Completa el formulario para actualizar</SheetDescription>
         </SheetHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="dni_ruc"
@@ -211,11 +201,7 @@ export function UpdateLabelSheet({
                     <SelectContent className="w-[380px]">
                       <SelectGroup>
                         {Object.values(agencies).map(agency => (
-                          <SelectItem
-                            key={agency.id}
-                            value={agency.id}
-                            className="capitalize"
-                          >
+                          <SelectItem key={agency.id} value={agency.id} className="capitalize">
                             {agency.company}
                           </SelectItem>
                         ))}

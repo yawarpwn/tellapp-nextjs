@@ -76,8 +76,7 @@ export const createQuotationStore = <T extends QuotationClientType>(
         ...initProps,
         setQuo: quo => set(state => ({ quo: { ...state.quo, ...quo } })),
         setItems: items => set({ items }),
-        setIsCustomerServed: () =>
-          set(state => ({ ...state, isCustomerServed: true })),
+        setIsCustomerServed: () => set(state => ({ ...state, isCustomerServed: true })),
         addItem: item =>
           set(state => ({
             items: [
@@ -94,9 +93,7 @@ export const createQuotationStore = <T extends QuotationClientType>(
           })),
         editItem: (id, itemToEdit) =>
           set(state => ({
-            items: state.items.map(item =>
-              item.id === id ? { ...item, ...itemToEdit } : item,
-            ),
+            items: state.items.map(item => (item.id === id ? { ...item, ...itemToEdit } : item)),
           })),
         duplicateItem: item =>
           set(state => ({
@@ -125,9 +122,7 @@ export const createQuotationStore = <T extends QuotationClientType>(
 
         partialize: state =>
           Object.fromEntries(
-            Object.entries(state).filter(
-              ([key]) => !['customers', 'products'].includes(key),
-            ),
+            Object.entries(state).filter(([key]) => !['customers', 'products'].includes(key)),
           ),
         skipHydration: true,
       },

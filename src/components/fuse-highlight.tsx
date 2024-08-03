@@ -39,12 +39,7 @@ type Props = {
 }
 export function FuseHighLight({ hit, attribute }: Props) {
   const matches =
-    typeof hit.item === 'string'
-      ? hit.matches?.[0]
-      : hit.matches?.find(m => m.key === attribute)
-  const fallback =
-    typeof hit.item === 'string'
-      ? hit.item
-      : resolveAttribute(hit.item, attribute)
+    typeof hit.item === 'string' ? hit.matches?.[0] : hit.matches?.find(m => m.key === attribute)
+  const fallback = typeof hit.item === 'string' ? hit.item : resolveAttribute(hit.item, attribute)
   return highlight(matches?.value || fallback, matches?.indices)
 }

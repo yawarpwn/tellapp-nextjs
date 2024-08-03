@@ -26,6 +26,7 @@ export const QuotationClientSchema = z.object({
   }),
   items: z.array(QuotationItemSchema),
   credit: z.coerce.number().optional().nullable(),
+  discount: z.coerce.number().optional().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
 })

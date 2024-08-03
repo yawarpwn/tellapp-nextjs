@@ -43,16 +43,11 @@ import type { ProductUpdate } from '@/types'
 import { PRODUCT_CATEGORIES } from '@/constants'
 import { getErrorMessage } from '@/lib/handle-error'
 
-interface UpdateTaskSheetProps
-  extends React.ComponentPropsWithRef<typeof Sheet> {
+interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet> {
   product: Product
 }
 
-export function UpdateProductSheet({
-  product,
-  onOpenChange,
-  open,
-}: UpdateTaskSheetProps) {
+export function UpdateProductSheet({ product, onOpenChange, open }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
   const form = useForm<ProductUpdate>({
@@ -91,15 +86,10 @@ export function UpdateProductSheet({
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
           <SheetTitle>Actualizar Producto</SheetTitle>
-          <SheetDescription>
-            Completa el formulario para actualizar
-          </SheetDescription>
+          <SheetDescription>Completa el formulario para actualizar</SheetDescription>
         </SheetHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="description"
@@ -195,10 +185,7 @@ export function UpdateProductSheet({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Categoria</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={product.category}
-                  >
+                  <Select onValueChange={field.onChange} defaultValue={product.category}>
                     <FormControl>
                       <SelectTrigger className="capitalize">
                         <SelectValue placeholder="Seleciona una categoria" />
@@ -207,11 +194,7 @@ export function UpdateProductSheet({
                     <SelectContent>
                       <SelectGroup>
                         {Object.values(PRODUCT_CATEGORIES).map(product => (
-                          <SelectItem
-                            key={product}
-                            value={product}
-                            className="capitalize"
-                          >
+                          <SelectItem key={product} value={product} className="capitalize">
                             {product}
                           </SelectItem>
                         ))}

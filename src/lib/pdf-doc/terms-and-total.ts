@@ -4,9 +4,7 @@ import { getIgv } from '@/lib/utils'
 import { Content, Table } from 'pdfmake/interfaces'
 
 export function getTermAndTotal(quotation: QuotationType) {
-  const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(
-    quotation.items,
-  )
+  const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(quotation.items)
 
   const deadlineText =
     quotation.deadline === 1

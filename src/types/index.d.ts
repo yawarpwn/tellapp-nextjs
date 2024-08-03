@@ -5,23 +5,11 @@ import { z } from 'zod'
 //Quotations
 export type * from '@/schemas'
 
-import {
-  SignalCreateSchema,
-  SignalSchema,
-  SignalUpdateSchema,
-} from '@/schemas/signal'
+import { SignalCreateSchema, SignalSchema, SignalUpdateSchema } from '@/schemas/signal'
 
-import {
-  agencieCreateSchema,
-  agencieUpdateSchema,
-  agencySchema,
-} from '@/schemas/agencies'
+import { agencieCreateSchema, agencieUpdateSchema, agencySchema } from '@/schemas/agencies'
 
-import {
-  labelCreateSchema,
-  labelSchema,
-  labelUpdateSchema,
-} from '@/schemas/labels'
+import { labelCreateSchema, labelSchema, labelUpdateSchema } from '@/schemas/labels'
 
 export interface PageProps {
   searchParams?: {

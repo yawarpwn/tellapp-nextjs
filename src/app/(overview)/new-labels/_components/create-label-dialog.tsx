@@ -52,8 +52,7 @@ import type { LabelCreateType } from '@/types'
 export function CreateLabelDialog() {
   const [open, setOpen] = React.useState(false)
   const [isCreatePending, startCreateTransition] = React.useTransition()
-  const [isSearchDniRucPending, startSearchDniRucTransition] =
-    React.useTransition()
+  const [isSearchDniRucPending, startSearchDniRucTransition] = React.useTransition()
   const [agencies, setAgencies] = React.useState<AgencyType[]>([])
 
   React.useEffect(() => {
@@ -127,15 +126,10 @@ export function CreateLabelDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Rotulo</DialogTitle>
-          <DialogDescription>
-            LLena el formulario para crear un nuevo Cliente
-          </DialogDescription>
+          <DialogDescription>LLena el formulario para crear un nuevo Cliente</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="dni_ruc"
@@ -167,10 +161,7 @@ export function CreateLabelDialog() {
                 <FormItem>
                   <FormLabel>Destinatario</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isCreatePending || isSearchDniRucPending}
-                      {...field}
-                    />
+                    <Input disabled={isCreatePending || isSearchDniRucPending} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -184,10 +175,7 @@ export function CreateLabelDialog() {
                 <FormItem>
                   <FormLabel>Destino</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isCreatePending || isSearchDniRucPending}
-                      {...field}
-                    />
+                    <Input disabled={isCreatePending || isSearchDniRucPending} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -201,10 +189,7 @@ export function CreateLabelDialog() {
                 <FormItem>
                   <FormLabel>Telefono</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isCreatePending || isSearchDniRucPending}
-                      {...field}
-                    />
+                    <Input disabled={isCreatePending || isSearchDniRucPending} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -218,10 +203,7 @@ export function CreateLabelDialog() {
                 <FormItem>
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isCreatePending || isSearchDniRucPending}
-                      {...field}
-                    />
+                    <Input disabled={isCreatePending || isSearchDniRucPending} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

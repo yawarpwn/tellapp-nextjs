@@ -11,9 +11,7 @@ type ComplexType = {
 //mejora la lectura
 type PrettyComplexType = Prettify<ComplexType>
 
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I,
-) => void
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
   ? I
   : never
 

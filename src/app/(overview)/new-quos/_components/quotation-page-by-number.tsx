@@ -9,7 +9,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { EditIcon } from '@/icons'
-import { fetchQuotationByNumber } from '@/lib/data/quotations'
 import { formatDateToLocal, formatNumberToLocal } from '@/lib/utils'
 import { getIgv } from '@/lib/utils'
 import Link from 'next/link'
@@ -27,9 +26,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
     notFound()
   }
 
-  const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(
-    quotation.items,
-  )
+  const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(quotation.items)
 
   return (
     <>
@@ -54,7 +51,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
           )}
           <IsPaymentPendingButton
             id={quotation.id}
-            isPaymentPending={quotation.isPaymentPending}
+            isPaymentPending={!!quotation.isPaymentPending}
             quotationNumber={quotation.number}
           />
         </div>
@@ -72,23 +69,15 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
 
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
         <div>
-          <h3 className="text-lg font-semibold ">
-            {quotation.company ?? 'SIN NOMBRE'}
-          </h3>
-          <address className="mt-2 not-italic text-muted-foreground ">
-            {quotation.address}
-          </address>
-          <p className="mt-2 text-muted-foreground">
-            {quotation.ruc ?? 'SIN RUC'}
-          </p>
+          <h3 className="text-lg font-semibold ">{quotation.company ?? 'SIN NOMBRE'}</h3>
+          <address className="mt-2 not-italic text-muted-foreground ">{quotation.address}</address>
+          <p className="mt-2 text-muted-foreground">{quotation.ruc ?? 'SIN RUC'}</p>
         </div>
         <div className="space-y-2 sm:text-right">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-1 sm:gap-2">
             <dl className="grid gap-x-3 sm:grid-cols-6">
               <dt className="col-span-3 font-semibold ">Fecha:</dt>
-              <dd className="col-span-3 ">
-                {formatDateToLocal(quotation.createdAt)}
-              </dd>
+              <dd className="col-span-3 ">{formatDateToLocal(quotation.createdAt)}</dd>
             </dl>
             <dl className="grid gap-x-3 sm:grid-cols-6">
               <dt className="col-span-3 font-semibold ">Actualizado:</dt>
@@ -104,9 +93,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <dl className="grid gap-x-3 sm:grid-cols-6">
               <dt className="col-span-3 font-semibold ">Codición de Pago</dt>
               <dd className="col-span-3 ">
-                {quotation.credit
-                  ? `${quotation.credit} días`
-                  : '50% Adelanto '}
+                {quotation.credit ? `${quotation.credit} días` : '50% Adelanto '}
               </dd>
             </dl>
           </div>
@@ -131,9 +118,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
               </TableCell>
               <TableCell>{item.unit_size}</TableCell>
               <TableCell className="text-center">{item.qty}</TableCell>
-              <TableCell className="text-center">
-                {(item.price / 1.18).toFixed(4)}
-              </TableCell>
+              <TableCell className="text-center">{(item.price / 1.18).toFixed(4)}</TableCell>
               <TableCell>{formatNumberToLocal(item.price)}</TableCell>
               <TableCell className="text-right">
                 {formatNumberToLocal(item.price * item.qty)}

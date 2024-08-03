@@ -3,11 +3,7 @@ import { Logo } from '@/components/logo'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams?: { message?: string }
-}) {
+export default async function Home({ searchParams }: { searchParams?: { message?: string } }) {
   const message = searchParams?.message || ''
 
   const authToken = cookies().get('auth-token')
@@ -53,12 +49,10 @@ export default async function Home({
             <div className="absolute bottom-1 right-1 z-10 flex max-w-md items-center gap-2 rounded-md bg-background/60 px-4">
               <div className=" text-sm italic">
                 <p>
-                  Desde que supimos que venías, nuestras vidas tomaron, rumbo,
-                  un horizonte, una meta, un camino.
+                  Desde que supimos que venías, nuestras vidas tomaron, rumbo, un horizonte, una
+                  meta, un camino.
                 </p>
-                <p className="mt-2">
-                  Todo nuestros logros son para ti y gracias a ti🙏
-                </p>
+                <p className="mt-2">Todo nuestros logros son para ti y gracias a ti🙏</p>
               </div>
               <div className="flex h-[100px] w-[150px] justify-center object-cover">
                 <img

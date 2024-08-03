@@ -12,13 +12,7 @@ export function generateLabelPdf(label: LabelType) {
         table: {
           widths: ['*', '*', '*'],
           heights: [570, 'auto', 'auto'],
-          body: [
-            [
-              gelLabelColumn(label),
-              gelLabelColumn(label),
-              gelLabelColumn(label),
-            ],
-          ],
+          body: [[gelLabelColumn(label), gelLabelColumn(label), gelLabelColumn(label)]],
         },
         layout: {
           defaultBorder: false,

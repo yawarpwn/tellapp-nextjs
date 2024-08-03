@@ -46,9 +46,7 @@ export function CustomersPicker({ customers, onPickCustomer }: Props) {
         </DialogTrigger>
         <DialogContent className="h-[90vh]">
           <DialogHeader>
-            <DialogTitle className="sr-only">
-              Buscar cliente frecuente
-            </DialogTitle>
+            <DialogTitle className="sr-only">Buscar cliente frecuente</DialogTitle>
             <InputSearch
               searchValue={filterValue}
               placeholder={'Buscar cliente...'}

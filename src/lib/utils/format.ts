@@ -1,9 +1,6 @@
 import { type QuotationItem } from '@/types'
 
-export const formatDateToLocal = (
-  date: Date,
-  options?: Intl.DateTimeFormatOptions,
-) => {
+export const formatDateToLocal = (date: Date, options?: Intl.DateTimeFormatOptions) => {
   const formatter = new Intl.DateTimeFormat('es-PE', {
     day: 'numeric',
     month: 'numeric',
@@ -26,9 +23,7 @@ export const getFormatedDate = (date: string | Date) => {
   let month = currentDate.getMonth() + 1
   let day = currentDate.getDate()
 
-  const formatedDate = `${year}-${String(month).padStart(2, '0')}-${String(
-    day,
-  ).padStart(2, '0')}`
+  const formatedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
   return formatedDate
 }
 

@@ -20,13 +20,7 @@ import { DeleteIcon } from '@/icons'
 import { Loader2 } from 'lucide-react'
 import React from 'react'
 
-export function DeleteButton({
-  id,
-  showTrigger = false,
-}: {
-  id: string
-  showTrigger: boolean
-}) {
+export function DeleteButton({ id, showTrigger = false }: { id: string; showTrigger: boolean }) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const [pending, startTranstion] = React.useTransition()
@@ -37,7 +31,7 @@ export function DeleteButton({
           <DialogTrigger asChild>
             <Button variant={'secondary'} size={'sm'}>
               <DeleteIcon size={20} />
-              <span className="ml-2 max-md:sr-only">Eliminar</span>
+              <span className="ml-2 hidden lg:block">Eliminar</span>
             </Button>
           </DialogTrigger>
         )}

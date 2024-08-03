@@ -1,10 +1,5 @@
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { SearchIcon } from '@/icons'
@@ -25,9 +20,7 @@ import { useSearch } from '@/hooks/use-search'
 export function QuotationSearchProduct() {
   const products = useQuotationCreateStore(state => state.products)
   const addItem = useQuotationCreateStore(state => state.addItem)
-  const [selectedProductId, setSelectedProductId] = React.useState<
-    string | null
-  >(null)
+  const [selectedProductId, setSelectedProductId] = React.useState<string | null>(null)
   const [open, setOpen] = React.useState<boolean>(false)
 
   const { results, searchValue, setSearchValue } = useSearch({
@@ -78,9 +71,7 @@ export function QuotationSearchProduct() {
                   setOpen(false)
                 }}
               >
-                <TableCell className="min-w-[250px]">
-                  {product.description}
-                </TableCell>
+                <TableCell className="min-w-[250px]">{product.description}</TableCell>
                 <TableCell>{product.code}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell>{product.cost}</TableCell>
@@ -91,9 +82,7 @@ export function QuotationSearchProduct() {
         <form
           onSubmit={e => {
             e.preventDefault()
-            const selectedProduct = products.find(
-              product => product.id === selectedProductId,
-            )
+            const selectedProduct = products.find(product => product.id === selectedProductId)
 
             if (!selectedProduct) return
 

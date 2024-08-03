@@ -31,9 +31,7 @@ const initialState = {
 export function QuotationItemModal() {
   // const { itemToEdit, open, onOpenChange, closeModal } = props
   // const [open, setOpen] = React.useState(false)
-  const isItemModalOpen = useQuotationCreateStore(
-    state => state.isItemModalOpen,
-  )
+  const isItemModalOpen = useQuotationCreateStore(state => state.isItemModalOpen)
   const openItemModal = useQuotationCreateStore(state => state.openItemModal)
   const closeItemModal = useQuotationCreateStore(state => state.closeItemModal)
   const items = useQuotationCreateStore(state => state.items)
@@ -162,9 +160,7 @@ export function QuotationItemModal() {
                     >
                       <div className="flex items-center gap-x-2 p-0">
                         <span className="btn btn-primary btn-xs h-full ">
-                          <p style={{ writingMode: 'vertical-lr' }}>
-                            {item.code}
-                          </p>
+                          <p style={{ writingMode: 'vertical-lr' }}>{item.code}</p>
                         </span>
                         <span className="p-0">{item.description}</span>
                       </div>
@@ -212,13 +208,7 @@ export function QuotationItemModal() {
                 />
               </div>
               <div className="w-full">
-                <Input
-                  value={item.cost}
-                  type="number"
-                  labelText="Costo"
-                  name="cost"
-                  disabled
-                />
+                <Input value={item.cost} type="number" labelText="Costo" name="cost" disabled />
               </div>
             </div>
           </div>
@@ -226,11 +216,7 @@ export function QuotationItemModal() {
             <button className="btn btn-secondary flex-1" type="submit">
               {isEditMode ? 'Actualizar' : 'Agregar'}
             </button>
-            <button
-              type="button"
-              className="btn btn-secondary flex-1"
-              onClick={closeItemModal}
-            >
+            <button type="button" className="btn btn-secondary flex-1" onClick={closeItemModal}>
               Cancelar
             </button>
           </footer>

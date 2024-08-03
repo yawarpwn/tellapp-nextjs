@@ -26,14 +26,9 @@ export function IsRegularButton({
 
   return (
     <form>
-      <Button
-        disabled={pending}
-        onClick={handleClick}
-        variant="secondary"
-        size={'sm'}
-      >
+      <Button disabled={pending} onClick={handleClick} variant="secondary" size={'sm'}>
         <StartIcon size={20} filled={isRegular} />
-        <span className="ml-2 max-md:sr-only">Favorito</span>
+        <span className="ml-2 hidden lg:block">Favorito</span>
       </Button>
     </form>
   )

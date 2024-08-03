@@ -1,10 +1,6 @@
 'use server'
 import { QuotationsModel, CustomersModel } from '@/models'
-import type {
-  QuotationClientCreate,
-  QuotationClientUpdate,
-  QuotationItem,
-} from '@/types'
+import type { QuotationClientCreate, QuotationClientUpdate, QuotationItem } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getRuc } from '../sunat'
@@ -100,9 +96,7 @@ export async function deleteQuotationAction(id: string) {
   redirect(`/new-quos`)
 }
 
-export async function duplicateQuotationAction(
-  id: string,
-): Promise<{ number: number }> {
+export async function duplicateQuotationAction(id: string): Promise<{ number: number }> {
   const { data: quotation, error } = await QuotationsModel.getById(id)
 
   if (error) throw error

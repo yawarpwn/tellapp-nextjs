@@ -6,29 +6,19 @@ import { agencyColumns } from './_components/agency-columns'
 import { CreateAgencyDialog } from './_components/create-agency-dialog'
 
 async function ProductTable() {
-	const agencies = await fetchAgencies()
+  const agencies = await fetchAgencies()
 
-	return (
-		<DataTable
-			createComponent={<CreateAgencyDialog />}
-			columns={agencyColumns}
-			data={agencies}
-		/>
-	)
+  return (
+    <DataTable createComponent={<CreateAgencyDialog />} columns={agencyColumns} data={agencies} />
+  )
 }
 
 export default async function Page() {
-	return (
-		<Suspense
-			fallback={
-				<DataTableSkeleton
-					columnCount={5}
-					rowCount={20}
-					searchableColumnCount={1}
-				/>
-			}
-		>
-			<ProductTable />
-		</Suspense>
-	)
+  return (
+    <Suspense
+      fallback={<DataTableSkeleton columnCount={5} rowCount={20} searchableColumnCount={1} />}
+    >
+      <ProductTable />
+    </Suspense>
+  )
 }

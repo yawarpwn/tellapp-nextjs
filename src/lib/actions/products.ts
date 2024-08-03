@@ -21,10 +21,7 @@ export async function createProductAction(productToInsert: ProductInsert) {
   revalidatePath('/new-products', 'page')
 }
 
-export async function updateProductAction(
-  id: string,
-  productToUpdate: ProductUpdate,
-) {
+export async function updateProductAction(id: string, productToUpdate: ProductUpdate) {
   const { error } = await ProductsModel.update(id, {
     description: productToUpdate.description,
     code: productToUpdate.code?.toUpperCase(),

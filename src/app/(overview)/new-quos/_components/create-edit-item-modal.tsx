@@ -1,11 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { type Product } from '@/types'
@@ -34,9 +29,9 @@ const initialQuoItem = {
 export function CreateEditItemModal(props: Props) {
   const { open, onClose, item, addItem, editItem } = props
   const { products } = props
-  const [quoItem, setQuoItem] = useState<
-    Omit<QuotationItem, 'id'> | QuotationItem
-  >(item ?? initialQuoItem)
+  const [quoItem, setQuoItem] = useState<Omit<QuotationItem, 'id'> | QuotationItem>(
+    item ?? initialQuoItem,
+  )
 
   const { hits, onSearch } = useFuse<Product>(products, {
     keys: [
@@ -69,9 +64,7 @@ export function CreateEditItemModal(props: Props) {
 
   const canSearch = quoItem.description.length > 2
 
-  const handleChangeSearch = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
+  const handleChangeSearch = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.currentTarget
 
     onSearch(value)

@@ -9,18 +9,9 @@ import {
 } from '@/components/ui/table'
 import { fetchFilteredGallery } from '@/lib/data/gallery'
 import { TrashIcon } from 'lucide-react'
-import {
-  GalleryDeleteFormButton,
-  GalleryEditFormButton,
-} from './gallery-buttons'
+import { GalleryDeleteFormButton, GalleryEditFormButton } from './gallery-buttons'
 
-export async function GalleryTable({
-  query,
-  currentPage,
-}: {
-  query: string
-  currentPage: number
-}) {
+export async function GalleryTable({ query, currentPage }: { query: string; currentPage: number }) {
   const galleryImages = await fetchFilteredGallery(query, currentPage)
   console.log(galleryImages)
   const hasGalleryImages = galleryImages && galleryImages.length > 0
@@ -61,10 +52,7 @@ export async function GalleryTable({
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <GalleryEditFormButton galleryImage={photo} />
-                    <GalleryDeleteFormButton
-                      id={photo.id}
-                      publicId={photo.public_id}
-                    />
+                    <GalleryDeleteFormButton id={photo.id} publicId={photo.public_id} />
                   </div>
                 </TableCell>
               </TableRow>

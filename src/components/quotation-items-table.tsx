@@ -47,18 +47,10 @@ export function QuotationItemsTable() {
               <TableCell>100</TableCell>
               <TableCell>
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => onEditItem(item.id)}
-                    type="button"
-                    className="btn btn-sm"
-                  >
+                  <button onClick={() => onEditItem(item.id)} type="button" className="btn btn-sm">
                     <EditIcon />
                   </button>
-                  <button
-                    onClick={() => deleteItem(item.id)}
-                    className="btn btn-sm"
-                    type="button"
-                  >
+                  <button onClick={() => deleteItem(item.id)} className="btn btn-sm" type="button">
                     <TrashIcon />
                   </button>
                 </div>

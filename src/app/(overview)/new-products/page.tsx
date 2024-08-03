@@ -14,24 +14,14 @@ async function ProductTable() {
   }
 
   return (
-    <DataTable
-      createComponent={<CreateProductDialog />}
-      columns={productColumns}
-      data={products}
-    />
+    <DataTable createComponent={<CreateProductDialog />} columns={productColumns} data={products} />
   )
 }
 
 export default async function Page() {
   return (
     <Suspense
-      fallback={
-        <DataTableSkeleton
-          columnCount={5}
-          rowCount={20}
-          searchableColumnCount={1}
-        />
-      }
+      fallback={<DataTableSkeleton columnCount={5} rowCount={20} searchableColumnCount={1} />}
     >
       <ProductTable />
     </Suspense>

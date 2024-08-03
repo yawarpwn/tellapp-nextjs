@@ -106,10 +106,7 @@ export function DataTable(props: Props) {
                 <TableHead key={header.id}>
                   {header.isPlaceholder
                     ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
+                    : flexRender(header.column.columnDef.header, header.getContext())}
                 </TableHead>
               ))}
             </TableRow>
@@ -136,9 +133,7 @@ export function DataTable(props: Props) {
                 <div className="flex min-h-[500px] items-center justify-center">
                   <div>
                     <EmpetyIcon className="h-60 w-60" />
-                    <p className="text-center text-2xl font-bold">
-                      No hay resultados
-                    </p>
+                    <p className="text-center text-2xl font-bold">No hay resultados</p>
                   </div>
                 </div>
               </TableCell>

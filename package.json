@@ -10,7 +10,8 @@
     "seed": "tsx ./src/db/seed.ts",
     "backup": "tsx ./scripts/backup.ts",
     "orm:check": "drizzle-kit check --config=./src/db/drizzle.config.ts",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write ./src"
   },
   "dependencies": {
     "@formkit/drag-and-drop": "0.0.25",

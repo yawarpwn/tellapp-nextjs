@@ -8,20 +8,13 @@ import pdfMake from 'pdfmake/build/pdfmake'
 import { useMemo } from 'react'
 // import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
-export function DownloadAndShareButtons({
-  quotation,
-}: {
-  quotation: QuotationClient
-}) {
+export function DownloadAndShareButtons({ quotation }: { quotation: QuotationClient }) {
   //WARN: Mejorar legibilidad
-  const date = Intl.DateTimeFormat('es-PE')
-    .format(quotation.updatedAt)
-    .replace(/\//g, '-')
+  const date = Intl.DateTimeFormat('es-PE').format(quotation.updatedAt).replace(/\//g, '-')
   const ruc = quotation.company
     ? `-${quotation.company.replace(/\./g, '').split(' ').join('-')}`
     : `-${date}-SIN-RUC`
-  const diferenceTime =
-    Number(quotation.updatedAt) - Number(quotation.createdAt)
+  const diferenceTime = Number(quotation.updatedAt) - Number(quotation.createdAt)
   const isUpdate = diferenceTime > 0
 
   const pdfFileName = `${quotation.number}-COT${ruc}${isUpdate ? '-ACTUALIZADO' : ''}.pdf`

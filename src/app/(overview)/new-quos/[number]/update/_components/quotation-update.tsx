@@ -8,10 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { useQuotationUpdateStore } from '@/providers/quotation-update-store-provider'
 import { SearchIcon, StartIcon } from '@/icons'
-import {
-  updateQuotationAction,
-  searchRucAction,
-} from '@/lib/actions/quoatations'
+import { updateQuotationAction, searchRucAction } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
@@ -118,10 +115,7 @@ export function QuotationUpdate() {
       <header className="flex justify-between">
         <div></div>
         <div className="flex justify-end">
-          <CustomersPicker
-            onPickCustomer={onPickCustomer}
-            customers={customers}
-          />
+          <CustomersPicker onPickCustomer={onPickCustomer} customers={customers} />
         </div>
       </header>
       <article className="mt-4 flex flex-col gap-4">
@@ -158,9 +152,7 @@ export function QuotationUpdate() {
               id="deadline"
               value={quo.deadline}
               disabled={pendingRuc}
-              onChange={e =>
-                setQuo({ ...quo, deadline: Number(e.target.value) })
-              }
+              onChange={e => setQuo({ ...quo, deadline: Number(e.target.value) })}
             />
           </div>
         </div>
@@ -196,9 +188,7 @@ export function QuotationUpdate() {
             <div className="flex items-center gap-2">
               <Checkbox
                 id="includeIgv"
-                onCheckedChange={e =>
-                  setQuo({ ...quo, includeIgv: Boolean(e) })
-                }
+                onCheckedChange={e => setQuo({ ...quo, includeIgv: Boolean(e) })}
                 checked={quo.includeIgv}
               />
               <Label htmlFor="includeIgv">Incluir IGV</Label>

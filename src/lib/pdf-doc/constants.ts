@@ -4,11 +4,7 @@ type Props = {
   fill?: string
 }
 
-export const getLogo = ({
-  width = 100,
-  height = 15,
-  fill = '#ff0000',
-}: Props) => `
+export const getLogo = ({ width = 100, height = 15, fill = '#ff0000' }: Props) => `
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xml:space="preserve"

@@ -30,16 +30,11 @@ import { updateCustomerAction } from '@/lib/actions/customers'
 import { CustomerUpdateSchema } from '@/schemas/customers'
 import type { Customer, CustomerUpdate } from '@/types'
 
-interface UpdateTaskSheetProps
-  extends React.ComponentPropsWithRef<typeof Sheet> {
+interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet> {
   customer: Customer
 }
 
-export function UpdateCustomerSheet({
-  customer,
-  onOpenChange,
-  ...props
-}: UpdateTaskSheetProps) {
+export function UpdateCustomerSheet({ customer, onOpenChange, ...props }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
   const form = useForm<CustomerUpdate>({
@@ -75,15 +70,10 @@ export function UpdateCustomerSheet({
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
           <SheetTitle>Actualizar</SheetTitle>
-          <SheetDescription>
-            Completa el formulario para actualizar
-          </SheetDescription>
+          <SheetDescription>Completa el formulario para actualizar</SheetDescription>
         </SheetHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="name"
@@ -119,11 +109,7 @@ export function UpdateCustomerSheet({
                 <FormItem>
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Ejemplo: Calle 123"
-                      {...field}
-                      value={field.value ?? ''}
-                    />
+                    <Input placeholder="Ejemplo: Calle 123" {...field} value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

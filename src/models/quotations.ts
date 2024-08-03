@@ -1,13 +1,8 @@
-import type { DatabaseResponse } from '@/types'
+import type { DatabaseResponse, QuotationClient } from '@/types'
 import { DatabaseError } from '@/errors'
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
-import {
-  quotationsTable,
-  customersTable,
-  Quotation,
-  InsertQuotation,
-} from '@/db/schemas'
+import { quotationsTable, customersTable, Quotation, InsertQuotation } from '@/db/schemas'
 export class QuotationsModel {
   /**
    * Obtener todas las cotizaciones
@@ -32,10 +27,7 @@ export class QuotationsModel {
           updatedAt: quotationsTable.updatedAt,
         })
         .from(quotationsTable)
-        .leftJoin(
-          customersTable,
-          eq(quotationsTable.customerId, customersTable.id),
-        )
+        .leftJoin(customersTable, eq(quotationsTable.customerId, customersTable.id))
         .orderBy(desc(quotationsTable.updatedAt))
         .limit(1000)
 
@@ -73,10 +65,7 @@ export class QuotationsModel {
         })
         .from(quotationsTable)
         .where(eq(quotationsTable.id, id))
-        .leftJoin(
-          customersTable,
-          eq(quotationsTable.customerId, customersTable.id),
-        )
+        .leftJoin(customersTable, eq(quotationsTable.customerId, customersTable.id))
 
       return {
         data: result[0],
@@ -91,9 +80,7 @@ export class QuotationsModel {
     }
   }
 
-  static async getByNumber(
-    number: number,
-  ): Promise<DatabaseResponse<Quotation>> {
+  static async getByNumber(number: number): Promise<DatabaseResponse<QuotationClient>> {
     try {
       const result = await db
         .select({
@@ -114,10 +101,7 @@ export class QuotationsModel {
         })
         .from(quotationsTable)
         .where(eq(quotationsTable.number, number))
-        .leftJoin(
-          customersTable,
-          eq(quotationsTable.customerId, customersTable.id),
-        )
+        .leftJoin(customersTable, eq(quotationsTable.customerId, customersTable.id))
 
       return {
         data: result[0],
@@ -132,9 +116,7 @@ export class QuotationsModel {
     }
   }
 
-  static async getLastQuotation(): Promise<
-    DatabaseResponse<{ number: number }>
-  > {
+  static async getLastQuotation(): Promise<DatabaseResponse<{ number: number }>> {
     try {
       const quotations = await db
         .select({
@@ -181,16 +163,11 @@ export class QuotationsModel {
     }
   }
 
-  static async delete(
-    id: Quotation['id'],
-  ): Promise<DatabaseResponse<{ number: number }>> {
+  static async delete(id: Quotation['id']): Promise<DatabaseResponse<{ number: number }>> {
     try {
-      const result = await db
-        .delete(quotationsTable)
-        .where(eq(quotationsTable.id, id))
-        .returning({
-          number: quotationsTable.number,
-        })
+      const result = await db.delete(quotationsTable).where(eq(quotationsTable.id, id)).returning({
+        number: quotationsTable.number,
+      })
       return {
         data: { number: result[0].number },
         error: null,

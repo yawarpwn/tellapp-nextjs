@@ -81,15 +81,10 @@ export function CreateProductDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Producto</DialogTitle>
-          <DialogDescription>
-            LLena el formulario para crear un nuevo producto
-          </DialogDescription>
+          <DialogDescription>LLena el formulario para crear un nuevo producto</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="description"
@@ -115,11 +110,7 @@ export function CreateProductDialog() {
                 <FormItem>
                   <FormLabel>Codigo</FormLabel>
                   <FormControl>
-                    <Input
-                      className="uppercase"
-                      placeholder="FHIP-123"
-                      {...field}
-                    />
+                    <Input className="uppercase" placeholder="FHIP-123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -192,10 +183,7 @@ export function CreateProductDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Categoria</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger className="capitalize">
                         <SelectValue placeholder="Seleciona una categoria" />
@@ -204,11 +192,7 @@ export function CreateProductDialog() {
                     <SelectContent>
                       <SelectGroup>
                         {Object.values(PRODUCT_CATEGORIES).map(item => (
-                          <SelectItem
-                            key={item}
-                            value={item}
-                            className="capitalize"
-                          >
+                          <SelectItem key={item} value={item} className="capitalize">
                             {item}
                           </SelectItem>
                         ))}

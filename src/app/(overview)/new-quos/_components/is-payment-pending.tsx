@@ -25,21 +25,16 @@ export function IsPaymentPendingButton({
 
   return (
     <form>
-      <Button
-        disabled={pending}
-        onClick={handleClick}
-        variant="secondary"
-        size={'sm'}
-      >
+      <Button disabled={pending} onClick={handleClick} variant="secondary" size={'sm'}>
         {isPaymentPending ? (
           <>
             <span className="size-2 rounded-full bg-yellow-500"></span>
-            <span className="ml-2 max-md:sr-only">Pendiente</span>
+            <span className="ml-2 hidden lg:block">Pendiente</span>
           </>
         ) : (
           <>
             <span className="size-2 rounded-full bg-green-400"></span>
-            <span className="ml-2 max-md:sr-only">Pagado</span>
+            <span className="ml-2 hidden lg:block">Pagado</span>
           </>
         )}
       </Button>

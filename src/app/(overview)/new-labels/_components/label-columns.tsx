@@ -111,12 +111,8 @@ export const labelColumns = [
               Ver
             </DropdownMenuItem>
 
-            <DropdownMenuItem onSelect={() => setShowUpdateDialog(true)}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)}>
-              Borrar
-            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setShowUpdateDialog(true)}>Edit</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)}>Borrar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

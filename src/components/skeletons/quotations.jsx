@@ -205,17 +205,13 @@ export function QuotationSkeleton() {
                 </dl>
 
                 <dl className="grid items-center gap-x-3 sm:grid-cols-6">
-                  <dt className="col-span-3 font-semibold ">
-                    Tiempo de entrega:
-                  </dt>
+                  <dt className="col-span-3 font-semibold ">Tiempo de entrega:</dt>
                   <dd className="col-span-3 ">
                     <Skeleton className="h-10 w-full" />
                   </dd>
                 </dl>
                 <dl className="grid items-center gap-x-3 sm:grid-cols-6">
-                  <dt className="col-span-3 font-semibold ">
-                    Codición de Pago
-                  </dt>
+                  <dt className="col-span-3 font-semibold ">Codición de Pago</dt>
                   <dd className="col-span-3 ">
                     <Skeleton className="h-10 w-full" />
                   </dd>

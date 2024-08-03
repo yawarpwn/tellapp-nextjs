@@ -3,9 +3,7 @@ import type { QuotationClient } from '@/types'
 import { Content } from 'pdfmake/interfaces'
 
 export function getItemsTable(quotation: QuotationClient) {
-  const { formatedIgv, formatedSubTotal, formatedTotal } = getIgv(
-    quotation.items,
-  )
+  const { formatedIgv, formatedSubTotal, formatedTotal } = getIgv(quotation.items)
 
   const itemsTable: Content = {
     table: {

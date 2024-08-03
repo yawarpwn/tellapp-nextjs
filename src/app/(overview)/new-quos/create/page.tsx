@@ -7,8 +7,7 @@ import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations
 import { notFound } from 'next/navigation'
 
 async function CreateQuotationPageServer() {
-  const { data: customers, error: customersError } =
-    await CustomersModel.getAll()
+  const { data: customers, error: customersError } = await CustomersModel.getAll()
   const { data: products, error: productsError } = await ProductsModel.getAll()
 
   if (customersError || productsError) {

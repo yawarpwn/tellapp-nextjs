@@ -16,9 +16,7 @@ export const productColumns = [
   }),
   columnHelper.accessor('code', {
     header: 'Código',
-    cell: props => (
-      <div className="min-w-[100px]">{props.getValue().toUpperCase()}</div>
-    ),
+    cell: props => <div className="min-w-[100px]">{props.getValue().toUpperCase()}</div>,
   }),
   columnHelper.accessor('unitSize', {
     header: 'U/M',

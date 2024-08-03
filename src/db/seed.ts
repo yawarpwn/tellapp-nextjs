@@ -14,10 +14,7 @@ if (!supabaseKey) {
   throw new Error('Missing Supabase key')
 }
 
-const supabase = createClient(
-  'https://mluiozpgwvyzpnbzfkwm.supabase.co',
-  supabaseKey,
-)
+const supabase = createClient('https://mluiozpgwvyzpnbzfkwm.supabase.co', supabaseKey)
 
 async function seed() {}
 seed()

@@ -4,10 +4,7 @@ import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button } from '@/components/ui/button'
 import { setIsRegularCustomerAction } from '@/lib/actions/customers'
 import { StartIcon } from '@/icons'
-import {
-  deleteQuotationAction,
-  duplicateQuotationAction,
-} from '@/lib/actions/quoatations'
+import { deleteQuotationAction, duplicateQuotationAction } from '@/lib/actions/quoatations'
 import React from 'react'
 
 import {
@@ -33,9 +30,7 @@ export function getColumns(): ColumnDef<QuotationClient>[] {
       id: 'regular-customer',
 
       cell: function Cell({ row }) {
-        const [optimisticState, updateOptimistic] = React.useState(
-          row.original.isRegularCustomer,
-        )
+        const [optimisticState, updateOptimistic] = React.useState(row.original.isRegularCustomer)
 
         if (!row.original.customerId) return null
         return (
@@ -132,9 +127,7 @@ export function getColumns(): ColumnDef<QuotationClient>[] {
               dialogTitle={
                 <>
                   ¿Deseas borrar la cotización{' '}
-                  <span className="font-bold text-accent">
-                    #{row.original.number}
-                  </span>
+                  <span className="font-bold text-accent">#{row.original.number}</span>
                 </>
               }
               open={showDeleteModal}
@@ -153,9 +146,7 @@ export function getColumns(): ColumnDef<QuotationClient>[] {
                 <Link href={`/new-quos/${row.original.number}`}>Ver</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/new-quos/${row.original.number}/update`}>
-                  Editar
-                </Link>
+                <Link href={`/new-quos/${row.original.number}/update`}>Editar</Link>
               </DropdownMenuItem>
               {/* <DropdownMenuItem onSelect={openDeleteModal}> */}
               {/*   Borrar */}

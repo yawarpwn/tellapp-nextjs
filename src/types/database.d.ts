@@ -9,6 +9,4 @@ type DatabaseResponseFailure = {
   error: DatabaseError
 }
 
-export type DatabaseResponse<T> =
-  | DatabaseResponseSuccess<T>
-  | DatabaseResponseFailure
+export type DatabaseResponse<T> = DatabaseResponseSuccess<T> | DatabaseResponseFailure

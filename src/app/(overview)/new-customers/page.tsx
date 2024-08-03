@@ -21,13 +21,7 @@ async function ProductTable() {
 export default async function Page() {
   return (
     <Suspense
-      fallback={
-        <DataTableSkeleton
-          columnCount={5}
-          rowCount={20}
-          searchableColumnCount={1}
-        />
-      }
+      fallback={<DataTableSkeleton columnCount={5} rowCount={20} searchableColumnCount={1} />}
     >
       <ProductTable />
     </Suspense>

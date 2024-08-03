@@ -12,9 +12,7 @@ export async function createAgencyAction(input: AgencyCreateType) {
 
   const { data, error } = await supabase.from(TABLES.Agencies).insert({
     ...input,
-    destinations: input.destinations
-      .split(',')
-      .map((item: string) => item.trim()),
+    destinations: input.destinations.split(',').map((item: string) => item.trim()),
   })
   if (error) {
     console.log('ERROR CREATING AGENCY: ', error)
@@ -28,10 +26,7 @@ export async function deleteAgencyAction(id: string) {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
-  const { data, error } = await supabase
-    .from(TABLES.Agencies)
-    .delete()
-    .eq('id', id)
+  const { data, error } = await supabase.from(TABLES.Agencies).delete().eq('id', id)
 
   if (error) {
     console.log('ERROR DELETING AGENCY: ', error)
@@ -51,9 +46,7 @@ export async function updateAgencyAction(input: AgencyUpdateType) {
     .from(TABLES.Agencies)
     .update({
       ...input,
-      destinations: input.destinations
-        .split(',')
-        .map((item: string) => item.trim()),
+      destinations: input.destinations.split(',').map((item: string) => item.trim()),
       updated_at: new Date().toISOString(),
     })
     .eq('id', input.id)

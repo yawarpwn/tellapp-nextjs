@@ -29,10 +29,7 @@ export async function deleteLabelAction(id: string) {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
-  const { data, error } = await supabase
-    .from(TABLES.Labels)
-    .delete()
-    .eq('id', id)
+  const { data, error } = await supabase.from(TABLES.Labels).delete().eq('id', id)
 
   if (error) {
     console.log('ERROR DELETING CUSTOMER: ', error)
@@ -151,10 +148,7 @@ export async function updateLabel(_, formData) {
   const { id } = validatedFields.data
 
   // update in db
-  const { error } = await supabase
-    .from(TABLE)
-    .update(validatedFields.data)
-    .eq('id', id)
+  const { error } = await supabase.from(TABLE).update(validatedFields.data).eq('id', id)
 
   // handle error
   if (error) {

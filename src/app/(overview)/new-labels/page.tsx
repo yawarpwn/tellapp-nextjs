@@ -8,25 +8,13 @@ import { labelColumns } from './_components/label-columns'
 async function ProductTable() {
   const labels = await fetchLabels()
 
-  return (
-    <DataTable
-      createComponent={<CreateLabelDialog />}
-      columns={labelColumns}
-      data={labels}
-    />
-  )
+  return <DataTable createComponent={<CreateLabelDialog />} columns={labelColumns} data={labels} />
 }
 
 export default async function Page() {
   return (
     <Suspense
-      fallback={
-        <DataTableSkeleton
-          columnCount={5}
-          rowCount={20}
-          searchableColumnCount={1}
-        />
-      }
+      fallback={<DataTableSkeleton columnCount={5} rowCount={20} searchableColumnCount={1} />}
     >
       <ProductTable />
     </Suspense>

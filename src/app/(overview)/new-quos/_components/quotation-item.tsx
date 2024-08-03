@@ -19,15 +19,7 @@ interface Props {
   addItem: (item: Omit<QuotationItem, 'id'>) => void
 }
 export function QuotationItems(props: Props) {
-  const {
-    products,
-    items,
-    duplicateItem,
-    setItems,
-    editItem,
-    deleteItem,
-    addItem,
-  } = props
+  const { products, items, duplicateItem, setItems, editItem, deleteItem, addItem } = props
 
   //Estados
   const [seletedProductId, setSelectedProductId] = useState<string | null>(null)
@@ -55,10 +47,7 @@ export function QuotationItems(props: Props) {
     }
   }
 
-  const onChangeValue = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    item: QuotationItem,
-  ) => {
+  const onChangeValue = (event: React.ChangeEvent<HTMLInputElement>, item: QuotationItem) => {
     const { name, value } = event.target
     if (name == 'price' || name == 'qty') {
       editItem(item.id, {
@@ -109,11 +98,7 @@ export function QuotationItems(props: Props) {
                   <CardContent className="grid gap-4 p-4">
                     <div className="flex items-center justify-between [&_button]:size-7 [&_button]:shrink-0 [&_button_svg]:size-4 ">
                       <div className="flex items-center gap-1">
-                        <Button
-                          type="button"
-                          size="icon"
-                          onClick={() => moveUpItem(index)}
-                        >
+                        <Button type="button" size="icon" onClick={() => moveUpItem(index)}>
                           <ChevronUp />
                         </Button>
                         <Button size="icon" onClick={() => moveDownItem(index)}>

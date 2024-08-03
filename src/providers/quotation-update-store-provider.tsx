@@ -1,10 +1,5 @@
 'use client'
-import {
-  type Customer,
-  type Product,
-  QuotationClient,
-  QuotationClientUpdate,
-} from '@/types'
+import { type Customer, type Product, QuotationClient, QuotationClientUpdate } from '@/types'
 
 import {
   createQuotationStore,
@@ -14,13 +9,11 @@ import {
 import React from 'react'
 import { useStore } from 'zustand'
 
-type QuotationCreateStoreApi = ReturnType<
-  typeof createQuotationStore<QuotationClientUpdate>
->
+type QuotationCreateStoreApi = ReturnType<typeof createQuotationStore<QuotationClientUpdate>>
 
-export const QuotationCreateStoreContext = React.createContext<
-  QuotationCreateStoreApi | undefined
->(undefined)
+export const QuotationCreateStoreContext = React.createContext<QuotationCreateStoreApi | undefined>(
+  undefined,
+)
 
 // type QuotationProviderProps =  React.PropsWithChildren<Partial<QuotationStore>>
 type QuotationCreateStoreProviderProps = {
@@ -30,9 +23,7 @@ type QuotationCreateStoreProviderProps = {
   products: Product[]
 }
 
-export function QuotationUpdateStoreProvider(
-  props: QuotationCreateStoreProviderProps,
-) {
+export function QuotationUpdateStoreProvider(props: QuotationCreateStoreProviderProps) {
   const { children, customers, products, quo } = props
   const storeRef = React.useRef<QuotationCreateStoreApi>()
   if (!storeRef.current) {
@@ -69,14 +60,10 @@ export function QuotationUpdateStoreProvider(
 export function useQuotationUpdateStore<T>(
   selector: (state: QuotationStore<QuotationClientUpdate>) => T,
 ): T {
-  const quotationCreateStoreContext = React.useContext(
-    QuotationCreateStoreContext,
-  )
+  const quotationCreateStoreContext = React.useContext(QuotationCreateStoreContext)
 
   if (!quotationCreateStoreContext)
-    throw new Error(
-      'useQuotationUpdateStore must be used within QuotationUpdateStoreProvider',
-    )
+    throw new Error('useQuotationUpdateStore must be used within QuotationUpdateStoreProvider')
 
   return useStore(quotationCreateStoreContext, selector)
 }

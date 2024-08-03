@@ -68,15 +68,10 @@ export function CreateCustomerDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Cliente</DialogTitle>
-          <DialogDescription>
-            LLena el formulario para crear un nuevo Cliente
-          </DialogDescription>
+          <DialogDescription>LLena el formulario para crear un nuevo Cliente</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="name"
@@ -112,11 +107,7 @@ export function CreateCustomerDialog() {
                 <FormItem>
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Ejemplo: Calle 123"
-                      value={field.value ?? ''}
-                    />
+                    <Input {...field} placeholder="Ejemplo: Calle 123" value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -167,11 +158,7 @@ export function CreateCustomerDialog() {
                   Cancel
                 </Button>
               </DialogClose>
-              <Button
-                type="submit"
-                variant="primary"
-                disabled={isCreatePending}
-              >
+              <Button type="submit" variant="primary" disabled={isCreatePending}>
                 Crear
               </Button>
             </DialogFooter>

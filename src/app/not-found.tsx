@@ -10,10 +10,7 @@ export default function NotFoundPage() {
         <TextGradient as="h2" className="text-center text-3xl font-extrabold">
           Pagina no encontrada
         </TextGradient>
-        <Link
-          className="mt-4 block text-center text-secondary underline "
-          href="/new-quos"
-        >
+        <Link className="mt-4 block text-center text-secondary underline " href="/new-quos">
           <span>Ir al Inicio</span>
         </Link>
       </div>

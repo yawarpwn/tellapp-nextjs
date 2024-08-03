@@ -30,8 +30,7 @@
     --nav-height: 3rem;
 
     /* Gradients */
-    --border-gradient: linear-gradient(rgb(32, 33, 37), rgb(32, 33, 37))
-        no-repeat padding-box,
+    --border-gradient: linear-gradient(rgb(32, 33, 37), rgb(32, 33, 37)) no-repeat padding-box,
       linear-gradient(
           81.02deg,
           oklch(var(--secondary)) -23.47%,
@@ -39,8 +38,7 @@
           oklch(var(--accent)) 114.8%
         )
         border-box;
-    --border-gradient-hover: linear-gradient(rgb(38, 39, 44), rgb(38, 39, 44))
-        no-repeat padding-box,
+    --border-gradient-hover: linear-gradient(rgb(38, 39, 44), rgb(38, 39, 44)) no-repeat padding-box,
       linear-gradient(
           81.02deg,
           oklch(var(--secondary)) -23.47%,

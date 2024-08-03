@@ -20,13 +20,5 @@ export function generatePagination(currentPage: number, totalPages: number) {
   // Si la pagina actual esta en un punto intermedio
   // Muestra la primera pagina, puntos suspensivos, la pagina actual y sus vecinos,
   // Otros puntos suspensivos y la ultima pagina
-  return [
-    1,
-    '...',
-    currentPage - 1,
-    currentPage,
-    currentPage + 1,
-    '...',
-    totalPages,
-  ] // [1, '...', 3, 4, 5, '...', 8]
+  return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages] // [1, '...', 3, 4, 5, '...', 8]
 }

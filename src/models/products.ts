@@ -25,8 +25,6 @@ export class ProductsModel {
         .from(productsTable)
         .orderBy(desc(productsTable.updatedAt))
 
-      console.log('all produccts success')
-
       return {
         data: result,
         error: null,
@@ -40,9 +38,7 @@ export class ProductsModel {
     }
   }
 
-  static async create(
-    values: ProductInsert,
-  ): Promise<DatabaseResponse<Product>> {
+  static async create(values: ProductInsert): Promise<DatabaseResponse<Product>> {
     try {
       const result = await db.insert(productsTable).values(values).returning()
 
@@ -60,9 +56,7 @@ export class ProductsModel {
 
   static async delete(id: Product['id']): Promise<DatabaseResponse<Product>> {
     try {
-      const result = await db
-        .delete(productsTable)
-        .where(eq(productsTable.id, id))
+      const result = await db.delete(productsTable).where(eq(productsTable.id, id))
       return {
         data: result[0],
         error: null,
@@ -76,10 +70,7 @@ export class ProductsModel {
     }
   }
 
-  static async update(
-    id: Product['id'],
-    value: ProductUpdate,
-  ): Promise<DatabaseResponse<Product>> {
+  static async update(id: Product['id'], value: ProductUpdate): Promise<DatabaseResponse<Product>> {
     try {
       const result = await db
         .update(productsTable)

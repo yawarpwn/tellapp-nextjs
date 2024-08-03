@@ -8,10 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { SearchIcon, StartIcon } from '@/icons'
-import {
-  createQuotationAction,
-  searchRucAction,
-} from '@/lib/actions/quoatations'
+import { createQuotationAction, searchRucAction } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
@@ -119,10 +116,7 @@ export function QuotationCreate() {
       <header className="flex justify-between">
         <div></div>
         <div className="flex justify-end">
-          <CustomersPicker
-            customers={customers}
-            onPickCustomer={onPickCustomer}
-          />
+          <CustomersPicker customers={customers} onPickCustomer={onPickCustomer} />
         </div>
       </header>
       <article className="mt-4 flex flex-col gap-4">
@@ -159,9 +153,7 @@ export function QuotationCreate() {
               id="deadline"
               value={quo.deadline}
               disabled={pendingRuc}
-              onChange={e =>
-                setQuo({ ...quo, deadline: Number(e.target.value) })
-              }
+              onChange={e => setQuo({ ...quo, deadline: Number(e.target.value) })}
             />
           </div>
         </div>
@@ -197,9 +189,7 @@ export function QuotationCreate() {
             <div className="flex items-center gap-2">
               <Checkbox
                 id="includeIgv"
-                onCheckedChange={e =>
-                  setQuo({ ...quo, includeIgv: Boolean(e) })
-                }
+                onCheckedChange={e => setQuo({ ...quo, includeIgv: Boolean(e) })}
                 checked={quo.includeIgv}
               />
               <Label htmlFor="includeIgv">Incluir IGV</Label>
@@ -217,13 +207,43 @@ export function QuotationCreate() {
           </div>
         </div>
 
-        <div className="grid h-6 grid-cols-2 items-center gap-2 border">
+        {/*Creditto */}
+        <div className="grid grid-cols-2 items-center gap-2 border">
           <div className="flex items-center gap-2">
             <Switch
               checked={showCreditOption}
               onCheckedChange={checked => setShowCreditOption(checked)}
             />
             <Label htmlFor="credit">Pago a Credito?</Label>
+          </div>
+          {showCreditOption && (
+            <div className="flex items-center gap-2">
+              <Input
+                id="credit"
+                name="credit"
+                type="number"
+                className="w-20"
+                value={quo.credit ?? ''}
+                placeholder="200.00"
+                onChange={e => {
+                  const { value } = e.target
+                  const credit = value ? Number(value) : null
+                  setQuo({ ...quo, credit })
+                }}
+              />
+              <span>Soles</span>
+            </div>
+          )}
+        </div>
+
+        {/*Descuento */}
+        <div className="grid grid-cols-2 items-center gap-2 border">
+          <div className="flex items-center gap-2">
+            <Switch
+              checked={showCreditOption}
+              onCheckedChange={checked => setShowCreditOption(checked)}
+            />
+            <Label htmlFor="credit">Descuento??</Label>
           </div>
           {showCreditOption && (
             <div className="flex items-center gap-2">

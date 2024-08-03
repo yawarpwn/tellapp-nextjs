@@ -5,36 +5,22 @@ import { CustomersModel, ProductsModel, QuotationsModel } from '@/models'
 import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
-export async function QuotationUpdateServer({
-  quoNumber,
-}: {
-  quoNumber: number
-}) {
-  const { data: customers, error: customersError } =
-    await CustomersModel.getAll()
+export async function QuotationUpdateServer({ quoNumber }: { quoNumber: number }) {
+  const { data: customers, error: customersError } = await CustomersModel.getAll()
   const { data: products, error: productsError } = await ProductsModel.getAll()
-  const { data: quotation, error: quotationError } =
-    await QuotationsModel.getByNumber(quoNumber)
+  const { data: quotation, error: quotationError } = await QuotationsModel.getByNumber(quoNumber)
 
   if (customersError || productsError || quotationError) {
     notFound()
   }
   return (
-    <QuotationUpdateStoreProvider
-      customers={customers}
-      quo={quotation}
-      products={products}
-    >
+    <QuotationUpdateStoreProvider customers={customers} quo={quotation} products={products}>
       <QuotationUpdate />
     </QuotationUpdateStoreProvider>
   )
 }
 
-export default async function Page({
-  params,
-}: {
-  params?: { number?: string }
-}) {
+export default async function Page({ params }: { params?: { number?: string } }) {
   const number = Number(params?.number)
   return (
     <>
