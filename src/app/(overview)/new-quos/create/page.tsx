@@ -4,12 +4,16 @@ import { CustomersModel, ProductsModel } from '@/models'
 import { QuotationCreate } from './_components/quotation-create'
 import { Suspense } from 'react'
 import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations'
+import { notFound } from 'next/navigation'
 
 async function CreateQuotationPageServer() {
-  const [customers, products] = await Promise.all([
-    CustomersModel.getAll(),
-    ProductsModel.getAll(),
-  ])
+  const { data: customers, error: customersError } =
+    await CustomersModel.getAll()
+  const { data: products, error: productsError } = await ProductsModel.getAll()
+
+  if (customersError || productsError) {
+    notFound()
+  }
 
   return (
     <QuotationCreateStoreProvider products={products} customers={customers}>

@@ -1,11 +1,15 @@
 import { DataTableSkeleton } from '@/components/skeletons/data-table'
 import { fetchQuotations } from '@/lib/data/quotations'
+import { QuotationsModel } from '@/models'
 import { Suspense } from 'react'
 import { DataTable } from './data-table'
+import { notFound } from 'next/navigation'
 
 async function TableQuotationWrap() {
-  const quotations = await fetchQuotations()
-  // console.log(quotations)
+  const { data: quotations, error } = await QuotationsModel.getAll()
+
+  if (error) notFound()
+
   return <DataTable data={quotations} />
 }
 

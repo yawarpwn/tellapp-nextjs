@@ -52,7 +52,7 @@ export class QuotationsModel {
     }
   }
 
-  static async getById(id: string) {
+  static async getById(id: string): Promise<DatabaseResponse<Quotation>> {
     try {
       const result = await db
         .select({
@@ -78,9 +78,16 @@ export class QuotationsModel {
           eq(quotationsTable.customerId, customersTable.id),
         )
 
-      return result[0]
+      return {
+        data: result[0],
+        error: null,
+      }
     } catch (error) {
       console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al obtener la cotización'),
+      }
     }
   }
 

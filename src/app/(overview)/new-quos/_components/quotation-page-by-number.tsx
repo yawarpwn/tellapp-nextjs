@@ -19,9 +19,11 @@ import { DuplicateButton } from './duplicate-button'
 import { IsRegularButton } from './is-regular-button'
 import { notFound } from 'next/navigation'
 import { IsPaymentPendingButton } from './is-payment-pending'
+import { QuotationsModel } from '@/models'
 export async function QuotationPageByNumber({ number }: { number: number }) {
-  const quotation = await fetchQuotationByNumber({ number })
-  if (!quotation) {
+  const { data: quotation, error } = await QuotationsModel.getByNumber(number)
+
+  if (error) {
     notFound()
   }
 

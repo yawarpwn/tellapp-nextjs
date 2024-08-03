@@ -1,22 +1,24 @@
 import Breadcrumbs from '@/components/breadcrumbs'
 import { QuotationUpdateStoreProvider } from '@/providers/quotation-update-store-provider'
-import { fetchQuotationByNumber } from '@/lib/data/quotations'
 import { QuotationUpdate } from './_components/quotation-update'
-import { CustomersModel, ProductsModel } from '@/models'
+import { CustomersModel, ProductsModel, QuotationsModel } from '@/models'
 import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
-
-// export const dynamic = 'force-dynamic'
+import { notFound } from 'next/navigation'
 export async function QuotationUpdateServer({
   quoNumber,
 }: {
   quoNumber: number
 }) {
-  const [quotation, customers, products] = await Promise.all([
-    fetchQuotationByNumber({ number: quoNumber }),
-    CustomersModel.getAll(),
-    ProductsModel.getAll(),
-  ])
+  const { data: customers, error: customersError } =
+    await CustomersModel.getAll()
+  const { data: products, error: productsError } = await ProductsModel.getAll()
+  const { data: quotation, error: quotationError } =
+    await QuotationsModel.getByNumber(quoNumber)
+
+  if (customersError || productsError || quotationError) {
+    notFound()
+  }
   return (
     <QuotationUpdateStoreProvider
       customers={customers}

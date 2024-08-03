@@ -1,5 +1,4 @@
 'use server'
-
 import { QuotationsModel, CustomersModel } from '@/models'
 import type {
   QuotationClientCreate,
@@ -17,20 +16,20 @@ export async function updateQuotationAction(
   let customerId = quotation.customerId
 
   if (quotation.ruc && quotation.company && !customerId) {
-    const { data } = await CustomersModel.create({
+    const { error, data } = await CustomersModel.create({
       name: quotation.company,
       ruc: quotation.ruc,
       address: quotation.address,
     })
 
-    if (!data) {
-      throw new Error('Error al crear cliente')
+    if (error) {
+      throw error
     }
 
     customerId = data.id
   }
 
-  const { data } = await QuotationsModel.update(quotation.id, {
+  const { data, error } = await QuotationsModel.update(quotation.id, {
     deadline: quotation.deadline,
     includeIgv: quotation.includeIgv,
     credit: quotation.credit,
@@ -39,8 +38,8 @@ export async function updateQuotationAction(
     updatedAt: new Date(),
   })
 
-  if (!data) {
-    throw new Error('Error creando cotizacion')
+  if (error) {
+    throw error
   }
 
   revalidatePath(`/new-quos/${data.number}`)
@@ -54,24 +53,29 @@ export async function createQuotationAction(
   let customerId = quotation.customerId
 
   if (quotation.ruc && quotation.company && !customerId) {
-    const { data } = await CustomersModel.create({
+    const { data, error } = await CustomersModel.create({
       name: quotation.company,
       ruc: quotation.ruc,
       address: quotation.address,
     })
 
-    if (!data) {
-      throw new Error('Error al crear cliente')
+    if (error) {
+      throw error
     }
 
     customerId = data.id
   }
 
-  const lastQuotation = await QuotationsModel.getLastQuotation()
+  const { data: lastQuotation, error: lastQuotationError } =
+    await QuotationsModel.getLastQuotation()
+
+  if (lastQuotationError) {
+    throw lastQuotationError
+  }
 
   const quoNumber = lastQuotation.number + 1
 
-  const { data } = await QuotationsModel.create({
+  const { error } = await QuotationsModel.create({
     number: quoNumber,
     deadline: quotation.deadline,
     includeIgv: quotation.includeIgv,
@@ -80,8 +84,8 @@ export async function createQuotationAction(
     items,
   })
 
-  if (!data) {
-    throw new Error('Error creando cotizacion')
+  if (error) {
+    throw error
   }
 
   revalidatePath('/new-quos')
@@ -99,31 +103,33 @@ export async function deleteQuotationAction(id: string) {
 export async function duplicateQuotationAction(
   id: string,
 ): Promise<{ number: number }> {
-  try {
-    const quotation = await QuotationsModel.getById(id)
+  const { data: quotation, error } = await QuotationsModel.getById(id)
 
-    const lastQuotation = await QuotationsModel.getLastQuotation()
-    const quoNumber = lastQuotation.number + 1
-    await QuotationsModel.create({
-      ...quotation,
-      id: crypto.randomUUID(),
-      number: quoNumber,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    })
+  if (error) throw error
 
-    revalidatePath('/new-quos')
-    return { number: quoNumber }
-    // redirect(`/new-quos/${lastQuotation.number}`)
-  } catch (error) {
-    console.log(error)
-    throw new Error('Error duplicando cotizacion')
-  }
+  const { data: lastQuotation, error: lastQuotationError } =
+    await QuotationsModel.getLastQuotation()
+  if (lastQuotationError) throw lastQuotationError
+
+  const quoNumber = lastQuotation.number + 1
+  await QuotationsModel.create({
+    ...quotation,
+    id: crypto.randomUUID(),
+    number: quoNumber,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  })
+
+  revalidatePath('/new-quos')
+  return { number: quoNumber }
+  // redirect(`/new-quos/${lastQuotation.number}`)
 }
 
 export async function searchRucAction(ruc: string) {
   //search in customers Db
-  const customer = await CustomersModel.getByRuc(ruc)
+  const { data: customer, error } = await CustomersModel.getByRuc(ruc)
+
+  if (error) throw error
 
   if (customer) {
     return {
@@ -154,6 +160,8 @@ export async function setIsPaymentPending({
   value: boolean
   quoNumber: number
 }) {
-  await QuotationsModel.setIsPaymentPending(id, value)
+  const { error } = await QuotationsModel.setIsPaymentPending(id, value)
+  if (error) throw error
+
   revalidatePath(`/new-quos/${quoNumber}`)
 }
