@@ -1,14 +1,26 @@
 import { DataTable } from '@/components/data-table'
 import { DataTableSkeleton } from '@/components/skeletons/data-table'
-import { fetchLabels } from '@/lib/data/labels'
+import { AgenciesModel } from '@/models/agencies'
+import { LabelsModel } from '@/models/labels'
+import { LabelsProvider } from '@/providers/labels-provider'
 import { Suspense } from 'react'
 import { CreateLabelDialog } from './_components/create-label-dialog'
 import { labelColumns } from './_components/label-columns'
 
 async function ProductTable() {
-  const labels = await fetchLabels()
+  const { data: labels, error: labelsError } = await LabelsModel.getAll()
 
-  return <DataTable createComponent={<CreateLabelDialog />} columns={labelColumns} data={labels} />
+  if (labelsError) return
+
+  const { data: agencies, error: agenciesError } = await AgenciesModel.getAll()
+
+  if (agenciesError) return
+
+  return (
+    <LabelsProvider agencies={agencies}>
+      <DataTable createComponent={<CreateLabelDialog />} columns={labelColumns} data={labels} />
+    </LabelsProvider>
+  )
 }
 
 export default async function Page() {

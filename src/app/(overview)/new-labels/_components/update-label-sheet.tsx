@@ -1,14 +1,10 @@
 'use client'
 
-import { TABLES } from '@/constants'
-import { createBrowserClient } from '@/lib/supabase/client'
-import { Agency } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import * as React from 'react'
+import React, { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-// import { getErrorMessage } from "@/lib/handle-error"
 import { Button } from '@/components/ui/button'
 
 import {
@@ -21,88 +17,56 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
 
 import { updateLabelAction } from '@/lib/actions/labels'
-import { labelUpdateSchema } from '@/schemas/labels'
-import type { LabelType, LabelUpdateType } from '@/types'
+import { useLabels } from '@/providers/labels-provider'
+import { LabelUpdateSchema } from '@/schemas/labels'
+import type { Label, LabelUpdate } from '@/types'
+import { ChevronDown } from 'lucide-react'
+import { PickAgencyDialog } from './pick-agency-dialog'
 
 interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet> {
-  label: LabelType
+  label: Label
 }
 
 export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSheetProps) {
-  const [isUpdatePending, startUpdateTransition] = React.useTransition()
+  const [isUpdatePending, startUpdateTransition] = useTransition()
+  const [open, setOpen] = useState(false)
+  const { agencies } = useLabels()
 
-  const [agencies, setAgencies] = React.useState<Agency[]>([])
-
-  const suggestedAgency = label.agency_id
-    ? agencies.find(agency => agency.id === label.agency_id)
-    : null
-
-  console.log(suggestedAgency?.company)
-
-  React.useEffect(() => {
-    const supabase = createBrowserClient()
-    supabase
-      .from(TABLES.Agencies)
-      .select()
-      .then(({ data, error }) => {
-        if (error) {
-          console.log(error)
-        } else {
-          setAgencies(data)
-        }
-      })
-  }, [])
-
-  const form = useForm<LabelUpdateType>({
-    resolver: zodResolver(labelUpdateSchema),
+  const form = useForm<LabelUpdate>({
+    resolver: zodResolver(LabelUpdateSchema),
     defaultValues: {
       destination: label.destination,
-      dni_ruc: label.dni_ruc,
+      agencyId: label.agencyId,
+      dniRuc: label.dniRuc,
       phone: label.phone,
       address: label.address,
       recipient: label.recipient,
+      observations: label.observations,
     },
   })
 
-  function onSubmit(input: LabelUpdateType) {
+  function onSubmit(input: LabelUpdate) {
     startUpdateTransition(() => {
-      toast.promise(
-        updateLabelAction({
-          id: label.id,
-          ...input,
-        }),
-        {
-          loading: 'Actualizando...',
-          success: () => {
-            onOpenChange?.(false)
-            return 'Actualizacion con exito'
-          },
-          error: () => {
-            onOpenChange?.(false)
-            // return getErrorMessage(error)
-            return 'Error al Actualizar'
-          },
+      toast.promise(updateLabelAction(label.id, input), {
+        loading: 'Actualizando...',
+        success: () => {
+          onOpenChange?.(false)
+          return 'Actualizacion con exito'
         },
-      )
+        error: () => {
+          // return getErrorMessage(error)
+          return 'Error al Actualizar'
+        },
+      })
     })
   }
 
@@ -111,13 +75,13 @@ export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSh
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
           <SheetTitle>Actualizar</SheetTitle>
-          <SheetDescription>Completa el formulario para actualizar</SheetDescription>
         </SheetHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
-              name="dni_ruc"
+              name="dniRuc"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Dni/Ruc</FormLabel>
@@ -158,12 +122,24 @@ export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSh
 
             <FormField
               control={form.control}
+              name="agencyId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Agencia Sugerida</FormLabel>
+                  <PickAgencyDialog agencyId={field.value} agencies={agencies} />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="phone"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Telefono</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -177,37 +153,8 @@ export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSh
                 <FormItem>
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} value={field.value ?? ''} />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="agency_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Agencia Sugerida</FormLabel>
-                  <Select
-                    defaultValue={suggestedAgency?.company ?? ''}
-                    onValueChange={field.onChange}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="capitalize">
-                        <SelectValue placeholder="Seleciona una categoria" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="w-[380px]">
-                      <SelectGroup>
-                        {Object.values(agencies).map(agency => (
-                          <SelectItem key={agency.id} value={agency.id} className="capitalize">
-                            {agency.company}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -219,7 +166,9 @@ export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSh
                   Cancel
                 </Button>
               </SheetClose>
-              <Button disabled={isUpdatePending}>Actualizar</Button>
+              <Button type="submit" disabled={isUpdatePending}>
+                Actualizar
+              </Button>
             </SheetFooter>
           </form>
         </Form>

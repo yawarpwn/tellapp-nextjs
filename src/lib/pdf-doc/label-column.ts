@@ -1,8 +1,8 @@
-import { LabelType } from '@/types'
+import { Label } from '@/types'
 import { Column, Table } from 'pdfmake/interfaces'
 import { getFragileSvg, getLogo } from './constants'
 
-export const gelLabelColumn = (label: LabelType) => {
+export const gelLabelColumn = (label: Label) => {
   const column: Column = {
     table: {
       widths: '*',
@@ -67,7 +67,7 @@ export const gelLabelColumn = (label: LabelType) => {
                 style: 'sectionTitle',
               },
               {
-                text: label.dni_ruc,
+                text: label.dniRuc,
                 style: 'sectionContent',
               },
             ],
@@ -98,16 +98,16 @@ export const gelLabelColumn = (label: LabelType) => {
                 style: 'sectionTitle',
               },
               {
-                text: label.agencies?.company || '',
+                text: label.agency?.name || '',
                 fontSize: 14,
                 bold: true,
               },
               {
-                text: label.agencies?.address || '',
+                text: label.agency?.address || '',
                 fontSize: 12,
               },
               {
-                text: label.agencies?.phone || '',
+                text: label.agency?.phone || '',
                 fontSize: 12,
               },
             ],

@@ -1,44 +1,31 @@
+import { labelsTable } from '@/db/schemas'
 import { z } from 'zod'
-import { agencySchema } from './agencies'
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod'
 
-export const labelSchema = z.object({
-  id: z.string(),
-  recipient: z.string({
-    required_error: 'El destinatario es requerido',
-  }),
-  destination: z.string({
-    required_error: 'El destino es requerido',
-  }),
-  dni_ruc: z
-    .string({
-      required_error: 'El Dni/Ruc es requerido',
-    })
-    .refine(
-      value => {
-        // Comprobar si el valor es un número y tiene 8 o 11 dígitos
-        return /^\d{8}$|^\d{11}$/.test(value)
-      },
-      {
-        message: 'El DNI/RUC debe ser un string de 8 o 11 dígitos',
-      },
-    ),
-  address: z.string().nullish(),
-  agency_id: z.string().nullable().optional(),
-  phone: z.coerce
-    .string()
-    .length(9, {
-      message: 'El telefono debe tener 9 caracteres',
-    })
-    .nullish(),
-  agencies: agencySchema.nullable(),
-  updated_at: z.string(),
-  created_at: z.string(),
+export const LabelBaseSchema = createSelectSchema(labelsTable)
+
+export const LabelInsertSchema = createInsertSchema(labelsTable, {
+  observations: schema => schema.observations.nullable().optional(),
+  agencyId: schema => schema.agencyId.nullable().optional(),
+  address: schema => schema.address.nullable().optional(),
+  phone: () => z.string().length(9).nullable().optional(),
+  dniRuc: schema => schema.dniRuc.length(8).or(schema.dniRuc.length(11)),
+  recipient: schema => schema.recipient.min(1),
+  destination: schema => schema.destination.min(1),
 })
-
-export const labelCreateSchema = labelSchema.omit({
+export const LabelUpdateSchema = LabelInsertSchema.partial().omit({
   id: true,
-  updated_at: true,
-  created_at: true,
-  agencies: true,
+  updatedAt: true,
+  createdAt: true,
 })
-export const labelUpdateSchema = labelSchema.partial()
+
+export type Label = z.infer<typeof LabelBaseSchema> & {
+  agency?: {
+    name: string
+    address: string
+    phone?: string | null
+    ruc: string
+  } | null
+}
+export type LabelInsert = z.infer<typeof LabelInsertSchema>
+export type LabelUpdate = Partial<z.infer<typeof LabelInsertSchema>>

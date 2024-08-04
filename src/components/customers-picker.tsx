@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { useQuotationCreateStore } from '@/providers/quotation-create-store-provider'
 import { Customer } from '@/schemas'
 
 interface Props {
@@ -18,6 +17,7 @@ interface Props {
   onPickCustomer: (customer: Customer) => void
 }
 export function CustomersPicker({ customers, onPickCustomer }: Props) {
+  // TODO://Implmeent combobox
   const [open, setOpen] = React.useState(false)
 
   const [filterValue, setFilterValue] = React.useState('')
