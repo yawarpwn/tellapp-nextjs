@@ -8,7 +8,6 @@ export const LabelInsertSchema = createInsertSchema(labelsTable, {
   observations: schema => schema.observations.nullable().optional(),
   agencyId: schema => schema.agencyId.nullable().optional(),
   address: schema => schema.address.nullable().optional(),
-  phone: () => z.string().length(9).nullable().optional(),
   dniRuc: schema => schema.dniRuc.length(8).or(schema.dniRuc.length(11)),
   recipient: schema => schema.recipient.min(1),
   destination: schema => schema.destination.min(1),

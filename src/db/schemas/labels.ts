@@ -10,7 +10,7 @@ export const labelsTable = pgTable('_labels', {
   address: text('address'),
   observations: text('observations'),
   agencyId: uuid('agency_id').references(() => agenciesTable.id, {
-    onDelete: 'no action',
+    onDelete: 'set null',
     onUpdate: 'no action',
   }),
   createdAt: timestamp('created_at').defaultNow().notNull(),

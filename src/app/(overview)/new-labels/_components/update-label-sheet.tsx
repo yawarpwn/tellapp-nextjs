@@ -31,6 +31,7 @@ import { LabelUpdateSchema } from '@/schemas/labels'
 import type { Label, LabelUpdate } from '@/types'
 import { ChevronDown } from 'lucide-react'
 import { PickAgencyDialog } from './pick-agency-dialog'
+import { Textarea } from '@/components/ui/textarea'
 
 interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet> {
   label: Label
@@ -38,7 +39,6 @@ interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet>
 
 export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = useTransition()
-  const [open, setOpen] = useState(false)
   const { agencies } = useLabels()
 
   const form = useForm<LabelUpdate>({
@@ -126,7 +126,13 @@ export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSh
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Agencia Sugerida</FormLabel>
-                  <PickAgencyDialog agencyId={field.value} agencies={agencies} />
+                  <PickAgencyDialog
+                    onPickAgency={agencyId => {
+                      form.setValue('agencyId', agencyId)
+                    }}
+                    agencyId={field.value}
+                    agencies={agencies}
+                  />
                   <FormMessage />
                 </FormItem>
               )}
@@ -154,6 +160,20 @@ export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSh
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
                     <Input {...field} value={field.value ?? ''} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="observations"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Observaciones</FormLabel>
+                  <FormControl>
+                    <Textarea {...field} value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -8,21 +8,11 @@ import { PlusIcon } from '@radix-ui/react-icons'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -32,7 +22,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -43,6 +32,7 @@ import { LabelInsertSchema } from '@/schemas/labels'
 import type { LabelInsert } from '@/types'
 import { useLabels } from '@/providers/labels-provider'
 import { Textarea } from '@/components/ui/textarea'
+import { PickAgencyDialog } from './pick-agency-dialog'
 
 export function CreateLabelDialog() {
   const [open, setOpen] = useState(false)
@@ -177,6 +167,24 @@ export function CreateLabelDialog() {
 
             <FormField
               control={form.control}
+              name="agencyId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Agencia Sugerida</FormLabel>
+                  <PickAgencyDialog
+                    onPickAgency={agencyId => {
+                      form.setValue('agencyId', agencyId)
+                    }}
+                    agencyId={field.value}
+                    agencies={agencies}
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="phone"
               render={({ field }) => (
                 <FormItem>
@@ -206,37 +214,6 @@ export function CreateLabelDialog() {
                       value={field.value ?? ''}
                     />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="agencyId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Agencia Sugerida</FormLabel>
-                  <Select onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger className="capitalize">
-                        <SelectValue placeholder="Seleciona una agencia" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectGroup>
-                        {agencies.map(agency => (
-                          <SelectItem
-                            disabled={isCreatePending || isSearchDniRucPending}
-                            key={agency.id}
-                            value={agency.id}
-                            className="capitalize"
-                          >
-                            {agency.name}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

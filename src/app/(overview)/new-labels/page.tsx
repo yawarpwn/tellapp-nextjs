@@ -6,15 +6,15 @@ import { LabelsProvider } from '@/providers/labels-provider'
 import { Suspense } from 'react'
 import { CreateLabelDialog } from './_components/create-label-dialog'
 import { labelColumns } from './_components/label-columns'
+import { notFound } from 'next/navigation'
 
 async function ProductTable() {
   const { data: labels, error: labelsError } = await LabelsModel.getAll()
 
-  if (labelsError) return
-
+  if (labelsError) notFound()
   const { data: agencies, error: agenciesError } = await AgenciesModel.getAll()
 
-  if (agenciesError) return
+  if (agenciesError) notFound()
 
   return (
     <LabelsProvider agencies={agencies}>

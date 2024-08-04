@@ -30,10 +30,10 @@ export function generateLabelPdf(label: Label) {
       },
       sectionContent: {
         bold: true,
-        fontSize: 16,
+        fontSize: 14,
       },
       section: {
-        margin: [0, 8],
+        margin: [0, 6],
       },
     },
   }

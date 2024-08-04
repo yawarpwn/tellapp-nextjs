@@ -94,21 +94,40 @@ export const gelLabelColumn = (label: Label) => {
           {
             stack: [
               {
-                text: 'AGENCIA',
+                text: 'OBSERVACIONES',
+                style: 'sectionTitle',
+              },
+              {
+                text: label.observations || '\n\n',
+                style: 'sectionContent',
+                fontSize: 10,
+              },
+            ],
+            style: 'section',
+          },
+        ],
+
+        [
+          {
+            stack: [
+              {
+                text: 'AGENCIA SUGERIDA',
                 style: 'sectionTitle',
               },
               {
                 text: label.agency?.name || '',
-                fontSize: 14,
+                fontSize: 12,
                 bold: true,
               },
               {
                 text: label.agency?.address || '',
-                fontSize: 12,
+                fontSize: 10,
+                italics: true,
               },
               {
                 text: label.agency?.phone || '',
-                fontSize: 12,
+                fontSize: 10,
+                italics: true,
               },
             ],
             style: 'section',

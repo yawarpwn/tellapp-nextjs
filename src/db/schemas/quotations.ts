@@ -9,7 +9,10 @@ export const quotationsTable = pgTable('_quotations', {
   deadline: integer('deadline').notNull(),
   credit: integer('credit'),
   includeIgv: boolean('include_igv').default(false).notNull(),
-  customerId: uuid('customer_id').references(() => customersTable.id),
+  customerId: uuid('customer_id').references(() => customersTable.id, {
+    onDelete: 'set null',
+    onUpdate: 'no action',
+  }),
   isPaymentPending: boolean('is_payment_pending').default(false).notNull(),
   items: jsonb('items').$type<QuotationItem[]>().notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),

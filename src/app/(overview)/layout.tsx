@@ -3,6 +3,7 @@ import { MobileMenu } from '@/components/mobile-menu'
 import { Sidebar } from '@/components/sidebar'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 import React from 'react'
 
 async function LayoutDashboar({ children }: { children: React.ReactNode }) {
@@ -29,7 +30,9 @@ async function LayoutDashboar({ children }: { children: React.ReactNode }) {
         </div>
         {/* Main Content */}
         <div className="mt-4 min-w-full max-w-[100vw]">
-          <main className="px-4 xl:px-28">{children}</main>
+          <Suspense fallback={<div>Loading...</div>}>
+            <main className="px-4 xl:px-28">{children}</main>
+          </Suspense>
           <footer className="h-4"></footer>
         </div>
         {/* Main Content */}
