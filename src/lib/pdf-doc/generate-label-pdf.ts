@@ -1,11 +1,11 @@
 import pdfMake from 'pdfmake/build/pdfmake'
 import { useMemo } from 'react'
 // import * as pdfFonts from 'pdfmake/build/vfs_fonts'
-import { LabelType } from '@/types'
+import { Label } from '@/types'
 import { CustomTableLayout, TDocumentDefinitions } from 'pdfmake/interfaces'
 import { gelLabelColumn } from './label-column'
 
-export function generateLabelPdf(label: LabelType) {
+export function generateLabelPdf(label: Label) {
   const docPdf: TDocumentDefinitions = {
     content: [
       {
@@ -30,10 +30,10 @@ export function generateLabelPdf(label: LabelType) {
       },
       sectionContent: {
         bold: true,
-        fontSize: 16,
+        fontSize: 14,
       },
       section: {
-        margin: [0, 8],
+        margin: [0, 6],
       },
     },
   }
@@ -59,7 +59,7 @@ export function generateLabelPdf(label: LabelType) {
   )
 
   return {
-    download: () => dd.download(`rotulo-${label.dni_ruc}.pdf`),
+    download: () => dd.download(`rotulo-${label.dniRuc}.pdf`),
     print: () => dd.print(),
     open: () => dd.open(),
   }

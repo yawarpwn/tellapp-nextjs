@@ -1,20 +1,20 @@
 'use client'
 
-import { CustomersPicker } from '@/components/customers-picker'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { useQuotationUpdateStore } from '@/providers/quotation-update-store-provider'
 import { SearchIcon, StartIcon } from '@/icons'
-import { updateQuotationAction, searchRucAction } from '@/lib/actions/quoatations'
+import { searchRucAction, updateQuotationAction } from '@/lib/actions/quoatations'
 import { shootCoffeti } from '@/lib/confetti'
+import { useQuotationUpdateStore } from '@/providers/quotation-update-store-provider'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'sonner'
+import { CustomerPickerDialog } from '../../../_components/customer-picker-dialog'
 import { QuotationItems } from '../../../_components/quotation-item'
 
 export function QuotationUpdate() {
@@ -112,10 +112,13 @@ export function QuotationUpdate() {
 
   return (
     <>
-      <header className="flex justify-between">
-        <div></div>
+      <header className="flex justify-end">
         <div className="flex justify-end">
-          <CustomersPicker onPickCustomer={onPickCustomer} customers={customers} />
+          <CustomerPickerDialog
+            customers={customers}
+            onCustomerPick={onPickCustomer}
+            customerId={quo.customerId}
+          />
         </div>
       </header>
       <article className="mt-4 flex flex-col gap-4">

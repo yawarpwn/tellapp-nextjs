@@ -1,6 +1,6 @@
 'use client'
 
-import type { LabelType } from '@/types'
+import type { Label } from '@/types'
 import React from 'react'
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
@@ -21,7 +21,7 @@ import {
 
 import { createColumnHelper } from '@tanstack/react-table'
 
-const columnHelper = createColumnHelper<LabelType>()
+const columnHelper = createColumnHelper<Label>()
 
 export const labelColumns = [
   columnHelper.accessor('recipient', {
@@ -29,7 +29,7 @@ export const labelColumns = [
     cell: props => (
       <div className="min-w-[250px]">
         <p>{props.getValue()}</p>
-        <p>{props.row.original.dni_ruc}</p>
+        <p>{props.row.original.dniRuc}</p>
       </div>
     ),
   }),
@@ -37,7 +37,7 @@ export const labelColumns = [
     header: 'Destino',
     cell: props => (
       <div>
-        <p>{props.getValue()}</p>
+        <p>{props.getValue().toUpperCase()}</p>
         {props.row.original.address && <p>{props.row.original.address}</p>}
       </div>
     ),
@@ -46,13 +46,13 @@ export const labelColumns = [
     header: 'Teléfono',
     cell: props => props.getValue(),
   }),
-  columnHelper.accessor('agency_id', {
+  columnHelper.accessor('agencyId', {
     header: 'Agencia',
     cell: ({ row }) => {
       return (
         <div>
-          <p>{row.original.agencies?.company || ''}</p>
-          <p>{row.original.agencies?.ruc || ''}</p>
+          <p>{row.original.agency?.name || ''}</p>
+          <p>{row.original.agency?.ruc || ''}</p>
         </div>
       )
     },

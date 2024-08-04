@@ -3,7 +3,7 @@
 import { DataTablePagination } from '@/components/data-table-pagination'
 import { DebouncedInput } from '@/components/input-debounce'
 import { EmpetyIcon } from '@/icons'
-import type { ProductType } from '@/types'
+import type { Product } from '@/types'
 import {
   flexRender,
   getCoreRowModel,
@@ -23,13 +23,13 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-interface Props {
-  data: ProductType[]
+interface Props<T> {
+  data: T[]
   columns: any
   createComponent: React.ReactNode
 }
 
-export function DataTable({ data, columns, createComponent }: Props) {
+export function DataTable<T>({ data, columns, createComponent }: Props<T>) {
   const [globalFilter, setGlobalFilter] = React.useState('')
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageSize: 14,

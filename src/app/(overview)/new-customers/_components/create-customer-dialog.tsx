@@ -31,7 +31,7 @@ import {
 
 import { createCustomerAction } from '@/lib/actions/customers'
 import type { CustomerInsert } from '@/types'
-import { CustomerInsertSchema } from '@/schemas'
+import { AgencyInsertSchema } from '@/schemas'
 
 export function CreateCustomerDialog() {
   const [open, setOpen] = React.useState(false)
@@ -54,7 +54,7 @@ export function CreateCustomerDialog() {
   }
 
   const form = useForm<CustomerInsert>({
-    resolver: zodResolver(CustomerInsertSchema),
+    resolver: zodResolver(AgencyInsertSchema),
   })
 
   return (

@@ -1,33 +1,18 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
-import { TABLES } from '@/constants'
 import { SearchIcon } from '@/icons'
 import { getErrorMessage } from '@/lib/handle-error'
-import { createBrowserClient } from '@/lib/supabase/client'
-import { AgencyType } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from '@radix-ui/react-icons'
-import * as React from 'react'
+import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -37,47 +22,32 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-
-import { createLabelAction, searchByRucOrDni } from '@/lib/actions/labels'
-import { getDni, getRuc } from '@/lib/sunat'
-import { labelCreateSchema } from '@/schemas/labels'
-import type { LabelCreateType } from '@/types'
+import { createLabelAction, searchByDniOrRuc } from '@/lib/actions/labels'
+import { LabelInsertSchema } from '@/schemas/labels'
+import type { LabelInsert } from '@/types'
+import { useLabels } from '@/providers/labels-provider'
+import { Textarea } from '@/components/ui/textarea'
+import { PickAgencyDialog } from './pick-agency-dialog'
 
 export function CreateLabelDialog() {
-  const [open, setOpen] = React.useState(false)
-  const [isCreatePending, startCreateTransition] = React.useTransition()
-  const [isSearchDniRucPending, startSearchDniRucTransition] = React.useTransition()
-  const [agencies, setAgencies] = React.useState<AgencyType[]>([])
+  const [open, setOpen] = useState(false)
+  const [isCreatePending, startCreateTransition] = useTransition()
+  const [isSearchDniRucPending, startSearchDniRucTransition] = useTransition()
+  const { agencies } = useLabels()
 
-  React.useEffect(() => {
-    const supabase = createBrowserClient()
-    supabase
-      .from(TABLES.Agencies)
-      .select()
-      .then(({ data, error }) => {
-        if (error) {
-          console.log(error)
-        } else {
-          setAgencies(data)
-        }
-      })
-  }, [])
-
-  function onSubmit(input: LabelCreateType) {
-    console.log({ input })
+  const onSubmit = (input: LabelInsert) => {
     startCreateTransition(() => {
       toast.promise(createLabelAction(input), {
-        loading: 'Creando cliente...',
+        loading: 'Creando etiqueta...',
         success: () => {
-          form.reset()
+          form.reset
           setOpen(false)
-          return 'Cliente Creado'
+          return 'Etiqueta creada'
         },
         error: error => {
           setOpen(false)
@@ -87,13 +57,27 @@ export function CreateLabelDialog() {
     })
   }
 
-  const form = useForm<LabelCreateType>({
-    resolver: zodResolver(labelCreateSchema),
+  const form = useForm<LabelInsert>({
+    resolver: zodResolver(LabelInsertSchema),
+    defaultValues: {
+      agencyId: undefined,
+      recipient: '',
+      destination: '',
+      address: '',
+      dniRuc: '',
+      phone: '',
+      observations: '',
+    },
   })
 
   //Search company in server
   const searchCompany = async () => {
-    const dniRuc = form.getValues('dni_ruc')
+    const dniRuc = form.getValues('dniRuc')
+
+    if (!dniRuc) {
+      toast.warning('Ingresa un dni o ruc')
+      return
+    }
 
     if (dniRuc.length !== 8 && dniRuc.length !== 11) {
       toast.warning('Ingresa un dni o ruc válido')
@@ -101,8 +85,8 @@ export function CreateLabelDialog() {
     }
 
     startSearchDniRucTransition(() => {
-      toast.promise(searchByRucOrDni(dniRuc), {
-        loading: 'Buscando DNI...',
+      toast.promise(searchByDniOrRuc(dniRuc), {
+        loading: 'Buscando ...',
         success: data => {
           form.setValue('recipient', data.company)
           form.setFocus('destination')
@@ -126,19 +110,18 @@ export function CreateLabelDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Rotulo</DialogTitle>
-          <DialogDescription>LLena el formulario para crear un nuevo Cliente</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
-              name="dni_ruc"
+              name="dniRuc"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Dni/Ruc</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input disabled={isSearchDniRucPending} {...field} />
+                      <Input type="number" disabled={isSearchDniRucPending} {...field} />
                       <Button
                         onClick={searchCompany}
                         size="icon"
@@ -184,12 +167,34 @@ export function CreateLabelDialog() {
 
             <FormField
               control={form.control}
+              name="agencyId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Agencia Sugerida</FormLabel>
+                  <PickAgencyDialog
+                    onPickAgency={agencyId => {
+                      form.setValue('agencyId', agencyId)
+                    }}
+                    agencyId={field.value}
+                    agencies={agencies}
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="phone"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Telefono</FormLabel>
                   <FormControl>
-                    <Input disabled={isCreatePending || isSearchDniRucPending} {...field} />
+                    <Input
+                      {...field}
+                      disabled={isCreatePending || isSearchDniRucPending}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -203,39 +208,30 @@ export function CreateLabelDialog() {
                 <FormItem>
                   <FormLabel>Direccion</FormLabel>
                   <FormControl>
-                    <Input disabled={isCreatePending || isSearchDniRucPending} {...field} />
+                    <Input
+                      disabled={isCreatePending || isSearchDniRucPending}
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="agency_id"
+              name="observations"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Agencia Sugerida</FormLabel>
-                  <Select onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger className="capitalize">
-                        <SelectValue placeholder="Seleciona una categoria" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectGroup>
-                        {Object.values(agencies).map(agency => (
-                          <SelectItem
-                            disabled={isCreatePending || isSearchDniRucPending}
-                            key={agency.id}
-                            value={agency.id}
-                            className="capitalize"
-                          >
-                            {agency.company}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Observaciones</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={isSearchDniRucPending}
+                      {...field}
+                      value={field.value ?? ''}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

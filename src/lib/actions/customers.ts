@@ -14,12 +14,9 @@ export async function createCustomerAction(input: CustomerInsert): Promise<void>
 }
 
 export async function deleteCustomerAction(id: string) {
-  try {
-    await CustomersModel.delete(id)
-    revalidatePath('/new-customers')
-  } catch (error) {
-    console.log('ERROR DELETING CUSTOMER: ', error)
-  }
+  const { error } = await CustomersModel.delete(id)
+  if (error) throw error
+  revalidatePath('/new-customers')
 }
 
 export async function updateCustomerAction(id: string, input: CustomerUpdate) {

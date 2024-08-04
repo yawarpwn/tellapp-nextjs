@@ -1,31 +1,19 @@
+import { agenciesTable } from '@/db/schemas'
 import { z } from 'zod'
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod'
 
-export const agencySchema = z.object({
-  id: z.string(),
-  company: z.string(),
-  ruc: z.coerce.number().positive().min(10000000000, {
-    message: 'Ruc debe ser de 11 digitos',
-  }),
-  address: z.string().nullable(),
-  phone: z.coerce.number().nullable(),
-  // destinations: z.array(z.string()),
-  destinations: z.string().refine(
-    data => {
-      if (!data) return false
-      const items = data.split(',').map(item => item.trim())
-      return items.length > 0
-    },
-    {
-      message: 'Uno o mas destinos, separados por coma',
-    },
-  ),
-  updated_at: z.string(),
-  created_at: z.string(),
+export const AgencySchema = createSelectSchema(agenciesTable)
+export const AgencyInsertSchema = createInsertSchema(agenciesTable, {
+  ruc: () => z.coerce.string().length(11),
+  phone: () => z.coerce.string().length(9).nullable().optional(),
 })
 
-export const agencyCreateSchema = agencySchema.omit({
+export const AgencyUpdateSchema = AgencyInsertSchema.partial().omit({
   id: true,
-  updated_at: true,
-  created_at: true,
+  updatedAt: true,
+  createdAt: true,
 })
-export const agencyUpdateSchema = agencySchema.partial()
+
+export type Agency = z.infer<typeof AgencySchema>
+export type AgencyInsert = z.infer<typeof AgencyInsertSchema>
+export type AgencyUpdate = Partial<z.infer<typeof AgencyInsertSchema>>

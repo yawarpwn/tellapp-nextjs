@@ -7,25 +7,11 @@ export type * from '@/schemas'
 
 import { SignalCreateSchema, SignalSchema, SignalUpdateSchema } from '@/schemas/signal'
 
-import { agencieCreateSchema, agencieUpdateSchema, agencySchema } from '@/schemas/agencies'
-
-import { labelCreateSchema, labelSchema, labelUpdateSchema } from '@/schemas/labels'
-
 export interface PageProps {
   searchParams?: {
     [key: string]: string | undefined
   }
 }
-
-// Labels
-export type LabelType = z.infer<typeof labelSchema>
-export type LabelCreateType = z.infer<typeof labelCreateSchema>
-export type LabelUpdateType = z.infer<typeof labelUpdateSchema>
-
-// Agency
-export type AgencyType = z.infer<typeof agencySchema>
-export type AgencyCreateType = z.infer<typeof agencieCreateSchema>
-export type AgencyUpdateType = z.infer<typeof agencieUpdateSchema>
 
 // Signals
 export type SignalType = z.infer<typeof SignalSchema>

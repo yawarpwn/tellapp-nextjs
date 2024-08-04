@@ -94,8 +94,19 @@ export class CustomersModel {
     }
   }
 
-  static async delete(id: Customer['id']) {
-    await db.delete(customersTable).where(eq(customersTable.id, id))
+  static async delete(id: Customer['id']): Promise<DatabaseResponse<{ id: string }>> {
+    try {
+      await db.delete(customersTable).where(eq(customersTable.id, id))
+      return {
+        data: { id: id },
+        error: null,
+      }
+    } catch (error) {
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al eliminar el cliente'),
+      }
+    }
   }
 
   static async toggleIsRegular(

@@ -1,6 +1,6 @@
 'use client'
 
-import { CustomersPicker } from '@/components/customers-picker'
+import { CustomerPickerDialog } from '../../_components/customer-picker-dialog'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -113,10 +113,13 @@ export function QuotationCreate() {
 
   return (
     <>
-      <header className="flex justify-between">
-        <div></div>
+      <header className="flex justify-end">
         <div className="flex justify-end">
-          <CustomersPicker customers={customers} onPickCustomer={onPickCustomer} />
+          <CustomerPickerDialog
+            customers={customers}
+            onCustomerPick={onPickCustomer}
+            customerId={quo.customerId}
+          />
         </div>
       </header>
       <article className="mt-4 flex flex-col gap-4">
