@@ -22,7 +22,7 @@ export function CustomerPickerDialog({ customers, customerId, onCustomerPick }: 
   return (
     <>
       <Button variant="secondary" type="button" className="w-full" onClick={() => setOpen(true)}>
-        Clientes Frecuentes
+        Clientes
         <SearchIcon className="ml-2 size-4" />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>

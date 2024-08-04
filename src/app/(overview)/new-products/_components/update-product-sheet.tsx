@@ -86,7 +86,6 @@ export function UpdateProductSheet({ product, onOpenChange, open }: UpdateTaskSh
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
           <SheetTitle>Actualizar Producto</SheetTitle>
-          <SheetDescription>Completa el formulario para actualizar</SheetDescription>
         </SheetHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -205,13 +204,15 @@ export function UpdateProductSheet({ product, onOpenChange, open }: UpdateTaskSh
                 </FormItem>
               )}
             />
-            <SheetFooter className="gap-2 pt-2 sm:space-x-0">
+            <SheetFooter className="flex flex-row gap-2 pt-2 sm:space-x-0">
               <SheetClose asChild>
-                <Button type="button" variant="outline">
+                <Button type="button" variant="outline" className="w-full">
                   Cancel
                 </Button>
               </SheetClose>
-              <Button disabled={isUpdatePending}>Actualizar</Button>
+              <Button className="w-full" variant="primary" disabled={isUpdatePending}>
+                Actualizar
+              </Button>
             </SheetFooter>
           </form>
         </Form>

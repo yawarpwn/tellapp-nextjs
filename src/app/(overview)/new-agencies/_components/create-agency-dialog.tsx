@@ -63,14 +63,13 @@ export function CreateAgencyDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="primary" size="sm">
-          <PlusIcon className="mr-2 size-4" aria-hidden="true" />
-          Crear
+          <PlusIcon className="size-4" />
+          <span className="ml-2 hidden lg:block">Crear</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Crear Cliente</DialogTitle>
-          <DialogDescription>LLena el formulario para crear un nuevo Cliente</DialogDescription>
+          <DialogTitle>Crear Agencia</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -130,13 +129,13 @@ export function CreateAgencyDialog() {
               )}
             />
 
-            <DialogFooter className="gap-2 pt-2 sm:space-x-0">
+            <DialogFooter className="flex flex-row gap-2 pt-2 sm:space-x-0">
               <DialogClose asChild>
-                <Button type="button" variant="outline">
+                <Button type="button" variant="outline" className="w-full">
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type="submit" variant="primary" disabled={isCreatePending}>
+              <Button type="submit" variant="primary" className="w-full" disabled={isCreatePending}>
                 Crear
               </Button>
             </DialogFooter>

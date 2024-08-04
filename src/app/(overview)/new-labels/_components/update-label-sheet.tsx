@@ -76,7 +76,6 @@ export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSh
         <SheetHeader className="text-left">
           <SheetTitle>Actualizar</SheetTitle>
         </SheetHeader>
-
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
@@ -180,13 +179,13 @@ export function UpdateLabelSheet({ label, onOpenChange, ...props }: UpdateTaskSh
               )}
             />
 
-            <SheetFooter className="gap-2 pt-2 sm:space-x-0">
+            <SheetFooter className="flex flex-row gap-2 pt-2 sm:space-x-0">
               <SheetClose asChild>
-                <Button type="button" variant="outline">
+                <Button type="button" variant="outline" className="w-full">
                   Cancel
                 </Button>
               </SheetClose>
-              <Button type="submit" disabled={isUpdatePending}>
+              <Button type="submit" className="w-full" variant="primary" disabled={isUpdatePending}>
                 Actualizar
               </Button>
             </SheetFooter>

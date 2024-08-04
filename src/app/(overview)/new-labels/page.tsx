@@ -9,16 +9,18 @@ import { labelColumns } from './_components/label-columns'
 import { notFound } from 'next/navigation'
 
 async function ProductTable() {
-  const { data: labels, error: labelsError } = await LabelsModel.getAll()
-
-  if (labelsError) notFound()
-  const { data: agencies, error: agenciesError } = await AgenciesModel.getAll()
-
-  if (agenciesError) notFound()
+  const [labelsResponse, agenciesResponse] = await Promise.all([
+    LabelsModel.getAll(),
+    AgenciesModel.getAll(),
+  ])
 
   return (
-    <LabelsProvider agencies={agencies}>
-      <DataTable createComponent={<CreateLabelDialog />} columns={labelColumns} data={labels} />
+    <LabelsProvider agencies={agenciesResponse.data!}>
+      <DataTable
+        createComponent={<CreateLabelDialog />}
+        columns={labelColumns}
+        data={labelsResponse.data!}
+      />
     </LabelsProvider>
   )
 }

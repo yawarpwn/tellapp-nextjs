@@ -74,14 +74,13 @@ export function CreateProductDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="primary" size="sm">
-          <PlusIcon className="mr-2 size-4" aria-hidden="true" />
-          Crear
+          <PlusIcon className="size-4" />
+          <span className="ml-2 hidden lg:block">Crear</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Producto</DialogTitle>
-          <DialogDescription>LLena el formulario para crear un nuevo producto</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -203,13 +202,13 @@ export function CreateProductDialog() {
                 </FormItem>
               )}
             />
-            <DialogFooter className="gap-2 pt-2 sm:space-x-0">
+            <DialogFooter className="flex flex-row gap-2 pt-2 sm:space-x-0">
               <DialogClose asChild>
-                <Button type="button" variant="outline">
+                <Button type="button" variant="outline" className="w-full">
                   Cancel
                 </Button>
               </DialogClose>
-              <Button variant="secondary" disabled={isCreatePending}>
+              <Button variant="primary" disabled={isCreatePending} className="w-full">
                 Crear
               </Button>
             </DialogFooter>

@@ -103,8 +103,8 @@ export function CreateLabelDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="primary" size="sm">
-          <PlusIcon className="mr-2 size-4" aria-hidden="true" />
-          Crear
+          <PlusIcon className="size-4" />
+          <span className="ml-2 hidden lg:block">Crear</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -237,11 +237,12 @@ export function CreateLabelDialog() {
               )}
             />
 
-            <DialogFooter className="gap-2 pt-2 sm:space-x-0">
+            <DialogFooter className="flex flex-row gap-2 pt-2 sm:space-x-0">
               <DialogClose asChild>
                 <Button
                   disabled={isCreatePending || isSearchDniRucPending}
                   type="button"
+                  className="w-full"
                   variant="outline"
                 >
                   Cancel
@@ -249,6 +250,7 @@ export function CreateLabelDialog() {
               </DialogClose>
               <Button
                 type="submit"
+                className="w-full"
                 variant="primary"
                 disabled={isCreatePending || isSearchDniRucPending}
               >

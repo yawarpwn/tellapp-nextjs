@@ -18,7 +18,7 @@
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 66.65% 0.177 249.59;
+    --accent: 52.15% 0.281 288.32;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
@@ -35,7 +35,7 @@
           81.02deg,
           oklch(var(--secondary)) -23.47%,
           oklch(var(--primary)) 45.52%,
-          oklch(var(--accent)) 114.8%
+          oklch(66.65% 0.177 249.59) 114.8%
         )
         border-box;
     --border-gradient-hover: linear-gradient(rgb(38, 39, 44), rgb(38, 39, 44)) no-repeat padding-box,
@@ -43,7 +43,7 @@
           81.02deg,
           oklch(var(--secondary)) -23.47%,
           oklch(var(--primary)) 45.52%,
-          oklch(var(--accent)) 114.8%
+          oklch(66.65% 0.177 249.59) 114.8%
         )
         border-box;
   }

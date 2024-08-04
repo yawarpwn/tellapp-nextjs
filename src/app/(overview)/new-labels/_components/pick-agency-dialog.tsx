@@ -24,7 +24,7 @@ export function PickAgencyDialog({ agencies, agencyId, onPickAgency }: Props) {
     <>
       <Button type="button" className="w-full" onClick={() => setOpen(true)}>
         <span className="truncate">
-          {agencyId ? agencies.find(a => a.id === agencyId)?.name : 'Agencia'}
+          {agencyId ? agencies.find(a => a.id === agencyId)?.name : 'Selecionar Agencia'}
         </span>
         <ChevronDown className="ml-2 size-3" />
       </Button>

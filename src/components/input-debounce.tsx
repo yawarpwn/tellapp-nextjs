@@ -44,7 +44,7 @@ export function DebouncedInput({
   }, [value, onChange, debounce, searchParams])
 
   return (
-    <div className="flex items-center gap-2 rounded-md border bg-background200 px-2 py-1 [&:has(input:focus)]:border-primary ">
+    <div className="flex  max-w-sm items-center gap-2 rounded-md border bg-background200 px-2 py-1  [&:has(input:focus)]:border-primary ">
       <SearchIcon size={20} />
       <input
         {...props}

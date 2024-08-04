@@ -27,14 +27,14 @@ import {
 import { PlusIcon } from '@/icons'
 
 import { DebouncedInput } from '@/components/input-debounce'
-import type { QuotationType } from '@/types'
+import type { QuotationClient } from '@/types'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { FloatingBar } from './_components/floating-bar'
 import { getColumns } from './columns'
 
 interface Props {
-  data: QuotationType[]
+  data: QuotationClient[]
   // columns: ColumnDef<QuotationType>[]
 }
 
@@ -88,7 +88,7 @@ export function DataTable(props: Props) {
         <DebouncedInput
           value={globalFilter}
           onChange={value => setGlobalFilter(String(value))}
-          placeholder="Filtrar..."
+          placeholder="Buscar..."
         />
         <Link
           className={buttonVariants({ variant: 'primary', size: 'sm' })}

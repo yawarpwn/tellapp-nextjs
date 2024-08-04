@@ -66,8 +66,7 @@ export function UpdateAgencySheet({ agency, onOpenChange, ...props }: UpdateTask
     <Sheet onOpenChange={onOpenChange} {...props}>
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
-          <SheetTitle>Actualizar</SheetTitle>
-          <SheetDescription>Completa el formulario para actualizar</SheetDescription>
+          <SheetTitle>Actualizar Agencia</SheetTitle>
         </SheetHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -127,13 +126,15 @@ export function UpdateAgencySheet({ agency, onOpenChange, ...props }: UpdateTask
               )}
             />
 
-            <SheetFooter className="gap-2 pt-2 sm:space-x-0">
+            <SheetFooter className="flex flex-row gap-2 pt-2 sm:space-x-0">
               <SheetClose asChild>
-                <Button type="button" variant="outline">
+                <Button type="button" variant="outline" className="w-full">
                   Cancel
                 </Button>
               </SheetClose>
-              <Button disabled={isUpdatePending}>Actualizar</Button>
+              <Button variant="primary" className="w-full" disabled={isUpdatePending}>
+                Actualizar
+              </Button>
             </SheetFooter>
           </form>
         </Form>
