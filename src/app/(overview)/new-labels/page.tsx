@@ -6,7 +6,7 @@ import { LabelsProvider } from '@/providers/labels-provider'
 import { Suspense } from 'react'
 import { CreateLabelDialog } from './_components/create-label-dialog'
 import { labelColumns } from './_components/label-columns'
-import { notFound } from 'next/navigation'
+import { unstable_noStore as noStore } from 'next/cache'
 
 async function ProductTable() {
   const [labelsResponse, agenciesResponse] = await Promise.all([
@@ -14,12 +14,15 @@ async function ProductTable() {
     AgenciesModel.getAll(),
   ])
 
+  if (labelsResponse.error) throw labelsResponse.error
+  if (agenciesResponse.error) throw agenciesResponse.error
+
   return (
-    <LabelsProvider agencies={agenciesResponse.data!}>
+    <LabelsProvider agencies={agenciesResponse.data}>
       <DataTable
         createComponent={<CreateLabelDialog />}
         columns={labelColumns}
-        data={labelsResponse.data!}
+        data={labelsResponse.data}
       />
     </LabelsProvider>
   )

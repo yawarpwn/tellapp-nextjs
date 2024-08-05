@@ -4,8 +4,10 @@ import { Suspense } from 'react'
 import { agencyColumns } from './_components/agency-columns'
 import { CreateAgencyDialog } from './_components/create-agency-dialog'
 import { AgenciesModel } from '@/models/agencies'
+import { unstable_noStore as noStore } from 'next/cache'
 
 async function ProductTable() {
+  noStore()
   const { error, data: agencies } = await AgenciesModel.getAll()
 
   if (error) throw error

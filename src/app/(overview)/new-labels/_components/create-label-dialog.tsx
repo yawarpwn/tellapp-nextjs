@@ -4,7 +4,6 @@ import { Input } from '@/components/ui/input'
 import { SearchIcon } from '@/icons'
 import { getErrorMessage } from '@/lib/handle-error'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusIcon } from '@radix-ui/react-icons'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -33,6 +32,7 @@ import type { LabelInsert } from '@/types'
 import { useLabels } from '@/providers/labels-provider'
 import { Textarea } from '@/components/ui/textarea'
 import { PickAgencyDialog } from './pick-agency-dialog'
+import { AddButton } from '@/components/buttons'
 
 export function CreateLabelDialog() {
   const [open, setOpen] = useState(false)
@@ -101,12 +101,7 @@ export function CreateLabelDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="primary" size="sm">
-          <PlusIcon className="size-4" />
-          <span className="ml-2 hidden lg:block">Crear</span>
-        </Button>
-      </DialogTrigger>
+      <AddButton />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Rotulo</DialogTitle>

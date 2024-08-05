@@ -1,9 +1,9 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
+import { AddButton } from '@/components/buttons'
 import { getErrorMessage } from '@/lib/handle-error'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusIcon } from '@/icons'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -59,12 +59,7 @@ export function CreateCustomerDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="primary" size="sm">
-          <PlusIcon className="size-4" />
-          <span className="ml-2 hidden lg:block">Crear</span>
-        </Button>
-      </DialogTrigger>
+      <AddButton />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Cliente</DialogTitle>

@@ -4,7 +4,6 @@ import { Input } from '@/components/ui/input'
 import { PRODUCT_CATEGORIES } from '@/constants'
 import type { ProductInsert } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -16,7 +15,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -44,6 +42,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { createProductAction } from '@/lib/actions/products'
 
 import { ProductInsertSchema } from '@/schemas/products'
+import { AddButton } from '@/components/buttons'
 
 export function CreateProductDialog() {
   const [open, setOpen] = React.useState(false)
@@ -72,12 +71,7 @@ export function CreateProductDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="primary" size="sm">
-          <PlusIcon className="size-4" />
-          <span className="ml-2 hidden lg:block">Crear</span>
-        </Button>
-      </DialogTrigger>
+      <AddButton />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Producto</DialogTitle>

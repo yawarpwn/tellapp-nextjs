@@ -75,7 +75,7 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
     rowCount = 10,
     searchableColumnCount = 0,
     filterableColumnCount = 0,
-    showViewOptions = true,
+    showViewOptions = false,
     cellWidths = ['auto'],
     withPagination = true,
     shrinkZero = false,
@@ -98,6 +98,7 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
               ))
             : null}
         </div>
+        <Skeleton className="h-7 w-12 md:w-24" />
         {showViewOptions ? <Skeleton className="ml-auto hidden h-7 w-[4.5rem] lg:flex" /> : null}
       </div>
       <div className="rounded-md border">

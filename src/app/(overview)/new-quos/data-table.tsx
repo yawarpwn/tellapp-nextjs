@@ -94,8 +94,8 @@ export function DataTable(props: Props) {
           className={buttonVariants({ variant: 'primary', size: 'sm' })}
           href="/new-quos/create"
         >
-          <PlusIcon className="md:mr-2" size={24} />
-          <span className="hidden md:block">Crear</span>
+          <PlusIcon size={24} />
+          <span className="ml-2 hidden sm:block">Crear</span>
         </Link>
       </div>
       <Table>

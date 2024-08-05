@@ -30,9 +30,7 @@ async function LayoutDashboar({ children }: { children: React.ReactNode }) {
         </div>
         {/* Main Content */}
         <div className="mt-4 min-w-full max-w-[100vw]">
-          <Suspense fallback={<div>Loading...</div>}>
-            <main className="px-3 xl:px-28">{children}</main>
-          </Suspense>
+          <main className="px-3 xl:px-28">{children}</main>
           <footer className="h-4"></footer>
         </div>
         {/* Main Content */}

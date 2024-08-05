@@ -3,7 +3,6 @@
 import { Input } from '@/components/ui/input'
 import { getErrorMessage } from '@/lib/handle-error'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -13,7 +12,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -32,6 +30,7 @@ import {
 import { createAgencyAction } from '@/lib/actions/agencies'
 import { AgencyInsertSchema } from '@/schemas/agencies'
 
+import { AddButton } from '@/components/buttons'
 import type { AgencyInsert } from '@/types'
 
 export function CreateAgencyDialog() {
@@ -61,12 +60,7 @@ export function CreateAgencyDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="primary" size="sm">
-          <PlusIcon className="size-4" />
-          <span className="ml-2 hidden lg:block">Crear</span>
-        </Button>
-      </DialogTrigger>
+      <AddButton />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Agencia</DialogTitle>
