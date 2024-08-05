@@ -2,10 +2,7 @@
 import { TABLES } from '@/constants'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
-import {
-	destroyResource,
-	uploadImageFile,
-} from '../cloudinary'
+import { destroyResource, uploadImageFile } from '../cloudinary'
 import { createServerClient } from '../supabase/server'
 
 // export async function uploadFiles(
@@ -49,122 +46,117 @@ import { createServerClient } from '../supabase/server'
 // }
 
 export async function createGalleryImage(formData: FormData) {
-	const data = Object.fromEntries(formData.entries())
+  const data = Object.fromEntries(formData.entries())
 
-	const { title, category, fileImage } = data
+  const { title, category, fileImage } = data
 
-	try {
-		const {
-			public_id,
-			secure_url,
-			width,
-			height,
-			format,
-		} = await uploadImageFile(fileImage as File, {
-			folder: 'gallery',
-			allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-			transformation: [{
-				width: 'auto',
-				height: 1000,
-				crop: 'scale',
-				quality: 'auto',
-				format: 'webp',
-			}],
-		})
-		console.log('upload image with public_id', public_id)
+  try {
+    const { public_id, secure_url, width, height, format } = await uploadImageFile(
+      fileImage as File,
+      {
+        folder: 'gallery',
+        allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+        transformation: [
+          {
+            width: 'auto',
+            height: 1000,
+            crop: 'scale',
+            quality: 'auto',
+            format: 'webp',
+          },
+        ],
+      },
+    )
+    console.log('upload image with public_id', public_id)
 
-		// prepare data
-		const dataTopInsert = {
-			public_id,
-			url: secure_url,
-			width,
-			height,
-			format,
-			category,
-			title,
-		}
+    // prepare data
+    const dataTopInsert = {
+      public_id,
+      url: secure_url,
+      width,
+      height,
+      format,
+      category,
+      title,
+    }
 
-		// update to Database
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLES.Gallery).insert(dataTopInsert)
+    // update to Database
+    const cookieStore = cookies()
+    const supabase = createServerClient(cookieStore)
+    const { error } = await supabase.from(TABLES.Gallery).insert(dataTopInsert)
 
-		if (error) throw error
+    if (error) throw error
 
-		revalidatePath(`/gallery/`)
-	} catch (error) {
-		console.log(error)
-	}
+    revalidatePath(`/gallery/`)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function updateGalleryImage(formData: FormData) {
-	const data = Object.fromEntries(formData.entries())
+  const data = Object.fromEntries(formData.entries())
 
-	const { title, category, id, fileImage, publicId } = data
-	console.log('----', data)
+  const { title, category, id, fileImage, publicId } = data
+  console.log('----', data)
 
-	try {
-		let dataToUpdate = {
-			title,
-			category,
-			updated_at: new Date().toISOString(),
-		}
+  try {
+    let dataToUpdate = {
+      title,
+      category,
+      updated_at: new Date().toISOString(),
+    }
 
-		if (fileImage && publicId) {
-			const {
-				public_id,
-				secure_url,
-				width,
-				height,
-				format,
-			} = await uploadImageFile(fileImage as File, {
-				folder: 'gallery',
-			})
-			console.log('upload image with public_id', public_id)
+    if (fileImage && publicId) {
+      const { public_id, secure_url, width, height, format } = await uploadImageFile(
+        fileImage as File,
+        {
+          folder: 'gallery',
+        },
+      )
+      console.log('upload image with public_id', public_id)
 
-			await destroyResource(publicId as string)
-			console.log('destroy image with public_id', publicId)
+      await destroyResource(publicId as string)
+      console.log('destroy image with public_id', publicId)
 
-			dataToUpdate = {
-				...dataToUpdate,
-				url: secure_url,
-				public_id,
-				width,
-				height,
-				format,
-			}
-		}
+      dataToUpdate = {
+        ...dataToUpdate,
+        url: secure_url,
+        public_id,
+        width,
+        height,
+        format,
+      }
+    }
 
-		// update to Database
-		const cookieStore = cookies()
-		const supabase = createServerClient(cookieStore)
-		const { error } = await supabase.from(TABLES.Gallery).update(dataToUpdate)
-			.eq('id', id)
+    // update to Database
+    const cookieStore = cookies()
+    const supabase = createServerClient(cookieStore)
+    const { error } = await supabase.from(TABLES.Gallery).update(dataToUpdate).eq('id', id)
 
-		if (error) throw error
+    if (error) throw error
 
-		revalidatePath(`/gallery/`)
-	} catch (error) {
-		console.log(error)
-	}
+    revalidatePath(`/gallery/`)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function deleteGalleryImage(_: undefined, formData: FormData) {
-	const id = formData.get('id') as string
-	const publicId = formData.get('publicId') as string
+  const id = formData.get('id') as string
+  const publicId = formData.get('publicId') as string
 
-	const cookieStore = cookies()
-	const supabase = createServerClient(cookieStore)
+  const cookieStore = cookies()
+  const supabase = createServerClient(cookieStore)
 
-	// destroy image in cloudinary
-	await destroyResource(publicId)
-	console.log('destroy image with public_id', publicId)
+  // destroy image in cloudinary
+  await destroyResource(publicId)
+  console.log('destroy image with public_id', publicId)
 
-	const { error } = await supabase.from(TABLES.Gallery).delete().eq('id', id)
-	if (error) {
-		console.log(error)
-	}
-	console.log('gallery image deleted')
+  const { error } = await supabase.from(TABLES.Gallery).delete().eq('id', id)
+  if (error) {
+    console.log(error)
+  }
+  console.log('gallery image deleted')
 
-	revalidatePath(`/gallery/`)
+  revalidatePath(`/gallery/`)
 }

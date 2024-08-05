@@ -7,40 +7,32 @@ import { type Signal } from '@/types'
 import DeleteActionForm from '../delete-action-form'
 
 interface Props {
-	item: Signal
+  item: Signal
 }
 
 export function SignalEditFormButton({ item }: Props) {
-	return (
-		<>
-			<CreateUpdateImageButton
-				item={item}
-				action={updateSignal}
-				categories={Object.values(SIGNALS_CATEGORIES)}
-			/>
-		</>
-	)
+  return (
+    <>
+      <CreateUpdateImageButton
+        item={item}
+        action={updateSignal}
+        categories={Object.values(SIGNALS_CATEGORIES)}
+      />
+    </>
+  )
 }
 
 export function SignalAddFormButton() {
-	return (
-		<>
-			<CreateUpdateImageButton
-				action={createSignal}
-				categories={Object.values(SIGNALS_CATEGORIES)}
-			/>
-		</>
-	)
+  return (
+    <>
+      <CreateUpdateImageButton
+        action={createSignal}
+        categories={Object.values(SIGNALS_CATEGORIES)}
+      />
+    </>
+  )
 }
 
-export function SignalDeleteFormButton(
-	{ id, publicId }: { id: string; publicId: string },
-) {
-	return (
-		<DeleteActionForm
-			id={id}
-			publicId={publicId}
-			deleteAction={deleteSignal}
-		/>
-	)
+export function SignalDeleteFormButton({ id, publicId }: { id: string; publicId: string }) {
+  return <DeleteActionForm id={id} publicId={publicId} deleteAction={deleteSignal} />
 }

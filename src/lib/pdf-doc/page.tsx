@@ -27,12 +27,7 @@ import { generatePdfDoc } from './pdf-doc'
 // }
 
 export default function Page() {
-  const dd = pdfMake.createPdf(
-    generatePdfDoc(),
-    undefined,
-    undefined,
-    pdfFonts.pdfMake.vfs,
-  )
+  const dd = pdfMake.createPdf(generatePdfDoc(), undefined, undefined, pdfFonts.pdfMake.vfs)
   return (
     <div>
       <button className="bg-orange-500 px-4 py-2" onClick={() => dd.open()}>

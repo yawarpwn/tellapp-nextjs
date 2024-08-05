@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -38,56 +37,47 @@ import { Textarea } from '@/components/ui/textarea'
 import { updateProductAction } from '@/lib/actions/products'
 
 import { ProductUpdateSchema } from '@/schemas/products'
-import type { ProductType } from '@/types'
-import type { ProductUpdateType } from '@/types'
+import type { Product } from '@/types'
+import type { ProductUpdate } from '@/types'
 
 import { PRODUCT_CATEGORIES } from '@/constants'
 import { getErrorMessage } from '@/lib/handle-error'
 
-interface UpdateTaskSheetProps
-  extends React.ComponentPropsWithRef<typeof Sheet> {
-  product: ProductType
+interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet> {
+  product: Product
 }
 
-export function UpdateProductSheet({
-  product,
-  onOpenChange,
-  open,
-  ...props
-}: UpdateTaskSheetProps) {
+export function UpdateProductSheet({ product, onOpenChange, open }: UpdateTaskSheetProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
-  const form = useForm<ProductUpdateType>({
+  const form = useForm<ProductUpdate>({
     resolver: zodResolver(ProductUpdateSchema),
     defaultValues: {
       description: product.description,
       code: product.code,
       price: product.price,
-      unit_size: product.unit_size,
+      unitSize: product.unitSize,
+      category: product.category,
       cost: product.cost,
       link: product.link ?? '',
     },
   })
 
-  function onSubmit(input: z.infer<typeof ProductUpdateSchema>) {
+  function onSubmit(input: ProductUpdate) {
     startUpdateTransition(() => {
-      toast.promise(
-        updateProductAction(product.id, {
-          ...input,
-          code: input?.code?.toUpperCase(),
-        }),
-        {
-          loading: 'Updating task...',
-          success: () => {
-            onOpenChange?.(false)
-            return 'Producto actualizado'
-          },
-          error: error => {
-            onOpenChange?.(false)
-            return getErrorMessage(error)
-          },
+      toast.promise(updateProductAction(product.id, input), {
+        loading: 'Actualizando producto..',
+        success: () => {
+          console.log('success')
+          onOpenChange?.(false)
+          return 'Producto actualizado'
         },
-      )
+        error: error => {
+          console.log(error)
+          onOpenChange?.(false)
+          return getErrorMessage(error)
+        },
+      })
     })
   }
 
@@ -96,15 +86,9 @@ export function UpdateProductSheet({
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
           <SheetTitle>Actualizar Producto</SheetTitle>
-          <SheetDescription>
-            Completa el formulario para actualizar
-          </SheetDescription>
         </SheetHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="description"
@@ -135,7 +119,7 @@ export function UpdateProductSheet({
 
             <FormField
               control={form.control}
-              name="unit_size"
+              name="unitSize"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>U/M</FormLabel>
@@ -183,7 +167,11 @@ export function UpdateProductSheet({
                 <FormItem>
                   <FormLabel>Link</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      placeholder="https://tellsenales.com/producto/enlace-product/"
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -196,10 +184,7 @@ export function UpdateProductSheet({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Categoria</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={product.category}
-                  >
+                  <Select onValueChange={field.onChange} defaultValue={product.category}>
                     <FormControl>
                       <SelectTrigger className="capitalize">
                         <SelectValue placeholder="Seleciona una categoria" />
@@ -208,11 +193,7 @@ export function UpdateProductSheet({
                     <SelectContent>
                       <SelectGroup>
                         {Object.values(PRODUCT_CATEGORIES).map(product => (
-                          <SelectItem
-                            key={product}
-                            value={product}
-                            className="capitalize"
-                          >
+                          <SelectItem key={product} value={product} className="capitalize">
                             {product}
                           </SelectItem>
                         ))}
@@ -223,13 +204,15 @@ export function UpdateProductSheet({
                 </FormItem>
               )}
             />
-            <SheetFooter className="gap-2 pt-2 sm:space-x-0">
+            <SheetFooter className="flex flex-row gap-2 pt-2 sm:space-x-0">
               <SheetClose asChild>
-                <Button type="button" variant="outline">
+                <Button type="button" variant="outline" className="w-full">
                   Cancel
                 </Button>
               </SheetClose>
-              <Button disabled={isUpdatePending}>Actualizar</Button>
+              <Button className="w-full" variant="primary" disabled={isUpdatePending}>
+                Actualizar
+              </Button>
             </SheetFooter>
           </form>
         </Form>

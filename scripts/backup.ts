@@ -15,6 +15,7 @@ async function backup(table: (typeof TABLES)[keyof typeof TABLES]) {
 
   fs.writeFile(`./backup/${table}.json`, JSON.stringify(data))
   console.log(`Success Backup TABLE:${table}`)
+  return data
 }
 
 async function main() {

@@ -1,27 +1,76 @@
 'use client'
 
-import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { DocumentDuplicateIcon } from '@/icons'
 import { duplicateQuotationAction } from '@/lib/actions/quoatations'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { DeleteIcon } from '@/icons'
+import { Loader2 } from 'lucide-react'
 import React from 'react'
 
-export function DuplicateButton({ id }: { id: string }) {
-	const [open, setOpen] = React.useState(false)
-	return (
-		<>
-			<ConfirmActionDialog
-				action={() => duplicateQuotationAction(id)}
-				onSuccess={() => console.log('success')}
-				dialogTitle='Duplicar Cotización'
-				dialogDescription='¿Deseas duplicar esta cotización?'
-				onOpenChange={setOpen}
-				showTrigger={false}
-				open={open}
-			/>
-			<Button variant='secondary' onClick={() => setOpen(true)}>
-				<DocumentDuplicateIcon size={20} />
-			</Button>
-		</>
-	)
+export function DuplicateButton({ id, showTrigger = false }: { id: string; showTrigger: boolean }) {
+  const router = useRouter()
+  const [open, setOpen] = React.useState(false)
+  const [pending, startTranstion] = React.useTransition()
+  return (
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
+        {showTrigger && (
+          <DialogTrigger asChild>
+            <Button variant={'secondary'} size={'sm'}>
+              <DocumentDuplicateIcon size={20} />
+              <span className="ml-2 hidden lg:block">Duplicar</span>
+            </Button>
+          </DialogTrigger>
+        )}
+
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Duplicar Cotización</DialogTitle>
+            {DialogDescription && (
+              <DialogDescription className="py-4">
+                ¿Deseas duplicar esta cotización?
+              </DialogDescription>
+            )}
+            <DialogFooter className="gap-y-2">
+              <DialogClose asChild>
+                <Button>Cancelar</Button>
+              </DialogClose>
+              <Button
+                variant={'primary'}
+                disabled={pending}
+                onClick={() => {
+                  startTranstion(async () => {
+                    toast.promise(duplicateQuotationAction(id), {
+                      success: ({ number }) => {
+                        router.push(`/new-quos/${number}`)
+                        return `Cotizacion ${number} Creado`
+                      },
+                      loading: 'duplicando...',
+                      error: 'No se pudo duplicar',
+                    })
+                  })
+                }}
+              >
+                {pending && <Loader2 className="mr-2 animate-spin" />}
+                Aceptar
+              </Button>
+            </DialogFooter>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
 }

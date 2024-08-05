@@ -1,40 +1,22 @@
+import { customersTable } from '@/db/schemas'
 import { z } from 'zod'
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod'
 
-export const customerSchema = z.object({
-  id: z.string(),
-  name: z.string().min(10, {
-    message: 'El nombre debe tener al menos 10 caracteres',
-  }),
-  ruc: z.coerce.string().length(11, {
-    message: 'El ruc debe tener al menos 11 caracteres',
-  }),
-  address: z
-    .string()
-    .min(10, {
-      message: 'La dirección debe tener al menos 10 caracteres',
-    })
-    .nullable(),
-  phone: z.coerce
-    .string()
-    .length(9, {
-      message: 'El telefono debe tener 9 caracteres',
-    })
-    .nullable(),
-  email: z
-    .string()
-    .email({
-      message: 'El correo no es valido',
-    })
-    .nullable(),
-  created_at: z.date(),
-  updated_at: z.date(),
+// Customers
+export const CustomerSchema = createSelectSchema(customersTable)
+export const CustomerInsertSchema = createInsertSchema(customersTable, {
+  ruc: () => z.coerce.string().length(11),
+  address: schema => schema.address.nullable().optional(),
+  email: schema => schema.email.email().nullable().optional(),
+  phone: () => z.coerce.string().length(9).nullable().optional(),
 })
-
-export const customerCreateSchema = customerSchema.omit({
+export const CustomerUpdateSchema = CustomerInsertSchema.partial().omit({
   id: true,
-  created_at: true,
-  updated_at: true,
-  email: true,
-  phone: true,
+  updatedAt: true,
+  createdAt: true,
+  isRegular: true,
 })
-export const customerUpdateSchema = customerSchema.partial()
+
+export type Customer = z.infer<typeof CustomerSchema>
+export type CustomerInsert = z.infer<typeof CustomerInsertSchema>
+export type CustomerUpdate = Partial<z.infer<typeof CustomerInsertSchema>>

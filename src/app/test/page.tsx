@@ -1,9 +1,9 @@
-export default async function PageTest() {
+import CommandMenu from './command-menu'
+export default function Page() {
   return (
-    <form>
-      Neyda
-      <input type="email" placeholder="tu correo" />
-      <button>Enviar</button>
-    </form>
+    <div>
+      <h1>Test</h1>
+      <CommandMenu />
+    </div>
   )
 }

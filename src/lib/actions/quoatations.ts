@@ -1,442 +1,161 @@
 'use server'
-
-import { TABLES } from '@/constants'
-import { createServerClient } from '@/lib/supabase/server'
-import {
-  QuotationCreateSchema,
-  QuotationUpdateSchema,
-} from '@/schemas/quotations'
-import {
-  type QuotationCreateType,
-  type QuotationItemType,
-  type QuotationType,
-  type QuotationUpdateType,
-} from '@/types'
-import { revalidatePath, revalidateTag } from 'next/cache'
-import { cookies } from 'next/headers'
+import { QuotationsModel, CustomersModel } from '@/models'
+import type { QuotationClientCreate, QuotationClientUpdate, QuotationItem } from '@/types'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import {
-  fetchLastQuotation,
-  fetchQuotationById,
-  fetchQuotationByNumber,
-} from '../data/quotations'
+import { getRuc } from '../sunat'
 
-export async function setQuotation(
-  quotation: QuotationUpdateType,
-  items: QuotationItemType[],
-): Promise<[Error?, QuotationType?]> {
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
+export async function updateQuotationAction(
+  quotation: QuotationClientUpdate,
+  items: QuotationItem[],
+): Promise<{ number: number }> {
+  let customerId = quotation.customerId
 
-  console.log({ quotation })
+  if (quotation.ruc && quotation.company && !customerId) {
+    const { error, data } = await CustomersModel.create({
+      name: quotation.company,
+      ruc: quotation.ruc,
+      address: quotation.address,
+    })
 
-  if (quotation.is_regular_customer) {
-    const { data: customerFounds, error: customerFoundError } = await supabase
-      .from(TABLES.Customers)
-      .select('ruc')
-      .eq('ruc', quotation.ruc)
-
-    console.log('Customers Founds', customerFounds)
-
-    if (customerFoundError) {
-      console.log('ERROR: SEARCHING frecuently customer', customerFoundError)
+    if (error) {
+      throw error
     }
 
-    if (customerFounds?.length === 0) {
-      const { data: customers, error: errorCustomers } = await supabase
-        .from(TABLES.Customers)
-        .insert({
-          name: quotation.company,
-          ruc: quotation.ruc,
-          address: quotation.address,
-        })
-
-      if (errorCustomers) {
-        throw errorCustomers
-      }
-    }
+    customerId = data.id
   }
 
-  const quotationToUpdate = {
-    ruc: quotation.ruc,
-    company: quotation.company,
-    address: quotation.address,
+  const { data, error } = await QuotationsModel.update(quotation.id, {
     deadline: quotation.deadline,
-    include_igv: quotation.include_igv,
-    updated_at: new Date().toISOString(),
-    credit: quotation.credit ? Number(quotation.credit) : null,
-    items: items,
-  }
-
-  const { data, error } = await supabase
-    .from(TABLES.Quotations)
-    .update(quotationToUpdate)
-    .eq('id', quotation.id)
-    .select()
+    includeIgv: quotation.includeIgv,
+    credit: quotation.credit,
+    customerId,
+    items,
+    updatedAt: new Date(),
+  })
 
   if (error) {
-    console.log('error updating quotation', error)
-    return [new Error('Error actualizando cotización')]
+    throw error
   }
-  revalidatePath(`/new-quos/${data[0].number}`)
-  return [undefined, data[0]]
+
+  revalidatePath(`/new-quos/${data.number}`)
+  return { number: data.number }
 }
 
-export async function insertQuotation(
-  quotation: QuotationCreateType,
-  items: QuotationItemType[],
-): Promise<[Error?, QuotationType?]> {
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
+export async function createQuotationAction(
+  quotation: QuotationClientCreate,
+  items: QuotationItem[],
+): Promise<{ number: number }> {
+  let customerId = quotation.customerId
 
-  if (quotation.is_regular_customer) {
-    const { data: customerFounds, error: customerFoundError } = await supabase
-      .from(TABLES.Customers)
-      .select('ruc')
-      .eq('ruc', quotation.ruc)
+  if (quotation.ruc && quotation.company && !customerId) {
+    const { data, error } = await CustomersModel.create({
+      name: quotation.company,
+      ruc: quotation.ruc,
+      address: quotation.address,
+    })
 
-    console.log('Customers Founds', customerFounds)
-
-    if (customerFoundError) {
-      console.log('ERROR: SEARCHING frecuently customer', customerFoundError)
+    if (error) {
+      throw error
     }
 
-    if (customerFounds?.length === 0) {
-      const { data: customers, error: errorCustomers } = await supabase
-        .from(TABLES.Customers)
-        .insert({
-          name: quotation.company,
-          ruc: quotation.ruc,
-          address: quotation.address,
-        })
-
-      if (errorCustomers) {
-        throw errorCustomers
-      }
-    }
+    customerId = data.id
   }
 
-  const quotationToInsert = {
-    ruc: quotation.ruc,
-    company: quotation.company,
-    address: quotation.address,
+  const { data: lastQuotation, error: lastQuotationError } =
+    await QuotationsModel.getLastQuotation()
+
+  if (lastQuotationError) {
+    throw lastQuotationError
+  }
+
+  const quoNumber = lastQuotation.number + 1
+
+  const { error } = await QuotationsModel.create({
+    number: quoNumber,
     deadline: quotation.deadline,
-    include_igv: quotation.include_igv,
-    created_at: new Date().toISOString(),
-    credit: quotation.credit ? Number(quotation.credit) : null,
+    includeIgv: quotation.includeIgv,
+    credit: quotation.credit,
+    customerId,
     items,
-  }
-
-  const { data, error } = await supabase
-    .from(TABLES.Quotations)
-    .insert(quotationToInsert)
-    .select()
-    .returns<QuotationType[]>()
+  })
 
   if (error) {
-    console.log('error inserting quotation', error)
-    return [new Error('Error inserting quotation')]
+    throw error
   }
 
   revalidatePath('/new-quos')
-  return [undefined, data[0]]
-}
-
-// Create Product
-export async function createQuotation(_: undefined, formData: FormData) {
-  const rawData = {
-    ruc: formData.get('ruc') || undefined,
-    company: formData.get('company') || undefined,
-    address: formData.get('address') || undefined,
-    deadline: formData.get('deadline'),
-    include_igv: formData.get('include_igv'),
-    is_regular_customer: formData.get('is_regular_customer'),
-  }
-
-  const items = JSON.parse(formData.get('items') as string)
-
-  // validated fields with zod
-  const validatedFields = QuotationCreateSchema.safeParse(rawData)
-
-  // if error
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
-    }
-  }
-
-  // create supabase client
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  const { company, ruc, address, deadline, include_igv, is_regular_customer } =
-    validatedFields.data
-
-  // Si esta marco como cliente regular agregamos a la DB
-  if (is_regular_customer) {
-    // buscar si existe el ruc en customers
-    const { data: customers, error: customersError } = await supabase
-      .from(TABLES.Customers)
-      .select()
-      .eq('ruc', ruc)
-
-    if (customersError) {
-      return {
-        errors: customersError,
-      }
-    }
-
-    // si no existe el ruc en customers agregamos
-    if (customers?.length === 0) {
-      const { error } = await supabase.from(TABLES.Customers).insert({
-        ruc,
-        name: company,
-        address,
-      })
-
-      if (error) {
-        return {
-          errors: error,
-        }
-      }
-    }
-  }
-
-  // prepare data to insert
-  //
-  const quotationToInsert = {
-    company,
-    ruc,
-    address,
-    deadline,
-    items,
-    include_igv,
-    created_at: new Date().toISOString(),
-  }
-
-  const { error, data } = await supabase
-    .from(TABLES.Quotations)
-    .insert(quotationToInsert)
-    .select()
-
-  if (error) {
-    return {
-      errors: error,
-      data: null,
-      message: 'Failed to create quotation',
-    }
-  }
-
-  revalidatePath('/quotations')
-
-  return {
-    errors: null,
-    message: `Se ha creado la cotización`,
-    data: data[0],
-    quoNumber: data[0].number,
-  }
-}
-
-// Update Product
-export async function updateQuotation(_: undefined, formData: FormData) {
-  const rawData = {
-    id: formData.get('id'),
-    ruc: formData.get('ruc') || undefined,
-    company: formData.get('company') || undefined,
-    address: formData.get('address') || undefined,
-    deadline: formData.get('deadline'),
-    include_igv: formData.get('include_igv'),
-    is_regular_customer: formData.get('is_regular_customer'),
-  }
-
-  const items = JSON.parse(formData.get('items') as string)
-
-  // validated fields
-  const validatedFields = QuotationUpdateSchema.safeParse(rawData)
-
-  // if have error
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to UPdate Product.',
-    }
-  }
-
-  const {
-    number,
-    id,
-    company,
-    ruc,
-    address,
-    deadline,
-    include_igv,
-    is_regular_customer,
-  } = validatedFields.data
-
-  // create supabase client
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  // Si esta marco como cliente regular agregamos a la DB
-  if (is_regular_customer) {
-    // buscar si existe el ruc en customers
-    const { data: customers, error: customersError } = await supabase
-      .from(TABLES.Customers)
-      .select()
-      .eq('ruc', ruc)
-
-    if (customersError) {
-      return {
-        errors: customersError,
-      }
-    }
-
-    // si no existe el ruc en customers agregamos
-    if (customers?.length === 0) {
-      const { error } = await supabase.from(TABLES.Customers).insert({
-        ruc,
-        name: company,
-        address,
-      })
-
-      if (error) {
-        return {
-          errors: error,
-        }
-      }
-    }
-  }
-
-  const quotationToUpdate = {
-    number,
-    company,
-    ruc,
-    address,
-    deadline,
-    items,
-    include_igv,
-    updated_at: new Date().toISOString(),
-    // is_regular_customer
-  }
-
-  const { error, data } = await supabase
-    .from(TABLES.Quotations)
-    .update(quotationToUpdate)
-    .eq('id', id)
-    .select()
-
-  // handle error
-  if (error) {
-    return {
-      errors: error,
-    }
-  }
-
-  revalidatePath('/quotations')
-  return {
-    errors: null,
-    message: `Cotización ${number} actualizada correctamente`,
-    quoNumber: data[0].number,
-  }
-}
-
-export async function deleteQuotation(_: undefined, formData: FormData) {
-  const number = Number(formData.get('number'))
-
-  // create supabase client
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  await supabase.from(TABLES.Quotations).delete().eq('number', number)
-  redirect('/quotations')
+  return { number: quoNumber }
 }
 
 export async function deleteQuotationAction(id: string) {
   // create supabase client
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-  const { error, data } = await supabase
-    .from(TABLES.Quotations)
-    .delete()
-    .eq('id', id)
-    .select()
+  await QuotationsModel.delete(id)
 
-  if (error) {
-    console.log(error)
-  }
-
-  if (!data) {
-    console.log('no data')
-    return
-  }
-
-  revalidateTag('/new-quos')
+  revalidatePath('/new-quos')
   redirect(`/new-quos`)
 }
 
-export async function duplicateQuotationAction(id: string) {
-  // create supabase client
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
+export async function duplicateQuotationAction(id: string): Promise<{ number: number }> {
+  const { data: quotation, error } = await QuotationsModel.getById(id)
 
-  const quotation = await fetchQuotationById(id)
-  const { is_regular_customer, ...restQuotation } = quotation
+  if (error) throw error
 
-  const quotationToDuplicate = {
-    ...restQuotation,
+  const { data: lastQuotation, error: lastQuotationError } =
+    await QuotationsModel.getLastQuotation()
+  if (lastQuotationError) throw lastQuotationError
+
+  const quoNumber = lastQuotation.number + 1
+  await QuotationsModel.create({
+    ...quotation,
     id: crypto.randomUUID(),
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  }
+    number: quoNumber,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  })
 
-  const { data, error } = await supabase
-    .from(TABLES.Quotations)
-    .insert(quotationToDuplicate)
-    .select()
-
-  if (error) {
-    console.log('error duplicating', error)
-    throw new Error('Error duplicando cotización')
-  }
-
-  if (!data) {
-    console.log('no data')
-    return
-  }
-
-  revalidateTag('/new-quos')
-  redirect(`/new-quos/${data[0].number}`)
+  revalidatePath('/new-quos')
+  return { number: quoNumber }
+  // redirect(`/new-quos/${lastQuotation.number}`)
 }
 
-export async function duplicateQuotation(_: undefined, formData: FormData) {
-  const number = Number(formData.get('number'))
+export async function searchRucAction(ruc: string) {
+  //search in customers Db
+  const { data: customer, error } = await CustomersModel.getByRuc(ruc)
 
-  // create supabase client
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
+  if (error) throw error
 
-  const quotation = await fetchQuotationByNumber({ number })
-  const { number: lastQuotation } = await fetchLastQuotation()
-
-  const dataToDuplicate = {
-    number: lastQuotation + 1,
-    company: quotation.company,
-    ruc: quotation.ruc,
-    address: quotation.address,
-    deadline: quotation.deadline,
-    items: quotation.items,
-    include_igv: quotation.include_igv,
+  if (customer) {
+    return {
+      company: customer.name,
+      address: customer.address,
+      ruc: customer.ruc,
+      customerIsFromDb: true,
+      customerId: customer.id,
+    }
   }
 
-  const { data, error } = await supabase
-    .from(TABLES.Quotations)
-    .insert(dataToDuplicate)
+  const data = await getRuc(ruc)
 
-  if (error) {
-    console.log(error)
-    throw new Error('Error duplicando cotización')
+  return {
+    company: data.company,
+    address: data.address,
+    ruc: data.ruc,
+    customerIsFromDb: false,
   }
+}
 
-  redirect('/quotations')
+export async function setIsPaymentPending({
+  id,
+  value,
+  quoNumber,
+}: {
+  id: string
+  value: boolean
+  quoNumber: number
+}) {
+  const { error } = await QuotationsModel.setIsPaymentPending(id, value)
+  if (error) throw error
+
+  revalidatePath(`/new-quos/${quoNumber}`)
 }

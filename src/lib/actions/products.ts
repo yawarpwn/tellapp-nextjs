@@ -1,63 +1,44 @@
 'use server'
 
-import { TABLES } from '@/constants'
-import { createServerClient } from '@/lib/supabase'
-import { ProductCreateType, ProductId, ProductUpdateType } from '@/types'
+import { ProductInsert, ProductUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { ProductsModel } from '@/models/products'
 
-export async function createProductAction(productToInsert: ProductCreateType) {
-  console.log('create', productToInsert)
-  // Insert to Database
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
+export async function createProductAction(productToInsert: ProductInsert) {
+  const { error } = await ProductsModel.create({
+    id: crypto.randomUUID(),
+    description: productToInsert.description,
+    code: productToInsert.code.toUpperCase(),
+    price: productToInsert.price,
+    cost: productToInsert.cost,
+    category: productToInsert.category,
+    link: productToInsert.link,
+    unitSize: productToInsert.unitSize,
+  })
 
-  const { error } = await supabase.from(TABLES.Products).insert(productToInsert)
-
-  if (error) {
-    throw new Error(error.message)
-  }
+  if (error) throw error
 
   revalidatePath('/new-products', 'page')
 }
 
-export async function updateProductAction(
-  id: ProductId,
-  productToUpdate: ProductUpdateType,
-) {
-  console.log('update', productToUpdate)
+export async function updateProductAction(id: string, productToUpdate: ProductUpdate) {
+  const { error } = await ProductsModel.update(id, {
+    description: productToUpdate.description,
+    code: productToUpdate.code?.toUpperCase(),
+    price: productToUpdate.price,
+    cost: productToUpdate.cost,
+    category: productToUpdate.category,
+    link: productToUpdate.link,
+    unitSize: productToUpdate.unitSize,
+  })
 
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  const { error } = await supabase
-    .from(TABLES.Products)
-    .update({
-      ...productToUpdate,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', id)
-
-  if (error) {
-    console.log(error)
-    throw new Error(error.message)
-  }
+  if (error) throw error
 
   revalidatePath('/new-products')
 }
 
-export async function deleteProductAction(id: number): Promise<void> {
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-
-  // delete data in database
-  const { error } = await supabase.from(TABLES.Products).delete().eq('id', id)
-
-  if (error) {
-    console.log(error)
-    throw new Error(error.message)
-  }
-
+export async function deleteProductAction(id: string): Promise<void> {
+  const { error } = await ProductsModel.delete(id)
+  if (error) throw error
   revalidatePath('/new-products')
 }

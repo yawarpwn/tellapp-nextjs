@@ -1,8 +1,8 @@
-import { LabelType } from '@/types'
+import { Label } from '@/types'
 import { Column, Table } from 'pdfmake/interfaces'
 import { getFragileSvg, getLogo } from './constants'
 
-export const gelLabelColumn = (label: LabelType) => {
+export const gelLabelColumn = (label: Label) => {
   const column: Column = {
     table: {
       widths: '*',
@@ -67,7 +67,7 @@ export const gelLabelColumn = (label: LabelType) => {
                 style: 'sectionTitle',
               },
               {
-                text: label.dni_ruc,
+                text: label.dniRuc,
                 style: 'sectionContent',
               },
             ],
@@ -94,21 +94,40 @@ export const gelLabelColumn = (label: LabelType) => {
           {
             stack: [
               {
-                text: 'AGENCIA',
+                text: 'OBSERVACIONES',
                 style: 'sectionTitle',
               },
               {
-                text: label.agencies?.company || '',
-                fontSize: 14,
+                text: label.observations || '\n\n',
+                style: 'sectionContent',
+                fontSize: 10,
+              },
+            ],
+            style: 'section',
+          },
+        ],
+
+        [
+          {
+            stack: [
+              {
+                text: 'AGENCIA SUGERIDA',
+                style: 'sectionTitle',
+              },
+              {
+                text: label.agency?.name || '',
+                fontSize: 12,
                 bold: true,
               },
               {
-                text: label.agencies?.address || '',
-                fontSize: 12,
+                text: label.agency?.address || '',
+                fontSize: 10,
+                italics: true,
               },
               {
-                text: label.agencies?.phone || '',
-                fontSize: 12,
+                text: label.agency?.phone || '',
+                fontSize: 10,
+                italics: true,
               },
             ],
             style: 'section',

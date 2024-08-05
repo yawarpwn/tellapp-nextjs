@@ -1,23 +1,14 @@
 import { Logo } from '@/components/logo'
 import { MobileMenu } from '@/components/mobile-menu'
 import { Sidebar } from '@/components/sidebar'
-import { createServerClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 import React from 'react'
 
 async function LayoutDashboar({ children }: { children: React.ReactNode }) {
-  const cookieStore = cookies()
-
-  const supabase = createServerClient(cookieStore)
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
-  if (!session) {
-    redirect('/')
-  }
-
+  const authToken = cookies().get('auth-token')
+  if (!authToken) redirect('/')
   return (
     <>
       {/* Root */}
@@ -27,7 +18,7 @@ async function LayoutDashboar({ children }: { children: React.ReactNode }) {
           <div className="top-0 h-16 [position:unset] md:sticky ">
             <header
               id="sidebar-mobile"
-              className="bg-base-100 absolute z-10 flex  h-auto w-full justify-between px-6 py-4 md:hidden "
+              className="bg-base-100 absolute z-10 flex  h-auto w-full justify-between px-3 py-4 md:hidden "
             >
               <Logo />
               <MobileMenu />
@@ -39,7 +30,7 @@ async function LayoutDashboar({ children }: { children: React.ReactNode }) {
         </div>
         {/* Main Content */}
         <div className="mt-4 min-w-full max-w-[100vw]">
-          <main className="px-4 xl:px-28">{children}</main>
+          <main className="px-3 xl:px-28">{children}</main>
           <footer className="h-4"></footer>
         </div>
         {/* Main Content */}

@@ -1,15 +1,13 @@
 'use client'
 
-import type { LabelType } from '@/types'
+import type { Label } from '@/types'
 import React from 'react'
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
-import { LabelTemplate } from '@/components/label-template'
 import { Button } from '@/components/ui/button'
 import { deleteLabelAction } from '@/lib/actions/labels'
 import { generateLabelPdf } from '@/lib/pdf-doc/generate-label-pdf'
 import { MoreHorizontal } from 'lucide-react'
-// import { useReactToPrint } from 'react-to-print'
 import { UpdateLabelSheet } from './update-label-sheet'
 
 import {
@@ -23,15 +21,15 @@ import {
 
 import { createColumnHelper } from '@tanstack/react-table'
 
-const columnHelper = createColumnHelper<LabelType>()
+const columnHelper = createColumnHelper<Label>()
 
-export const customerColumns = [
+export const labelColumns = [
   columnHelper.accessor('recipient', {
     header: 'Destinatario',
     cell: props => (
       <div className="min-w-[250px]">
         <p>{props.getValue()}</p>
-        <p>{props.row.original.dni_ruc}</p>
+        <p>{props.row.original.dniRuc}</p>
       </div>
     ),
   }),
@@ -39,7 +37,7 @@ export const customerColumns = [
     header: 'Destino',
     cell: props => (
       <div>
-        <p>{props.getValue()}</p>
+        <p>{props.getValue().toUpperCase()}</p>
         {props.row.original.address && <p>{props.row.original.address}</p>}
       </div>
     ),
@@ -48,13 +46,13 @@ export const customerColumns = [
     header: 'Teléfono',
     cell: props => props.getValue(),
   }),
-  columnHelper.accessor('agency_id', {
+  columnHelper.accessor('agencyId', {
     header: 'Agencia',
     cell: ({ row }) => {
       return (
         <div>
-          <p>{row.original.agencies?.company || ''}</p>
-          <p>{row.original.agencies?.ruc || ''}</p>
+          <p>{row.original.agency?.name || ''}</p>
+          <p>{row.original.agency?.ruc || ''}</p>
         </div>
       )
     },
@@ -65,11 +63,6 @@ export const customerColumns = [
     cell: function Cell({ row }) {
       const [showDeleteDialog, setShowDeleteDialog] = React.useState(false)
       const [showUpdateDialog, setShowUpdateDialog] = React.useState(false)
-      // const containerRef = React.useRef(null)
-
-      // const printPdf = useReactToPrint({
-      //   content: () => containerRef.current,
-      // })
 
       return (
         <DropdownMenu>
@@ -80,9 +73,6 @@ export const customerColumns = [
               label={row.original}
             />
           )}
-          {/* <div className="hidden"> */}
-          {/*   <LabelTemplate label={row.original} ref={containerRef} /> */}
-          {/* </div> */}
           <ConfirmActionDialog
             open={showDeleteDialog}
             onOpenChange={setShowDeleteDialog}
@@ -121,13 +111,8 @@ export const customerColumns = [
               Ver
             </DropdownMenuItem>
 
-            {/* <DropdownMenuItem onSelect={printPdf}>Imprimir</DropdownMenuItem> */}
-            <DropdownMenuItem onSelect={() => setShowUpdateDialog(true)}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)}>
-              Borrar
-            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setShowUpdateDialog(true)}>Edit</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)}>Borrar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

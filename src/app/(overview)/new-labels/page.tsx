@@ -1,32 +1,37 @@
 import { DataTable } from '@/components/data-table'
 import { DataTableSkeleton } from '@/components/skeletons/data-table'
-import { fetchLabels } from '@/lib/data/labels'
+import { AgenciesModel } from '@/models/agencies'
+import { LabelsModel } from '@/models/labels'
+import { LabelsProvider } from '@/providers/labels-provider'
 import { Suspense } from 'react'
 import { CreateLabelDialog } from './_components/create-label-dialog'
-import { customerColumns } from './_components/label-columns'
+import { labelColumns } from './_components/label-columns'
+import { unstable_noStore as noStore } from 'next/cache'
 
 async function ProductTable() {
-  const labels = await fetchLabels()
+  const [labelsResponse, agenciesResponse] = await Promise.all([
+    LabelsModel.getAll(),
+    AgenciesModel.getAll(),
+  ])
+
+  if (labelsResponse.error) throw labelsResponse.error
+  if (agenciesResponse.error) throw agenciesResponse.error
 
   return (
-    <DataTable
-      createComponent={<CreateLabelDialog />}
-      columns={customerColumns}
-      data={labels}
-    />
+    <LabelsProvider agencies={agenciesResponse.data}>
+      <DataTable
+        createComponent={<CreateLabelDialog />}
+        columns={labelColumns}
+        data={labelsResponse.data}
+      />
+    </LabelsProvider>
   )
 }
 
 export default async function Page() {
   return (
     <Suspense
-      fallback={
-        <DataTableSkeleton
-          columnCount={5}
-          rowCount={20}
-          searchableColumnCount={1}
-        />
-      }
+      fallback={<DataTableSkeleton columnCount={5} rowCount={20} searchableColumnCount={1} />}
     >
       <ProductTable />
     </Suspense>

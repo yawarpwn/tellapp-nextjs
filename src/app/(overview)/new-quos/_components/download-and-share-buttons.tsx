@@ -3,18 +3,21 @@ import { Button } from '@/components/ui/button'
 import { ShareIcon } from '@/icons'
 import { DownloadIcon } from '@/icons'
 import { generateQuotationPdf } from '@/lib/pdf-doc/generate-quotation-pdf'
-import { type QuotationType } from '@/types'
+import { type QuotationClient } from '@/types'
 import pdfMake from 'pdfmake/build/pdfmake'
 import { useMemo } from 'react'
 // import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
-export function DownloadAndShareButtons({
-  quotation,
-}: {
-  quotation: QuotationType
-}) {
-  const ruc = `-${quotation?.ruc}` || ''
-  const pdfFileName = `COT-2024-${quotation.number}${ruc}.pdf`
+export function DownloadAndShareButtons({ quotation }: { quotation: QuotationClient }) {
+  //WARN: Mejorar legibilidad
+  const date = Intl.DateTimeFormat('es-PE').format(quotation.updatedAt).replace(/\//g, '-')
+  const ruc = quotation.company
+    ? `-${quotation.company.replace(/\./g, '').split(' ').join('-')}`
+    : `-${date}-SIN-RUC`
+  const diferenceTime = Number(quotation.updatedAt) - Number(quotation.createdAt)
+  const isUpdate = diferenceTime > 0
+
+  const pdfFileName = `${quotation.number}-COT${ruc}${isUpdate ? '-ACTUALIZADO' : ''}.pdf`
 
   const dd = useMemo(
     () =>
@@ -71,12 +74,12 @@ export function DownloadAndShareButtons({
 
   return (
     <>
-      <Button onClick={downloadPdf} variant="secondary">
+      <Button onClick={downloadPdf} variant="secondary" size={'sm'}>
         <DownloadIcon size={20} />
         <span className="ml-2 hidden lg:block">Descargar</span>
       </Button>
 
-      <Button onClick={handleShare} variant="secondary">
+      <Button onClick={handleShare} variant="secondary" size={'sm'}>
         <ShareIcon size={20} />
         <span className="ml-2 hidden lg:block">Compartir</span>
       </Button>

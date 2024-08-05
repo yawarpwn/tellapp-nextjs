@@ -1,12 +1,10 @@
-import { type QuotationType } from '@/types'
+import { type QuotationClient } from '@/types'
 
 import { getIgv } from '@/lib/utils'
 import { Content, Table } from 'pdfmake/interfaces'
 
-export function getTermAndTotal(quotation: QuotationType) {
-  const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(
-    quotation.items,
-  )
+export function getTermAndTotal(quotation: QuotationClient) {
+  const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(quotation.items)
 
   const deadlineText =
     quotation.deadline === 1
@@ -52,7 +50,7 @@ export function getTermAndTotal(quotation: QuotationType) {
               { text: ':', margin: [2, 0] },
               {
                 text: quotation.credit
-                  ? `${quotation.credit} dias credito`
+                  ? `Crédito ${quotation.credit} días `
                   : '50% adelanto , 50% contraentrega',
                 italics: true,
               },
@@ -94,7 +92,7 @@ export function getTermAndTotal(quotation: QuotationType) {
                 alignment: 'right',
               },
               {
-                text: quotation.include_igv ? formatedSubTotal : 'S/ 0.00',
+                text: quotation.includeIgv ? formatedSubTotal : 'S/ 0.00',
                 alignment: 'right',
               },
             ],
@@ -105,7 +103,7 @@ export function getTermAndTotal(quotation: QuotationType) {
                 alignment: 'right',
               },
               {
-                text: quotation.include_igv ? formatedIgv : 'S/ 0.00',
+                text: quotation.includeIgv ? formatedIgv : 'S/ 0.00',
                 alignment: 'right',
               },
             ],

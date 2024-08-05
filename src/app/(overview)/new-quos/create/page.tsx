@@ -1,39 +1,46 @@
 import Breadcrumbs from '@/components/breadcrumbs'
-import { QuotationStoreProvider } from '@/hooks/use-quotation-store'
-import { fetchCustomers } from '@/lib/data/customers'
-import { fetchProducts } from '@/lib/data/products'
-import { fetchLastQuotation } from '@/lib/data/quotations'
-import { CreateUpdatePage } from '../_components/create-update-page'
+import { QuotationCreateStoreProvider } from '@/providers/quotation-create-store-provider'
+import { CustomersModel, ProductsModel } from '@/models'
+import { QuotationCreate } from './_components/quotation-create'
+import { Suspense } from 'react'
+import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations'
+import { notFound } from 'next/navigation'
 
+async function CreateQuotationPageServer() {
+  const { data: customers, error: customersError } = await CustomersModel.getAll()
+  const { data: products, error: productsError } = await ProductsModel.getAll()
+
+  if (customersError || productsError) {
+    notFound()
+  }
+
+  return (
+    <QuotationCreateStoreProvider products={products} customers={customers}>
+      <QuotationCreate />
+    </QuotationCreateStoreProvider>
+  )
+}
+
+// export const dynamic = 'force-dynamic'
 export default async function Page() {
-	const [customers, products, lastQuotation] = await Promise.all([
-		fetchCustomers(),
-		fetchProducts(),
-		fetchLastQuotation(),
-	])
-
-	return (
-		<div className='flex flex-col gap-4'>
-			<Breadcrumbs
-				breadcrumbs={[
-					{
-						label: 'Cotizaciones',
-						href: '/new-quos',
-					},
-					{
-						label: 'Crear',
-						href: '/new-quos/crear',
-						active: true,
-					},
-				]}
-			/>
-			<QuotationStoreProvider
-				customers={customers}
-				products={products}
-				quoNumber={lastQuotation.number + 1}
-			>
-				<CreateUpdatePage />
-			</QuotationStoreProvider>
-		</div>
-	)
+  return (
+    <div className="flex flex-col gap-4">
+      <Breadcrumbs
+        breadcrumbs={[
+          {
+            label: 'Cotizaciones',
+            href: '/new-quos',
+          },
+          {
+            label: 'Crear',
+            href: '/new-quos/crear',
+            active: true,
+          },
+        ]}
+      />
+      <Suspense fallback={<UpdateCreateQuotationSkeleton />}>
+        <CreateQuotationPageServer />
+      </Suspense>
+    </div>
+  )
 }
