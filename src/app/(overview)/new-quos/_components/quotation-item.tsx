@@ -9,6 +9,8 @@ import { PlusIcon } from '@/icons'
 import { Product, QuotationItem } from '@/types'
 import React, { useState } from 'react'
 import { CreateEditItemModal } from './create-edit-item-modal'
+// import { AddEditItemDialog } from './add-edit-item-dialog'
+
 interface Props {
   items: QuotationItem[]
   products: Product[]
@@ -66,12 +68,12 @@ export function QuotationItems(props: Props) {
     <section>
       {open && (
         <CreateEditItemModal
+          open={open}
+          onClose={closeItemModal}
           products={products}
           addItem={addItem}
           editItem={editItem}
           item={productItem}
-          open={open}
-          onClose={closeItemModal}
         />
       )}
       <header className="flex items-center justify-between py-4">

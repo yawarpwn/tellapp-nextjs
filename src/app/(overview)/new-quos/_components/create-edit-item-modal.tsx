@@ -5,9 +5,10 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { type Product } from '@/types'
 import { useFuse } from '@/hooks/use-fuse'
-import { XIcon } from '@/icons'
 import { type QuotationItem } from '@/types'
 import React, { useState } from 'react'
+import { SearchIcon } from 'lucide-react'
+import { formatNumberToLocal } from '@/lib/utils'
 
 type Props = {
   open: boolean
@@ -19,11 +20,11 @@ type Props = {
 }
 
 const initialQuoItem = {
-  price: 1,
-  qty: 1,
+  price: 0,
+  qty: 0,
   unit_size: '',
   description: '',
-  cost: 1,
+  cost: 0,
 }
 
 export function CreateEditItemModal(props: Props) {
@@ -46,7 +47,9 @@ export function CreateEditItemModal(props: Props) {
     ],
   })
 
-  const handleChangeItem = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeItem = (
+    event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const { name, value } = event.currentTarget
 
     if (name == 'price' || name == 'qty' || name == 'cost') {
@@ -62,17 +65,9 @@ export function CreateEditItemModal(props: Props) {
     })
   }
 
-  const canSearch = quoItem.description.length > 2
-
-  const handleChangeSearch = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
-
     onSearch(value)
-
-    setQuoItem({
-      ...quoItem,
-      description: value,
-    })
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -86,68 +81,69 @@ export function CreateEditItemModal(props: Props) {
     onClose()
   }
 
-  const clearSearch = () => {
-    setQuoItem({
-      ...quoItem,
-      description: '',
-    })
-  }
-
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent showCloseButton={false} className="h-[98svh]">
-        <DialogTitle className="sr-only">Agregar / Editar products</DialogTitle>
-        <form onSubmit={handleSubmit} className="flex h-[93svh] flex-col gap-4">
-          <div className="relative grid gap-2">
-            {/* <Label htmlFor='description'>Descripcion</Label> */}
-            {canSearch && (
-              <Button
-                type="button"
-                onClick={clearSearch}
-                size="icon"
-                className="absolute right-0.5 top-0.5 z-40 size-6 bg-background"
-              >
-                <XIcon className="size-3.5" />
-              </Button>
-            )}
-            <Textarea
-              name="description"
-              id="description"
-              className="h-[80px] resize-none"
-              value={quoItem.description}
-              onChange={handleChangeSearch}
-            />
-          </div>
-          <ul className="flex flex-col gap-2 overflow-y-auto">
-            {hits.map(hit => (
-              <li
-                key={hit.refIndex}
-                className="flex cursor-pointer"
-                onClick={() => {
-                  setQuoItem({
-                    ...quoItem,
-                    description: hit.item.description,
-                    cost: hit.item.cost,
-                    price: hit.item.price,
-                    unit_size: hit.item.unitSize,
-                    qty: 1,
-                  })
-                }}
-              >
-                <div className="flex w-full items-center gap-x-2 overflow-hidden rounded-md p-0 hover:bg-zinc-800">
-                  <div className="inline-flex h-full items-center bg-indigo-700 "></div>
-                  <div className="p-1">
-                    {hit.item.description}
-                    <Badge className="ml-2">{hit.item.unitSize}</Badge>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-
+      <DialogContent
+        showCloseButton={false}
+        className="h-[100svh] border p-2 py-4 md:h-[90svh] md:p-6"
+      >
+        <div className="flex items-center rounded-md border pl-2">
+          <SearchIcon size={20} />
+          <Input
+            onChange={handleChangeSearch}
+            className="border-none focus-visible:ring-0  "
+            type="search"
+            placeholder="Buscar producto"
+          />
+        </div>
+        {/* Items List */}
+        <div className="flex flex-col gap-2 overflow-y-auto">
+          {hits.map(hit => (
+            <button
+              key={hit.refIndex}
+              className="flex flex-col gap-2 rounded-sm border bg-background p-2 hover:bg-muted"
+              onClick={() => {
+                setQuoItem({
+                  ...quoItem,
+                  description: hit.item.description,
+                  cost: hit.item.cost,
+                  price: hit.item.price,
+                  unit_size: hit.item.unitSize,
+                  qty: 1,
+                })
+              }}
+            >
+              <div className="line-clamp-2 text-left text-muted-foreground">
+                {hit.item.description}
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="lowercase text-muted-foreground">
+                  {hit.item.unitSize}
+                </Badge>
+                <Badge variant="outline" className="bg-muted uppercase text-muted-foreground">
+                  {hit.item.code}
+                </Badge>
+                <Badge variant="outline" className="text-muted-foreground">
+                  {formatNumberToLocal(hit.item.price)}
+                </Badge>
+              </div>
+            </button>
+          ))}
+        </div>
+        <div className="h-px w-full bg-muted"></div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <Textarea
+            name="description"
+            id="description"
+            className="h-[90px] resize-none  bg-muted p-2"
+            value={quoItem.description}
+            onChange={handleChangeItem}
+          />
           <div className="flex gap-4">
-            <div className="grid gap-2">
-              <label htmlFor="qty">Cantidad</label>
+            <div className="grid w-full gap-2">
+              <label className="text-xs text-muted-foreground" htmlFor="qty">
+                Cantidad
+              </label>
               <Input
                 id="qty"
                 name="qty"
@@ -156,8 +152,10 @@ export function CreateEditItemModal(props: Props) {
                 value={quoItem.qty}
               />
             </div>
-            <div className="grid gap-2">
-              <label htmlFor="unit_size">Unidad/Medida</label>
+            <div className="grid w-full gap-2">
+              <label className="text-xs text-muted-foreground" htmlFor="unit_size">
+                Unidad/Medida
+              </label>
               <Input
                 id="unit_size"
                 type="text"
@@ -168,8 +166,10 @@ export function CreateEditItemModal(props: Props) {
             </div>
           </div>
           <div className="flex gap-4">
-            <div className="grid gap-2">
-              <label htmlFor="price">Precio</label>
+            <div className="grid w-full gap-2">
+              <label className="text-xs text-muted-foreground" htmlFor="price">
+                Precio
+              </label>
               <Input
                 id="price"
                 type="number"
@@ -178,8 +178,10 @@ export function CreateEditItemModal(props: Props) {
                 value={quoItem.price}
               />
             </div>
-            <div className="grid gap-2">
-              <label htmlFor="cost">Costo</label>
+            <div className="grid w-full gap-2">
+              <label className="text-xs text-muted-foreground" htmlFor="cost">
+                Costo
+              </label>
               <Input
                 id="cost"
                 disabled

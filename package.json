@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev ",
     "build": "next build",
     "start": "next start",
     "migrate": "drizzle-kit check --config=./src/db/drizzle.config.ts && drizzle-kit generate --config=./src/db/drizzle.config.ts && tsx ./src/db/migrations/migrate.ts",
