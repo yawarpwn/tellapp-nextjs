@@ -50,14 +50,14 @@ export const NAVIGATION = [
     icon: ProductsIcon,
   },
   {
-    title: 'Rotulos',
-    href: '/new-labels',
-    icon: PrinterIcon,
-  },
-  {
     title: 'Clientes',
     href: '/new-customers',
     icon: CustomersIcon,
+  },
+  {
+    title: 'Rotulos',
+    href: '/new-labels',
+    icon: PrinterIcon,
   },
   {
     title: 'Agencias',

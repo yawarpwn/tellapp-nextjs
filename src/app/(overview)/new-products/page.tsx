@@ -4,16 +4,11 @@ import { Suspense } from 'react'
 import { CreateProductDialog } from './_components/create-product-dialog'
 import { productColumns } from './_components/product-columns'
 import { ProductsModel } from '@/models/products'
-import { notFound } from 'next/navigation'
-import { unstable_noStore as noStore } from 'next/cache'
 
 async function ProductTable() {
-  noStore()
   const { data: products, error } = await ProductsModel.getAll()
 
-  if (error) {
-    notFound()
-  }
+  if (error) throw error
 
   return (
     <DataTable createComponent={<CreateProductDialog />} columns={productColumns} data={products} />

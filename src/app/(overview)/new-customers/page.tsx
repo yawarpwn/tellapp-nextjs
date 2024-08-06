@@ -4,12 +4,11 @@ import { Suspense } from 'react'
 import { CustomersModel } from '@/models'
 import { CreateCustomerDialog } from './_components/create-customer-dialog'
 import { customerColumns } from './_components/customer-columns'
-import { unstable_noStore as noStore } from 'next/cache'
 
 async function ProductTable() {
-  noStore()
   const { data: customers, error } = await CustomersModel.getAll()
   if (error) throw error
+
   return (
     <DataTable
       createComponent={<CreateCustomerDialog />}
