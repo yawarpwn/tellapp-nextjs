@@ -3,6 +3,7 @@
 import { ProductInsert, ProductUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { ProductsModel } from '@/models/products'
+import { redirect } from 'next/navigation'
 
 export async function createProductAction(productToInsert: ProductInsert) {
   const { error } = await ProductsModel.create({
@@ -35,6 +36,7 @@ export async function updateProductAction(id: string, productToUpdate: ProductUp
   if (error) throw error
 
   revalidatePath('/new-products')
+  redirect('/new-products')
 }
 
 export async function deleteProductAction(id: string): Promise<void> {
