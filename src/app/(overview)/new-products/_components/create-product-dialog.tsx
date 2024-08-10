@@ -149,7 +149,7 @@ export function CreateProductDialog() {
                   <FormItem>
                     <FormLabel>Costo</FormLabel>
                     <FormControl>
-                      <Input placeholder="90" {...field} />
+                      <Input placeholder="90" {...field} type="number" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -162,7 +162,7 @@ export function CreateProductDialog() {
                   <FormItem>
                     <FormLabel>Precio</FormLabel>
                     <FormControl>
-                      <Input placeholder="100" {...field} />
+                      <Input placeholder="100" {...field} type="number" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

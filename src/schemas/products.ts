@@ -12,7 +12,11 @@ export const ProductInsertSchema = createInsertSchema(productsTable, {
   category: () => z.nativeEnum(PRODUCT_CATEGORIES),
 })
 
-export const ProductUpdateSchema = ProductSchema.omit({
+export const ProductUpdateSchema = createInsertSchema(productsTable, {
+  cost: () => z.coerce.number().positive(),
+  price: () => z.coerce.number().positive(),
+  category: () => z.nativeEnum(PRODUCT_CATEGORIES),
+}).omit({
   id: true,
   rank: true,
   createdAt: true,

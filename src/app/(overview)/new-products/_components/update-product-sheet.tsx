@@ -138,7 +138,7 @@ export function UpdateProductSheet({ product, onOpenChange, open }: UpdateTaskSh
                   <FormItem>
                     <FormLabel>Precio</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} type="number" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -152,7 +152,7 @@ export function UpdateProductSheet({ product, onOpenChange, open }: UpdateTaskSh
                   <FormItem>
                     <FormLabel>Costo</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} type="number" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
