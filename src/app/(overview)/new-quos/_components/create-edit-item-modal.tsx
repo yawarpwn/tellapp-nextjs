@@ -87,7 +87,8 @@ export function CreateEditItemModal(props: Props) {
         showCloseButton={false}
         className="h-[100svh] border p-2 py-4 md:h-[90svh] md:p-6"
       >
-        <div className="flex items-center rounded-md border pl-2">
+        {/* Search Product */}
+        <header className="flex items-center rounded-md border pl-2">
           <SearchIcon size={20} />
           <Input
             onChange={handleChangeSearch}
@@ -95,12 +96,12 @@ export function CreateEditItemModal(props: Props) {
             type="search"
             placeholder="Buscar producto"
           />
-        </div>
+        </header>
         {/* Items List */}
         <div className="flex flex-col gap-2 overflow-y-auto">
           {hits.map(hit => (
             <button
-              key={hit.refIndex}
+              key={hit.item.id}
               className="flex flex-col gap-2 rounded-sm border bg-background p-2 hover:bg-muted"
               onClick={() => {
                 setQuoItem({
@@ -120,7 +121,10 @@ export function CreateEditItemModal(props: Props) {
                 <Badge variant="outline" className="lowercase text-muted-foreground">
                   {hit.item.unitSize}
                 </Badge>
-                <Badge variant="outline" className="bg-muted uppercase text-muted-foreground">
+                <Badge
+                  variant="outline"
+                  className="border border-secondary uppercase text-secondary"
+                >
                   {hit.item.code}
                 </Badge>
                 <Badge variant="outline" className="text-muted-foreground">
@@ -131,77 +135,81 @@ export function CreateEditItemModal(props: Props) {
           ))}
         </div>
         <div className="h-px w-full bg-muted"></div>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <Textarea
-            name="description"
-            id="description"
-            className="h-[90px] resize-none  bg-muted p-2"
-            value={quoItem.description}
-            onChange={handleChangeItem}
-          />
-          <div className="flex gap-4">
-            <div className="grid w-full gap-2">
-              <label className="text-xs text-muted-foreground" htmlFor="qty">
-                Cantidad
-              </label>
-              <Input
-                id="qty"
-                name="qty"
-                type="number"
-                onChange={handleChangeItem}
-                value={quoItem.qty}
-              />
+
+        {/* Inputs Products */}
+        <footer>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <Textarea
+              name="description"
+              id="description"
+              className="h-[90px] resize-none  bg-muted p-2"
+              value={quoItem.description}
+              onChange={handleChangeItem}
+            />
+            <div className="flex gap-4">
+              <div className="grid w-full gap-2">
+                <label className="text-xs text-muted-foreground" htmlFor="qty">
+                  Cantidad
+                </label>
+                <Input
+                  id="qty"
+                  name="qty"
+                  type="number"
+                  onChange={handleChangeItem}
+                  value={quoItem.qty}
+                />
+              </div>
+              <div className="grid w-full gap-2">
+                <label className="text-xs text-muted-foreground" htmlFor="unit_size">
+                  Unidad/Medida
+                </label>
+                <Input
+                  id="unit_size"
+                  type="text"
+                  name="unit_size"
+                  onChange={handleChangeItem}
+                  defaultValue={quoItem.unit_size}
+                />
+              </div>
             </div>
-            <div className="grid w-full gap-2">
-              <label className="text-xs text-muted-foreground" htmlFor="unit_size">
-                Unidad/Medida
-              </label>
-              <Input
-                id="unit_size"
-                type="text"
-                name="unit_size"
-                onChange={handleChangeItem}
-                defaultValue={quoItem.unit_size}
-              />
+            <div className="flex gap-4">
+              <div className="grid w-full gap-2">
+                <label className="text-xs text-muted-foreground" htmlFor="price">
+                  Precio
+                </label>
+                <Input
+                  id="price"
+                  type="number"
+                  name="price"
+                  onChange={handleChangeItem}
+                  value={quoItem.price}
+                />
+              </div>
+              <div className="grid w-full gap-2">
+                <label className="text-xs text-muted-foreground" htmlFor="cost">
+                  Costo
+                </label>
+                <Input
+                  id="cost"
+                  disabled
+                  name="cost"
+                  onChange={handleChangeItem}
+                  value={quoItem.cost ?? ''}
+                />
+              </div>
             </div>
-          </div>
-          <div className="flex gap-4">
-            <div className="grid w-full gap-2">
-              <label className="text-xs text-muted-foreground" htmlFor="price">
-                Precio
-              </label>
-              <Input
-                id="price"
-                type="number"
-                name="price"
-                onChange={handleChangeItem}
-                value={quoItem.price}
-              />
-            </div>
-            <div className="grid w-full gap-2">
-              <label className="text-xs text-muted-foreground" htmlFor="cost">
-                Costo
-              </label>
-              <Input
-                id="cost"
-                disabled
-                name="cost"
-                onChange={handleChangeItem}
-                value={quoItem.cost ?? ''}
-              />
-            </div>
-          </div>
-          <footer className="flex gap-2">
-            <DialogClose asChild>
-              <Button type="button" className="w-full">
-                Cancelar
+            <footer className="flex gap-2">
+              <DialogClose asChild>
+                <Button type="button" className="w-full">
+                  Cancelar
+                </Button>
+              </DialogClose>
+              <Button variant="secondary" className="w-full" type="submit">
+                Aceptar
               </Button>
-            </DialogClose>
-            <Button variant="secondary" className="w-full" type="submit">
-              Aceptar
-            </Button>
-          </footer>
-        </form>
+            </footer>
+          </form>
+        </footer>
       </DialogContent>
     </Dialog>
   )

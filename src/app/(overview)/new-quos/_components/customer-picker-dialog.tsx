@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/command'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 interface Props {
   customers: Customer[]
@@ -18,6 +18,7 @@ interface Props {
   onCustomerPick: (customer: Customer) => void
 }
 export function CustomerPickerDialog({ customers, customerId, onCustomerPick }: Props) {
+  const filteredCustomers = useMemo(() => customers.filter(c => c.isRegular), [customers])
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -30,7 +31,7 @@ export function CustomerPickerDialog({ customers, customerId, onCustomerPick }: 
         <CommandList className="max-h-[700px]">
           <CommandEmpty>Cliente no encontrada</CommandEmpty>
           <CommandGroup heading="Clientes">
-            {customers.map(customer => (
+            {filteredCustomers.map(customer => (
               <CommandItem
                 className="cursor-pointer"
                 key={customer.id}

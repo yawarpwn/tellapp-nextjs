@@ -30,7 +30,7 @@ export function PickAgencyDialog({ agencies, agencyId, onPickAgency }: Props) {
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="buscar agencia..." />
-        <CommandList>
+        <CommandList className="max-h-[500px]">
           <CommandEmpty>Agencia no encontrada</CommandEmpty>
           <CommandGroup heading="Agenias">
             {agencies.map(agency => (
