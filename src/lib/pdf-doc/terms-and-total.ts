@@ -19,7 +19,7 @@ export function getTermAndTotal(quotation: QuotationClient) {
           body: [
             [
               {
-                text: 'Términos y condiciones',
+                text: 'Términos y condiciones:',
                 color: '#7d2de0',
                 fontSize: 10,
                 bold: true,
@@ -88,7 +88,7 @@ export function getTermAndTotal(quotation: QuotationClient) {
 
             [
               {
-                text: 'Total Ventas Gravadas',
+                text: 'Sub Total Ventas Gravadas',
                 alignment: 'right',
               },
               {
@@ -99,7 +99,7 @@ export function getTermAndTotal(quotation: QuotationClient) {
 
             [
               {
-                text: 'Total IGV (18%)',
+                text: 'IGV (18%)',
                 alignment: 'right',
               },
               {
@@ -109,9 +109,17 @@ export function getTermAndTotal(quotation: QuotationClient) {
             ],
             [
               {
-                text: 'Total',
+                text: [
+                  {
+                    text: quotation.includeIgv ? 'Importe Total' : 'Total',
+                    bold: true,
+                  },
+                  {
+                    text: quotation.includeIgv ? '' : ' ( No Incluye IGV)',
+                    fontSize: 8,
+                  },
+                ],
                 alignment: 'right',
-                bold: true,
                 fontSize: 10,
               },
               {

@@ -2,8 +2,8 @@ import { type QuotationItem } from '@/types'
 
 export const formatDateToLocal = (date: Date, options?: Intl.DateTimeFormatOptions) => {
   const formatter = new Intl.DateTimeFormat('es-PE', {
-    day: 'numeric',
-    month: 'numeric',
+    day: '2-digit',
+    month: '2-digit',
     year: 'numeric',
     ...options,
   })

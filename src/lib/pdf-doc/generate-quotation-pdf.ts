@@ -1,11 +1,11 @@
 import { formatDateToLocal, formatNumberToLocal, getIgv } from '@/lib/utils'
-import { QuotationType } from '@/types'
+import { QuotationClient } from '@/types'
 import { TDocumentDefinitions } from 'pdfmake/interfaces'
 import { companyInfo } from './company-info'
 import { getItemsTable } from './items-table'
 import { getTermAndTotal } from './terms-and-total'
 
-export function generateQuotationPdf(quotation: QuotationType) {
+export function generateQuotationPdf(quotation: QuotationClient) {
   const pdfDoc: TDocumentDefinitions = {
     content: [
       // Company info
@@ -21,7 +21,7 @@ export function generateQuotationPdf(quotation: QuotationType) {
               body: [
                 ['Cliente', ':', quotation.company || ''],
                 ['Ruc', ':', quotation.ruc || ''],
-                ['Direccion', ':', quotation.address || ''],
+                ['Dirección', ':', quotation.address || ''],
               ],
             },
             layout: {
@@ -57,7 +57,7 @@ export function generateQuotationPdf(quotation: QuotationType) {
                   {},
                   ':',
                   {
-                    text: formatDateToLocal(quotation.updated_at),
+                    text: formatDateToLocal(quotation.updatedAt),
                     alignment: 'right',
                   },
                 ],
