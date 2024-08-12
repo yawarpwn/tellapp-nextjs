@@ -107,9 +107,13 @@ export async function duplicateQuotationAction(id: string): Promise<{ number: nu
 
   const quoNumber = lastQuotation.number + 1
   await QuotationsModel.create({
-    ...quotation,
+    deadline: quotation.deadline,
+    credit: quotation.credit,
+    includeIgv: quotation.includeIgv,
+    customerId: quotation.customerId,
     id: crypto.randomUUID(),
     number: quoNumber,
+    items: quotation.items,
     createdAt: new Date(),
     updatedAt: new Date(),
   })
