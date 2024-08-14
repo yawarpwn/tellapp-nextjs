@@ -31,7 +31,7 @@ export function QuotationUpdateStoreProvider(props: QuotationCreateStoreProvider
       initQuotationStore({
         quo: {
           id: quo.id,
-          deadline: 10,
+          deadline: quo.deadline,
           address: quo.address,
           customerId: quo.customerId,
           company: quo.company,
