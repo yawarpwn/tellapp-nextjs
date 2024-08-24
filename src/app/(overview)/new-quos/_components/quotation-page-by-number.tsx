@@ -26,6 +26,8 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
     notFound()
   }
 
+  console.log('wwwwwwwwwwww')
+  console.log(quotation.items)
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(quotation.items)
 
   return (
@@ -117,7 +119,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
                 <div className="min-w-[250px]">{item.description}</div>
               </TableCell>
               <TableCell>{item.unit_size}</TableCell>
-              <TableCell className="text-center">{item.qty}</TableCell>
+              <TableCell className="text-center">{item.qty.toString().padStart(2, 0)}</TableCell>
               <TableCell className="text-center">{(item.price / 1.18).toFixed(4)}</TableCell>
               <TableCell>{formatNumberToLocal(item.price)}</TableCell>
               <TableCell className="text-right">

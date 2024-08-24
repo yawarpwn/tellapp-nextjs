@@ -7,7 +7,7 @@ export function getItemsTable(quotation: QuotationClient) {
 
   const itemsTable: Content = {
     table: {
-      widths: ['auto', '*', 'auto', 'auto', 35, 35, 'auto'],
+      widths: ['auto', '*', 'auto', 50, 'auto', 35, 'auto'],
       headerRows: 1,
       body: [
         [
@@ -18,12 +18,17 @@ export function getItemsTable(quotation: QuotationClient) {
             color: '#fff',
           },
           {
+            text: 'LINK',
+            alignment: 'center',
+            color: '#fff',
+          },
+          {
             text: 'U/M',
             alignment: 'center',
             color: '#fff',
           },
           { text: 'CANT', color: '#fff', alignment: 'center' },
-          { text: 'P. BASE', color: '#fff', alignment: 'center' },
+          // { text: 'P. BASE', color: '#fff', alignment: 'center' },
           { text: 'P. UNT', color: '#fff', alignment: 'center' },
           { text: 'MONTO', color: '#fff', alignment: 'center' },
         ],
@@ -38,11 +43,19 @@ export function getItemsTable(quotation: QuotationClient) {
 
             // description
             {
-              text: [
-                {
-                  text: item.description,
-                },
-              ],
+              text: item.description,
+            },
+
+            //Link
+            {
+              text: item.link ? 'Ver' : '',
+              fontSize: 6,
+              link: item.link ? item.link : '#',
+              external: true,
+              alignment: 'center',
+              italic: true,
+              color: '#7d2de0',
+              margin: [0, 5],
             },
 
             // unidad medidad
@@ -55,19 +68,19 @@ export function getItemsTable(quotation: QuotationClient) {
 
             // cantidad
             {
-              text: item.qty,
+              text: item.qty.toString().padStart(2, '0'),
               alignment: 'center',
               margin: [0, 5],
             },
 
             // Base
-            {
-              text: quotation.includeIgv
-                ? Number(item.price / 1.18).toFixed(2)
-                : Number(item.price).toFixed(2),
-              alignment: 'center',
-              margin: [0, 5],
-            },
+            // {
+            //   text: quotation.includeIgv
+            //     ? Number(item.price / 1.18).toFixed(2)
+            //     : Number(item.price).toFixed(2),
+            //   alignment: 'center',
+            //   margin: [0, 5],
+            // },
 
             // Precio Unitario
             {

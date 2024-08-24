@@ -4,6 +4,7 @@ import { formatNumberToLocal } from '@/lib/utils'
 import type { Product } from '@/types'
 import React from 'react'
 import { ProductRowActions } from './product-row-actions'
+import { ExternalLink } from 'lucide-react'
 
 import { createColumnHelper } from '@tanstack/react-table'
 
@@ -12,7 +13,27 @@ const columnHelper = createColumnHelper<Product>()
 export const productColumns = [
   columnHelper.accessor('description', {
     header: 'Descripcion',
-    cell: props => <div className="min-w-[250px]">{props.getValue()}</div>,
+    cell: props => (
+      <div className="min-w-[250px]">
+        <p>{props.getValue()}</p>
+      </div>
+    ),
+  }),
+
+  columnHelper.accessor('link', {
+    header: 'Link',
+    cell: props =>
+      props.getValue() ? (
+        <a
+          target="_blank"
+          className="text-xs text-primary underline"
+          href={props.getValue() ?? '#'}
+        >
+          <ExternalLink />
+        </a>
+      ) : (
+        ''
+      ),
   }),
   columnHelper.accessor('unitSize', {
     header: 'U/M',

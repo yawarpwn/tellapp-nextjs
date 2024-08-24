@@ -42,6 +42,11 @@ export const labelColumns = [
       </div>
     ),
   }),
+
+  columnHelper.accessor('observations', {
+    header: 'Observaciones',
+    cell: props => <p className="text-sm text-muted-foreground">{props.getValue()}</p>,
+  }),
   columnHelper.accessor('phone', {
     header: 'Teléfono',
     cell: props => props.getValue(),

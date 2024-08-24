@@ -6,6 +6,38 @@ import { eq, desc } from 'drizzle-orm'
 import { productsTable } from '@/db/schemas'
 
 export class ProductsModel {
+  static async getById(id: string): Promise<DatabaseResponse<Product>> {
+    try {
+      const result = await db
+        .select({
+          id: productsTable.id,
+          description: productsTable.description,
+          category: productsTable.category,
+          code: productsTable.code,
+          price: productsTable.price,
+          cost: productsTable.cost,
+          link: productsTable.link,
+          rank: productsTable.rank,
+          unitSize: productsTable.unitSize,
+          createdAt: productsTable.createdAt,
+          updatedAt: productsTable.updatedAt,
+        })
+        .from(productsTable)
+        .where(eq(productsTable.id, id))
+
+      return {
+        data: result[0],
+        error: null,
+      }
+    } catch (error) {
+      console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al obtener producto ' + id),
+      }
+    }
+  }
+
   static async getAll(): Promise<DatabaseResponse<Product[]>> {
     try {
       const result = await db
@@ -47,6 +79,7 @@ export class ProductsModel {
         error: null,
       }
     } catch (error) {
+      console.log(error)
       return {
         data: null,
         error: DatabaseError.internalError('Error al crear el producto'),

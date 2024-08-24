@@ -43,6 +43,7 @@
     "drizzle-zod": "0.5.1",
     "env-var": "^7.5.0",
     "fuse.js": "6.6.2",
+    "iconv-lite": "^0.6.3",
     "jsonwebtoken": "9.0.2",
     "just-compare": "2.3.0",
     "just-debounce-it": "^3.2.0",

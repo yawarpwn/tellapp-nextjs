@@ -4,6 +4,7 @@ import { ProductInsert, ProductUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { ProductsModel } from '@/models/products'
 import { redirect } from 'next/navigation'
+// import iconv from 'iconv-lite'
 
 export async function createProductAction(productToInsert: ProductInsert) {
   const { error } = await ProductsModel.create({
@@ -23,6 +24,10 @@ export async function createProductAction(productToInsert: ProductInsert) {
 }
 
 export async function updateProductAction(id: string, productToUpdate: ProductUpdate) {
+  // const encodedDescription = productToUpdate.description
+  //   ? iconv.encode(productToUpdate.description, 'utf-8').toString()
+  //   : undefined
+
   const { error } = await ProductsModel.update(id, {
     description: productToUpdate.description,
     code: productToUpdate.code?.toUpperCase(),
@@ -42,5 +47,23 @@ export async function updateProductAction(id: string, productToUpdate: ProductUp
 export async function deleteProductAction(id: string): Promise<void> {
   const { error } = await ProductsModel.delete(id)
   if (error) throw error
+  revalidatePath('/new-products')
+}
+
+export async function duplicateProductAction(id: string) {
+  const { data: product, error } = await ProductsModel.getById(id)
+
+  if (error) throw error
+
+  const { error: createError } = await ProductsModel.create({
+    ...product,
+    id: crypto.randomUUID(),
+    code: product.code + '-copy',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  })
+
+  if (createError) throw createError
+
   revalidatePath('/new-products')
 }

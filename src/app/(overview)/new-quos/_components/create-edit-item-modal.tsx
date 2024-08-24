@@ -1,14 +1,31 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { type Product } from '@/types'
 import { useFuse } from '@/hooks/use-fuse'
 import { type QuotationItem } from '@/types'
 import React, { useState } from 'react'
-import { SearchIcon } from 'lucide-react'
 import { formatNumberToLocal } from '@/lib/utils'
+import { EmpetyIcon, SearchIcon } from '@/icons'
+
+function EmpetyHits() {
+  // {[1, 2, 3, 4, 5].map(item => (
+  //   <Skeleton key={item} className="h-[72px] w-full rounded-md" />
+  // ))}
+  return (
+    <div className="flex h-full items-center justify-center ">
+      <div className="flex flex-col items-center gap-8">
+        <h2 className="text-muted-foreground">Sin Resultados</h2>
+        <span className="text-muted">
+          <EmpetyIcon size={86} />
+        </span>
+      </div>
+    </div>
+  )
+}
 
 type Props = {
   open: boolean
@@ -25,6 +42,7 @@ const initialQuoItem = {
   unit_size: '',
   description: '',
   cost: 0,
+  link: '',
 }
 
 export function CreateEditItemModal(props: Props) {
@@ -52,16 +70,12 @@ export function CreateEditItemModal(props: Props) {
   ) => {
     const { name, value } = event.currentTarget
 
-    if (name == 'price' || name == 'qty' || name == 'cost') {
-      setQuoItem({
-        ...quoItem,
-        [name]: Number(value),
-      })
-    }
+    const updateValue =
+      name === 'price' || name === 'qty' || name === 'cost' ? Number(value) : value
 
     setQuoItem({
       ...quoItem,
-      [name]: value,
+      [name]: updateValue,
     })
   }
 
@@ -85,54 +99,61 @@ export function CreateEditItemModal(props: Props) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
         showCloseButton={false}
-        className="h-[100svh] border p-2 py-4 md:h-[90svh] md:p-6"
+        className="flex h-[100svh] flex-col border p-2 py-4 md:h-[90svh] md:p-6"
       >
         {/* Search Product */}
-        <header className="flex items-center rounded-md border pl-2">
-          <SearchIcon size={20} />
-          <Input
-            onChange={handleChangeSearch}
-            className="border-none focus-visible:ring-0  "
-            type="search"
-            placeholder="Buscar producto"
-          />
+        <header className="">
+          <div className="flex h-9 w-full items-center rounded-md border pl-2">
+            <SearchIcon className="text-muted" size={20} />
+            <Input
+              onChange={handleChangeSearch}
+              className="border-none focus-visible:ring-0  "
+              type="search"
+              placeholder="Buscar producto"
+            />
+          </div>
         </header>
         {/* Items List */}
-        <div className="flex flex-col gap-2 overflow-y-auto">
-          {hits.map(hit => (
-            <button
-              key={hit.item.id}
-              className="flex flex-col gap-2 rounded-sm border bg-background p-2 hover:bg-muted"
-              onClick={() => {
-                setQuoItem({
-                  ...quoItem,
-                  description: hit.item.description,
-                  cost: hit.item.cost,
-                  price: hit.item.price,
-                  unit_size: hit.item.unitSize,
-                  qty: 1,
-                })
-              }}
-            >
-              <div className="line-clamp-2 text-left text-muted-foreground">
-                {hit.item.description}
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="lowercase text-muted-foreground">
-                  {hit.item.unitSize}
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="border border-secondary uppercase text-secondary"
-                >
-                  {hit.item.code}
-                </Badge>
-                <Badge variant="outline" className="text-muted-foreground">
-                  {formatNumberToLocal(hit.item.price)}
-                </Badge>
-              </div>
-            </button>
-          ))}
+        <div className="flex flex-1 flex-col gap-2 overflow-y-auto">
+          {hits.length > 0 ? (
+            hits.map(hit => (
+              <button
+                key={hit.item.id}
+                className="flex flex-col gap-2 rounded-sm border bg-background p-2 hover:bg-muted"
+                onClick={() => {
+                  setQuoItem({
+                    ...quoItem,
+                    description: hit.item.description,
+                    cost: hit.item.cost,
+                    price: hit.item.price,
+                    unit_size: hit.item.unitSize,
+                    link: hit.item.link ? hit.item.link : '',
+                    qty: 1,
+                  })
+                }}
+              >
+                <div className="line-clamp-2 text-left text-muted-foreground">
+                  {hit.item.description}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Badge variant="outline" className="lowercase text-muted-foreground">
+                    {hit.item.unitSize}
+                  </Badge>
+                  <Badge
+                    variant="outline"
+                    className="border border-secondary uppercase text-secondary"
+                  >
+                    {hit.item.code}
+                  </Badge>
+                  <Badge variant="outline" className="text-muted-foreground">
+                    {formatNumberToLocal(hit.item.price)}
+                  </Badge>
+                </div>
+              </button>
+            ))
+          ) : (
+            <EmpetyHits />
+          )}
         </div>
         <div className="h-px w-full bg-muted"></div>
 

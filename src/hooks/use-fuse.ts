@@ -1,46 +1,41 @@
 import Fuse from 'fuse.js'
 import { useDebounce } from 'use-debounce'
-
-import debounce from 'just-debounce-it'
-
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 interface Options<T> extends Fuse.IFuseOptions<T> {
   matchAllOnEmptyQuery?: boolean
-  limit?: number
 }
 
 export function useFuse<T>(list: T[], options: Options<T>) {
   const [query, setQuery] = useState('')
 
-  const debouncedSearch = useDebounce(() => setQuery('doble'), 300)
+  // Debounce del valor de búsqueda
+  const [debouncedQuery] = useDebounce(query, 300)
 
-  const { matchAllOnEmptyQuery, limit, ...fuseOptions } = options
+  const { matchAllOnEmptyQuery, ...fuseOptions } = options
 
-  // Memoriza Fuse Instance para mejor rendimiento
+  // Memoriza la instancia de Fuse para evitar recalcularla innecesariamente
   const fuse = useMemo(
     () => new Fuse(list, { ...fuseOptions, includeMatches: true }),
     [list, fuseOptions],
   )
 
-  // memoriza los resultados cada vez que cambian la consulta o las opciones
+  // Memoriza los resultados cada vez que cambian la consulta debounced o las opciones
   const hits = useMemo(() => {
-    if (!query) {
-      return fuse.search('pvc celtex', { limit: 10 })
-      // return fuse.search('', { limit: 10 })
+    if (!debouncedQuery && matchAllOnEmptyQuery) {
+      return fuse.search('', { limit: 10 }) // Retorna todos los elementos si la búsqueda está vacía y se requiere
     }
-    return fuse.search(query, { limit: 10 })
-  }, [query, fuse])
 
-  const onSearch = debounce(
-    useCallback(
-      (value: string) => {
-        setQuery(value)
-      },
-      [setQuery],
-    ),
-    300,
-  )
+    if (!debouncedQuery) {
+      return []
+    }
+
+    return fuse.search(debouncedQuery, { limit: 10 })
+  }, [debouncedQuery, fuse, matchAllOnEmptyQuery])
+
+  const onSearch = (value: string) => {
+    setQuery(value)
+  }
 
   return {
     onSearch,

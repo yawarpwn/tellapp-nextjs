@@ -6,7 +6,13 @@ import { LabelsModel } from '@/models/labels'
 import { getDni, getRuc } from '../sunat'
 
 export async function createLabelAction(input: LabelInsert) {
-  const { error } = await LabelsModel.create(input)
+  const cleanedPhone = input.phone
+    ? input.phone.replace(/ /g, '').replace(' ', '').replace('+51', '')
+    : null
+  const { error } = await LabelsModel.create({
+    ...input,
+    phone: cleanedPhone,
+  })
   if (error) throw error
   revalidatePath('/new-labels')
 }
@@ -18,7 +24,14 @@ export async function deleteLabelAction(id: string) {
 }
 
 export async function updateLabelAction(id: string, input: LabelUpdate) {
-  const { error } = await LabelsModel.update(id, input)
+  const cleanedPhone = input.phone
+    ? input.phone.replace(/ /g, '').replace(' ', '').replace('+51', '')
+    : null
+
+  const { error } = await LabelsModel.update(id, {
+    ...input,
+    phone: cleanedPhone,
+  })
   if (error) throw error
 
   revalidatePath('/new-labels')

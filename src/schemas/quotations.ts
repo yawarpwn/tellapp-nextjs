@@ -7,6 +7,7 @@ export const QuotationItemSchema = z.object({
   price: z.number(),
   qty: z.number(),
   cost: z.number().optional().nullable(),
+  link: z.string().optional().nullable(),
   unit_size: z.string(),
   description: z.string(),
 })
