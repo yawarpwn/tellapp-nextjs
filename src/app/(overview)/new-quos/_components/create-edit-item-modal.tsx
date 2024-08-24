@@ -1,7 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
-import { Skeleton } from '@/components/ui/skeleton'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { type Product } from '@/types'
@@ -12,9 +11,6 @@ import { formatNumberToLocal } from '@/lib/utils'
 import { EmpetyIcon, SearchIcon } from '@/icons'
 
 function EmpetyHits() {
-  // {[1, 2, 3, 4, 5].map(item => (
-  //   <Skeleton key={item} className="h-[72px] w-full rounded-md" />
-  // ))}
   return (
     <div className="flex h-full items-center justify-center ">
       <div className="flex flex-col items-center gap-8">
@@ -95,6 +91,13 @@ export function CreateEditItemModal(props: Props) {
     onClose()
   }
 
+  const removeLink = () => {
+    setQuoItem({
+      ...quoItem,
+      link: undefined,
+    })
+  }
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
@@ -160,13 +163,25 @@ export function CreateEditItemModal(props: Props) {
         {/* Inputs Products */}
         <footer>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <Textarea
-              name="description"
-              id="description"
-              className="h-[90px] resize-none  bg-muted p-2"
-              value={quoItem.description}
-              onChange={handleChangeItem}
-            />
+            <div>
+              <Textarea
+                name="description"
+                id="description"
+                className="h-[90px] resize-none  bg-muted p-2"
+                value={quoItem.description}
+                onChange={handleChangeItem}
+              />
+              {quoItem.link && (
+                <button
+                  type="button"
+                  onClick={removeLink}
+                  className="w-full pt-2 text-center text-xs text-primary underline"
+                >
+                  Quitar link de producto
+                </button>
+              )}
+            </div>
+
             <div className="flex gap-4">
               <div className="grid w-full gap-2">
                 <label className="text-xs text-muted-foreground" htmlFor="qty">

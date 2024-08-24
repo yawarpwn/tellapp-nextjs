@@ -19,6 +19,7 @@ import { IsRegularButton } from './is-regular-button'
 import { notFound } from 'next/navigation'
 import { IsPaymentPendingButton } from './is-payment-pending'
 import { QuotationsModel } from '@/models'
+import { ExternalLinkIcon } from 'lucide-react'
 export async function QuotationPageByNumber({ number }: { number: number }) {
   const { data: quotation, error } = await QuotationsModel.getByNumber(number)
 
@@ -26,8 +27,6 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
     notFound()
   }
 
-  console.log('wwwwwwwwwwww')
-  console.log(quotation.items)
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(quotation.items)
 
   return (
@@ -105,6 +104,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
         <TableHeader>
           <TableRow>
             <TableHead>DESCRIPCION</TableHead>
+            <TableHead>LINK</TableHead>
             <TableHead>U/M</TableHead>
             <TableHead>CANT</TableHead>
             <TableHead>P.BASE</TableHead>
@@ -118,8 +118,15 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
               <TableCell>
                 <div className="min-w-[250px]">{item.description}</div>
               </TableCell>
+              <TableCell>
+                {item.link && (
+                  <a target="_blank" href={item.link}>
+                    <ExternalLinkIcon className="text-primary" />
+                  </a>
+                )}
+              </TableCell>
               <TableCell>{item.unit_size}</TableCell>
-              <TableCell className="text-center">{item.qty.toString().padStart(2, 0)}</TableCell>
+              <TableCell className="text-center">{item.qty.toString().padStart(2, '0')}</TableCell>
               <TableCell className="text-center">{(item.price / 1.18).toFixed(4)}</TableCell>
               <TableCell>{formatNumberToLocal(item.price)}</TableCell>
               <TableCell className="text-right">
