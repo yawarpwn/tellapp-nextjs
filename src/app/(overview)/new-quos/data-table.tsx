@@ -4,13 +4,11 @@ import { DataTablePagination } from '@/components/data-table-pagination'
 import { buttonVariants } from '@/components/ui/button'
 import { EmpetyIcon } from '@/icons'
 import {
-  type ColumnDef,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   type PaginationState,
-  type RowSelectionState,
   useReactTable,
 } from '@tanstack/react-table'
 import React from 'react'
@@ -37,6 +35,17 @@ interface Props {
   data: QuotationClient[]
   // columns: ColumnDef<QuotationType>[]
 }
+
+// declare module '@tanstack/table-core' {
+//   //add fuzzy filter to the filterFns
+//   interface FilterFns {
+//     customFilter: FilterFn<unknown>
+//   }
+//
+//   interface FilterMeta {
+//     itemRank: number
+//   }
+// }
 
 export function DataTable(props: Props) {
   const { data } = props

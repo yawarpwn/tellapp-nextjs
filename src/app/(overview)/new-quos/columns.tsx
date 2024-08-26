@@ -28,6 +28,9 @@ export function getColumns(): ColumnDef<QuotationClient>[] {
   return [
     {
       id: 'regular-customer',
+      accessorKey: 'ruc',
+      header: '',
+      enableGlobalFilter: true,
 
       cell: function Cell({ row }) {
         const [optimisticState, updateOptimistic] = React.useState(row.original.isRegularCustomer)
@@ -69,7 +72,7 @@ export function getColumns(): ColumnDef<QuotationClient>[] {
     },
     {
       accessorKey: 'company',
-      // accessorFn: row => row.company,
+      enableGlobalFilter: true,
       header: 'Cliente',
       cell: ({ row }) => (
         <div>
