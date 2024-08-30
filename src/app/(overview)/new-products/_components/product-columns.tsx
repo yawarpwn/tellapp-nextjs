@@ -29,7 +29,7 @@ export const productColumns = [
           className="text-xs text-primary underline"
           href={props.getValue() ?? '#'}
         >
-          <ExternalLink />
+          <ExternalLink size={18} />
         </a>
       ) : (
         ''

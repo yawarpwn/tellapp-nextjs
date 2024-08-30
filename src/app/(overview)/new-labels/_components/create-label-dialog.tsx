@@ -187,6 +187,7 @@ export function CreateLabelDialog() {
                   <FormControl>
                     <Input
                       {...field}
+                      type="number"
                       disabled={isCreatePending || isSearchDniRucPending}
                       value={field.value ?? ''}
                     />

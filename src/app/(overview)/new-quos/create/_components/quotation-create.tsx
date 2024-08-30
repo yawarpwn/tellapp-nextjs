@@ -131,7 +131,7 @@ export function QuotationCreate() {
                 required
                 id="ruc"
                 value={quo.ruc ?? ''}
-                type="text"
+                type="number"
                 name="ruc"
                 disabled={pendingRuc}
                 onChange={handleInputChange}
