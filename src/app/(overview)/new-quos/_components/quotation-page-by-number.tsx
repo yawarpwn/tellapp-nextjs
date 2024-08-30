@@ -20,6 +20,7 @@ import { notFound } from 'next/navigation'
 import { IsPaymentPendingButton } from './is-payment-pending'
 import { QuotationsModel } from '@/models'
 import { ExternalLinkIcon } from 'lucide-react'
+import { CopyText } from './copy-text'
 export async function QuotationPageByNumber({ number }: { number: number }) {
   const { data: quotation, error } = await QuotationsModel.getByNumber(number)
 
@@ -104,40 +105,47 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
         <TableHeader>
           <TableRow>
             <TableHead>DESCRIPCION</TableHead>
-            <TableHead>LINK</TableHead>
-            <TableHead>U/M</TableHead>
-            <TableHead>CANT</TableHead>
-            <TableHead>P.BASE</TableHead>
-            <TableHead>P.UNIT</TableHead>
-            <TableHead>MONTO</TableHead>
+            <TableHead className="text-center">LINK</TableHead>
+            <TableHead className="text-center">U/M</TableHead>
+            <TableHead className="text-center">CANT</TableHead>
+            <TableHead className="text-center">P.BASE</TableHead>
+            <TableHead className="text-center">P.UNIT</TableHead>
+            <TableHead className="text-center">MONTO</TableHead>
+            <TableHead className="text-right">ACCIONES</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {quotation.items.map(item => (
             <TableRow key={item.id}>
               <TableCell>
-                <div className="min-w-[250px]">{item.description}</div>
+                <div className="min-w-[250px]">
+                  <CopyText text={item.description} />
+                </div>
               </TableCell>
-              <TableCell>
+              <TableCell className="text-center">
                 {item.link && (
-                  <a target="_blank" href={item.link}>
-                    <ExternalLinkIcon className="text-primary" />
+                  <a target="_blank" className="flex justify-center" href={item.link}>
+                    <ExternalLinkIcon size={18} className="text-primary" />
                   </a>
                 )}
               </TableCell>
-              <TableCell>{item.unit_size}</TableCell>
+              <TableCell className="text-center">{item.unit_size}</TableCell>
               <TableCell className="text-center">{item.qty.toString().padStart(2, '0')}</TableCell>
               <TableCell className="text-center">{(item.price / 1.18).toFixed(4)}</TableCell>
               <TableCell>{formatNumberToLocal(item.price)}</TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-center">
                 {formatNumberToLocal(item.price * item.qty)}
+              </TableCell>
+
+              <TableCell className="text-right">
+                <button>copy</button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter className="justify-end" aria-colspan={6}>
+        <TableFooter className="justify-end" aria-colspan={8}>
           <TableRow>
-            <TableCell colSpan={6}>
+            <TableCell colSpan={8}>
               <div className="flex justify-end gap-4">
                 <span>Subtotal</span>
                 <span className="w-[100px] text-right">{formatedSubTotal}</span>
@@ -145,7 +153,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={6}>
+            <TableCell colSpan={8}>
               <div className="flex justify-end gap-4">
                 <span>Igv</span>
                 <span className="w-[100px] text-right">{formatedIgv}</span>
@@ -153,7 +161,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={6}>
+            <TableCell colSpan={8}>
               <div className="flex justify-end gap-4">
                 <span>Total</span>
                 <span className="w-[100px] text-right">{formatedTotal}</span>

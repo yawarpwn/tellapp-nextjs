@@ -1,9 +1,17 @@
-import CommandMenu from './command-menu'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 export default function Page() {
   return (
     <div>
-      <h1>Test</h1>
-      <CommandMenu />
+      <span>
+        <TooltipProvider>
+          <Tooltip defaultOpen open={true}>
+            <TooltipTrigger>tete</TooltipTrigger>
+            <TooltipContent>
+              <p>mees</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </span>
     </div>
   )
 }
