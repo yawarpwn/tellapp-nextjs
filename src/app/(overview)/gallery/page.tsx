@@ -1,28 +1,25 @@
-import { GalleryAddFormButton } from '@/components/gallery/gallery-buttons'
-import { GalleryTable } from '@/components/gallery/gallery-table'
-import { Pagination } from '@/components/pagination'
-import Search from '@/components/search'
-import { TableSkeleton } from '@/components/skeletons/table-skeleton'
-import { fetchGalleryPages } from '@/lib/data/gallery'
-import { PageProps } from '@/types'
 import { Suspense } from 'react'
+import { CreateGalleryDialog } from './_components/create-gallery-dialog'
+import { galleryColumns } from './_components/gallery-columns'
+import { DataTable } from '@/components/data-table'
+import { DataTableSkeleton } from '@/components/skeletons/data-table'
+import { GalleryModel } from '@/models'
 
-export default async function Page({ searchParams }: PageProps) {
-  const page = Number(searchParams?.page) || 1
-  const query = searchParams?.query || ''
-  const totalPages = await fetchGalleryPages(query)
+async function GalleryTable() {
+  const { data: galllery, error } = await GalleryModel.getAll()
+  if (error) throw error
 
   return (
-    <div>
-      <header className="mb-4 flex items-center justify-between gap-2">
-        <Search placeholder="Buscar foto..." searchValue={query} />
-        <GalleryAddFormButton />
-      </header>
-      <Suspense key={query} fallback={<TableSkeleton />}>
-        <GalleryTable currentPage={page} query={query} />
-      </Suspense>
-      {/* <GalleryImagesList title={'Galeria'} images={galleryImages} /> */}
-      <Pagination totalPages={totalPages} />
-    </div>
+    <DataTable createComponent={<CreateGalleryDialog />} columns={galleryColumns} data={galllery} />
+  )
+}
+
+export default async function Page() {
+  return (
+    <Suspense
+      fallback={<DataTableSkeleton columnCount={5} rowCount={20} searchableColumnCount={1} />}
+    >
+      <GalleryTable />
+    </Suspense>
   )
 }

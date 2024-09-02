@@ -1,15 +1,20 @@
 import { GALLERY_CATEGORIES } from '@/constants'
 import { z } from 'zod'
+import { galleryTable } from '@/db/schemas'
 
-export const GalleryImageSchema = z.object({
-  title: z.string(),
-  id: z.string(),
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod'
+
+export const GallerySchema = createSelectSchema(galleryTable)
+export const GalleryInsertSchema = createInsertSchema(galleryTable, {
   category: z.nativeEnum(GALLERY_CATEGORIES),
-  url: z.string(),
-  public_id: z.string(),
-  width: z.number(),
-  height: z.number(),
-  format: z.string(),
-  updated_at: z.string(),
-  created_at: z.string(),
 })
+export const GalleryUpdateSchema = GalleryInsertSchema.partial().omit({
+  id: true,
+  updatedAt: true,
+  createdAt: true,
+})
+export type Gallery = z.infer<typeof GallerySchema> & {
+  thumbUrl: string
+}
+export type GalleryInsert = z.infer<typeof GalleryInsertSchema>
+export type GalleryUpdate = Partial<z.infer<typeof GalleryInsertSchema>>

@@ -2,6 +2,8 @@ import {
   type ResourceApiResponse,
   type TransformationOptions,
   type UploadApiOptions,
+  type UploadApiErrorResponse,
+  UploadApiResponse,
   v2 as cloudinary,
 } from 'cloudinary'
 
@@ -36,11 +38,9 @@ export async function deleteSource(publicId: string) {
 }
 
 export async function uploadStream(
-  file: File,
+  buffer: Buffer,
   { category, folder }: { category: string; folder: string },
-) {
-  const arrayBuffer = await file.arrayBuffer()
-  const bytes = Buffer.from(arrayBuffer)
+): Promise<UploadApiResponse> {
   const options: UploadApiOptions = {
     tags: [folder, category],
     folder: folder,
@@ -64,9 +64,14 @@ export async function uploadStream(
           reject(error)
           return
         }
+
+        if (!result) {
+          reject(new Error('No result from upload'))
+          return
+        }
         resolve(result)
       })
-      .end(bytes)
+      .end(buffer)
   })
 }
 
