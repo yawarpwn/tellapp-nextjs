@@ -3,10 +3,10 @@
 import { FilePond, registerPlugin } from 'react-filepond'
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-
 // Styles filepond
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+import { toast } from 'sonner'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -39,25 +39,27 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 export function CreateGalleryDialog() {
   const [open, setOpen] = React.useState(false)
-  const [isCreatePending, setIsCreatePending] = React.useState(false)
   const [pending, startTransition] = React.useTransition()
 
   const [files, setFiles] = React.useState<File[]>([])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    formData.set('photo', files[0])
 
-    startTransition(async () => {
-      const form = new FormData(e.currentTarget)
-      form.set('photo', files[0])
-
-      createGalleryAction(form)
-        .then(() => {
-          console.log('submited')
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    startTransition(() => {
+      toast.promise(createGalleryAction(formData), {
+        loading: 'Subiendo...',
+        success: () => {
+          form.reset()
+          setFiles([])
+          setOpen(false)
+          return 'Galeria creada'
+        },
+        error: 'Error al subir foto a la galeria',
+      })
     })
   }
   return (
@@ -108,7 +110,9 @@ export function CreateGalleryDialog() {
                 Cancel
               </Button>
             </DialogClose>
-            <SubmitButton />
+            <Button type="submit" variant="primary" disabled={pending}>
+              {pending ? 'Subiendo' : 'Subir'}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

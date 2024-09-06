@@ -45,16 +45,16 @@ export async function uploadStream(
     tags: [folder, category],
     folder: folder,
     overwrite: true,
-    allowed_formats: ['jpg', 'png', 'webp'],
-    transformation: [
-      {
-        width: 'auto',
-        height: 1000,
-        crop: 'scale',
-        quality: 'auto',
-        format: 'webp',
-      },
-    ],
+    allowed_formats: ['jpg', 'png', 'webp', 'jpeg', 'avif'],
+    // transformation: [
+    //   {
+    //     width: 'auto',
+    //     height: 1000,
+    //     crop: 'scale',
+    //     quality: 'auto',
+    //     format: 'webp',
+    //   },
+    // ],
   }
 
   return new Promise((resolve, reject) => {
