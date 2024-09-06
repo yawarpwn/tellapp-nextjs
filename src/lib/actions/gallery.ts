@@ -9,6 +9,11 @@ export async function createGalleryAction(formData: FormData) {
   const title = formData.get('title') as string
   const category = formData.get('category') as GalleryCategory
 
+  console.log({ photoFile, title, category })
+
+  // const buf = await photoFile.arrayBuffer()
+  // console.log(buf)
+
   try {
     //transform to buffer
     const arrayBuffer = await photoFile.arrayBuffer()

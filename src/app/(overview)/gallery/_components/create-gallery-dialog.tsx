@@ -1,5 +1,13 @@
 'use client'
 
+import { FilePond, registerPlugin } from 'react-filepond'
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+
+// Styles filepond
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { AddButton } from '@/components/buttons'
@@ -21,18 +29,37 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
-import { Sub } from '@radix-ui/react-dropdown-menu'
+
+// Register the plugins
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 export function CreateGalleryDialog() {
   const [open, setOpen] = React.useState(false)
   const [isCreatePending, setIsCreatePending] = React.useState(false)
+  const [pending, startTransition] = React.useTransition()
 
+  const [files, setFiles] = React.useState<File[]>([])
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    startTransition(async () => {
+      const form = new FormData(e.currentTarget)
+      form.set('photo', files[0])
+
+      createGalleryAction(form)
+        .then(() => {
+          console.log('submited')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    })
+  }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <AddButton />
@@ -40,8 +67,19 @@ export function CreateGalleryDialog() {
         <DialogHeader>
           <DialogTitle>Agregar foto a galeria</DialogTitle>
         </DialogHeader>
-        <form action={createGalleryAction} className="flex flex-col gap-4">
-          <input required type="file" name="photo" />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <FilePond
+            files={files}
+            onupdatefiles={itemsFiles => {
+              setFiles(itemsFiles.map(itemFile => itemFile.file as File))
+            }}
+            allowMultiple={false}
+            acceptedFileTypes={['jpeg', 'png', 'jpg', 'webp', 'avif']}
+            maxFiles={1}
+            // server="/api"
+            name="photo"
+            labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+          />
           <div className="grid gap-2">
             <Label>Titulo</Label>
             <Input name="title" type="text" placeholder="Fibra de vidrio 60x60cm vista posterior" />
