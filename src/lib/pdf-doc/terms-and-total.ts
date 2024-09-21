@@ -2,6 +2,7 @@ import { type QuotationClient } from '@/types'
 
 import { getIgv } from '@/lib/utils'
 import { Content, Table } from 'pdfmake/interfaces'
+import { COLORS } from './constants'
 
 export function getTermAndTotal(quotation: QuotationClient) {
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(quotation.items)
@@ -20,7 +21,7 @@ export function getTermAndTotal(quotation: QuotationClient) {
             [
               {
                 text: 'Términos y condiciones:',
-                color: '#7d2de0',
+                color: COLORS.PRIMARY,
                 fontSize: 10,
                 bold: true,
                 colSpan: 3,
@@ -111,12 +112,15 @@ export function getTermAndTotal(quotation: QuotationClient) {
               {
                 text: [
                   {
-                    text: quotation.includeIgv ? 'Importe Total' : 'Total',
+                    text: quotation.includeIgv ? 'IMPORTE TOTAL' : 'TOTAL',
                     bold: true,
+                    color: COLORS.PRIMARY,
                   },
                   {
-                    text: quotation.includeIgv ? '' : ' ( No Incluye IGV)',
+                    text: quotation.includeIgv ? '' : ' (No Incluye IGV)',
                     fontSize: 8,
+                    color: COLORS.PRIMARY,
+                    bold: true,
                   },
                 ],
                 alignment: 'right',
@@ -127,6 +131,7 @@ export function getTermAndTotal(quotation: QuotationClient) {
                 alignment: 'right',
                 bold: true,
                 fontSize: 10,
+                color: COLORS.PRIMARY,
               },
             ],
           ],

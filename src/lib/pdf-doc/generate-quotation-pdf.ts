@@ -103,7 +103,7 @@ export function generateQuotationPdf(quotation: QuotationClient) {
                 width: 65,
               },
               {
-                text: 'Rauel Maldonado R.',
+                text: 'Raquel Maldonado R.',
                 decoration: 'underline',
               },
               {

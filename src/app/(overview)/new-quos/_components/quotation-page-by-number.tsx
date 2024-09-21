@@ -111,7 +111,6 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <TableHead className="text-center">P.BASE</TableHead>
             <TableHead className="text-center">P.UNIT</TableHead>
             <TableHead className="text-center">MONTO</TableHead>
-            <TableHead className="text-right">ACCIONES</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -119,7 +118,7 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <TableRow key={item.id}>
               <TableCell>
                 <div className="min-w-[250px]">
-                  <CopyText text={item.description} />
+                  <CopyText unitSize={item.unit_size} text={item.description} />
                 </div>
               </TableCell>
               <TableCell className="text-center">
@@ -132,39 +131,47 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
               <TableCell className="text-center">{item.unit_size}</TableCell>
               <TableCell className="text-center">{item.qty.toString().padStart(2, '0')}</TableCell>
               <TableCell className="text-center">{(item.price / 1.18).toFixed(4)}</TableCell>
-              <TableCell>{formatNumberToLocal(item.price)}</TableCell>
+              <TableCell className="text-center">{formatNumberToLocal(item.price)}</TableCell>
               <TableCell className="text-center">
                 {formatNumberToLocal(item.price * item.qty)}
-              </TableCell>
-
-              <TableCell className="text-right">
-                <button>copy</button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter className="justify-end" aria-colspan={8}>
+        <TableFooter className="justify-end" aria-colspan={7}>
           <TableRow>
-            <TableCell colSpan={8}>
-              <div className="flex justify-end gap-4">
-                <span>Subtotal</span>
-                <span className="w-[100px] text-right">{formatedSubTotal}</span>
+            <TableCell colSpan={6}>
+              <div className="flex justify-end">
+                <span>SUBTOTAL</span>
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex justify-center ">
+                <span>{formatedSubTotal}</span>
               </div>
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={8}>
-              <div className="flex justify-end gap-4">
-                <span>Igv</span>
-                <span className="w-[100px] text-right">{formatedIgv}</span>
+            <TableCell colSpan={6}>
+              <div className="flex justify-end">
+                <span>IGV</span>
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex justify-center">
+                <span>{formatedIgv}</span>
               </div>
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={8}>
-              <div className="flex justify-end gap-4">
-                <span>Total</span>
-                <span className="w-[100px] text-right">{formatedTotal}</span>
+            <TableCell colSpan={6}>
+              <div className="flex justify-end">
+                <span>TOTAL</span>
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex justify-center">
+                <span>{formatedTotal}</span>
               </div>
             </TableCell>
           </TableRow>

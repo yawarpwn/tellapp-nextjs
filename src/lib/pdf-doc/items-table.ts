@@ -30,9 +30,11 @@ export function getItemsTable(quotation: QuotationClient) {
           { text: 'CANT', color: '#fff', alignment: 'center' },
           // { text: 'P. BASE', color: '#fff', alignment: 'center' },
           { text: 'P. UNT', color: '#fff', alignment: 'center' },
-          { text: 'MONTO', color: '#fff', alignment: 'center' },
+          { text: 'IMPORTE', color: '#fff', alignment: 'center' },
         ],
         ...quotation.items.map((item, index) => {
+          const unitPrice = quotation.includeIgv ? item.price / 1.18 : item.price
+          const importe = unitPrice * item.qty
           return [
             // numero
             {
@@ -73,25 +75,16 @@ export function getItemsTable(quotation: QuotationClient) {
               margin: [0, 5],
             },
 
-            // Base
-            // {
-            //   text: quotation.includeIgv
-            //     ? Number(item.price / 1.18).toFixed(2)
-            //     : Number(item.price).toFixed(2),
-            //   alignment: 'center',
-            //   margin: [0, 5],
-            // },
-
             // Precio Unitario
             {
-              text: Number(item.price).toFixed(2),
+              text: unitPrice.toFixed(2),
               alignment: 'center',
               margin: [0, 5],
             },
 
-            // Total
+            // Importe
             {
-              text: (Number(item.price) * Number(item.qty)).toFixed(2),
+              text: importe.toFixed(2),
               alignment: 'center',
               margin: [0, 5],
             },
@@ -101,7 +94,7 @@ export function getItemsTable(quotation: QuotationClient) {
     },
     layout: {
       fillColor: function (rowIndex, node, columnIndex) {
-        if (rowIndex === 0) return '#7d2de0'
+        if (rowIndex === 0) return '#222'
 
         return rowIndex % 2 === 0 ? '#ededed' : null
       },

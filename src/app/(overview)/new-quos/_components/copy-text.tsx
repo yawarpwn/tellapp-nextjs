@@ -21,16 +21,20 @@ const CHARS = {
 }
 
 const INIT_MESSAGE = 'Copiar'
+const genericSizes = ['und', 'rollo']
 
-export function CopyText({ text }: { text: string }) {
+export function CopyText({ text, unitSize }: { text: string; unitSize: string }) {
   const [message, setMessage] = useState(INIT_MESSAGE)
   const [open, setOpen] = useState(false)
+
+  const isGenericSize = genericSizes.includes(unitSize.toLowerCase())
 
   const handleCopy = () => {
     const cleanText = text
       .replace(/[áéíóúÁÉÍÓÚñÑ]/g, match => CHARS[match])
       .replace(/"/g, ' pulgadas')
       .replace(/[^a-zA-Z0-9 =.:(),/-]/g, '')
+      .replace(/^(\w+)/, !isGenericSize ? `$1 ( ${unitSize} ) ` : '$1')
       .toUpperCase()
 
     navigator.clipboard

@@ -5,7 +5,7 @@ import { createSelectSchema, createInsertSchema } from 'drizzle-zod'
 export const AgencySchema = createSelectSchema(agenciesTable)
 export const AgencyInsertSchema = createInsertSchema(agenciesTable, {
   ruc: () => z.coerce.string().length(11),
-  phone: () => z.coerce.string().length(9).nullable().optional(),
+  phone: () => z.coerce.string().nullable().optional(),
 })
 
 export const AgencyUpdateSchema = AgencyInsertSchema.partial().omit({
