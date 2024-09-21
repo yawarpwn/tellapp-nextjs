@@ -54,6 +54,7 @@ function ProductFilter({ column }: { column: Column<any, unknown> }) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
+          <SelectItem value={' '}>Todos</SelectItem>
           {Object.values(PRODUCT_CATEGORIES).map(category => (
             <SelectItem key={category} value={category}>
               {category}

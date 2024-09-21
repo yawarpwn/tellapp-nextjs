@@ -34,6 +34,8 @@ export const PRODUCT_CATEGORIES = {
   EPP: 'epp',
   SERVICIO: 'servicio',
   ROPA_SEGURIDAD: 'ropa seguridad',
+  CONVENCIONALES: 'convencionales',
+  ACRILICOs: 'acrilicos',
 } as const
 
 export const ITEMS_PER_PAGE = 12
