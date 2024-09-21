@@ -20,6 +20,14 @@ export const productColumns = [
     ),
   }),
 
+  columnHelper.accessor('category', {
+    header: 'Categoria',
+    cell: props => props.getValue(),
+    meta: {
+      filterVariant: 'select',
+    },
+  }),
+
   columnHelper.accessor('link', {
     header: 'Link',
     cell: props =>

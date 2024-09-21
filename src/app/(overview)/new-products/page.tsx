@@ -11,7 +11,12 @@ async function ProductTable() {
   if (error) throw error
 
   return (
-    <DataTable createComponent={<CreateProductDialog />} columns={productColumns} data={products} />
+    <DataTable
+      showCategory
+      createComponent={<CreateProductDialog />}
+      columns={productColumns}
+      data={products}
+    />
   )
 }
 
