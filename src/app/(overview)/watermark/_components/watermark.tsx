@@ -8,6 +8,8 @@ export function Watermark() {
   const [blob, setBlob] = useState<Blob | null>(null)
   const [loading, setLoading] = useState(false)
 
+  console.log({ loading, blob })
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -19,11 +21,11 @@ export function Watermark() {
         body: formData,
       })
 
-      if (!res.ok) throw new Error('Error al subir imagen')
+      if (!res.ok) throw new Error('Error en la respuesta')
 
       const blob = await res.blob()
       setBlob(blob)
-      // setImageSrc(URL.createObjectURL(blob))
+      setImageSrc(URL.createObjectURL(blob))
     } catch (error) {
       console.error(error)
     } finally {
@@ -84,7 +86,7 @@ export function Watermark() {
             <img src={imageSrc} />
           </div>
         ) : (
-          <input name="photo" className="block" type="file" />
+          <input required name="photo" className="block" type="file" />
         )}
         <button className="bg-primary" type="submit">
           {loading ? 'enviando...' : 'enviar'}
