@@ -7,6 +7,7 @@ import {
   QuotationIcon,
   SignalIcon,
   TruckIcon,
+  FolderDownIcon,
 } from '@/icons'
 
 export const TABLES = {
@@ -76,6 +77,11 @@ export const NAVIGATION = [
     title: 'Señales',
     href: '/signals',
     icon: SignalIcon,
+  },
+  {
+    title: 'Marcas',
+    href: '/watermark',
+    icon: FolderDownIcon,
   },
 ]
 

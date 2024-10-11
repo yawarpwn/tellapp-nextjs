@@ -1,18 +1,26 @@
 'use client'
-import React, { useState, useTransition } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { addWatermarkInPhoto } from '@/lib/actions/watermark'
+import { FilePond, registerPlugin } from 'react-filepond'
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import { DownloadIcon } from '@/icons'
+import { Share2Icon, ShareIcon } from 'lucide-react'
+
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 export function Watermark() {
-  const [imageSrc, setImageSrc] = useState<string | null>(null)
   const [blob, setBlob] = useState<Blob | null>(null)
   const [loading, setLoading] = useState(false)
-
-  console.log({ loading, blob })
+  const [files, setFiles] = React.useState<File[]>([])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
+    formData.set('photo', files[0])
+
     setLoading(true)
 
     try {
@@ -25,7 +33,6 @@ export function Watermark() {
 
       const blob = await res.blob()
       setBlob(blob)
-      setImageSrc(URL.createObjectURL(blob))
     } catch (error) {
       console.error(error)
     } finally {
@@ -70,34 +77,62 @@ export function Watermark() {
     }
   }
 
-  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return
-
-    const file = event.target.files[0] as File
-    const blob = new Blob([file])
-    setImageSrc(URL.createObjectURL(blob))
-  }
-
   return (
-    <div>
+    <div className="grid gap-8">
       <form onSubmit={handleSubmit}>
-        {imageSrc ? (
-          <div>
-            <img src={imageSrc} />
-          </div>
-        ) : (
-          <input required name="photo" className="block" type="file" />
-        )}
-        <button className="bg-primary" type="submit">
-          {loading ? 'enviando...' : 'enviar'}
-        </button>
+        {/* {imageSrc ? ( */}
+        {/*   <div> */}
+        {/*     <img src={imageSrc} /> */}
+        {/*   </div> */}
+        {/* ) : ( */}
+        {/*   <input required name="photo" className="block" type="file" /> */}
+        {/* )} */}
+
+        <FilePond
+          files={files}
+          required
+          onupdatefiles={itemsFiles => {
+            setFiles(itemsFiles.map(itemFile => itemFile.file as File))
+          }}
+          allowMultiple={false}
+          acceptedFileTypes={['jpeg', 'png', 'jpg', 'webp', 'avif']}
+          maxFiles={1}
+          // server="/api"
+          name="photo"
+          labelIdle='Arrastra y suelta tu foto <span class="filepond--label-action">Subir</span>'
+        />
+        <Button
+          disabled={files.length === 0}
+          variant="secondary"
+          className="w-full bg-primary"
+          type="submit"
+        >
+          {loading ? 'agregando logo...' : 'Agregar marca de agua'}
+        </Button>
       </form>
+
       {blob && (
-        <div>
-          <img src={URL.createObjectURL(blob)} />
-          <div className="flex justify-between ">
-            <Button onClick={handleDownload}>Descargar</Button>
-            <Button onClick={handleShare}>Compartir</Button>
+        <div className="flex h-[288px] items-center justify-center overflow-hidden rounded-sm bg-foreground">
+          <div className="relative h-[256px] w-[340px] overflow-hidden rounded-md">
+            <img className="h-full w-full object-cover" src={URL.createObjectURL(blob)} />
+            <div className="absolute right-0 top-0 z-10 flex flex-col gap-2 p-2 ">
+              <Button
+                className="h-8 w-8 rounded-full"
+                variant="outline"
+                size={'icon'}
+                onClick={handleDownload}
+              >
+                <DownloadIcon size={20} />
+              </Button>
+              <Button
+                className="h-8 w-8 rounded-full"
+                variant="outline"
+                size={'icon'}
+                onClick={handleShare}
+              >
+                <Share2Icon size={20} />
+              </Button>
+            </div>
           </div>
         </div>
       )}

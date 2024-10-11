@@ -7,6 +7,8 @@ export async function POST(request: NextRequest) {
   const formData = await request.formData()
   const photo = formData.get('photo') as File
 
+  console.log(photo)
+
   if (!photo) {
     return new NextResponse('NO photo provided', { status: 400 })
   }
@@ -27,6 +29,9 @@ export async function POST(request: NextRequest) {
           gravity: 'center',
         },
       ])
+      .resize({
+        width: 1000,
+      })
       .sharpen()
       .withMetadata()
       .toBuffer()
