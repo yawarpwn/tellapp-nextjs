@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { CreateProductDialog } from './_components/create-product-dialog'
 import { productColumns } from './_components/product-columns'
 import { ProductsModel } from '@/models/products'
+import { PRODUCT_CATEGORIES } from '@/constants'
 
 async function ProductTable() {
   const { data: products, error } = await ProductsModel.getAll()
@@ -13,6 +14,7 @@ async function ProductTable() {
   return (
     <DataTable
       showCategory
+      categories={PRODUCT_CATEGORIES}
       createComponent={<CreateProductDialog />}
       columns={productColumns}
       data={products}

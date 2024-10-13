@@ -4,13 +4,19 @@ import { galleryColumns } from './_components/gallery-columns'
 import { DataTable } from '@/components/data-table'
 import { DataTableSkeleton } from '@/components/skeletons/data-table'
 import { GalleryModel } from '@/models'
+import { GALLERY_CATEGORIES } from '@/constants'
 
 async function GalleryTable() {
   const { data: galllery, error } = await GalleryModel.getAll()
   if (error) throw error
 
   return (
-    <DataTable createComponent={<CreateGalleryDialog />} columns={galleryColumns} data={galllery} />
+    <DataTable
+      categories={GALLERY_CATEGORIES}
+      createComponent={<CreateGalleryDialog />}
+      columns={galleryColumns}
+      data={galllery}
+    />
   )
 }
 

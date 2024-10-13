@@ -36,16 +36,25 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+type Categories = Record<string, string>
+
 interface Props<T> {
   data: T[]
   columns: any
   showCategory?: boolean
   createComponent: React.ReactNode
+  categories?: Categories
 }
 
-function ProductFilter({ column }: { column: Column<any, unknown> }) {
-  const columnFilterValue = column.getFilterValue()
-  const { filterVariant } = column.columnDef.meta ?? {}
+function ProductFilter({
+  column,
+  categories,
+}: {
+  column: Column<any, unknown>
+  categories: Categories
+}) {
+  // const columnFilterValue = column.getFilterValue()
+  // const { filterVariant } = column.columnDef.meta ?? {}
 
   return (
     <Select onValueChange={value => column.setFilterValue(value)}>
@@ -55,7 +64,7 @@ function ProductFilter({ column }: { column: Column<any, unknown> }) {
       <SelectContent>
         <SelectGroup>
           <SelectItem value={' '}>Todos</SelectItem>
-          {Object.values(PRODUCT_CATEGORIES).map(category => (
+          {Object.values(categories).map(category => (
             <SelectItem key={category} value={category}>
               {category}
             </SelectItem>
@@ -69,7 +78,13 @@ function ProductFilter({ column }: { column: Column<any, unknown> }) {
 
 // A typical debounced input react component
 
-export function DataTable<T>({ data, columns, createComponent, showCategory }: Props<T>) {
+export function DataTable<T>({
+  data,
+  columns,
+  categories,
+  createComponent,
+  showCategory,
+}: Props<T>) {
   const [globalFilter, setGlobalFilter] = React.useState('')
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [pagination, setPagination] = React.useState<PaginationState>({
@@ -102,9 +117,9 @@ export function DataTable<T>({ data, columns, createComponent, showCategory }: P
         />
         {createComponent}
       </div>
-      {showCategory && (
+      {categories && (
         <div className="flex items-center justify-end gap-2">
-          <ProductFilter column={table.getColumn('category')} />
+          <ProductFilter categories={categories} column={table.getColumn('category')} />
         </div>
       )}
       <Table>

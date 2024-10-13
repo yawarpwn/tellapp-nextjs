@@ -27,7 +27,7 @@ export const signalsColumns = [
     header: 'Señal',
     cell: props => {
       return (
-        <div className="size-28 overflow-hidden">
+        <div className="size-[60px] overflow-hidden">
           <img className="h-full w-full object-contain" src={props.row.original.thumbUrl} />
         </div>
       )

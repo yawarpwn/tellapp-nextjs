@@ -4,6 +4,7 @@ import { signalsColumns } from './_components/signals-columns'
 import { DataTable } from '@/components/data-table'
 import { DataTableSkeleton } from '@/components/skeletons/data-table'
 import { SignalsModel } from '@/models'
+import { SIGNALS_CATEGORIES } from '@/constants'
 
 async function GalleryTable() {
   const { data: signals, error } = await SignalsModel.getAll()
@@ -11,7 +12,12 @@ async function GalleryTable() {
   if (error) throw error
 
   return (
-    <DataTable createComponent={<CreateSignalDialog />} columns={signalsColumns} data={signals} />
+    <DataTable
+      categories={SIGNALS_CATEGORIES}
+      createComponent={<CreateSignalDialog />}
+      columns={signalsColumns}
+      data={signals}
+    />
   )
 }
 
