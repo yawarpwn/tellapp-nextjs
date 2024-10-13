@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label'
 import { AddButton } from '@/components/buttons'
 import { GALLERY_CATEGORIES } from '@/constants'
 import * as React from 'react'
-import { updateGalleryAction } from '@/lib/actions/gallery'
+import { updateSignalAction } from '@/lib/actions/signals'
 import { SubmitButton } from '@/components/submit-button'
 
 import { Button } from '@/components/ui/button'
@@ -34,7 +34,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Gallery } from '@/schemas'
+import { Signal } from '@/schemas'
 import { XIcon } from '@/icons'
 
 // Register the plugins
@@ -47,12 +47,12 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 interface Props {
   open: boolean
   closeDialog: () => void
-  gallery: Gallery
+  signal: Signal
 }
-export function UpdateGalleryDialog({ open, closeDialog, gallery }: Props) {
+export function UpdateSignalDialog({ open, closeDialog, signal }: Props) {
   // const [open, setOpen] = React.useState(false)
   const [pending, startTransition] = React.useTransition()
-  const [imgSrc, setImgSrc] = React.useState(gallery.url)
+  const [imgSrc, setImgSrc] = React.useState(signal.url)
 
   const [files, setFiles] = React.useState<File[]>([])
 
@@ -63,7 +63,7 @@ export function UpdateGalleryDialog({ open, closeDialog, gallery }: Props) {
     formData.set('photo', files[0])
 
     startTransition(() => {
-      toast.promise(updateGalleryAction(formData), {
+      toast.promise(updateSignalAction(formData), {
         loading: 'Actualizando...',
         success: () => {
           form.reset()
@@ -120,14 +120,18 @@ export function UpdateGalleryDialog({ open, closeDialog, gallery }: Props) {
               name="title"
               type="text"
               placeholder="Fibra de vidrio 60x60cm vista posterior"
-              defaultValue={gallery.title}
+              defaultValue={signal.title}
             />
           </div>
-          <input type="hidden" name="public-id" value={gallery.publicId} />
-          <input type="hidden" name="id" value={gallery.id} />
+          <div className="grid gap-2">
+            <Label>Código</Label>
+            <Input name="code" type="text" placeholder="fhp" defaultValue={signal.code} />
+          </div>
+          <input type="hidden" name="public-id" value={signal.publicId} />
+          <input type="hidden" name="id" value={signal.id} />
           <div className="grid gap-2">
             <Label>Categoria</Label>
-            <Select name="category" defaultValue={gallery.category} required>
+            <Select name="category" defaultValue={signal.category} required>
               <SelectTrigger className="capitalize">
                 <SelectValue placeholder="Seleciona una categoria" />
               </SelectTrigger>

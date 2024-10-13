@@ -7,7 +7,7 @@ import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button } from '@/components/ui/button'
 import { deleteSignalAction } from '@/lib/actions/signals'
 import { MoreHorizontal } from 'lucide-react'
-// import { UpdateCustomerSheet } from './update-customer-sheet'
+import { UpdateSignalDialog } from './update-signal-dialog'
 
 import {
   DropdownMenu,
@@ -77,13 +77,14 @@ export const signalsColumns = [
 
       return (
         <DropdownMenu>
-          {/* {showUpdateDialog && ( */}
-          {/*   <UpdateCustomerSheet */}
-          {/*     open={showUpdateDialog} */}
-          {/*     onOpenChange={setShowUpdateDialog} */}
-          {/*     customer={row.original} */}
-          {/*   /> */}
-          {/* )} */}
+          {showUpdateDialog && (
+            <UpdateSignalDialog
+              open={showUpdateDialog}
+              // onOpenChange={setShowUpdateDialog}
+              closeDialog={() => setShowUpdateDialog(false)}
+              signal={row.original}
+            />
+          )}
           <ConfirmActionDialog
             open={showDeleteDialog}
             onOpenChange={setShowDeleteDialog}

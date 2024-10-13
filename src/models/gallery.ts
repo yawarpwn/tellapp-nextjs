@@ -1,4 +1,4 @@
-import type { DatabaseResponse, Gallery, GalleryInsert } from '@/types'
+import type { DatabaseResponse, Gallery, GalleryInsert, GalleryUpdate } from '@/types'
 import { DatabaseError } from '@/errors'
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
@@ -88,6 +88,29 @@ export class GalleryModel {
       return {
         data: null,
         error: new DatabaseError('Error al insertar image en Galeria'),
+      }
+    }
+  }
+
+  static async update(value: GalleryUpdate, id: string) {
+    try {
+      const rows = await db
+        .update(galleryTable)
+        .set({
+          ...value,
+          updatedAt: new Date(),
+        })
+        .where(eq(galleryTable.id, id))
+        .returning()
+      return {
+        data: { id: rows[0].id },
+        error: null,
+      }
+    } catch (error) {
+      console.log('Error updating gallery', error)
+      return {
+        data: null,
+        error: new DatabaseError('Error al al actualizar image en Galeria'),
       }
     }
   }

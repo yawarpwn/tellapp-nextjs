@@ -1,4 +1,4 @@
-import type { DatabaseResponse, Signal, SignalInsert } from '@/types'
+import type { DatabaseResponse, Signal, SignalUpdate, SignalInsert } from '@/types'
 import { DatabaseError } from '@/errors'
 import { db } from '@/db'
 import { eq, desc } from 'drizzle-orm'
@@ -90,6 +90,29 @@ export class SignalsModel {
       return {
         data: null,
         error: new DatabaseError('Error al insertar image en signal'),
+      }
+    }
+  }
+
+  static async update(value: SignalUpdate, id: string) {
+    try {
+      const rows = await db
+        .update(signalsTable)
+        .set({
+          ...value,
+          updatedAt: new Date(),
+        })
+        .where(eq(signalsTable.id, id))
+        .returning()
+      return {
+        data: { id: rows[0].id },
+        error: null,
+      }
+    } catch (error) {
+      console.log('Error updating gallery', error)
+      return {
+        data: null,
+        error: new DatabaseError('Error al al actualizar image en Galeria'),
       }
     }
   }
