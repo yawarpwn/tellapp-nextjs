@@ -7,7 +7,7 @@ import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button } from '@/components/ui/button'
 import { deleteGalleryAction } from '@/lib/actions/gallery'
 import { MoreHorizontal } from 'lucide-react'
-// import { UpdateCustomerSheet } from './update-customer-sheet'
+import { UpdateGalleryDialog } from './update-gallery-sheet'
 
 import {
   DropdownMenu,
@@ -64,13 +64,14 @@ export const galleryColumns = [
 
       return (
         <DropdownMenu>
-          {/* {showUpdateDialog && ( */}
-          {/*   <UpdateCustomerSheet */}
-          {/*     open={showUpdateDialog} */}
-          {/*     onOpenChange={setShowUpdateDialog} */}
-          {/*     customer={row.original} */}
-          {/*   /> */}
-          {/* )} */}
+          {showUpdateDialog && (
+            <UpdateGalleryDialog
+              open={showUpdateDialog}
+              // onOpenChange={setShowUpdateDialog}
+              closeDialog={() => setShowUpdateDialog(false)}
+              gallery={row.original}
+            />
+          )}
           <ConfirmActionDialog
             open={showDeleteDialog}
             onOpenChange={setShowDeleteDialog}
