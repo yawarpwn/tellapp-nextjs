@@ -1,27 +1,26 @@
-import Pagination from '@/components/pagination'
-import Search from '@/components/search'
-import { SignalAddFormButton } from '@/components/signals/signal-button'
-import { SignalsTable } from '@/components/signals/table'
-import { TableSkeleton } from '@/components/skeletons/table-skeleton'
-import { fetchSignalsPages } from '@/lib/data/signals'
-import { PageProps } from '@/types'
 import { Suspense } from 'react'
+import { CreateSignalDialog } from './_components/create-signal-dialog'
+import { signalsColumns } from './_components/signals-columns'
+import { DataTable } from '@/components/data-table'
+import { DataTableSkeleton } from '@/components/skeletons/data-table'
+import { SignalsModel } from '@/models'
 
-export default async function Page({ searchParams }: PageProps) {
-  const page = Number(searchParams?.page) || 1
-  const query = searchParams?.query || ''
+async function GalleryTable() {
+  const { data: signals, error } = await SignalsModel.getAll()
+  console.log(signals)
+  if (error) throw error
 
-  const totalPages = await fetchSignalsPages(query)
   return (
-    <div>
-      <header className="mb-4 flex items-center justify-between gap-2">
-        <Search searchValue={query} placeholder="Buscar Señal..." />
-        <SignalAddFormButton />
-      </header>
-      <Suspense key={query} fallback={<TableSkeleton />}>
-        <SignalsTable currentPage={page} query={query} />
-      </Suspense>
-      <Pagination totalPages={totalPages} />
-    </div>
+    <DataTable createComponent={<CreateSignalDialog />} columns={signalsColumns} data={signals} />
+  )
+}
+
+export default async function Page() {
+  return (
+    <Suspense
+      fallback={<DataTableSkeleton columnCount={5} rowCount={20} searchableColumnCount={1} />}
+    >
+      <GalleryTable />
+    </Suspense>
   )
 }

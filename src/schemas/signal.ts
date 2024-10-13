@@ -2,28 +2,21 @@ import { SIGNALS_CATEGORIES } from '@/constants'
 
 import { z } from 'zod'
 
-export const SignalSchema = z.object({
-  title: z.string(),
-  id: z.string(),
-  code: z.string(),
+import { signalsTable } from '@/db/schemas'
+
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod'
+
+export const SignalSchema = createSelectSchema(signalsTable)
+export const SignalInsertSchema = createInsertSchema(signalsTable, {
   category: z.nativeEnum(SIGNALS_CATEGORIES),
-  url: z.string(),
-  public_id: z.string(),
-  width: z.number(),
-  height: z.number(),
-  format: z.string(),
-  updated_at: z.string(),
-  created_at: z.string(),
 })
-
-export const SignalUpdateSchema = SignalSchema.partial()
-export const SignalDeleteSchema = SignalSchema.pick({ id: true })
-export const SignalCreateSchema = SignalSchema.omit({
+export const SignalUpdateSchema = SignalInsertSchema.partial().omit({
   id: true,
-  updated_at: true,
-  created_at: true,
+  updatedAt: true,
+  createdAt: true,
 })
-
-export type Signal = z.infer<typeof SignalSchema>
-export type SignalUpdate = z.infer<typeof SignalUpdateSchema>
-export type SignalCreate = z.infer<typeof SignalCreateSchema>
+export type Signal = z.infer<typeof SignalSchema> & {
+  thumbUrl: string
+}
+export type SignalInsert = z.infer<typeof SignalInsertSchema>
+export type SignalUpdate = Partial<z.infer<typeof SignalInsertSchema>>

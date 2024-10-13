@@ -100,9 +100,9 @@ export const GALLERY_CATEGORIES = {
 } as const
 
 export const SIGNALS_CATEGORIES = {
-  viales: 'Viales',
-  seguridad: 'Seguridad',
-  decorativas: 'Decorativas',
-  obras: 'Obras',
-  fotoluminiscentes: 'Fotoluminicentes',
+  Viales: 'viales',
+  Seguridad: 'seguridad',
+  Decorativas: 'decorativas',
+  Obras: 'obras',
+  Fotoluminiscentes: 'fotoluminicentes',
 } as const
