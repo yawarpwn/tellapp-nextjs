@@ -24,10 +24,11 @@ const columnHelper = createColumnHelper<Signal>()
 
 export const signalsColumns = [
   columnHelper.accessor('url', {
+    header: 'Señal',
     cell: props => {
       return (
-        <div className="size-40 overflow-hidden">
-          <img className="h-full w-full object-cover" src={props.row.original.thumbUrl} />
+        <div className="size-28 overflow-hidden">
+          <img className="h-full w-full object-contain" src={props.row.original.thumbUrl} />
         </div>
       )
     },
@@ -45,9 +46,28 @@ export const signalsColumns = [
     header: 'Código',
     cell: props => (
       <div className="">
+        <p>{props.getValue().toUpperCase()}</p>
+      </div>
+    ),
+  }),
+
+  columnHelper.accessor('category', {
+    header: 'Categoria',
+    cell: props => (
+      <div className="">
         <p>{props.getValue()}</p>
       </div>
     ),
+  }),
+
+  columnHelper.accessor('width', {
+    header: 'Ancho',
+    cell: props => <p>{props.getValue()} px</p>,
+  }),
+
+  columnHelper.accessor('height', {
+    header: 'Alto',
+    cell: props => <p>{props.getValue()} px</p>,
   }),
   columnHelper.display({
     id: 'actions',

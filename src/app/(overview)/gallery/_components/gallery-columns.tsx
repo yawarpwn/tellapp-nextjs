@@ -1,6 +1,6 @@
 'use client'
 
-import type { Gallery } from '@/types'
+import type { Signal } from '@/types'
 import React from 'react'
 
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
@@ -20,14 +20,15 @@ import {
 
 import { createColumnHelper } from '@tanstack/react-table'
 
-const columnHelper = createColumnHelper<Gallery>()
+const columnHelper = createColumnHelper<Signal>()
 
 export const galleryColumns = [
   columnHelper.accessor('url', {
+    header: 'foto',
     cell: props => {
       return (
-        <div className="size-40 overflow-hidden">
-          <img className="h-full w-full object-cover" src={props.row.original.thumbUrl} />
+        <div className="size-[100px] overflow-hidden">
+          <img className="h-full w-full object-contain" src={props.row.original.thumbUrl} />
         </div>
       )
     },
@@ -39,6 +40,21 @@ export const galleryColumns = [
         <p>{props.getValue()}</p>
       </div>
     ),
+  }),
+
+  columnHelper.accessor('category', {
+    header: 'Categoria',
+    cell: props => <p>{props.getValue()}</p>,
+  }),
+
+  columnHelper.accessor('width', {
+    header: 'Ancho (px)',
+    cell: props => <p>{props.getValue()}</p>,
+  }),
+
+  columnHelper.accessor('height', {
+    header: 'Alto (px)',
+    cell: props => <p>{props.getValue()}</p>,
   }),
   columnHelper.display({
     id: 'actions',
