@@ -8,7 +8,6 @@ import { SIGNALS_CATEGORIES } from '@/constants'
 
 async function GalleryTable() {
   const { data: signals, error } = await SignalsModel.getAll()
-  console.log(signals)
   if (error) throw error
 
   return (
