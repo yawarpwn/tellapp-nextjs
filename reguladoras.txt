@@ -1,0 +1,455 @@
+SEÑAL DE PARE (R-1)
+Esta señal dispone que el Conductor debe detener
+completamente el vehículo.
+Se colocará al borde de la vía como mínimo a una
+distancia de 2 m del inicio de la vía interceptada.
+Generalmente se complementa con marcas en el
+pavimento correspondiente a la línea de parada o cruce
+de peatones.
+Adicionalmente puede instalarse en el borde izquierdo o
+ser de mayor tamaño, cuando existan vías
+unidireccionales de dos o más carriles o cuando la
+visibilidad de la señal del lado derecho sea insuficiente.
+SEÑAL DE CEDA EL PASO (R-2)
+Esta señal dispone que los conductores cedan el paso a
+los vehículos que circulan por una vía preferencial,
+principal, prioritaria o glorietas.
+Adicionalmente podrá instalarse al lado izquierdo o ser de
+mayor tamaño, cuando existan vías unidireccionales de
+dos o más carriles o cuando la visibilidad de la señal del
+lado derecho sea insuficiente.
+SEÑAL DE DIRECCIÓN OBLIGADA (R-3)
+Esta señal dispone la obligación de circular sólo en la
+dirección y sentido indicado por la flecha.
+Puede complementarse con marcas en pavimento o
+demarcación que indique el sentido de cada carril.
+SEÑAL DE NO ENTRE (R-4)
+Esta señal prohíbe el ingreso a una zona restringida al
+tránsito o donde éste circula a contraflujo.
+Por lo general se usa en rampas de salida de autopistas a
+vías convencionales, para evitar la entrada contra el
+sentido del tránsito, así como en intersecciones en “Y” en
+vías de un solo sentido (ver ejemplo en la Figura 2.55).
+Figura 2.55 Ejemplo de aplicación de señal NO ENTRE en intersecciones en
+“Y”.
+SEÑAL DE GIRO SOLAMENTE A LA IZQUIERDA (R-5)
+Esta señal dispone que el único sentido de
+desplazamiento permitido en uno o más carriles, es un
+giro a la izquierda.
+Debe complementarse con marcas en el pavimento que
+indique un texto “SOLO” y una flecha que indique el giro
+a la izquierda, en cada carril al cual se aplica.
+Las variantes que tiene esta señal permite incluso seguir
+de frente y a la vez poder voltear a la izquierda. Ver
+Sección 2.13.
+SEÑAL DE PROHIBIDO VOLTEAR A LA IZQUIERDA (R-6)
+Esta señal prohíbe el giro a la izquierda, y por tanto
+también el giro en “U”.
+SEÑAL DE PROHIBIDO GIRAR A LA IZQUIERDA CON LUZ ROJA (R-6A)
+Esta señal prohíbe el giro a la izquierda, en
+intersecciones controladas por semáforos y que no está
+permitido el giro a la izquierda con luz roja.
+Asimismo, tácitamente prohíbe el giro en “U”.
+SEÑAL DE GIRO SOLAMENTE A LA DERECHA (R-7)
+Esta señal dispone que el único sentido de
+desplazamiento permitido en uno o más carriles, es un
+giro a la derecha.
+Debe complementarse con marcas en el pavimento que
+indique un texto “SOLO” y una flecha que indique el giro
+a la derecha, en cada carril al cual se aplica.
+SEÑAL DE PROHIBIDO VOLTEAR A LA DERECHA (R-8)
+Esta señal prohíbe el giro a la derecha, y por tanto
+también el giro en “U”.
+SEÑAL DE PROHIBIDO GIRAR A LA DERECHA CON LUZ ROJA (R-8A)
+Esta señal prohíbe el giro a la derecha, en intersecciones
+controladas por semáforos y que no está permitido el giro
+a la derecha con luz roja.
+Asimismo, tácitamente prohíbe el giro en “U”.
+SEÑAL DE GIRO SOLAMENTE EN “U” (R-9)
+Esta señal permite el giro en “U”.
+Debe complementarse con marcas en el pavimento con
+línea continua de separación de carriles, que indique el
+carril que permite el giro en “U”.
+SEÑAL DE PROHIBIDO VOLTEAR EN “U” (R-10)
+Esta señal prohíbe el giro en “U”.
+SEÑAL DE CIRCULACIÓN EN AMBOS SENTIDOS (R-11)
+Esta señal se emplea en vías unidireccionales para
+notificar al conductor que se aproxima a un tramo de
+circulación bidireccional, sin separador central.
+SEÑAL DE CIRCULACIÓN EN TRES CARRILES, UNO EN CONTRAFLUJO (R-11A)
+Esta señal se emplea en vías de tres carriles para
+notificar al conductor, que el tramo es de dos carriles de
+circulación en un mismo sentido y un carril en sentido
+contrario.
+SEÑAL DE CIRCULACIÓN EN TRES CARRILES, DOS EN CONTRAFLUJO (R-11B)
+Esta señal se emplea en vías de tres carriles para
+notificar al conductor que el tramo es de un carril de
+circulación en un sentido y dos carriles en sentido
+contrario.
+SEÑAL DE PROHIBIDO CAMBIAR DE CARRIL (R-12)
+Esta señal prohíbe al conductor cambiar del carril por
+donde circula a otro. Se colocará al comienzo de la zona
+de prohibición.
+SEÑAL DE CIRCULACIÓN OBLIGATORIA (R-14)
+Esta señal dispone que el conductor debe circular sólo en
+el sentido indicado por la flecha.
+SEÑAL DE TRÁNSITO EN UN SENTIDO (R-14A)
+Esta señal se utiliza para indicar el sentido del tránsito de
+una vía.
+Se puede complementar la señal con el NOMBRE Y
+NUMERACIÓN DE CALLE.
+SEÑAL DE TRÁNSITO EN AMBOS SENTIDOS (R-14B)
+Esta señal se utiliza para indicar que en una vía el
+tránsito puede fluir en dos direcciones.
+Se puede complementar la señal con el NOMBRE Y
+NUMERACIÓN DE CALLE.
+SEÑAL DE PROHIBIDO ADELANTAR (R-16)
+Esta señal prohíbe al conductor efectuar la maniobra de
+adelantar a otro vehículo u otros que le antecedan
+traspasando el eje de la calzada.
+En vías pavimentadas se debe complementar con una
+línea amarrilla doble continua al borde izquierdo del carril
+en donde se prohíbe la maniobra.
+Siempre se debe colocar esta señal junto con la señal P60, SEÑAL PROHIBIDO ADELANTAR.
+SEÑAL DE FIN DE ZONA DE PROHIBIDO ADELANTAR (R-16A)
+Esta señal indica al conductor la terminación de una
+prohibición de adelantamiento.
+SEÑAL DE PROHIBIDO CIRCULACIÓN DE VEHÍCULOS AUTOMOTORES (R-17)
+Esta señal prohíbe la circulación de vehículos
+motorizados, su uso se restringe a áreas peatonales y a
+vías para vehículos de tracción animal y/o bicicletas.
+SEÑAL DE VEHÍCULOS PESADOS A LA DERECHA (R-18)
+Esta señal dispone que los conductores de vehículos
+pesados deben circular por el carril derecho.
+Se usa exclusivamente en tramos de vías con dos o más
+carriles por sentido de circulación, incluyendo los carriles
+especiales de ascenso.
+SEÑAL DE PROHIBIDO CIRCULACIÓN DE VEHÍCULOS DE CARGA (R-19)
+Esta señal prohíbe la circulación de vehículos de carga en
+el tramo de vía que sigue a la señal.
+Cuando se establezca esta restricción por el peso de
+dichos vehículos se deberá complementar con las señales
+preventivas y de reglamentación de peso máximo bruto
+permitido, (P-61) y (R-31). Cuando la restricción se deba
+a la congestión vehicular o peatonal, o a las molestias
+ocasionadas a los residentes, se complementará con una
+placa informativa que indique las horas de la restricción.
+SEÑAL PEATONES DEBEN CIRCULAR POR LA IZQUIERDA (R-20)
+Esta señal dispone la obligación del peatón, de caminar
+por la vereda o ruta peatonal del lado izquierdo de la vía
+por donde transitan los vehículos, de tal forma que el
+conductor siempre lo vea de frente la vía a vereda o
+acera enfrentando al tránsito vehicular.
+De ser necesario se complementara con una leyenda de
+“CAMINE POR LA IZQUIERDA”. Se utilizará esta señal en
+áreas rurales, principalmente en carreteras.
+SEÑAL PROHIBIDO EL PASO Y/O LA CIRCULACIÓN DE PEATONES (R-21)
+Esta señal prohíbe el paso y/o el tránsito peatonal por
+una vía y/o sus obras complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN DE BICICLETAS Y MOTOCICLOS (R-22)
+Esta señal prohíbe el paso y/o la circulación de bicicletas
+y motociclos por la vía y/o sus obras complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN DE TRICICLOS (R-22A)
+Esta señal prohíbe el paso y/o la circulación de triciclos
+motorizados y no motorizados por la vía y/o sus obras
+complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN DE MOTOCICLETAS (R-23)
+Esta señal prohíbe el paso y/o circulación de motocicletas
+por la vía y/o sus obras complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN DE MAQUINARIA AGRÍCOLA (R-24)
+Esta señal prohíbe el paso y/o la circulación de
+maquinaria agrícola por la vía y/o sus obras
+complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN DE VEHÍCULOS DE TRACCIÓN ANIMAL (R-25)
+Esta señal prohíbe el paso y/o la circulación de toda clase
+de vehículos de tracción animal por la vía y/o sus obras
+complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN DE CARRETILLAS MANUALES (R-25A)
+Esta señal prohíbe el paso y/o la circulación de toda clase
+de carretillas, carretas o cualquier otro vehículo
+impulsado por tracción humana por la vía y/o sus obras
+complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN ECUESTRE (R-25B)
+Esta señal prohíbe el paso y/o la circulación ecuestre por
+la vía y/o sus obras complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN DE BUSES (R-25C)
+Esta señal prohíbe el paso y/o la circulación de buses por
+la vía y/o sus obras complementarias.
+SEÑAL PROHIBIDO CIRCULACIÓN DE CUATRIMOTOS (R-25D)
+Esta señal prohíbe el paso y/o la circulación de
+cuatrimotos por la vía y/o sus obras complementarias.
+SEÑAL PERMITIDO ESTACIONAR (R-26)
+Esta señal permite el estacionamiento de vehículos en
+determinadas áreas de una vía.
+Debe complementarse con marcas en el pavimento que
+indiquen las zonas de estacionamiento.
+Las restricciones tales como horarios u otros, se indican
+en la en la parte inferior de la señal.
+SEÑAL PROHIBIDO ESTACIONAR (R-27)
+Esta señal prohíbe el estacionamiento de vehículos en
+determinadas áreas de una vía.
+Debe complementarse con marcas en el pavimento con
+una línea amarilla continua al margen derecho o
+izquierdo de la zona de restricción, en el sardinel o borde
+de la vereda.
+SEÑAL PROHIBIDO ESTACIONAR ZONA DE REMOLQUE (R-27A)
+Esta señal prohíbe el estacionamiento de vehículos en
+determinadas áreas de una vía y en caso de estacionarse
+el vehículo será remolcado.
+Debe complementarse con marcas en el pavimento con
+una línea amarilla continua al margen derecho o
+izquierdo de la zona de restricción, en el sardinel o borde
+de la vereda.
+SEÑAL PROHIBIDO DETENERSE (R-28)
+Esta señal prohíbe al conductor detener un vehículo en
+determinada longitud o área de una vía.
+De ser el caso se complementara con otra señal similar al
+lado izquierdo de la vía.
+SEÑAL PROHIBIDO EL USO DE LA BOCINA (R-29)
+Esta señal prohíbe el uso de claxon o bocina en
+determinadas zonas que atraviesa una vía,
+principalmente en hospitales, clínicas, centros
+educativos, bibliotecas y otros que la autoridad
+competente lo establezca por razones de la naturaleza de
+las actividades que realiza.
+SEÑAL VELOCIDAD MÁXIMA PERMITIDA 40 km/h, 100 km/h (R-30)
+Esta señal establece la velocidad máxima de operación
+en kilómetros por hora (km/h) a la que puede circular un
+vehículo en determinado carril, tramo o sector de una
+vía.
+Los límites máximos de velocidad deben ser expresados
+en múltiplos de 10 km/h.
+En el caso de señales dinámicas de mensaje variable,
+serán de fondo de color negro, con orla roja y la
+numeración de la velocidad de color blanco, tal como se
+indica en el ejemplo de la Figura 2.56.
+La reducción de la velocidad debe ser gradual, tal como
+se muestra en la Tabla 2.8, la cual además indica las
+distancias mínimas para cada cambio de velocidad de
+operación.
+Figura 2.56 Ejemplo de señal dinámica
+Tabla 2.8 Reduccion gradual de velocidades maximas y distancia minimas
+para cada cambio de velocidad
+Velocidad Máxima Inicial
+(Km/h)
+Siguiente Velocidad Máxima
+(Km/h)
+Distancias entre señales
+Velocidad Máxima (m)
+120 100 150
+110 90 140
+100 80 125
+90 70 110
+80 60 100
+70 50 80
+60 40 80
+50 30 55
+40 20 40
+SEÑAL VELOCIDAD MÍNIMA PERMITIDA 60 km/h (R-30B)
+Esta señal establece la velocidad mínima de operación en
+kilómetros por hora (km/h) a la que debe circular un
+vehículo en determinado carril, tramo o sector de una
+vía.
+Los límites mínimos de velocidad deben ser expresados
+en múltiplos de 10 km/h.
+En el caso de señales dinámicas de mensaje variable,
+serán de fondo de color negro, con orla roja y la
+numeración de la velocidad de color blanco, tal como se
+indica en el ejemplo de la Figura 3.56.
+SEÑAL VELOCIDAD MÁXIMA PERMITIDA DE SALIDA 50 km/h (R-30C)
+Esta señal establece la velocidad máxima de operación
+en kilómetros por hora (km/h) a la que debe salir un
+vehículo de una vía principal a otra.
+Los límites máximos de velocidad deben ser expresados
+en múltiplos de 10 km/h.
+En el caso de señales dinámicas de mensaje variable,
+serán de fondo de color negro, con orla roja y la
+numeración de la velocidad de color blanco, tal como se
+indica en el ejemplo de la Figura 3.56.
+SALIDA
+km / h
+SEÑAL VELOCIDAD MÁXIMA PERMITIDA PARA CAMIÓN 80 km/h (R-30D)
+Esta señal establece la velocidad máxima de operación
+en kilómetros por hora (km/h) a la que debe circular un
+CAMIÓN en un determinado carril o vía.
+En el caso de señales dinámicas de mensaje variable,
+serán de fondo de color negro, con orla roja y la
+numeración de la velocidad de color blanco, tal como se
+indica en el ejemplo de la Figura 3.56.
+El termino CAMIÓN incluye a todos los vehículos de carga
+que contempla el Reglamento Nacional de Vehículos,
+vigente.
+SEÑAL VELOCIDAD MÁXIMA PERMITIDA PARA BUS 90 km/h (R-30E)
+Esta señal establece la velocidad máxima de operación
+en kilómetros por hora (km/h) a la que debe circular un
+BUS en un determinado carril o vía.
+En el caso de señales dinámicas de mensaje variable,
+serán de fondo de color negro, con orla roja y la
+numeración de la velocidad de color blanco, tal como se
+indica en el ejemplo de la Figura 3.56.
+SEÑAL VELOCIDAD MÁXIMA PERMITIDA EN CURVA 40 km/h (R-30F)
+Esta señal establece la velocidad máxima de operación
+en kilómetros por hora (km/h) a la que debe circular un
+vehículo en una curva. Esta señal es de fondo amarillo,
+orla roja y numeración de color negro.
+Los límites máximos de velocidad deben ser expresados
+en múltiplos de 10 km/h.
+SEÑAL VELOCIDAD MÁXIMA SEGÚN TIPO DE VEHÍCULO (R-30G)
+Esta señal establece la velocidad mínima de
+operación en kilómetros por hora (km/h) a la
+que deben de circular los vehículos en
+determinado carril, tramo o sector de una vía,
+de acuerdo con su clasificación (automoviles,
+bus y camión), en concordancia con
+Reglamento Nacional de Tránsito.
+Esta señal se debe implementar en las vias
+donde la velocidad de operación es mayor a 80
+km/h.
+CAMION
+km / h
+BUS
+km / h km / h km / h km / h
+SEÑAL PESO MÁXIMO PERMITIDO POR EJE (R-31)
+Esta señal establece el peso máximo permitido por eje,
+con el que debe circular un vehículo por una vía, acorde
+al Reglamento Nacional de Vehículos, vigente.
+SEÑAL PESO MÁXIMO BRUTO PERMITIDO POR VEHÍCULO (R-32)
+Esta señal establece el peso máximo bruto con el que
+debe circular un vehículo por una vía, acorde al
+Reglamento Nacional de Vehículos, vigente.
+SEÑAL LARGO MÁXIMO PERMITIDO (R-33)
+Esta señal establece el largo máximo permitido
+expresado en metros, con el que un vehículo debe
+circular por una vía, acorde al Reglamento Nacional de
+Vehículos, vigente.
+SEÑAL CIRCULACIÓN SOLO DE BUSES (R-34)
+Esta señal establece el uso de carriles o vías para el
+tránsito exclusivo de buses.
+Esta señal será complementada con marcas en el
+pavimento con inscripciones «SOLO BUS».
+SEÑAL ALTURA MÁXIMA PERMITIDA (R-35)
+Esta señal establece la altura máxima expresada en
+metros, con la que un vehículo debe circular por una vía.
+Dicha altura máxima permitida, incluye la de la carga que
+transporta el vehículo.
+Se colocará en los puentes, túneles, pasos a desnivel,
+estaciones de peajes y pesaje, y demás obras
+complementarias que requieran tal restricción.
+Debe complementarse con pre señalización para advertir
+al conductor sobre la proximidad de la restricción.
+SEÑAL ANCHO MÁXIMO PERMITIDO (R-36)
+Esta señal establece el ancho máximo expresada en
+metros, con la que un vehículo debe circular por una vía.
+Dicho ancho máximo permitido, incluye el de la carga
+que transporta el vehículo.
+Se colocará en los puentes, túneles, estaciones de peajes
+y pesaje, y demás obras complementarias que requieran
+tal restricción.
+Debe complementarse con preseñalización para advertir
+al conductor sobre la proximidad de la restricción.
+SEÑAL CONTROL (R-37)
+Esta señal indica la presencia de un puesto o lugar de
+control de tránsito policial, aduana y otros, donde el
+vehículo puede ser obligado a detenerse.
+Debe complementarse con preseñalización para advertir
+al conductor sobre la proximidad de tales restricciones.
+SEÑAL CIRCULACIÓN CON LUCES BAJAS (R-40)
+Esta señal dispones la obligación de circular con las luces
+bajas del vehículo, en determinados tramos o sectores de
+una vía.
+Esta restricción se aplica a las vías urbanas en general,
+así como a la entrada a túneles, y carreteras en terreno
+plano para evitar encandilar al conductor que transita en
+sentido contrario.
+La no colocación de esta señal, no implica autorización
+para el uso de luces altas.
+SEÑAL CICLOVÍA (R-42)
+Esta señal se emplea para advertir al conductor sobre la
+existencia de una vía exclusiva para el tránsito de
+bicicletas (CICLOVIA).
+SEÑAL CICLOVÍA “CONSERVE LA DERECHA” (R-42A)
+Esta señal dispone que el ciclista tiene la obligación de
+circular por el carril derecho de la ciclovia.
+SEÑAL CICLOVÍA “OBLIGATORIO DESCENDER DE LA BICICLETA” (R-42B)
+Esta señal dispone que el ciclista tiene la obligación de
+descender de la bicicleta y circular a pie por un tramo o
+punto especificado.
+SEÑAL CICLOVÍA “CIRCULACIÓN NO COMPARTIDA BICICLETA – PEATÓN” (R-42C)
+Esta señal establece la obligación que tienen el ciclista y
+el peatón de circular por la vía que les corresponde.
+SEÑAL USO OBLIGATORIO DE CADENAS (R-43)
+Esta señal dispone el uso obligatorio de cadenas en las
+llantas de un vehículo, en determinado tramo o sector de
+una vía, debido a la presencia de condiciones climáticas
+adversas en la superficie de rodadura que pone en
+peligro la seguridad vial.
+Debe complementarse con preseñalización para advertir
+al conductor sobre la proximidad de tales restricciones.
+SEÑAL PARADERO PROHIBIDO (R-44)
+Esta señal prohíbe al conductor de un vehículo de servicio
+público, recoger o dejar pasajeros en lugares no
+autorizados para tales fines.
+Su no colocación, no autoriza al conductor incumplir la
+indicada restricción.
+SEÑAL PROHIBIDO CIRCULACIÓN DE VEHÍCULOS MOTORIZADOS DE TRES RUEDAS
+MOTOTAXIS (R-45) MOTOCARGA (R-45A)
+Esta señal prohíbe la circulación de
+vehiculos motorizados de tres
+ruedas (MOTOTAXIS y/o
+MOTOCARGA), en determinadas
+vías, acorde a lo dispuesto por el
+Reglamento Nacional de Transito.
+Su no colocación, no autoriza al
+conductor incumplir la indicada
+restricción.
+SEÑAL PARADERO (R-47)
+Esta señal establece los lugares autorizados para recoger
+o dejar pasajeros, provenientes de un servicio público.
+Dichos paraderos son reglamentados por las autoridades
+de encargadas del tránsito correspondiente.
+Las áreas que abarcan los paraderos deben
+complementarse con marcas en el pavimento y
+señalización complementaria de ser el caso.
+SEÑAL ZONA DE CARGA Y DESCARGA (R-48)
+Esta señal establece los lugares reglamentados por la
+autoridad competente para la carga y descarga de
+mercancías.
+Dichos lugares deben complementarse con marcas en el
+pavimento y señalización complementaria de ser el caso.
+SEÑAL MANTENER DISTANCIA DE SEGURIDAD (R-49)
+Esta señal establece la distancia de seguridad mínima
+que debe mantener el Conductor de un vehículo a otro
+que lo antecede, para evitar colisiones. Esta señal se
+utilizará en tramos de alto tránsito y peligro de
+ocurrencia de colisiones por alcance.
+La Tabla 3.4 : Separación entre Distanciadores en
+Función a su Velocidad, indica las distancias mínimas a
+mantener. Debe complementarse con marcas en el
+pavimento denominados distanciadores.
+Su no colocación o demarcación, no autoriza al conductor
+incumplir este requerimiento normativo de seguridad.
+SEÑAL PREFERENCIA AL SENTIDO CONTRARIO (R-50)
+Esta señal establece a los conductores que los vehículos
+que circulan en sentido contrario tienen prioridad.
+Se instala en puentes estrechos y angostamientos de
+calzada, entre otros lugares. En general se usa con la
+leyenda “PREFERENCIA AL SENTIDO CONTRARIO”.
+En carreteras con calzadas angostas se puede usar con la
+leyenda “PREFERENCIA AL TRÁNSITO QUE SUBE”, para
+asignar el derecho preferente de vía a los vehículos que
+suben.
+SEÑAL PROHIBIDO LA CARGA Y DESCARGA (R-52)
+Esta señal establece los lugares prohibidos por la
+autoridad competente para la carga y descarga de los
+vehículos de mercancías, esta restricción también incluye
+la prohibición de estacionarse o detenerse.
+Dichos lugares deben complementarse con marcas en el
+pavimento y señalización complementaria de ser el caso.
+SEÑAL NO BLOQUEAR CRUCE (R-53)
+Esta señal prohíbe al conductor detener el vehículo
+dentro del área de intersección de dos vías (CRUCE).
+Debe complementarse con marcas en el pavimento,
+mediante una malla ortogonal de color amarillo que
+abarque dicha área.
+Su no colocación o demarcación, no autoriza al conductor
+incumplir este requerimiento normativo de seguridad.

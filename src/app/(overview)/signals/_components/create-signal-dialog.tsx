@@ -10,6 +10,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 import { toast } from 'sonner'
 
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { AddButton } from '@/components/buttons'
 import { SIGNALS_CATEGORIES } from '@/constants'
@@ -68,7 +69,7 @@ export function CreateSignalDialog() {
       <AddButton />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Agregar foto a galeria</DialogTitle>
+          <DialogTitle>Crear senal</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <FilePond
@@ -87,10 +88,13 @@ export function CreateSignalDialog() {
             <Label>Titulo</Label>
             <Input name="title" type="text" placeholder="Fibra de vidrio 60x60cm vista posterior" />
           </div>
-
           <div className="grid gap-2">
             <Label>Código</Label>
             <Input name="code" type="text" placeholder="Código de identificacion" />
+          </div>
+          <div className="grid gap-2">
+            <Label>Descripcion</Label>
+            <Textarea name="description" placeholder="Descripcion de la senal" />
           </div>
           <div className="grid gap-2">
             <Label>Categoria</Label>

@@ -21,6 +21,7 @@ export class SignalsModel {
           format: signalsTable.format,
           createdAt: signalsTable.createdAt,
           updatedAt: signalsTable.updatedAt,
+          description: signalsTable.description,
         })
         .from(signalsTable)
         .orderBy(desc(signalsTable.updatedAt))
@@ -57,6 +58,7 @@ export class SignalsModel {
           format: signalsTable.format,
           createdAt: signalsTable.createdAt,
           updatedAt: signalsTable.updatedAt,
+          description: signalsTable.description,
         })
         .from(signalsTable)
         .where(eq(signalsTable.id, id))

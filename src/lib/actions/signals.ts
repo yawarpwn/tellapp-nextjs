@@ -9,6 +9,7 @@ export async function createSignalAction(formData: FormData) {
   const title = formData.get('title') as string
   const category = formData.get('category') as SignalCategory
   const code = formData.get('code') as string
+  const description = formData.get('description') as string | undefined
 
   try {
     //transform to buffer
@@ -18,7 +19,7 @@ export async function createSignalAction(formData: FormData) {
     //upload photo to cloudinary
     const res = await uploadStream(photoBuffer, {
       category,
-      folder: 'gallery',
+      folder: 'signals',
     })
 
     //insert info into db
@@ -29,6 +30,7 @@ export async function createSignalAction(formData: FormData) {
       width: res.width,
       height: res.height,
       format: res.format,
+      description,
       category,
       url: res.secure_url,
     })
@@ -74,9 +76,10 @@ export async function updateSignalAction(formData: FormData) {
   const category = formData.get('category') as SignalCategory
   const publicId = formData.get('public-id') as string
   const id = formData.get('id') as string
+  const description = formData.get('description') as string | undefined
 
   try {
-    if (!photoFile) {
+    if (photoFile) {
       // Si photoFile es undefined, no debería entrar aquí
       console.log('Entrando en la condición de photoFile')
 
@@ -122,7 +125,7 @@ export async function updateSignalAction(formData: FormData) {
       if (error) throw error
     }
 
-    revalidateTag('/gallery')
+    revalidateTag('/signals')
   } catch (error) {
     console.log(error)
     throw new Error('Error subiendo photo')

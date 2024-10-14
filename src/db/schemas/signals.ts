@@ -10,6 +10,7 @@ export const signalsTable = pgTable('signals', {
   height: integer('height').notNull(),
   url: text('url').notNull(),
   publicId: text('public_id').notNull(),
+  description: text('description'),
   format: text('format').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),

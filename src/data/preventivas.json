@@ -1,0 +1,417 @@
+[
+  {
+    "title": "Señal curva pronunciada a la derecha",
+    "code": "P-1A",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva horizontal pronunciada hacia la derecha."
+  },
+  {
+    "title": "Señal curva pronunciada a la izquierda",
+    "code": "P-1B",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva horizontal pronunciada hacia la izquierda."
+  },
+  {
+    "title": "Señal curva a la derecha",
+    "code": "P-2A",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva horizontal hacia la derecha."
+  },
+  {
+    "title": "Señal curva a la izquierda",
+    "code": "P-2B",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva horizontal hacia la izquierda."
+  },
+  {
+    "title": "Señal curva y contra-curva pronunciada a la derecha",
+    "code": "P-3A",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva y contra curva horizontal pronunciada hacia la derecha."
+  },
+  {
+    "title": "Señal curva y contra-curva pronunciada a la izquierda",
+    "code": "P-3B",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva y contra curva horizontal pronunciada hacia la izquierda."
+  },
+  {
+    "title": "Señal curva y contra-curva a la derecha",
+    "code": "P-4A",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva y contra curva horizontal hacia la derecha."
+  },
+  {
+    "title": "Señal curva y contra-curva a la izquierda",
+    "code": "P-4B",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva y contra curva horizontal hacia la izquierda."
+  },
+  {
+    "title": "Señal camino sinuoso a la derecha",
+    "code": "P-5-1",
+    "description": "Esta señal advierte al Conductor la proximidad de un camino sinuoso con la primera curva horizontal hacia la derecha."
+  },
+  {
+    "title": "Señal camino sinuoso a la izquierda",
+    "code": "P-5-1A",
+    "description": "Esta señal advierte al Conductor la proximidad de un camino sinuoso con la primera curva horizontal hacia la izquierda."
+  },
+  {
+    "title": "Señal curva en “u” a la derecha",
+    "code": "P-5-2A",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva horizontal en “U” hacia la derecha."
+  },
+  {
+    "title": "Señal curva en “u” a la izquierda",
+    "code": "P-5-2B",
+    "description": "Esta señal advierte al Conductor la proximidad de una curva horizontal en “U” hacia la izquierda."
+  },
+  {
+    "title": "Señal cruce de vías a nivel",
+    "code": "P-6",
+    "description": "Esta señal advierte al Conductor la proximidad de un cruce o intersección de dos vías al mismo nivel en Ángulo recto"
+  },
+  {
+    "title": "Señal intersección escalonada primera derecha",
+    "code": "P-6A",
+    "description": "Esta señal advierte al Conductor que circula por una vía principal, la proximidad de más de un empalme o intersección con otras vías, siendo la primera a la derecha."
+  },
+  {
+    "title": "Señal intersección escalonada primera izquierda",
+    "code": "P-6B",
+    "description": "Esta señal advierte al Conductor que circula por una vía principal, la proximidad de más de un empalme o intersección con otras vías, siendo la primera a la izquierda."
+  },
+  {
+    "title": "Señal intersección en “t”",
+    "code": "P-7",
+    "description": "Esta señal advierte al Conductor que circula por una vía, la proximidad de un empalme o intersección en forma de “T”."
+  },
+  {
+    "title": "Señal bifurcación en “y”",
+    "code": "P-8",
+    "description": "Esta señal advierte al Conductor que circula por una vía, la proximidad de una bifurcación o intersección en forma de “Y”."
+  },
+  {
+    "title": "Señal empalme en ángulo recto con vía lateral a la derecha",
+    "code": "P-9A",
+    "description": "Esta señal advierte al Conductor que circula por una vía, la proximidad de un empalme o intersección con otra vía ubicada a la derecha en ángulo recto"
+  },
+  {
+    "title": "Señal empalme en ángulo recto con vía lateral a la izquierda",
+    "code": "P-9B",
+    "description": "Esta señal advierte al Conductor que circula por una vía, la proximidad de un empalme o intersección con otra vía ubicada a la izquierda en ángulo recto"
+  },
+  {
+    "title": "Señal empalme en ángulo agudo a la derecha",
+    "code": "P-10A",
+    "description": "Esta señal advierte al Conductor que circula por una vía, la proximidad de un empalme o intersección con otra vía ubicada a la derecha en ángulo agudo."
+  },
+  {
+    "title": "Señal empalme en ángulo agudo a la izquierda",
+    "code": "P-10B",
+    "description": "Esta señal advierte al Conductor que circula por una vía, la proximidad de un empalme o intersección con otra vía ubicada a la izquierda en ángulo agudo."
+  },
+  {
+    "title": "Señal intersección rotatoria",
+    "code": "P-15",
+    "description": "Esta señal advierte al Conductor la proximidad de una intersección rotatoria"
+  },
+  {
+    "title": "Señal incorporación de tránsito a la derecha",
+    "code": "P-16A",
+    "description": "Esta señal advierte al Conductor que circula por una vía principal, la proximidad de una intersección a la derecha en ángulo agudo, con una vía secundaria en el mismo sentido de circulación."
+  },
+  {
+    "title": "Señal incorporación de tránsito a la izquierda",
+    "code": "P-16B",
+    "description": "Esta señal advierte al Conductor que circula por una vía principal, la proximidad de una intersección a la izquierda en ángulo agudo, con una vía secundaria en el mismo sentido de circulación."
+  },
+  {
+    "title": "Señal reducción de calzada a ambos lados",
+    "code": "P-17A",
+    "description": "Esta señal advierte al Conductor la proximidad de una reducción o estrechamiento de la calzada a ambos lados conservando el mismo eje."
+  },
+  {
+    "title": "Señal reducción de calzada lado derecho",
+    "code": "P-17B",
+    "description": "Esta señal advierte al Conductor la proximidad de una reducción o estrechamiento de la calzada con desplazamiento del eje a la izquierda."
+  },
+  {
+    "title": "Señal reducción de calzada a lado izquierdo",
+    "code": "P-17C",
+    "description": "Esta señal advierte al Conductor la proximidad de una reducción o estrechamiento de la calzada con desplazamiento del eje a la derecha."
+  },
+  {
+    "title": "Señal reducción del carril externo al lado derecho",
+    "code": "P-18A",
+    "description": "Esta señal advierte al Conductor la proximidad de una reducción del carril externo al lado derecho de la calzada."
+  },
+  {
+    "title": "Señal reducción del carril externo al lado izquierdo",
+    "code": "P-18B",
+    "description": "Esta señal advierte al Conductor la proximidad de una reducción del carril externo al lado izquierdo de la calzada."
+  },
+  {
+    "title": "Señal ensanchamiento de la calzada en ambos lados",
+    "code": "P-21",
+    "description": "Esta señal advierte al Conductor la proximidad de un ensanchamiento o ampliación de la calzada a ambos lados conservando el mismo eje."
+  },
+  {
+    "title": "Señal ensanchamiento de la calzada a la derecha",
+    "code": "P-21A",
+    "description": "Esta señal advierte al Conductor la proximidad de un ensanchamiento o ampliación de la calzada con desplazamiento del eje a la derecha."
+  },
+  {
+    "title": "Señal ensanchamiento de la calzada a la izquierda",
+    "code": "P-21B",
+    "description": "Esta señal advierte al Conductor la proximidad de un ensanchamiento o ampliación de la calzada con desplazamiento del eje a la izquierda."
+  },
+  {
+    "title": "Señal carril adicional",
+    "code": "P-22C",
+    "description": "Esta señal advierte al Conductor la proximidad un carril adicional o agregado sin interferir el flujo vehicular. Debe complementarse con marcas en el pavimento que prohíben el paso a los carriles del flujo principal."
+  },
+  {
+    "title": "Señal dos sentidos de tránsito",
+    "code": "P-25",
+    "description": "Esta señal advierte al Conductor que circulan por una vía unidireccional, la proximidad de un tramo con circulación de vehículos en ambos sentidos."
+  },
+  {
+    "title": "Señal tres carriles",
+    "code": "UNO EN CONTRAFLUJO",
+    "description": ""
+  },
+  {
+    "title": "Señal tres carriles",
+    "code": "DOS EN CONTRAFLUJO",
+    "description": ""
+  },
+  {
+    "title": "Señal inicio de vía de doble sentido con separador central",
+    "code": "P-28",
+    "description": "Esta señal advierte al Conductor, la proximidad a una vía de doble sentido"
+  },
+  {
+    "title": "Señal inicio de vía de un sentido con separador central",
+    "code": "P-28A",
+    "description": "Esta señal advierte al Conductor, la proximidad a una vía del mismo sentido"
+  },
+  {
+    "title": "Señal final de vía de doble sentido con separador central",
+    "code": "P-29",
+    "description": "Esta señal advierte al Conductor la proximidad del final del separador central o isla de la vía de doble sentido por la que circula."
+  },
+  {
+    "title": "Señal final de vía de un sentido con separador central",
+    "code": "P-29A",
+    "description": "Esta señal advierte al Conductor la proximidad del final del separador central o isla de la vía de un mismo sentido por la que circula."
+  },
+  {
+    "title": "Señal final de vía pavimentada",
+    "code": "P-31",
+    "description": "Esta señal advierte al Conductor la proximidad del paso de una vía pavimentada a una vía no pavimentada."
+  },
+  {
+    "title": "Señal final de vía",
+    "code": "P-31A",
+    "description": "Esta señal advierte al Conductor la proximidad del final o término de la vía por la que transita."
+  },
+  {
+    "title": "Señal proximidad reductor de velocidad tipo resalto",
+    "code": "P-33A",
+    "description": "Esta señal advierte al Conductor la proximidad de un reductor de velocidad tipo resalto circular o trapezoidal. Esta señal debe colocarse a una distancia mínima de 60 m antes de la ubicación del reductor de velocidad tipo resalto."
+  },
+  {
+    "title": "Señal ubicación de reductor de velocidad tipo resalto",
+    "code": "P-33B",
+    "description": "Esta señal indica al Conductor el lugar o ubicación de un reductor de velocidad tipo resalto circular o trapezoidal."
+  },
+  {
+    "title": "Señal proximidad de badén",
+    "code": "P-34",
+    "description": "Esta señal advierte al Conductor la proximidad de un BADEN. Esta señal debe colocarse a una distancia mínima de 60 m antes de la ubicación del BADEN."
+  },
+  {
+    "title": "Señal ubicación de badén",
+    "code": "P-34A",
+    "description": "Esta señal indica al Conductor el inicio de un BADEN."
+  },
+  {
+    "title": "Señal fuerte pendiente en descenso",
+    "code": "P-35",
+    "description": "Esta señal advertir al Conductor de la proximidad de un tramo con fuerte pendiente en descenso."
+  },
+  {
+    "title": "Señal fuerte pendiente en ascenso",
+    "code": "P-35C",
+    "description": "Esta señal advertir al Conductor de la proximidad de un tramo con fuerte pendiente en ascenso."
+  },
+  {
+    "title": "Señal superficie deslizante",
+    "code": "P-36",
+    "description": "Esta señal advierte al Conductor la proximidad de un tramo deslizante en la vía, ocasionado por fenómenos de la naturaleza, tales como nieve, granizo, heladas, lluvias y otros."
+  },
+  {
+    "title": "Señal altura máxima permitida",
+    "code": "P-38",
+    "description": "Esta señal advierte al Conductor la proximidad de infraestructura vial con restricción de paso: ALTURA MÁXIMA PERMITIDA"
+  },
+  {
+    "title": "Señal ancho máximo permitido",
+    "code": "P-39",
+    "description": "Esta señal advierte al Conductor la proximidad de infraestructura vial con restricción de paso: ANCHO MÁXIMO PERMITIDO"
+  },
+  {
+    "title": "Señal túnel",
+    "code": "P-41",
+    "description": "Esta señal advierte al Conductor la proximidad de un túnel."
+  },
+  {
+    "title": "Señal cruce ferroviario a nivel sin barreras",
+    "code": "P-42",
+    "description": "Esta señal advierte al Conductor la proximidad de un cruce ferroviario a nivel sin barreras."
+  },
+  {
+    "title": "Señal cruce ferroviario a nivel con barreras",
+    "code": "P-43",
+    "description": "Esta señal advierte al Conductor la proximidad de un cruce ferroviario a nivel provisto de barrera."
+  },
+  {
+    "title": "Señal de cruce ferroviario a nivel “cruz de san andrés”",
+    "code": "P-44",
+    "description": "Esta señal advierte al Conductor la proximidad de un cruce ferroviario a nivel."
+  },
+  {
+    "title": "Señal de cruce ferroviario a nivel “cruce oblicuo”",
+    "code": "P-44A",
+    "description": "Esta señal advierte al Conductor la proximidad de un cruce ferroviario oblicuo a nivel."
+  },
+  {
+    "title": "Señal de cruce ferroviario a nivel “no tocar pito”",
+    "code": "P-44B",
+    "description": "Esta señal dispone la zona o tramo donde el Maquinista del tren no debe tocar el pito."
+  },
+  {
+    "title": "Señal vuelo de aviones a baja altura",
+    "code": "P-45",
+    "description": "Esta señal advierte al Conductor sobre el vuelo de aviones a baja altura, debido a la proximidad de aeropuertos y/o aeródromos."
+  },
+  {
+    "title": "Señal “ciclovía” ciclistas en la vía",
+    "code": "P-46",
+    "description": "Esta señal advierte al Conductor de la proximidad de una “CICLOVÍA”."
+  },
+  {
+    "title": "Señal ciclovía “cruce de ciclovía”",
+    "code": "P-46A",
+    "description": "Esta señal advierte al Conductor la proximidad de un cruce de “CICLOVÍA”. Debe complementarse con marcas en el pavimento."
+  },
+  {
+    "title": "Señal ciclovía “ubicación cruce de ciclistas”",
+    "code": "P-46B",
+    "description": "Esta señal indica al Conductor el lugar o ubicación del cruce de “CICLOVÍA”. Debe complementarse con marcas en el pavimento."
+  },
+  {
+    "title": "Señal ciclovía “vehículos en la ciclovía”",
+    "code": "P-46C",
+    "description": "Esta señal advierte al ciclista la proximidad de un tramo donde pueden cruzar vehículos motorizados."
+  },
+  {
+    "title": "Señal ciclovía “tramo en descenso”",
+    "code": "P-46D",
+    "description": "Esta señal advierte al ciclista la proximidad de un tramo con pendiente en descenso en la “CICLOVÍA”"
+  },
+  {
+    "title": "Señal ciclovía “tramo en ascenso”",
+    "code": "P-46E",
+    "description": "Esta señal advierte al ciclista la proximidad de un tramo con pendiente en ascenso en la “CICLOVÍA”"
+  },
+  {
+    "title": "Señal zona de presencia de peatones",
+    "code": "P-48",
+    "description": "Esta señal advierte al Conductor sobre la posibilidad de presencia de peatones en la vía."
+  },
+  {
+    "title": "Señal proximidad de cruce peatonal",
+    "code": "P-48A",
+    "description": "Esta señal advierte al Conductor la proximidad de un cruce o paso peatonal. Debe complementarse con marcas en el pavimento."
+  },
+  {
+    "title": "Señal cruce peatonal",
+    "code": "P-48B",
+    "description": "Esta señal indica al Conductor el lugar o ubicación de un cruce o paso peatonal. Debe complementarse con marcas en el pavimento."
+  },
+  {
+    "title": "Señal zona escolar",
+    "code": "P-49",
+    "description": "Esta señal advierte al Conductor sobre la posibilidad de presencia de escolares en la vía."
+  },
+  {
+    "title": "Señal proximidad a cruce escolar",
+    "code": "P-49A",
+    "description": "Esta señal advierte al Conductor la proximidad de un cruce o paso de escolares. Debe complementarse con marcas en el pavimento."
+  },
+  {
+    "title": "Señal ubicación de cruce escolar",
+    "code": "P-49B",
+    "description": "Esta señal indica al Conductor el lugar o ubicación de un cruce o paso de escolares. Debe complementarse con marcas en el pavimento."
+  },
+  {
+    "title": "Señal niños jugando",
+    "code": "P-50",
+    "description": "Esta señal advierte al Conductor sobre la proximidad a una zona destinada a campos de juego adyacentes a la vía."
+  },
+  {
+    "title": "Señal maquinaria agrícola en la vía",
+    "code": "P-51",
+    "description": "Esta señal advierte al Conductor de la posibilidad de tránsito o cruce de maquinaria agrícola por la vía."
+  },
+  {
+    "title": "Señal salida de vehículos de bomberos",
+    "code": "P-52",
+    "description": "Esta señal advierte al Conductor sobre la proximidad de salida de vehículos de bomberos. Debe instalarse en las proximidades a las estaciones de bomberos."
+  },
+  {
+    "title": "Señal animales en la vía",
+    "code": "P-53",
+    "description": "Esta señal advierte al Conductor sobre la posibilidad de presencia o cruce de animales por la vía. Esta señal podrá adaptarse a la imagen del animal cuya presencia predomina en la zona que atraviesa la vía."
+  },
+  {
+    "title": "Señal proximidad de semáforo",
+    "code": "P-55",
+    "description": "Esta señal advierte al Conductor sobre la proximidad de una intersección controlada por semáforos. Esta señal debe colocarse a una distancia mínima de 200 m antes de la indicada intersección controlada por semáforos."
+  },
+  {
+    "title": "Señal zona urbana",
+    "code": "P-56",
+    "description": "Esta señal advierte al Conductor la proximidad de un centro poblado"
+  },
+  {
+    "title": "Señal proximidad de pare",
+    "code": "P-58",
+    "description": "Esta señal advierte al Conductor la proximidad de una señal PARE"
+  },
+  {
+    "title": "Señal proximidad de ceda el paso",
+    "code": "P-59",
+    "description": "Esta señal advierte al Conductor la proximidad de una señal CEDA EL PASO"
+  },
+  {
+    "title": "Señal prohibido adelantar",
+    "code": "P-60",
+    "description": "Esta señal advierte al Conductor que no debe adelantar a otros vehículos en el tramo por donde circula. Debe complementarse con marcas en el pavimento."
+  },
+  {
+    "title": "Señal delineador de curva horizontal - “chevron”",
+    "code": "P-61",
+    "description": "Esta señal guía al Conductor sobre el sentido de una curva pronunciada o que requiere atención por razones de seguridad vial. Debe usarse en grupos y al costado externo de la vía."
+  },
+  {
+    "title": "Señal peso bruto máximo permitido",
+    "code": "P-62",
+    "description": "Esta señal advierte al Conductor la proximidad de una restricción de peso bruto máximo permitido en una determinada sección o estructura conformante de la vía"
+  },
+  {
+    "title": "Señal ráfagas de viento lateral",
+    "code": "P-66",
+    "description": "Esta señal advierte al Conductor la proximidad de zonas o tramos con fuertes vientos laterales."
+  },
+  {
+    "title": "Señal zona de arenamiento en la vía",
+    "code": "P-66A",
+    "description": "Esta señal advierte al Conductor la proximidad de arenamiento en algunos tramos o zonas de la berma y/o calzada de la vía."
+  }
+]

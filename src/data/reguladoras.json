@@ -1,0 +1,343 @@
+[
+  {
+    "title": "Señal de pare",
+    "code": "R-1",
+    "description": "Esta señal dispone que el Conductor debe detener completamente el vehículo. Se colocará al borde de la vía como mínimo a una distancia de 2 m del inicio de la vía interceptada. Generalmente se complementa con marcas en el pavimento correspondiente a la línea de parada o cruce de peatones. Adicionalmente puede instalarse en el borde izquierdo o ser de mayor tamaño, cuando existan vías unidireccionales de dos o más carriles o cuando la visibilidad de la señal del lado derecho sea insuficiente."
+  },
+  {
+    "title": "Señal de ceda el paso",
+    "code": "R-2",
+    "description": "Esta señal dispone que los conductores cedan el paso a los vehículos que circulan por una vía preferencial, principal, prioritaria o glorietas. Adicionalmente podrá instalarse al lado izquierdo o ser de mayor tamaño, cuando existan vías unidireccionales de dos o más carriles o cuando la visibilidad de la señal del lado derecho sea insuficiente."
+  },
+  {
+    "title": "Señal de dirección obligada",
+    "code": "R-3",
+    "description": "Esta señal dispone la obligación de circular sólo en la dirección y sentido indicado por la flecha. Puede complementarse con marcas en pavimento o demarcación que indique el sentido de cada carril."
+  },
+  {
+    "title": "Señal de no entre",
+    "code": "R-4",
+    "description": "Esta señal prohíbe el ingreso a una zona restringida al tránsito o donde éste circula a contraflujo. Por lo general se usa en rampas de salida de autopistas a vías convencionales, para evitar la entrada contra el sentido del tránsito, así como en intersecciones en “Y” en vías de un solo sentido"
+  },
+  {
+    "title": "Señal de giro solamente a la izquierda",
+    "code": "R-5",
+    "description": "Esta señal dispone que el único sentido de desplazamiento permitido en uno o más carriles, es un giro a la izquierda. Debe complementarse con marcas en el pavimento que indique un texto “SOLO” y una flecha que indique el giro a la izquierda, en cada carril al cual se aplica. Las variantes que tiene esta señal permite incluso seguir de frente y a la vez poder voltear a la izquierda. Ver Sección 2.13."
+  },
+  {
+    "title": "Señal de prohibido voltear a la izquierda",
+    "code": "R-6",
+    "description": "Esta señal prohíbe el giro a la izquierda, y por tanto también el giro en “U”."
+  },
+  {
+    "title": "Señal de prohibido girar a la izquierda con luz roja",
+    "code": "R-6A",
+    "description": "Esta señal prohíbe el giro a la izquierda, en intersecciones controladas por semáforos y que no está permitido el giro a la izquierda con luz roja. Asimismo, tácitamente prohíbe el giro en “U”."
+  },
+  {
+    "title": "Señal de giro solamente a la derecha",
+    "code": "R-7",
+    "description": "Esta señal dispone que el único sentido de desplazamiento permitido en uno o más carriles, es un giro a la derecha. Debe complementarse con marcas en el pavimento que indique un texto “SOLO” y una flecha que indique el giro a la derecha, en cada carril al cual se aplica."
+  },
+  {
+    "title": "Señal de prohibido voltear a la derecha",
+    "code": "R-8",
+    "description": "Esta señal prohíbe el giro a la derecha, y por tanto también el giro en “U”."
+  },
+  {
+    "title": "Señal de prohibido girar a la derecha con luz roja",
+    "code": "R-8A",
+    "description": "Esta señal prohíbe el giro a la derecha, en intersecciones controladas por semáforos y que no está permitido el giro a la derecha con luz roja. Asimismo, tácitamente prohíbe el giro en “U”."
+  },
+  {
+    "title": "Señal de giro solamente en “u”",
+    "code": "R-9",
+    "description": "Esta señal permite el giro en “U”. Debe complementarse con marcas en el pavimento con línea continua de separación de carriles, que indique el carril que permite el giro en “U”."
+  },
+  {
+    "title": "Señal de prohibido voltear en “u”",
+    "code": "R-10",
+    "description": "Esta señal prohíbe el giro en “U”."
+  },
+  {
+    "title": "Señal de circulación en ambos sentidos",
+    "code": "R-11",
+    "description": "Esta señal se emplea en vías unidireccionales para notificar al conductor que se aproxima a un tramo de circulación bidireccional, sin separador central."
+  },
+  {
+    "title": "Señal de circulación en tres carriles, uno en contraflujo",
+    "code": "R-11A",
+    "description": "Esta señal se emplea en vías de tres carriles para notificar al conductor, que el tramo es de dos carriles de circulación en un mismo sentido y un carril en sentido contrario."
+  },
+  {
+    "title": "Señal de circulación en tres carriles, dos en contraflujo",
+    "code": "R-11B",
+    "description": "Esta señal se emplea en vías de tres carriles para notificar al conductor que el tramo es de un carril de circulación en un sentido y dos carriles en sentido contrario."
+  },
+  {
+    "title": "Señal de prohibido cambiar de carril",
+    "code": "R-12",
+    "description": "Esta señal prohíbe al conductor cambiar del carril por donde circula a otro. Se colocará al comienzo de la zona de prohibición."
+  },
+  {
+    "title": "Señal de circulación obligatoria",
+    "code": "R-14",
+    "description": "Esta señal dispone que el conductor debe circular sólo en el sentido indicado por la flecha."
+  },
+  {
+    "title": "Señal de tránsito en un sentido",
+    "code": "R-14A",
+    "description": "Esta señal se utiliza para indicar el sentido del tránsito de una vía. Se puede complementar la señal con el NOMBRE Y NUMERACIÓN DE CALLE."
+  },
+  {
+    "title": "Señal de tránsito en ambos sentidos",
+    "code": "R-14B",
+    "description": "Esta señal se utiliza para indicar que en una vía el tránsito puede fluir en dos direcciones. Se puede complementar la señal con el NOMBRE Y NUMERACIÓN DE CALLE."
+  },
+  {
+    "title": "Señal de prohibido adelantar",
+    "code": "R-16",
+    "description": "Esta señal prohíbe al conductor efectuar la maniobra de adelantar a otro vehículo u otros que le antecedan traspasando el eje de la calzada. En vías pavimentadas se debe complementar con una línea amarrilla doble continua al borde izquierdo del carril en donde se prohíbe la maniobra. Siempre se debe colocar esta señal junto con la señal P60."
+  },
+  {
+    "title": "Señal de fin de zona de prohibido adelantar",
+    "code": "R-16A",
+    "description": "Esta señal indica al conductor la terminación de una prohibición de adelantamiento."
+  },
+  {
+    "title": "Señal de prohibido circulación de vehículos automotores",
+    "code": "R-17",
+    "description": "Esta señal prohíbe la circulación de vehículos motorizados, su uso se restringe a áreas peatonales y a vías para vehículos de tracción animal y/o bicicletas."
+  },
+  {
+    "title": "Señal de vehículos pesados a la derecha",
+    "code": "R-18",
+    "description": "Esta señal dispone que los conductores de vehículos pesados deben circular por el carril derecho. Se usa exclusivamente en tramos de vías con dos o más carriles por sentido de circulación, incluyendo los carriles especiales de ascenso."
+  },
+  {
+    "title": "Señal de prohibido circulación de vehículos de carga",
+    "code": "R-19",
+    "description": "Esta señal prohíbe la circulación de vehículos de carga en el tramo de vía que sigue a la señal. Cuando se establezca esta restricción por el peso de dichos vehículos se deberá complementar con las señales preventivas y de reglamentación de peso máximo bruto permitido,"
+  },
+  {
+    "title": "Señal peatones deben circular por la izquierda",
+    "code": "R-20",
+    "description": "Esta señal dispone la obligación del peatón, de caminar por la vereda o ruta peatonal del lado izquierdo de la vía por donde transitan los vehículos, de tal forma que el conductor siempre lo vea de frente la vía a vereda o acera enfrentando al tránsito vehicular. De ser necesario se complementara con una leyenda de “CAMINE POR LA IZQUIERDA”. Se utilizará esta señal en áreas rurales, principalmente en carreteras."
+  },
+  {
+    "title": "Señal prohibido el paso y/o la circulación de peatones",
+    "code": "R-21",
+    "description": "Esta señal prohíbe el paso y/o el tránsito peatonal por una vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación de bicicletas y motociclos",
+    "code": "R-22",
+    "description": "Esta señal prohíbe el paso y/o la circulación de bicicletas y motociclos por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación de triciclos",
+    "code": "R-22A",
+    "description": "Esta señal prohíbe el paso y/o la circulación de triciclos motorizados y no motorizados por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación de motocicletas",
+    "code": "R-23",
+    "description": "Esta señal prohíbe el paso y/o circulación de motocicletas por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación de maquinaria agrícola",
+    "code": "R-24",
+    "description": "Esta señal prohíbe el paso y/o la circulación de maquinaria agrícola por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación de vehículos de tracción animal",
+    "code": "R-25",
+    "description": "Esta señal prohíbe el paso y/o la circulación de toda clase de vehículos de tracción animal por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación de carretillas manuales",
+    "code": "R-25A",
+    "description": "Esta señal prohíbe el paso y/o la circulación de toda clase de carretillas, carretas o cualquier otro vehículo impulsado por tracción humana por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación ecuestre",
+    "code": "R-25B",
+    "description": "Esta señal prohíbe el paso y/o la circulación ecuestre por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación de buses",
+    "code": "R-25C",
+    "description": "Esta señal prohíbe el paso y/o la circulación de buses por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal prohibido circulación de cuatrimotos",
+    "code": "R-25D",
+    "description": "Esta señal prohíbe el paso y/o la circulación de cuatrimotos por la vía y/o sus obras complementarias."
+  },
+  {
+    "title": "Señal permitido estacionar",
+    "code": "R-26",
+    "description": "Esta señal permite el estacionamiento de vehículos en determinadas áreas de una vía. Debe complementarse con marcas en el pavimento que indiquen las zonas de estacionamiento. Las restricciones tales como horarios u otros, se indican en la en la parte inferior de la señal."
+  },
+  {
+    "title": "Señal prohibido estacionar",
+    "code": "R-27",
+    "description": "Esta señal prohíbe el estacionamiento de vehículos en determinadas áreas de una vía. Debe complementarse con marcas en el pavimento con una línea amarilla continua al margen derecho o izquierdo de la zona de restricción, en el sardinel o borde de la vereda."
+  },
+  {
+    "title": "Señal prohibido estacionar zona de remolque",
+    "code": "R-27A",
+    "description": "Esta señal prohíbe el estacionamiento de vehículos en determinadas áreas de una vía y en caso de estacionarse el vehículo será remolcado. Debe complementarse con marcas en el pavimento con una línea amarilla continua al margen derecho o izquierdo de la zona de restricción, en el sardinel o borde de la vereda."
+  },
+  {
+    "title": "Señal prohibido detenerse",
+    "code": "R-28",
+    "description": "Esta señal prohíbe al conductor detener un vehículo en determinada longitud o área de una vía. De ser el caso se complementara con otra señal similar al lado izquierdo de la vía."
+  },
+  {
+    "title": "Señal prohibido el uso de la bocina",
+    "code": "R-29",
+    "description": "Esta señal prohíbe el uso de claxon o bocina en determinadas zonas que atraviesa una vía, principalmente en hospitales, clínicas, centros educativos, bibliotecas y otros que la autoridad competente lo establezca por razones de la naturaleza de las actividades que realiza."
+  },
+  {
+    "title": "Señal velocidad máxima permitida 40 km/h, 100 km/h",
+    "code": "R-30",
+    "description": "Esta señal establece la velocidad máxima de operación en kilómetros por hora"
+  },
+  {
+    "title": "Señal velocidad mínima permitida 60 km/h",
+    "code": "R-30B",
+    "description": "Esta señal establece la velocidad mínima de operación en kilómetros por hora"
+  },
+  {
+    "title": "Señal velocidad máxima permitida de salida 50 km/h",
+    "code": "R-30C",
+    "description": "Esta señal establece la velocidad máxima de operación en kilómetros por hora"
+  },
+  {
+    "title": "Señal velocidad máxima permitida para camión 80 km/h",
+    "code": "R-30D",
+    "description": "Esta señal establece la velocidad máxima de operación en kilómetros por hora"
+  },
+  {
+    "title": "Señal velocidad máxima permitida para bus 90 km/h",
+    "code": "R-30E",
+    "description": "Esta señal establece la velocidad máxima de operación en kilómetros por hora"
+  },
+  {
+    "title": "Señal velocidad máxima permitida en curva 40 km/h",
+    "code": "R-30F",
+    "description": "Esta señal establece la velocidad máxima de operación en kilómetros por hora"
+  },
+  {
+    "title": "Señal velocidad máxima según tipo de vehículo",
+    "code": "R-30G",
+    "description": "Esta señal establece la velocidad mínima de operación en kilómetros por hora"
+  },
+  {
+    "title": "Señal peso máximo permitido por eje",
+    "code": "R-31",
+    "description": "Esta señal establece el peso máximo permitido por eje, con el que debe circular un vehículo por una vía, acorde al Reglamento Nacional de Vehículos, vigente."
+  },
+  {
+    "title": "Señal peso máximo bruto permitido por vehículo",
+    "code": "R-32",
+    "description": "Esta señal establece el peso máximo bruto con el que debe circular un vehículo por una vía, acorde al Reglamento Nacional de Vehículos, vigente."
+  },
+  {
+    "title": "Señal largo máximo permitido",
+    "code": "R-33",
+    "description": "Esta señal establece el largo máximo permitido expresado en metros, con el que un vehículo debe circular por una vía, acorde al Reglamento Nacional de Vehículos, vigente."
+  },
+  {
+    "title": "Señal circulación solo de buses",
+    "code": "R-34",
+    "description": "Esta señal establece el uso de carriles o vías para el tránsito exclusivo de buses. Esta señal será complementada con marcas en el pavimento con inscripciones «SOLO BUS»."
+  },
+  {
+    "title": "Señal altura máxima permitida",
+    "code": "R-35",
+    "description": "Esta señal establece la altura máxima expresada en metros, con la que un vehículo debe circular por una vía. Dicha altura máxima permitida, incluye la de la carga que transporta el vehículo. Se colocará en los puentes, túneles, pasos a desnivel, estaciones de peajes y pesaje, y demás obras complementarias que requieran tal restricción. Debe complementarse con pre señalización para advertir al conductor sobre la proximidad de la restricción."
+  },
+  {
+    "title": "Señal ancho máximo permitido",
+    "code": "R-36",
+    "description": "Esta señal establece el ancho máximo expresada en metros, con la que un vehículo debe circular por una vía. Dicho ancho máximo permitido, incluye el de la carga que transporta el vehículo. Se colocará en los puentes, túneles, estaciones de peajes y pesaje, y demás obras complementarias que requieran tal restricción. Debe complementarse con preseñalización para advertir al conductor sobre la proximidad de la restricción."
+  },
+  {
+    "title": "Señal control",
+    "code": "R-37",
+    "description": "Esta señal indica la presencia de un puesto o lugar de control de tránsito policial, aduana y otros, donde el vehículo puede ser obligado a detenerse. Debe complementarse con preseñalización para advertir al conductor sobre la proximidad de tales restricciones."
+  },
+  {
+    "title": "Señal circulación con luces bajas",
+    "code": "R-40",
+    "description": "Esta señal dispones la obligación de circular con las luces bajas del vehículo, en determinados tramos o sectores de una vía. Esta restricción se aplica a las vías urbanas en general, así como a la entrada a túneles, y carreteras en terreno plano para evitar encandilar al conductor que transita en sentido contrario. La no colocación de esta señal, no implica autorización para el uso de luces altas."
+  },
+  {
+    "title": "Señal ciclovía",
+    "code": "R-42",
+    "description": "Esta señal se emplea para advertir al conductor sobre la existencia de una vía exclusiva para el tránsito de bicicletas"
+  },
+  {
+    "title": "Señal ciclovía “conserve la derecha”",
+    "code": "R-42A",
+    "description": "Esta señal dispone que el ciclista tiene la obligación de circular por el carril derecho de la ciclovia."
+  },
+  {
+    "title": "Señal ciclovía “obligatorio descender de la bicicleta”",
+    "code": "R-42B",
+    "description": "Esta señal dispone que el ciclista tiene la obligación de descender de la bicicleta y circular a pie por un tramo o punto especificado."
+  },
+  {
+    "title": "Señal ciclovía “circulación no compartida bicicleta – peatón”",
+    "code": "R-42C",
+    "description": "Esta señal establece la obligación que tienen el ciclista y el peatón de circular por la vía que les corresponde."
+  },
+  {
+    "title": "Señal uso obligatorio de cadenas",
+    "code": "R-43",
+    "description": "Esta señal dispone el uso obligatorio de cadenas en las llantas de un vehículo, en determinado tramo o sector de una vía, debido a la presencia de condiciones climáticas adversas en la superficie de rodadura que pone en peligro la seguridad vial. Debe complementarse con preseñalización para advertir al conductor sobre la proximidad de tales restricciones."
+  },
+  {
+    "title": "Señal paradero prohibido",
+    "code": "R-44",
+    "description": "Esta señal prohíbe al conductor de un vehículo de servicio público, recoger o dejar pasajeros en lugares no autorizados para tales fines. Su no colocación, no autoriza al conductor incumplir la indicada restricción."
+  },
+  {
+    "title": "Señal prohibido circulación de vehículos motorizados de tres ruedas mototaxis",
+    "code": "R-45",
+    "description": "MOTOCARGA"
+  },
+  {
+    "title": "Señal paradero",
+    "code": "R-47",
+    "description": "Esta señal establece los lugares autorizados para recoger o dejar pasajeros, provenientes de un servicio público. Dichos paraderos son reglamentados por las autoridades de encargadas del tránsito correspondiente. Las áreas que abarcan los paraderos deben complementarse con marcas en el pavimento y señalización complementaria de ser el caso."
+  },
+  {
+    "title": "Señal zona de carga y descarga",
+    "code": "R-48",
+    "description": "Esta señal establece los lugares reglamentados por la autoridad competente para la carga y descarga de mercancías. Dichos lugares deben complementarse con marcas en el pavimento y señalización complementaria de ser el caso."
+  },
+  {
+    "title": "Señal mantener distancia de seguridad",
+    "code": "R-49",
+    "description": "Esta señal establece la distancia de seguridad mínima que debe mantener el Conductor de un vehículo a otro que lo antecede, para evitar colisiones. Esta señal se utilizará en tramos de alto tránsito y peligro de ocurrencia de colisiones por alcance. La Tabla 3.4 : Separación entre Distanciadores en Función a su Velocidad, indica las distancias mínimas a mantener. Debe complementarse con marcas en el pavimento denominados distanciadores. Su no colocación o demarcación, no autoriza al conductor incumplir este requerimiento normativo de seguridad."
+  },
+  {
+    "title": "Señal preferencia al sentido contrario",
+    "code": "R-50",
+    "description": "Esta señal establece a los conductores que los vehículos que circulan en sentido contrario tienen prioridad. Se instala en puentes estrechos y angostamientos de calzada, entre otros lugares. En general se usa con la leyenda “PREFERENCIA AL SENTIDO CONTRARIO”. En carreteras con calzadas angostas se puede usar con la leyenda “PREFERENCIA AL TRÁNSITO QUE SUBE”, para asignar el derecho preferente de vía a los vehículos que suben."
+  },
+  {
+    "title": "Señal prohibido la carga y descarga",
+    "code": "R-52",
+    "description": "Esta señal establece los lugares prohibidos por la autoridad competente para la carga y descarga de los vehículos de mercancías, esta restricción también incluye la prohibición de estacionarse o detenerse. Dichos lugares deben complementarse con marcas en el pavimento y señalización complementaria de ser el caso."
+  },
+  {
+    "title": "Señal no bloquear cruce",
+    "code": "R-53",
+    "description": "Esta señal prohíbe al conductor detener el vehículo dentro del área de intersección de dos vías"
+  }
+]
+

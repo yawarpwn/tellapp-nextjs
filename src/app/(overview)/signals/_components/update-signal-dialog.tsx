@@ -10,6 +10,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 import { toast } from 'sonner'
 
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/textarea'
 import { Label } from '@/components/ui/label'
 import { AddButton } from '@/components/buttons'
 import { GALLERY_CATEGORIES } from '@/constants'
@@ -126,6 +127,10 @@ export function UpdateSignalDialog({ open, closeDialog, signal }: Props) {
           <div className="grid gap-2">
             <Label>Código</Label>
             <Input name="code" type="text" placeholder="fhp" defaultValue={signal.code} />
+          </div>
+          <div className="grid gap-2">
+            <Label>Descripcion</Label>
+            <Textarea name="description" placeholder="Descripcion de la senal" />
           </div>
           <input type="hidden" name="public-id" value={signal.publicId} />
           <input type="hidden" name="id" value={signal.id} />
