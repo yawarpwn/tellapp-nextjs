@@ -75,6 +75,10 @@ export async function uploadStream(
   })
 }
 
+export async function uploadAsset(file: string, options: UploadApiOptions) {
+  return cloudinary.uploader.upload(file, options)
+}
+
 export async function uploadImageFile(file: File, options: UploadApiOptions) {
   const mime = file.type
   const arrayBuffer = await file.arrayBuffer()

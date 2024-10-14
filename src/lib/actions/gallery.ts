@@ -73,7 +73,7 @@ export async function updateGalleryAction(formData: FormData) {
   const id = formData.get('id') as string
 
   try {
-    if (!photoFile) {
+    if (photoFile) {
       // Si photoFile es undefined, no debería entrar aquí
       console.log('Entrando en la condición de photoFile')
 

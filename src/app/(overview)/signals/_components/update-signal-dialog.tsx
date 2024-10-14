@@ -10,10 +10,10 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 import { toast } from 'sonner'
 
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/textarea'
+import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { AddButton } from '@/components/buttons'
-import { GALLERY_CATEGORIES } from '@/constants'
+import { SIGNALS_CATEGORIES } from '@/constants'
 import * as React from 'react'
 import { updateSignalAction } from '@/lib/actions/signals'
 import { SubmitButton } from '@/components/submit-button'
@@ -82,7 +82,7 @@ export function UpdateSignalDialog({ open, closeDialog, signal }: Props) {
       <AddButton />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Actualizar foto a galeria</DialogTitle>
+          <DialogTitle>Actualizar Señal</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -130,7 +130,11 @@ export function UpdateSignalDialog({ open, closeDialog, signal }: Props) {
           </div>
           <div className="grid gap-2">
             <Label>Descripcion</Label>
-            <Textarea name="description" placeholder="Descripcion de la senal" />
+            <Textarea
+              defaultValue={signal.description || ''}
+              name="description"
+              placeholder="Descripcion de la senal"
+            />
           </div>
           <input type="hidden" name="public-id" value={signal.publicId} />
           <input type="hidden" name="id" value={signal.id} />
@@ -142,7 +146,7 @@ export function UpdateSignalDialog({ open, closeDialog, signal }: Props) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {Object.values(GALLERY_CATEGORIES).map(item => (
+                  {Object.values(SIGNALS_CATEGORIES).map(item => (
                     <SelectItem key={item} value={item} className="capitalize">
                       {item}
                     </SelectItem>
