@@ -78,52 +78,57 @@ export async function updateSignalAction(formData: FormData) {
   const id = formData.get('id') as string
   const description = formData.get('description') as string | undefined
 
-  try {
-    if (photoFile) {
-      // Si photoFile es undefined, no debería entrar aquí
-      console.log('Entrando en la condición de photoFile')
-
-      //transform to buffer
-      const arrayBuffer = await photoFile.arrayBuffer()
-      const photoBuffer = Buffer.from(arrayBuffer)
-
-      //upload photo to cloudinary
-      const res = await uploadStream(photoBuffer, {
+  // Si no hay photoFile se actualiza solo los demas datos
+  if (!photoFile) {
+    const { data, error } = await SignalsModel.update(
+      {
+        title,
         category,
-        folder: 'gallery',
-      })
+        code,
+      },
+      id,
+    )
 
-      //insert info into db
-      const { data, error } = await SignalsModel.update(
-        {
-          title,
-          publicId: res.public_id,
-          width: res.width,
-          height: res.height,
-          format: res.format,
-          category,
-          url: res.secure_url,
-        },
-        id,
-      )
-
-      if (error) throw error
-
-      //borrar la imagen existente en cloudinary
-      await deleteSource(publicId)
-      console.log('assets with id: ' + publicId + ' deleted')
-    } else {
-      const { data, error } = await SignalsModel.update(
-        {
-          title,
-          category,
-          code,
-        },
-        id,
-      )
-
-      if (error) throw error
+    if (error) {
+      console.log(error)
+      throw new Error('Error actualizando signal foto info')
     }
+
+    revalidateTag('/signals')
+    return
+  }
+
+  try {
+    //transform to buffer
+    const arrayBuffer = await photoFile.arrayBuffer()
+    const photoBuffer = Buffer.from(arrayBuffer)
+
+    //upload photo to cloudinary
+    const res = await uploadStream(photoBuffer, {
+      category,
+      folder: 'gallery',
+    })
+
+    //insert info into db
+    const { data, error } = await SignalsModel.update(
+      {
+        title,
+        publicId: res.public_id,
+        width: res.width,
+        height: res.height,
+        format: res.format,
+        category,
+        url: res.secure_url,
+        description,
+      },
+      id,
+    )
+
+    if (error) throw error
+
+    //borrar la imagen existente en cloudinary
+    await deleteSource(publicId)
+    console.log('assets with id: ' + publicId + ' deleted')
 
     revalidateTag('/signals')
   } catch (error) {

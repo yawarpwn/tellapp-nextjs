@@ -60,7 +60,10 @@ export function UpdateGalleryDialog({ open, closeDialog, gallery }: Props) {
     e.preventDefault()
     const form = e.currentTarget
     const formData = new FormData(form)
-    formData.set('photo', files[0])
+
+    if (files[0]) {
+      formData.set('photo', files[0])
+    }
 
     startTransition(() => {
       toast.promise(updateGalleryAction(formData), {
@@ -87,7 +90,6 @@ export function UpdateGalleryDialog({ open, closeDialog, gallery }: Props) {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {imgSrc ? (
             <div className="relative flex justify-center overflow-hidden rounded-md bg-foreground p-2">
-              <input name="photo" type="hidden" value="" />
               <div className="w-[300px] overflow-hidden rounded-md">
                 <img src={imgSrc} className="h-full w-full object-cover" />
               </div>
