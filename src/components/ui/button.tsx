@@ -14,7 +14,7 @@ disabled:pointer-events-none disabled:opacity-40 `,
         default: `bg-[rgba(255,255,255,0.08)] bg-origin-padding  hover:bg-[rgba(252,255,255,0.16)]`,
         destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
         outline:
-          'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+          'border border-input hover:border-primary bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
         secondary: `border border-transparent [background:var(--border-gradient)] hover:[background:var(--border-gradient-hover)]`,
         ghost: 'hover:bg-white/40 bg-white/20 hover:text-accent-white hover:border-white/20',
         link: 'text-primary underline-offset-4 hover:underline',
