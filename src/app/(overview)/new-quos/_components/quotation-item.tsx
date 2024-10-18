@@ -62,7 +62,7 @@ export function QuotationItems(props: Props) {
     }
   }
 
-  const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(items)
+  const { formatedIgv, formatedTotal, formatedSubTotal, totalItems } = getIgv(items)
 
   return (
     <section>
@@ -78,6 +78,10 @@ export function QuotationItems(props: Props) {
       )}
       <header className="flex items-center justify-between py-4">
         <h2 className="text-xl font-bold ">Productos</h2>
+        <div>
+          <span className="text-muted-foreground">Items: </span>
+          <span className="font-bold text-primary">{totalItems}</span>
+        </div>
         <div className="flex items-center gap-2">
           <Button
             type="button"

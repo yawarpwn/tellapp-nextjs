@@ -37,6 +37,11 @@ export function getIgv(items: QuotationItem[]) {
     return result
   }, 0)
 
+  const totalItems = items.reduce((acc, curr) => {
+    const items = (acc += curr.qty)
+    return items
+  }, 0)
+
   const total = calcTotal
   const subTotal = total / 1.18
   const igv = subTotal * 0.18
@@ -48,6 +53,6 @@ export function getIgv(items: QuotationItem[]) {
     formatedTotal: formatNumberToLocal(total),
     formatedIgv: formatNumberToLocal(igv),
     formatedSubTotal: formatNumberToLocal(subTotal),
-    totalItems: items.length,
+    totalItems,
   }
 }

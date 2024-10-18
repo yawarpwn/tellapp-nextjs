@@ -122,9 +122,10 @@ export function QuotationCreate() {
           />
         </div>
       </header>
-      <article className="mt-4 flex flex-col gap-4">
-        <div className="grid gap-4 md:grid-cols-2 ">
-          <div className="grid gap-2">
+      <article className="mt-4 flex flex-col gap-4 ">
+        <div className="grid grid-cols-6 gap-3 md:gap-4">
+          {/* Ruc  */}
+          <div className="col-span-4 grid flex-grow gap-2 md:col-span-3">
             <Label htmlFor="ruc">Ruc</Label>
             <div className="relative">
               <Input
@@ -147,8 +148,9 @@ export function QuotationCreate() {
               </Button>
             </div>
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="deadline">Tiempo de entrega</Label>
+          {/* Deadline  */}
+          <div className="col-span-2 grid gap-2 md:col-span-3">
+            <Label htmlFor="deadline">Entrega</Label>
             <Input
               className={quo?.deadline === 0 ? 'border border-destructive' : ''}
               required
@@ -159,45 +161,43 @@ export function QuotationCreate() {
               onChange={e => setQuo({ ...quo, deadline: Number(e.target.value) })}
             />
           </div>
-        </div>
+          {/* Customer */}
+          <div className="col-span-6 grid gap-2 md:col-span-3">
+            <Label htmlFor="company">Cliente</Label>
+            <Input
+              id="company"
+              name="company"
+              type="text"
+              value={quo.company ?? ''}
+              disabled={pendingRuc}
+              onChange={e => setQuo({ ...quo, company: e.target.value })}
+            />
+          </div>
+          {/* Address */}
+          <div className="col-span-6 grid gap-2 md:col-span-3">
+            <Label htmlFor="company">Dirección</Label>
+            <Input
+              id="address"
+              name="address"
+              type="text"
+              value={quo.address ?? ''}
+              disabled={pendingRuc}
+              onChange={e => setQuo({ ...quo, address: e.target.value })}
+            />
+          </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="company">Cliente</Label>
-          <Input
-            id="company"
-            name="company"
-            type="text"
-            value={quo.company ?? ''}
-            disabled={pendingRuc}
-            onChange={e => setQuo({ ...quo, company: e.target.value })}
-          />
-        </div>
+          {/* Include IGV */}
+          <div className="col-span-3 flex items-center gap-2">
+            <Checkbox
+              id="includeIgv"
+              onCheckedChange={e => setQuo({ ...quo, includeIgv: Boolean(e) })}
+              checked={quo.includeIgv}
+            />
+            <Label htmlFor="includeIgv">Incluir IGV</Label>
+          </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="company">Dirección</Label>
-          <Input
-            id="address"
-            name="address"
-            type="text"
-            value={quo.address ?? ''}
-            disabled={pendingRuc}
-            onChange={e => setQuo({ ...quo, address: e.target.value })}
-          />
-        </div>
-        <div className="flex h-6 items-center gap-4">
-          <div
-            className="flex w-full items-center justify-between 
-            "
-          >
-            <div className="flex items-center gap-2">
-              <Checkbox
-                id="includeIgv"
-                onCheckedChange={e => setQuo({ ...quo, includeIgv: Boolean(e) })}
-                checked={quo.includeIgv}
-              />
-              <Label htmlFor="includeIgv">Incluir IGV</Label>
-            </div>
-
+          {/* is Regular Customer */}
+          <div className="col-span-3 flex w-full items-center justify-between">
             {quo.customerId && (
               <div
                 className="flex 
@@ -208,11 +208,9 @@ export function QuotationCreate() {
               </div>
             )}
           </div>
-        </div>
 
-        {/*Creditto */}
-        <div className="grid grid-cols-2 items-center gap-2 ">
-          <div className="flex items-center gap-2">
+          {/*Credit */}
+          <div className="col-span-3 flex h-9 items-center gap-2">
             <Switch
               checked={showCreditOption}
               onCheckedChange={checked => setShowCreditOption(checked)}
@@ -225,7 +223,7 @@ export function QuotationCreate() {
                 id="credit"
                 name="credit"
                 type="number"
-                className="w-20"
+                className="w-32 grow"
                 value={quo.credit ?? ''}
                 placeholder="30"
                 onChange={e => {
