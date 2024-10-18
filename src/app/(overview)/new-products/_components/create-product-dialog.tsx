@@ -43,10 +43,17 @@ import { createProductAction } from '@/lib/actions/products'
 
 import { ProductInsertSchema } from '@/schemas/products'
 import { AddButton } from '@/components/buttons'
+import { SaveIcon } from 'lucide-react'
 
-export function CreateProductDialog() {
+interface Props {
+  trigger: React.ReactNode
+  product?: Partial<ProductInsert>
+}
+export function CreateProductDialog(props: Props) {
   const [open, setOpen] = React.useState(false)
   const [isCreatePending, startCreateTransition] = React.useTransition()
+
+  const { product } = props
 
   function onSubmit(input: ProductInsert) {
     console.log('submit')
@@ -67,11 +74,27 @@ export function CreateProductDialog() {
 
   const form = useForm<ProductInsert>({
     resolver: zodResolver(ProductInsertSchema),
+    defaultValues: {
+      description: product?.description,
+      price: product?.price,
+      link: product?.link,
+      category: product?.category,
+      cost: product?.cost,
+      unitSize: product?.unitSize,
+    },
   })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <AddButton />
+      {props.trigger ? (
+        <DialogTrigger asChild>
+          <Button size="icon">
+            <SaveIcon />
+          </Button>
+        </DialogTrigger>
+      ) : (
+        <AddButton />
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear Producto</DialogTitle>
@@ -89,6 +112,7 @@ export function CreateProductDialog() {
                       placeholder="Descripcion de producto..."
                       className="resize-none"
                       {...field}
+                      defaultValue={product?.description || ''}
                     />
                   </FormControl>
                   <FormMessage />

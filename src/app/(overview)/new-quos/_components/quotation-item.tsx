@@ -2,8 +2,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { DeleteIcon, DocumentDuplicateIcon, EditIcon } from '@/icons'
 import { getIgv } from '@/lib/utils'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { BookMarked, ChevronDown, ChevronUp, PlusCircleIcon, SaveIcon } from 'lucide-react'
 import { NoResult } from './no-result'
+
+import { CreateProductDialog } from '../../new-products/_components/create-product-dialog'
 
 import { PlusIcon } from '@/icons'
 import { Product, QuotationItem } from '@/types'
@@ -27,6 +29,7 @@ export function QuotationItems(props: Props) {
   const [seletedProductId, setSelectedProductId] = useState<string | null>(null)
   const productItem = items.find(item => item.id == seletedProductId)
   const [open, setOpen] = useState(false)
+  const [createProductDialogOpen, setCreateProductDialogOpen] = useState(false)
 
   //functions
   const closeItemModal = () => setOpen(false)
@@ -76,6 +79,7 @@ export function QuotationItems(props: Props) {
           item={productItem}
         />
       )}
+
       <header className="flex items-center justify-between py-4">
         <h2 className="text-xl font-bold ">Productos</h2>
         <div>
@@ -111,7 +115,17 @@ export function QuotationItems(props: Props) {
                           <ChevronDown />
                         </Button>
                       </div>
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-2">
+                        <CreateProductDialog
+                          trigger
+                          product={{
+                            description: item.description,
+                            price: item.price,
+                            cost: item.cost || 0,
+                            link: item.link || '',
+                            unitSize: item.unit_size || '',
+                          }}
+                        />
                         <Button size="icon" onClick={() => duplicateItem(item)}>
                           <DocumentDuplicateIcon />
                         </Button>
