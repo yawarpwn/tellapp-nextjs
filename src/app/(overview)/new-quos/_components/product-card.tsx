@@ -47,7 +47,11 @@ export function ProductCard(props: Props) {
             </div>
             <div className="flex items-center space-x-2">
               <CreateProductDialog
-                trigger
+                triggerButton={
+                  <Button size="icon">
+                    <SaveIcon />
+                  </Button>
+                }
                 product={{
                   description: item.description,
                   price: item.price,
@@ -60,10 +64,10 @@ export function ProductCard(props: Props) {
                 <DocumentDuplicateIcon />
               </Button>
               <Button size="icon" onClick={() => onEditItem(item.id)}>
-                <EditIcon size={20} />
+                <EditIcon />
               </Button>
               <Button size="icon" onClick={() => deleteItem(item.id)}>
-                <DeleteIcon size={20} />
+                <DeleteIcon />
               </Button>
             </div>
           </div>

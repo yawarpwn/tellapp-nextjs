@@ -3,7 +3,7 @@ import { useId } from 'react'
 import { GradientIcons } from './gradient-icons'
 
 export default function Icon(props: IconProps) {
-  const { hasGradient, size, ...restProps } = props
+  const { hasGradient, size = 24, ...restProps } = props
   const id = useId()
   return (
     <svg
@@ -11,7 +11,8 @@ export default function Icon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className="h-6 w-6"
+      width={size}
+      height={size}
     >
       <path
         fillRule="evenodd"

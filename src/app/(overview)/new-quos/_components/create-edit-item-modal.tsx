@@ -7,7 +7,7 @@ import { type Product } from '@/types'
 import { useFuse } from '@/hooks/use-fuse'
 import { type QuotationItem } from '@/types'
 import React, { useState } from 'react'
-import { formatNumberToLocal } from '@/lib/utils'
+import { cn, formatNumberToLocal } from '@/lib/utils'
 import { EmpetyIcon, SearchIcon } from '@/icons'
 
 function EmpetyHits() {
@@ -102,7 +102,10 @@ export function CreateEditItemModal(props: Props) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
         showCloseButton={false}
-        className="flex h-[100svh] flex-col border p-2 py-4 md:h-[90svh] md:p-6"
+        className={cn(
+          'flex  max-w-md flex-col border p-2 py-4 md:p-6',
+          hits.length === 0 ? 'h-auto' : 'h-[95svh] md:h-[90svh]',
+        )}
       >
         {/* Search Product */}
         <header className="">

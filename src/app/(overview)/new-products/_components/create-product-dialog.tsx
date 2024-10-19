@@ -46,7 +46,7 @@ import { AddButton } from '@/components/buttons'
 import { SaveIcon } from 'lucide-react'
 
 interface Props {
-  trigger: React.ReactNode
+  triggerButton: React.ReactNode
   product?: Partial<ProductInsert>
 }
 export function CreateProductDialog(props: Props) {
@@ -86,12 +86,8 @@ export function CreateProductDialog(props: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {props.trigger ? (
-        <DialogTrigger asChild>
-          <Button size="icon">
-            <SaveIcon />
-          </Button>
-        </DialogTrigger>
+      {props.triggerButton ? (
+        <DialogTrigger asChild>{props.triggerButton}</DialogTrigger>
       ) : (
         <AddButton />
       )}
