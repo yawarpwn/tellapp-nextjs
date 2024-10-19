@@ -112,7 +112,6 @@ export function CreateProductDialog(props: Props) {
                       placeholder="Descripcion de producto..."
                       className="resize-none"
                       {...field}
-                      defaultValue={product?.description || ''}
                     />
                   </FormControl>
                   <FormMessage />

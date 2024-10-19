@@ -1,16 +1,11 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { DeleteIcon, DocumentDuplicateIcon, EditIcon } from '@/icons'
 import { getIgv } from '@/lib/utils'
-import { BookMarked, ChevronDown, ChevronUp, PlusCircleIcon, SaveIcon } from 'lucide-react'
 import { NoResult } from './no-result'
-
-import { CreateProductDialog } from '../../new-products/_components/create-product-dialog'
-
 import { PlusIcon } from '@/icons'
 import { Product, QuotationItem } from '@/types'
 import React, { useState } from 'react'
 import { CreateEditItemModal } from './create-edit-item-modal'
+import { ProductCard } from './product-card'
 // import { AddEditItemDialog } from './add-edit-item-dialog'
 
 interface Props {
@@ -29,7 +24,6 @@ export function QuotationItems(props: Props) {
   const [seletedProductId, setSelectedProductId] = useState<string | null>(null)
   const productItem = items.find(item => item.id == seletedProductId)
   const [open, setOpen] = useState(false)
-  const [createProductDialogOpen, setCreateProductDialogOpen] = useState(false)
 
   //functions
   const closeItemModal = () => setOpen(false)
@@ -63,6 +57,11 @@ export function QuotationItems(props: Props) {
         [name]: value,
       })
     }
+  }
+
+  const onEditItem = (id: string) => {
+    setOpen(true)
+    setSelectedProductId(id)
   }
 
   const { formatedIgv, formatedTotal, formatedSubTotal, totalItems } = getIgv(items)
@@ -103,86 +102,18 @@ export function QuotationItems(props: Props) {
         <div>
           <ul className="flex flex-col gap-4">
             {items.map((item, index) => (
-              <li key={item.id}>
-                <Card className="border-border">
-                  <CardContent className="grid gap-4 p-4">
-                    <div className="flex items-center justify-between [&_button]:size-7 [&_button]:shrink-0 [&_button_svg]:size-4 ">
-                      <div className="flex items-center gap-1">
-                        <Button type="button" size="icon" onClick={() => moveUpItem(index)}>
-                          <ChevronUp />
-                        </Button>
-                        <Button size="icon" onClick={() => moveDownItem(index)}>
-                          <ChevronDown />
-                        </Button>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <CreateProductDialog
-                          trigger
-                          product={{
-                            description: item.description,
-                            price: item.price,
-                            cost: item.cost || 0,
-                            link: item.link || '',
-                            unitSize: item.unit_size || '',
-                          }}
-                        />
-                        <Button size="icon" onClick={() => duplicateItem(item)}>
-                          <DocumentDuplicateIcon />
-                        </Button>
-                        <Button
-                          size="icon"
-                          onClick={() => {
-                            setOpen(true)
-                            setSelectedProductId(item.id)
-                          }}
-                        >
-                          <EditIcon size={20} />
-                        </Button>
-                        <Button size="icon" onClick={() => deleteItem(item.id)}>
-                          <DeleteIcon size={20} />
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex flex-col gap-4">
-                        <div className="flex-1">
-                          <p className="text-sm">{item.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-12 gap-2">
-                      <input
-                        className="col-span-4 rounded  border border-transparent bg-zinc-800 px-2 py-1 text-xs outline-none focus:border-primary"
-                        type="text"
-                        onChange={e => onChangeValue(e, item)}
-                        name="unit_size"
-                        value={item.unit_size}
-                      />
-                      <input
-                        className="col-span-2 rounded border border-transparent bg-transparent bg-zinc-800 px-2 py-1 outline-none focus:border-primary"
-                        type="number"
-                        onChange={e => onChangeValue(e, item)}
-                        name="qty"
-                        value={item.qty}
-                      />
-                      <div className="col-span-3 flex items-center gap-1">
-                        <span>S/</span>
-                        <input
-                          className="w-full rounded border border-transparent bg-zinc-800 px-2 py-1 outline-none focus:border-primary"
-                          type="number"
-                          onChange={e => onChangeValue(e, item)}
-                          name="price"
-                          value={item.price}
-                        />
-                      </div>
-                      <span className="text-success col-span-3 rounded px-2 py-1">
-                        S/ {item.price * item.qty}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </li>
+              <ProductCard
+                duplicateItem={duplicateItem}
+                item={item}
+                key={item.id}
+                editItem={editItem}
+                index={index}
+                onEditItem={onEditItem}
+                moveUpItem={moveUpItem}
+                moveDownItem={moveDownItem}
+                deleteItem={deleteItem}
+                onChangeValue={onChangeValue}
+              />
             ))}
           </ul>
 
