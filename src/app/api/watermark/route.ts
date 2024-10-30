@@ -9,6 +9,8 @@ export async function POST(request: NextRequest) {
 
   const photos = formData.getAll('files[]') as File[]
 
+  console.log(photos)
+
   if (!photos) {
     return new NextResponse('NO photo provided', { status: 400 })
   }
@@ -46,8 +48,6 @@ export async function POST(request: NextRequest) {
         folder: 'watermarked',
         category: 'watermarked',
       })
-
-      console.log(res)
 
       processedImages.push({
         url: res.secure_url,
