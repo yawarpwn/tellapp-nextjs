@@ -8,14 +8,12 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 export async function createWatermarkAction(formData: FormData) {
   const photos = formData.getAll('files[]') as File[]
 
-  console.log(photos)
-
   if (!photos) {
-    console.log(photos)
+    return {
+      error: 'No photos Provided',
+      data: null,
+    }
   }
-
-  // return new Response('ok')
-  let processedImages = []
 
   for (const photo of photos) {
     try {
@@ -58,18 +56,23 @@ export async function createWatermarkAction(formData: FormData) {
 
       const { data, error } = await WatermarkModel.create(watermarkToSave)
 
-      processedImages.push({ url: watermarkToSave.url })
-
       if (error) {
-        console.log('Errur subiendo Watermark', error)
+        throw error
       }
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      return {
+        error: 'Error subiendo imagen',
+        data: null,
+      }
     }
   }
 
   // Devolver las rutas de las imágenes procesadas como respuesta JSON
   revalidatePath('/watermark')
+  return {
+    data: 'Success',
+    error: null,
+  }
 }
 
 export async function deleteWatermarkAction({ id }: { id: string }) {

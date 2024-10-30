@@ -84,11 +84,18 @@ export function Watermark({ onClose }: Props) {
     startTransition(() => {
       toast.promise(createWatermarkAction(formData), {
         loading: 'Subiendo...',
-        success: () => {
+        success: result => {
+          const { data, error } = result
+          if (error) {
+            throw error
+          }
           onClose()
           return 'Subido correctamente'
         },
-        error: 'Error subiendo',
+        error: err => {
+          console.log(err)
+          return 'Error eliminando'
+        },
       })
     })
   }
