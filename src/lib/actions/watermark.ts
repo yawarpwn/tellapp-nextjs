@@ -20,16 +20,14 @@ export async function createWatermarkAction(formData: FormData) {
       //Transform photo to Buffer
       const photoBuffer = Buffer.from(await photo.arrayBuffer())
 
-      // const watermarkLogo = await fs.readFile(path.join(__dirname, 'watermark-tellsenales-logo.svg'))
-      // console.log('logo', watermarkLogo)
-
-      const watermarkPath = path.join(process.cwd(), 'public', 'watermark-tellsenales-logo.svg')
+      const response = await fetch('https://tellapp.vercel.app/watermark-tellsenales-logo.svg')
+      const watermarkBuffer = Buffer.from(await response.arrayBuffer())
 
       // Process the image with sharp
       const watermarkedImage = await sharp(photoBuffer)
         .composite([
           {
-            input: watermarkPath,
+            input: watermarkBuffer,
             gravity: 'center',
           },
         ])
