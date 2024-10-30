@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
-import { uploadStream } from '@/lib/cloudinary'
+import { destroyResource, uploadStream } from '@/lib/cloudinary'
 import { WatermarkModel } from '@/models'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
+import { redirect } from 'next/navigation'
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
@@ -91,4 +92,38 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   return new Response('ok')
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { id } = await request.json()
+    console.log(id)
+    if (!id) throw new Error('id no provided')
+
+    //Obtener publicId
+    const { data: watermarkedPhoto, error: watermarkedError } = await WatermarkModel.getById(id)
+
+    if (watermarkedError) {
+      throw watermarkedError
+    }
+
+    //Eliminar foto en clodinary
+    await destroyResource(watermarkedPhoto.publicId)
+
+    console.log('publicId', watermarkedPhoto.publicId)
+
+    //Eliminar foto en base de daos
+    const { data, error } = await WatermarkModel.delete(id)
+    if (error) {
+      console.log('Error eliminando watermarked photo ' + id, error)
+      throw error
+    }
+
+    revalidatePath('/watermark')
+    //Retornar respuesta
+    return new Response('ok')
+  } catch (error) {
+    console.log(error)
+    return new NextResponse('Error al eliminar marca de agua', { status: 500 })
+  }
 }

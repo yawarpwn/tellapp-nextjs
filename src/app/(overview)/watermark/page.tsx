@@ -1,26 +1,40 @@
-import { Watermark } from './_components/watermark'
 import { WatermarkModel } from '@/models'
-import { WatermarkCard } from './_components/watermark-card'
 import { CreateWatermark } from './_components/create-watermark'
+import { MasonryLayout } from './_components/masonry-layout'
+import { Suspense } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 
-export default async function Page() {
+function MasonrySkeleton() {
+  const items = Array.from({ length: 40 }, (_, i) => i)
+  return (
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2">
+      {items.map(i => (
+        <Skeleton key={i} className="h-[100px] w-[180px]"></Skeleton>
+      ))}
+    </div>
+  )
+}
+
+async function MasonryLayoutServer() {
   const { data: photos, error } = await WatermarkModel.getAll()
 
   if (error) {
     console.log(error)
-    return
+    throw error
   }
 
+  return <MasonryLayout items={photos} />
+}
+
+export default async function Page() {
   return (
     <div>
-      <header className="flex justify-end">
+      <header className="mb-8 flex justify-end">
         <CreateWatermark />
       </header>
-      <div className="mt-4 flex flex-col gap-4">
-        {photos.map(p => {
-          return <WatermarkCard key={p.id} url={p.url} />
-        })}
-      </div>
+      <Suspense fallback={<MasonrySkeleton />}>
+        <MasonryLayoutServer />
+      </Suspense>
     </div>
   )
 }

@@ -25,7 +25,7 @@ export function CreateWatermark() {
         <DialogTrigger asChild>
           <Button variant="secondary">Crear</Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="max-h-[95dvh] overflow-y-auto">
           {/* <DialogHeader> */}
           {/*   <DialogTitle>Crear Foto con marca de agua</DialogTitle> */}
           {/* </DialogHeader> */}

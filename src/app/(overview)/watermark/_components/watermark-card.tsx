@@ -2,8 +2,20 @@
 import { DownloadIcon, XIcon } from '@/icons'
 import { Button } from '@/components/ui/button'
 import { Share2Icon, ShareIcon } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
-export function WatermarkCard({ url }: { url: string }) {
+export function WatermarkCard({
+  url,
+  thumbUrl,
+  id,
+}: {
+  url: string
+  thumbUrl: string
+  id: string
+}) {
+  const [deleting, setDeleting] = useState(false)
+
   const handleDownload = () => {
     const anchor = document.createElement('a')
     anchor.href = url
@@ -28,29 +40,67 @@ export function WatermarkCard({ url }: { url: string }) {
     }
   }
 
+  const deleteAction = async () => {
+    setDeleting(true)
+    toast.promise(
+      fetch('/api/watermark', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Error al eliminar foto')
+          setDeleting(false)
+          console.log('success')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(() => {
+          setDeleting(false)
+        }),
+      {
+        loading: 'Eliminando',
+        success: 'Eliminado',
+        error: 'Error',
+      },
+    )
+  }
+
   return (
-    <div className="relative flex w-[340px] flex-col gap-2 overflow-hidden rounded-md">
+    <div className="absolute overflow-hidden rounded-md">
       {/* Buttons */}
-      <div className="absolute right-0 flex flex-col justify-center gap-2 p-2 ">
+      <div className="absolute right-0 flex flex-col justify-center gap-2 p-1 ">
         <Button
-          className="h-8 w-8 rounded-full"
+          className="h-6 w-6 rounded-full"
           variant="outline"
           size={'icon'}
           onClick={handleDownload}
         >
-          <DownloadIcon size={20} />
+          <DownloadIcon size={16} />
         </Button>
         <Button
           onClick={handleShare}
-          className="h-8 w-8 rounded-full"
+          className="h-6 w-6 rounded-full"
           variant="outline"
           size={'icon'}
         >
-          <Share2Icon size={20} />
+          <Share2Icon size={16} />
+        </Button>
+        <Button
+          onClick={deleteAction}
+          className="h-6 w-6 rounded-full"
+          variant="outline"
+          size={'icon'}
+          disabled={deleting}
+        >
+          <XIcon size={16} />
         </Button>
       </div>
       <div className="overflow-hidden rounded-md">
-        <img className="h-full w-full object-contain" src={url} />
+        <img className="h-full w-full object-contain" src={thumbUrl} />
       </div>
     </div>
   )
