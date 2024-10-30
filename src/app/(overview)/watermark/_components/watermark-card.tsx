@@ -53,35 +53,6 @@ export function WatermarkCard({
     })
   }
 
-  // const deleteAction = async () => {
-  //   setDeleting(true)
-  //   toast.promise(
-  //     fetch('/api/watermark', {
-  //       method: 'DELETE',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ id }),
-  //     })
-  //       .then(res => {
-  //         if (!res.ok) throw new Error('Error al eliminar foto')
-  //         setDeleting(false)
-  //         console.log('success')
-  //       })
-  //       .catch(err => {
-  //         console.log(err)
-  //       })
-  //       .finally(() => {
-  //         setDeleting(false)
-  //       }),
-  //     {
-  //       loading: 'Eliminando',
-  //       success: 'Eliminado',
-  //       error: 'Error',
-  //     },
-  //   )
-  // }
-
   return (
     <div className="absolute overflow-hidden rounded-md">
       {/* Buttons */}

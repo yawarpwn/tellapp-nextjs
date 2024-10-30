@@ -1,6 +1,6 @@
 'use client'
 import type { Watermark as WatermarkType } from '@/schemas'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { WatermarkCard } from '../_components/watermark-card'
 import MiniMasonry from 'minimasonry'
 interface Props {
@@ -17,13 +17,9 @@ export function MasonryLayout(props: Props) {
       container: containerRef.current,
       baseWidth: 150,
       gutter: 10,
-      gutterX: null,
-      gutterY: null,
       minify: true,
     })
-
-    console.log(masonry)
-  }, [])
+  }, [items])
   return (
     <div ref={containerRef} className="relative">
       {items.map(p => {
