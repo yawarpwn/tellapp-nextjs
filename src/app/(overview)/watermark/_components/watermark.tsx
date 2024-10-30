@@ -45,8 +45,9 @@ export function Watermark() {
 
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
+    const hash = new Date().getTime().toString()
     link.href = url
-    link.download = 'watermarked-image.jpg' // Nombre del archivo a descargar
+    link.download = `tellsenales-image-${hash}.jpg` // Nombre del archivo a descargar
     document.body.appendChild(link) // Necesario para Firefox
     link.click()
     document.body.removeChild(link) // Limpiar el DOM
