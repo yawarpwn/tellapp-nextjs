@@ -40,18 +40,26 @@ export async function createWatermarkAction(formData: FormData) {
         .withMetadata()
         .toBuffer()
 
-      // Guardar la imagen procesada en el sistema de archivos
-      const res = await uploadStream(watermarkedImage, {
-        folder: 'watermarked',
-        category: 'watermarked',
-      })
+      let res
 
-      const watermarkToSave = {
-        url: res.secure_url,
-        width: res.width,
-        height: res.height,
-        format: res.format,
-        publicId: res.public_id,
+      let watermarkToSave
+      // Guardar la imagen procesada en el sistema de archivos
+      try {
+        const res = await uploadStream(watermarkedImage, {
+          folder: 'watermarked',
+          category: 'watermarked',
+        })
+
+        watermarkToSave = {
+          url: res.secure_url,
+          width: res.width,
+          height: res.height,
+          format: res.format,
+          publicId: res.public_id,
+        }
+      } catch (error) {
+        console.log(error)
+        throw new Error('Error subiendo imagen a cloudinary' + JSON.stringify(error))
       }
 
       const { data, error } = await WatermarkModel.create(watermarkToSave)
@@ -61,7 +69,7 @@ export async function createWatermarkAction(formData: FormData) {
       }
     } catch (err) {
       return {
-        error: 'Error subiendo imagen',
+        error: `Error subiendo imagen: ${JSON.stringify(err)}`,
         data: null,
       }
     }
