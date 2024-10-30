@@ -29,7 +29,11 @@ export function Watermark() {
         body: formData,
       })
 
-      if (!res.ok) throw new Error('Error en la respuesta')
+      if (!res.ok) {
+        const messageError = `${res.status} : ${res.statusText}`
+        console.log(messageError)
+        throw new Error('Error en la respuesta' + messageError)
+      }
 
       const blob = await res.blob()
       setBlob(blob)
@@ -130,14 +134,6 @@ export function Watermark() {
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            {/* {imageSrc ? ( */}
-            {/*   <div> */}
-            {/*     <img src={imageSrc} /> */}
-            {/*   </div> */}
-            {/* ) : ( */}
-            {/*   <input required name="photo" className="block" type="file" /> */}
-            {/* )} */}
-
             <FilePond
               files={files}
               required
