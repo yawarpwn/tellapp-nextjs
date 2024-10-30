@@ -3,6 +3,8 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
 import { uploadStream } from '@/lib/cloudinary'
+import { WatermarkModel } from '@/models'
+import { revalidatePath } from 'next/cache'
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
@@ -49,9 +51,21 @@ export async function POST(request: NextRequest) {
         category: 'watermarked',
       })
 
-      processedImages.push({
+      const watermarkToSave = {
         url: res.secure_url,
-      })
+        width: res.width,
+        height: res.height,
+        format: res.format,
+        publicId: res.public_id,
+      }
+
+      const { data, error } = await WatermarkModel.create(watermarkToSave)
+
+      processedImages.push({ url: watermarkToSave.url })
+
+      if (error) {
+        console.log('Errur subiendo Watermark', error)
+      }
     } catch (error) {
       console.log(error)
       return new NextResponse('Error al agregar marca de agua', { status: 500 })
@@ -59,6 +73,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Devolver las rutas de las imágenes procesadas como respuesta JSON
+  revalidatePath('/watermark')
   return NextResponse.json(processedImages)
 }
 

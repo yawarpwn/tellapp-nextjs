@@ -11,6 +11,8 @@ export const WatermarkUpdateSchema = WatermarkInsertSchema.partial().omit({
   updatedAt: true,
   createdAt: true,
 })
-export type Watermark = z.infer<typeof WatermarkSchema>
+export type Watermark = z.infer<typeof WatermarkSchema> & {
+  thumbUrl: string
+}
 export type WatermarkInsert = z.infer<typeof WatermarkInsertSchema>
 export type WatermarkUpdate = Partial<z.infer<typeof WatermarkInsertSchema>>

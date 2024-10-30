@@ -69,8 +69,11 @@ type Response = {
 }
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
-export function Watermark() {
-  const [photos, setPhotos] = useState<Response[]>([])
+interface Props {
+  onClose: () => void
+}
+export function Watermark({ onClose }: Props) {
+  // const [photos, setPhotos] = useState<Response[]>([])
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = React.useState<File[]>([])
 
@@ -97,8 +100,9 @@ export function Watermark() {
         throw new Error('Error en la respuesta' + messageError)
       }
 
-      const json = (await res.json()) as Response[]
-      setPhotos(json)
+      // const json = (await res.json()) as Response[]
+      // setPhotos(json)
+      onClose()
     } catch (error) {
       console.error(error)
     } finally {
@@ -108,54 +112,29 @@ export function Watermark() {
 
   return (
     <div className="mx-auto w-full max-w-3xl p-8">
-      {photos.length > 0 && (
-        <div className="mb-8 flex justify-center">
-          <Button
-            onClick={() => {
-              setPhotos([])
-              setFiles([])
-            }}
-            variant="secondary"
-            className="flex items-center gap-4"
-          >
-            <Upload />
-            Subir otras fotos
-          </Button>
-        </div>
-      )}
-      <div className="grid gap-8">
-        {photos.length > 0 ? (
-          <div className="flex flex-col gap-4">
-            {photos.map(photo => (
-              <WatermarkCard key={photo.url} url={photo.url} />
-            ))}
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <FilePond
-              files={files}
-              required
-              onupdatefiles={itemsFiles => {
-                setFiles(itemsFiles.map(itemFile => itemFile.file as File))
-              }}
-              allowMultiple
-              acceptedFileTypes={['jpeg', 'png', 'jpg', 'webp', 'avif']}
-              maxFiles={5}
-              // server="/api"
-              name="photos"
-              labelIdle='Arrastra y suelta tu foto <span class="filepond--label-action">Subir</span>'
-            />
-            <Button
-              disabled={files.length === 0 || loading}
-              variant="secondary"
-              className="w-full bg-primary"
-              type="submit"
-            >
-              {loading ? 'agregando logo...' : 'Agregar marca de agua'}
-            </Button>
-          </form>
-        )}
-      </div>
+      <form onSubmit={handleSubmit}>
+        <FilePond
+          files={files}
+          required
+          onupdatefiles={itemsFiles => {
+            setFiles(itemsFiles.map(itemFile => itemFile.file as File))
+          }}
+          allowMultiple
+          acceptedFileTypes={['jpeg', 'png', 'jpg', 'webp', 'avif']}
+          maxFiles={5}
+          // server="/api"
+          name="photos"
+          labelIdle='Arrastra y suelta tu foto <span class="filepond--label-action">Subir</span>'
+        />
+        <Button
+          disabled={files.length === 0 || loading}
+          variant="secondary"
+          className="w-full bg-primary"
+          type="submit"
+        >
+          {loading ? 'agregando logo...' : 'Agregar marca de agua'}
+        </Button>
+      </form>
     </div>
   )
 }

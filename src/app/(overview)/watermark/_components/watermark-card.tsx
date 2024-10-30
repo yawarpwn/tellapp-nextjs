@@ -1,3 +1,4 @@
+'use client'
 import { DownloadIcon, XIcon } from '@/icons'
 import { Button } from '@/components/ui/button'
 import { Share2Icon, ShareIcon } from 'lucide-react'
