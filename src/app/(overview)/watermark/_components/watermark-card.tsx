@@ -3,7 +3,9 @@ import { DownloadIcon, XIcon } from '@/icons'
 import { Button } from '@/components/ui/button'
 import { Share2Icon, ShareIcon } from 'lucide-react'
 import { useState } from 'react'
+import { deleteWatermarkAction } from '@/lib/actions/watermark'
 import { toast } from 'sonner'
+import { useTransition } from 'react'
 
 export function WatermarkCard({
   url,
@@ -15,6 +17,7 @@ export function WatermarkCard({
   id: string
 }) {
   const [deleting, setDeleting] = useState(false)
+  const [pending, startTransition] = useTransition()
 
   const handleDownload = () => {
     const anchor = document.createElement('a')
@@ -41,33 +44,43 @@ export function WatermarkCard({
   }
 
   const deleteAction = async () => {
-    setDeleting(true)
-    toast.promise(
-      fetch('/api/watermark', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
-      })
-        .then(res => {
-          if (!res.ok) throw new Error('Error al eliminar foto')
-          setDeleting(false)
-          console.log('success')
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => {
-          setDeleting(false)
-        }),
-      {
-        loading: 'Eliminando',
+    startTransition(() => {
+      toast.promise(deleteWatermarkAction({ id }), {
+        loading: 'Eliminando...',
         success: 'Eliminado',
-        error: 'Error',
-      },
-    )
+        error: 'Error eliminando',
+      })
+    })
   }
+
+  // const deleteAction = async () => {
+  //   setDeleting(true)
+  //   toast.promise(
+  //     fetch('/api/watermark', {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ id }),
+  //     })
+  //       .then(res => {
+  //         if (!res.ok) throw new Error('Error al eliminar foto')
+  //         setDeleting(false)
+  //         console.log('success')
+  //       })
+  //       .catch(err => {
+  //         console.log(err)
+  //       })
+  //       .finally(() => {
+  //         setDeleting(false)
+  //       }),
+  //     {
+  //       loading: 'Eliminando',
+  //       success: 'Eliminado',
+  //       error: 'Error',
+  //     },
+  //   )
+  // }
 
   return (
     <div className="absolute overflow-hidden rounded-md">
@@ -94,7 +107,7 @@ export function WatermarkCard({
           className="h-6 w-6 rounded-full"
           variant="outline"
           size={'icon'}
-          disabled={deleting}
+          disabled={pending}
         >
           <XIcon size={16} />
         </Button>

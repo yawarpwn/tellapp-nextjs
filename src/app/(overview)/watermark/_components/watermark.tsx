@@ -1,14 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { FilePond, registerPlugin } from 'react-filepond'
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { Upload } from 'lucide-react'
+import { createWatermarkAction } from '@/lib/actions/watermark'
 
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import { WatermarkCard } from './watermark-card'
+import { toast } from 'sonner'
 
 function resizeImageFile(
   file: File,
@@ -64,17 +64,12 @@ function resizeImageFile(
   })
 }
 
-type Response = {
-  url: string
-}
-
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 interface Props {
   onClose: () => void
 }
 export function Watermark({ onClose }: Props) {
-  // const [photos, setPhotos] = useState<Response[]>([])
-  const [loading, setLoading] = useState(false)
+  const [pending, startTransition] = useTransition()
   const [files, setFiles] = React.useState<File[]>([])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -86,28 +81,16 @@ export function Watermark({ onClose }: Props) {
       formData.append('files[]', resizedFile)
     }
 
-    setLoading(true)
-
-    try {
-      const res = await fetch('/api/watermark', {
-        method: 'POST',
-        body: formData,
+    startTransition(() => {
+      toast.promise(createWatermarkAction(formData), {
+        loading: 'Eliminando...',
+        success: () => {
+          onClose()
+          return 'Eliminado'
+        },
+        error: 'Error eliminando',
       })
-
-      if (!res.ok) {
-        const messageError = `${res.status} : ${res.statusText}`
-        console.log(messageError)
-        throw new Error('Error en la respuesta' + messageError)
-      }
-
-      // const json = (await res.json()) as Response[]
-      // setPhotos(json)
-      onClose()
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
+    })
   }
 
   return (
@@ -127,12 +110,12 @@ export function Watermark({ onClose }: Props) {
           labelIdle='Arrastra y suelta tu foto <span class="filepond--label-action">Subir</span>'
         />
         <Button
-          disabled={files.length === 0 || loading}
+          disabled={files.length === 0 || pending}
           variant="secondary"
           className="w-full bg-primary"
           type="submit"
         >
-          {loading ? 'agregando logo...' : 'Agregar marca de agua'}
+          {pending ? 'agregando logo...' : 'Agregar marca de agua'}
         </Button>
       </form>
     </div>

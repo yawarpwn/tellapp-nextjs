@@ -1,21 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server'
-import fs from 'node:fs/promises'
+'use server'
+import { WatermarkModel } from '@/models'
 import path from 'node:path'
 import sharp from 'sharp'
 import { destroyResource, uploadStream } from '@/lib/cloudinary'
-import { WatermarkModel } from '@/models'
 import { revalidatePath, revalidateTag } from 'next/cache'
-import { redirect } from 'next/navigation'
 
-export async function POST(request: NextRequest) {
-  const formData = await request.formData()
-
+export async function createWatermarkAction(formData: FormData) {
   const photos = formData.getAll('files[]') as File[]
 
   console.log(photos)
 
   if (!photos) {
-    return new NextResponse('NO photo provided', { status: 400 })
+    console.log(photos)
   }
 
   // return new Response('ok')
@@ -69,35 +65,15 @@ export async function POST(request: NextRequest) {
       }
     } catch (error) {
       console.log(error)
-      return new NextResponse('Error al agregar marca de agua', { status: 500 })
     }
   }
 
   // Devolver las rutas de las imágenes procesadas como respuesta JSON
   revalidatePath('/watermark')
-  return NextResponse.json(processedImages)
 }
 
-// return new NextResponse(watermarkedImage, {
-//   headers: {
-//     'Content-Type': photo.type,
-//     'Content-Disposition': `inline; filename=${photo.name}`,
-//   },
-// })
-
-// headers: {
-//   'Content-Type': photo.type,
-//   'Content-Disposition': `inline; filename=${photo.name}`,
-// },
-
-export async function GET(request: NextRequest) {
-  return new Response('ok')
-}
-
-export async function DELETE(request: NextRequest) {
+export async function deleteWatermarkAction({ id }: { id: string }) {
   try {
-    const { id } = await request.json()
-    console.log(id)
     if (!id) throw new Error('id no provided')
 
     //Obtener publicId
@@ -121,9 +97,7 @@ export async function DELETE(request: NextRequest) {
 
     revalidateTag('/watermark')
     //Retornar respuesta
-    return new Response('ok')
   } catch (error) {
     console.log(error)
-    return new NextResponse('Error al eliminar marca de agua', { status: 500 })
   }
 }
