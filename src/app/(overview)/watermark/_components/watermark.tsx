@@ -8,26 +8,21 @@ import { Upload } from 'lucide-react'
 
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import { DownloadIcon, XIcon } from '@/icons'
-import { Share2Icon, ShareIcon } from 'lucide-react'
 import { WatermarkCard } from './watermark-card'
 
 type Response = {
-  files: string[]
+  url: string
 }
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 export function Watermark() {
-  const [photos, setPhotos] = useState<string[]>([])
+  const [photos, setPhotos] = useState<Response[]>([])
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = React.useState<File[]>([])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    console.log('handlesubit')
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
-    console.log(files)
-    // formData.set('photo', files)
     for (const file of files) {
       formData.append('files[]', file)
     }
@@ -46,11 +41,8 @@ export function Watermark() {
         throw new Error('Error en la respuesta' + messageError)
       }
 
-      const json = (await res.json()) as Response
-      setPhotos(json.files)
-      console.log(json)
-      // const blob = await res.blob()
-      // setBlob(blob)
+      const json = (await res.json()) as Response[]
+      setPhotos(json)
     } catch (error) {
       console.error(error)
     } finally {
@@ -78,8 +70,8 @@ export function Watermark() {
       <div className="grid gap-8">
         {photos.length > 0 ? (
           <div className="flex flex-col gap-4">
-            {photos.map(url => (
-              <WatermarkCard key={url} url={url} />
+            {photos.map(photo => (
+              <WatermarkCard key={photo.url} url={photo.url} />
             ))}
           </div>
         ) : (
@@ -98,7 +90,7 @@ export function Watermark() {
               labelIdle='Arrastra y suelta tu foto <span class="filepond--label-action">Subir</span>'
             />
             <Button
-              disabled={files.length === 0}
+              disabled={files.length === 0 || loading}
               variant="secondary"
               className="w-full bg-primary"
               type="submit"

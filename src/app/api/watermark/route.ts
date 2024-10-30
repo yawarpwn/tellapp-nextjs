@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
+import { uploadStream } from '@/lib/cloudinary'
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
@@ -13,7 +14,7 @@ export async function POST(request: NextRequest) {
   }
 
   // return new Response('ok')
-  let processedImages: string[] = []
+  let processedImages = []
 
   for (const photo of photos) {
     try {
@@ -41,11 +42,16 @@ export async function POST(request: NextRequest) {
         .toBuffer()
 
       // Guardar la imagen procesada en el sistema de archivos
-      const outputFilePath = path.join(process.cwd(), 'public', 'watermarked-photos', photo.name)
-      await fs.writeFile(outputFilePath, watermarkedImage)
+      const res = await uploadStream(watermarkedImage, {
+        folder: 'watermarked',
+        category: 'watermarked',
+      })
 
-      // Agregar la ruta del archivo procesado a la lista
-      processedImages.push(`/watermarked-photos/${photo.name}`)
+      console.log(res)
+
+      processedImages.push({
+        url: res.secure_url,
+      })
     } catch (error) {
       console.log(error)
       return new NextResponse('Error al agregar marca de agua', { status: 500 })
@@ -53,7 +59,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Devolver las rutas de las imágenes procesadas como respuesta JSON
-  return NextResponse.json({ files: processedImages })
+  return NextResponse.json(processedImages)
 }
 
 // return new NextResponse(watermarkedImage, {
