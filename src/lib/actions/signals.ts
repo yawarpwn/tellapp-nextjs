@@ -106,7 +106,8 @@ export async function updateSignalAction(formData: FormData) {
     //upload photo to cloudinary
     const res = await uploadStream(photoBuffer, {
       category,
-      folder: 'gallery',
+      folder: 'signals',
+      height: 417,
     })
 
     //insert info into db

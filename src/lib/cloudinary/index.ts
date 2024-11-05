@@ -39,7 +39,7 @@ export async function deleteSource(publicId: string) {
 
 export async function uploadStream(
   buffer: Buffer,
-  { category, folder }: { category: string; folder: string },
+  { category, folder, height = 1000 }: { category: string; folder: string; height?: number },
 ): Promise<UploadApiResponse> {
   const options: UploadApiOptions = {
     tags: [folder, category],
@@ -49,7 +49,7 @@ export async function uploadStream(
     transformation: [
       {
         width: 'auto',
-        height: 1000,
+        height: height,
         crop: 'scale',
         quality: 'auto',
         format: 'webp',
