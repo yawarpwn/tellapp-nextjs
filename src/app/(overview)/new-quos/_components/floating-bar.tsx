@@ -48,33 +48,28 @@ export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
         onOpenChange={setShowDuplicateModal}
         showTrigger={false}
       />
-      <div className="fixed inset-x-0 bottom-10 z-40 w-full border p-4 ">
-        <div className="w-full">
+      <div className="fixed inset-x-0 bottom-10 z-40 w-full  p-4 ">
+        <div className="w-full  ">
           <div className="mx-auto flex w-fit items-center gap-2 rounded-md bg-gradient-to-r from-accent via-primary to-secondary p-2 shadow-2xl [&>a]:shrink-0 [&>button]:shrink-0">
             <div className="flex h-9 items-center rounded-md border border-dashed pl-2.5 pr-1">
               <span>#{quotation.number}</span>
               <Separator orientation="vertical" className="ml-2 mr-1" />
-              <Button onClick={clearSelectedRow} className="size-7 hover:border" size={'icon'}>
+              <Button onClick={clearSelectedRow} className="size-7" size={'icon'}>
                 <XIcon className="size-4" />
               </Button>
             </div>
 
-            <Button variant={'ghost'} className="size-9 hover:border" size={'icon'} asChild>
+            <Button variant={'ghost'} className="size-9 " size={'icon'} asChild>
               <Link href={`/new-quos/${quotation.number}`}>
                 <EyeIcon />
               </Link>
             </Button>
-            <Button variant="ghost" className="size-9 hover:border" size={'icon'} asChild>
+            <Button variant="ghost" className="size-9 " size={'icon'} asChild>
               <Link href={`/new-quos/${quotation.number}/update`}>
                 <EditIcon />
               </Link>
             </Button>
-            <Button
-              onClick={openDeleteModal}
-              className="size-9 hover:border"
-              variant="ghost"
-              size={'icon'}
-            >
+            <Button onClick={openDeleteModal} className="size-9 " variant="ghost" size={'icon'}>
               <DeleteIcon />
             </Button>
             <TooltipProvider>
@@ -94,7 +89,6 @@ export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            <Separator />
           </div>
         </div>
       </div>

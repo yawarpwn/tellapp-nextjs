@@ -61,7 +61,9 @@ export function CopyText({ text, unitSize }: { text: string; unitSize: string })
     <TooltipProvider>
       <Tooltip open={open} onOpenChange={setOpen}>
         <TooltipTrigger asChild>
-          <button onClick={handleCopy}>{text}</button>
+          <button className="text-left" onClick={handleCopy}>
+            {text}
+          </button>
         </TooltipTrigger>
         <TooltipContent
           className={cn(
