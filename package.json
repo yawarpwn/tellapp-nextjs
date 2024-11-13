@@ -68,6 +68,7 @@
     "react-dropzone": "^14.2.3",
     "react-filepond": "^7.1.2",
     "react-hook-form": "7.51.2",
+    "resend": "^4.0.1-alpha.0",
     "sharp": "^0.33.5",
     "sonner": "^1.5.0",
     "tailwind-merge": "2.2.0",

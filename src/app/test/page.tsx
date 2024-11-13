@@ -1,17 +1,8 @@
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { EmailTemplate } from '@/components/email-template'
 export default function Page() {
   return (
     <div>
-      <span>
-        <TooltipProvider>
-          <Tooltip defaultOpen open={true}>
-            <TooltipTrigger>tete</TooltipTrigger>
-            <TooltipContent>
-              <p>mees</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </span>
+      <EmailTemplate email="ventas@tellsenales.com" name="johney" message="hola" />
     </div>
   )
 }
