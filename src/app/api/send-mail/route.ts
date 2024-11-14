@@ -3,28 +3,6 @@ import { EmailTemplate } from '@/components/email-template'
 import { Resend } from 'resend'
 import { envs } from '@/config'
 
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-
-class UserInfo {
-  constructor(
-    public name: string,
-    public email: string,
-    public message: string,
-  ) {}
-
-  static validate(obj: { [key: string]: string }): [string?, UserInfo?] {
-    const { name, email, message } = obj
-    if (!name) return ['Nombre es requerido']
-    if (name.length < 3) return ['Nombre debe tener al menos 3 caracteres']
-    if (!email) return ['Email es requerido']
-    if (!emailRegex.test(email)) return ['Email invalido']
-    if (!message) return ['Email es requerido']
-    if (message.length < 10) return ['Mesaje muy corto']
-
-    return [undefined, new UserInfo(name, email, message)]
-  }
-}
-
 const htmlTemplate = ({
   message,
   email,
@@ -37,23 +15,18 @@ const htmlTemplate = ({
 `
 export async function POST(req: Request) {
   const body = await req.json()
+  console.log(body)
 
-  const [errorValidation, userInfo] = UserInfo.validate(body)
-  //handle error
-  if (errorValidation) {
-    return NextResponse.json({ success: false, message: errorValidation })
-  }
+  const { email, name, message, ruc, phone } = body
 
   const resend = new Resend(envs.RESEND_API_KEY)
 
-  const { name, email, message } = userInfo!
-
   try {
     const { data, error } = await resend.emails.send({
-      from: `${name} <onboarding@resend.dev>`,
+      from: `${name} <ventas@tellsenales.com>`,
       to: ['tellsenales@gmail.com'],
       subject: 'Cliente desde la WEB',
-      react: EmailTemplate({ email, name, message }),
+      react: EmailTemplate({ email, name, message, ruc, phone }),
     })
 
     if (error) {
@@ -67,10 +40,12 @@ export async function POST(req: Request) {
       )
     }
 
+    console.log(data)
     return Response.json({
       data,
     })
   } catch (error) {
+    console.log(error)
     return Response.json(
       { error },
       {

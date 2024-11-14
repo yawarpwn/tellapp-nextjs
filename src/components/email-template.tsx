@@ -3,19 +3,21 @@ interface Props {
   name: string
   message: string
   phone?: string
+  ruc: number
 }
-export function EmailTemplate({ email, name, message, phone }: Props) {
+export function EmailTemplate({ email, name, message, phone, ruc }: Props) {
   return (
     <div className="container">
       <div className="header">
-        <h1 style={{ color: 'red' }} className="text-[#333]">
-          Nuevo Mensaje de Contacto
-        </h1>
+        <h1>Nuevo Mensaje de Contacto</h1>
         <p>Has recibido un nuevo mensaje desde tu página web.</p>
       </div>
       <div className="content">
         <p>
           <span className="label font-bold ">Nombre:</span> {name}
+        </p>
+        <p>
+          <span className="label font-bold ">Ruc:</span> {ruc}
         </p>
         <p>
           <span className="label font-bold">Correo Electrónico:</span> {email}
