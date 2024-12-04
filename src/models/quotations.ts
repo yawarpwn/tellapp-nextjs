@@ -29,7 +29,7 @@ export class QuotationsModel {
         .from(quotationsTable)
         .leftJoin(customersTable, eq(quotationsTable.customerId, customersTable.id))
         .orderBy(desc(quotationsTable.updatedAt))
-        .limit(1000)
+        .limit(2000)
 
       return {
         data: result,

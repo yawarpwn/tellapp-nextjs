@@ -107,7 +107,7 @@ export function generateQuotationPdf(quotation: QuotationClient) {
                 decoration: 'underline',
               },
               {
-                text: 'Gerente de Ventas',
+                text: 'Gerente Comercial',
                 fontSize: 7,
               },
             ],
