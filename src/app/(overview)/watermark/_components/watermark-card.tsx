@@ -1,7 +1,10 @@
 'use client'
+import { cn } from '@/lib/utils'
 import { DownloadIcon, XIcon } from '@/icons'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { Share2Icon, ShareIcon } from 'lucide-react'
+import { EyeIcon } from '@/icons'
 import { useState } from 'react'
 import { deleteWatermarkAction } from '@/lib/actions/watermark'
 import { toast } from 'sonner'
@@ -15,8 +18,18 @@ interface Props {
   id: string
   width: number
   height: number
+  isSelected: boolean
+  toggleSelectedPhoto: (id: string) => void
 }
-export function WatermarkCard({ url, thumbUrl, id, width, height }: Props) {
+export function WatermarkCard({
+  url,
+  thumbUrl,
+  id,
+  width,
+  height,
+  toggleSelectedPhoto,
+  isSelected,
+}: Props) {
   const [pending, startTransition] = useTransition()
   const [openModal, setOpenModal] = useState(false)
 
@@ -102,11 +115,26 @@ export function WatermarkCard({ url, thumbUrl, id, width, height }: Props) {
       >
         {/* Buttons */}
         <div className="">
+          <Checkbox
+            checked={isSelected}
+            className="absolute left-1 top-1 z-50 size-6"
+            onCheckedChange={() => toggleSelectedPhoto(id)}
+          />
+          <button
+            size="icon"
+            className="absolute right-1 top-1 z-50 w-8"
+            onClick={() => setOpenModal(true)}
+          >
+            <EyeIcon />
+          </button>
           <img className="h-full w-full object-contain" src={thumbUrl} />
         </div>
         <div
-          onClick={() => setOpenModal(true)}
-          className="absolute inset-0  bg-black/80 opacity-0 transition-colors duration-100 hover:opacity-100"
+          onClick={() => toggleSelectedPhoto(id)}
+          className={cn(
+            'absolute inset-0  bg-black/80 opacity-0 transition-colors duration-100',
+            isSelected && 'opacity-100',
+          )}
         ></div>
       </div>
     </>

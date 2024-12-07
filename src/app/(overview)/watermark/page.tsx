@@ -21,9 +21,6 @@ async function MasonryLayoutServer() {
     console.log(error)
     throw error
   }
-
-  // const handleShareSelectedImages = () => {}
-
   return <MasonryLayout items={items} />
 }
 

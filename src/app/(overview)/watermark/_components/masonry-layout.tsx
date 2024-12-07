@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import { WatermarkCard } from '../_components/watermark-card'
 import { CreateWatermark } from '../_components/create-watermark'
 import { Watermark } from '@/schemas'
@@ -8,6 +9,10 @@ interface Props {
   items: WatermarkType[]
 }
 export function MasonryLayout({ items }: Props) {
+  const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
+
+  console.log(selectedPhotos)
+
   function divideArray(inputArray: Watermark[], size: number) {
     const result = []
     const totalLength = inputArray.length
@@ -26,11 +31,10 @@ export function MasonryLayout({ items }: Props) {
   }
 
   const handleShareSelectedImages = async () => {
-    const photosToShare = [items[0].url, items[1].url, items[2].url, items[3].url]
+    const photosToShare = selectedPhotos.map(id => items.find(item => item.id === id)?.url || '')
 
     if (navigator.share) {
       const blobs = await Promise.all(photosToShare.map(url => fetch(url).then(res => res.blob())))
-      console.log(blobs)
       try {
         await navigator.share({
           title: 'Imagen para compartir',
@@ -53,12 +57,22 @@ export function MasonryLayout({ items }: Props) {
     console.log(photosToShare)
   }
 
+  const toggleSelectedPhoto = (id: string) => {
+    if (selectedPhotos.includes(id)) {
+      setSelectedPhotos(selectedPhotos.filter(item => item !== id))
+    } else {
+      setSelectedPhotos([...selectedPhotos, id])
+    }
+  }
+
   const mobileArray = divideArray(items, 2)
   const desktopArray = divideArray(items, 4)
   return (
     <div className="flex flex-col items-center">
       <header className="mb-8 flex w-full justify-end gap-3">
-        <button onClick={handleShareSelectedImages}>Compartir</button>
+        <Button disabled={selectedPhotos.length === 0} onClick={handleShareSelectedImages}>
+          Compartir
+        </Button>
         <CreateWatermark />
       </header>
       {/* Mobile */}
@@ -69,7 +83,9 @@ export function MasonryLayout({ items }: Props) {
               {photos.map((photo, index) => {
                 return (
                   <WatermarkCard
+                    isSelected={selectedPhotos.includes(photo.id)}
                     width={photo.width}
+                    toggleSelectedPhoto={toggleSelectedPhoto}
                     height={photo.height}
                     id={photo.id}
                     key={photo.id}
@@ -91,6 +107,8 @@ export function MasonryLayout({ items }: Props) {
               {photos.map((photo, index) => {
                 return (
                   <WatermarkCard
+                    isSelected={selectedPhotos.includes(photo.id)}
+                    toggleSelectedPhoto={toggleSelectedPhoto}
                     width={photo.width}
                     height={photo.height}
                     id={photo.id}
