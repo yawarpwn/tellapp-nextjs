@@ -2,16 +2,22 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { WatermarkCard } from '../_components/watermark-card'
+import { toast } from 'sonner'
 import { CreateWatermark } from '../_components/create-watermark'
 import { Watermark } from '@/schemas'
 import type { Watermark as WatermarkType } from '@/schemas'
+import { Loader2 } from 'lucide-react'
 interface Props {
   items: WatermarkType[]
 }
 export function MasonryLayout({ items }: Props) {
   const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
 
-  console.log(selectedPhotos)
+  const reset = () => {
+    setSelectedPhotos([])
+    setLoading(false)
+  }
 
   function divideArray(inputArray: Watermark[], size: number) {
     const result = []
@@ -34,6 +40,7 @@ export function MasonryLayout({ items }: Props) {
     const photosToShare = selectedPhotos.map(id => items.find(item => item.id === id)?.url || '')
 
     if (navigator.share) {
+      setLoading(true)
       const blobs = await Promise.all(photosToShare.map(url => fetch(url).then(res => res.blob())))
       try {
         await navigator.share({
@@ -46,12 +53,15 @@ export function MasonryLayout({ items }: Props) {
             ),
           ],
         })
-        console.log('Imagen compartida exitosamente')
+        toast.success('Imagen compartida exitosamente')
       } catch (error) {
         console.error('Error al compartir la imagen:', error)
+        setLoading(false)
+      } finally {
+        reset()
       }
     } else {
-      alert('La funcionalidad de compartir no está disponible en este dispositivo.')
+      toast.error('La funcionalidad de compartir no está disponible en este dispositivo.')
     }
 
     console.log(photosToShare)
@@ -65,12 +75,42 @@ export function MasonryLayout({ items }: Props) {
     }
   }
 
+  const handleDownloadSelectedImages = () => {
+    setLoading(true)
+    const photosToDownload = selectedPhotos.map(id => items.find(item => item.id === id)?.url || '')
+    photosToDownload.forEach(async url => {
+      const blob = await fetch(url).then(res => res.blob())
+      const blobUrl = URL.createObjectURL(blob)
+      const anchor = document.createElement('a')
+      anchor.href = blobUrl
+      const hash = new Date().getTime().toString()
+      anchor.download = `tellsenales-photo-${hash}`
+      anchor.target = '_blank'
+      document.body.appendChild(anchor)
+      anchor.click()
+      document.body.removeChild(anchor)
+    })
+    reset()
+  }
+
   const mobileArray = divideArray(items, 2)
   const desktopArray = divideArray(items, 4)
   return (
     <div className="flex flex-col items-center">
       <header className="mb-8 flex w-full justify-end gap-3">
-        <Button disabled={selectedPhotos.length === 0} onClick={handleShareSelectedImages}>
+        <Button onClick={() => reset()}>Limpiar</Button>
+        <Button
+          disabled={selectedPhotos.length === 0 || loading}
+          onClick={handleDownloadSelectedImages}
+        >
+          {loading && <Loader2 className="mr-2 animate-spin" size={20} />}
+          Descargar
+        </Button>
+        <Button
+          disabled={selectedPhotos.length === 0 || loading}
+          onClick={handleShareSelectedImages}
+        >
+          {loading && <Loader2 className="mr-2 animate-spin" size={20} />}
           Compartir
         </Button>
         <CreateWatermark />
