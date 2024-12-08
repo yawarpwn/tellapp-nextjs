@@ -12,11 +12,13 @@ interface Props {
 }
 export function MasonryLayout({ items }: Props) {
   const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
+  const [shareLoading, setShareLoading] = useState(false)
+  const [downloadLoading, setDownloadLoading] = useState(false)
 
   const reset = () => {
     setSelectedPhotos([])
-    setLoading(false)
+    setShareLoading(false)
+    setDownloadLoading(false)
   }
 
   function divideArray(inputArray: Watermark[], size: number) {
@@ -40,7 +42,7 @@ export function MasonryLayout({ items }: Props) {
     const photosToShare = selectedPhotos.map(id => items.find(item => item.id === id)?.url || '')
 
     if (navigator.share) {
-      setLoading(true)
+      setShareLoading(true)
       const blobs = await Promise.all(photosToShare.map(url => fetch(url).then(res => res.blob())))
       try {
         await navigator.share({
@@ -56,7 +58,7 @@ export function MasonryLayout({ items }: Props) {
         toast.success('Imagen compartida exitosamente')
       } catch (error) {
         console.error('Error al compartir la imagen:', error)
-        setLoading(false)
+        setShareLoading(false)
       } finally {
         reset()
       }
@@ -76,7 +78,7 @@ export function MasonryLayout({ items }: Props) {
   }
 
   const handleDownloadSelectedImages = () => {
-    setLoading(true)
+    setDownloadLoading(true)
     const photosToDownload = selectedPhotos.map(id => items.find(item => item.id === id)?.url || '')
     photosToDownload.forEach(async url => {
       const blob = await fetch(url).then(res => res.blob())
@@ -100,17 +102,17 @@ export function MasonryLayout({ items }: Props) {
       <header className="mb-8 flex w-full justify-end gap-3">
         <Button onClick={() => reset()}>Limpiar</Button>
         <Button
-          disabled={selectedPhotos.length === 0 || loading}
+          disabled={selectedPhotos.length === 0 || downloadLoading}
           onClick={handleDownloadSelectedImages}
         >
-          {loading && <Loader2 className="mr-2 animate-spin" size={20} />}
+          {shareLoading && <Loader2 className="mr-2 animate-spin" size={20} />}
           Descargar
         </Button>
         <Button
-          disabled={selectedPhotos.length === 0 || loading}
+          disabled={selectedPhotos.length === 0 || shareLoading}
           onClick={handleShareSelectedImages}
         >
-          {loading && <Loader2 className="mr-2 animate-spin" size={20} />}
+          {shareLoading && <Loader2 className="mr-2 animate-spin" size={20} />}
           Compartir
         </Button>
         <CreateWatermark />
