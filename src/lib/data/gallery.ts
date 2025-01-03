@@ -7,7 +7,7 @@ import { createServerClient } from '../supabase/server'
 
 export async function fetchGalleryPages(query = '') {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   const { count, error } = await supabase
@@ -24,7 +24,7 @@ export async function fetchGalleryPages(query = '') {
 
 export async function fetchFilteredGallery(query: string, currentPage: number) {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
   console.log(supabase)
 

@@ -1,6 +1,6 @@
 'use server'
 
-import { cookies } from 'next/headers'
+import { cookies, type UnsafeUnwrappedCookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -58,7 +58,10 @@ export async function signIn(_prevState: FormState, formData: FormData) {
   )
 
   const oneDay = 24 * 60 * 60 * 1000
-  cookies().set('auth-token', authToken, {
+
+  const cookieStore = await cookies()
+
+  cookieStore.set('auth-token', authToken, {
     expires: oneDay, // 1 day
     maxAge: oneDay, // 1 day
     httpOnly: false,
@@ -74,6 +77,7 @@ export async function signIn(_prevState: FormState, formData: FormData) {
 }
 
 export async function signOut() {
-  cookies().delete('auth-token')
+  const cookieStore = await cookies()
+  cookieStore.delete('auth-token')
   redirect('/')
 }

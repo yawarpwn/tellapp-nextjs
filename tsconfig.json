@@ -26,7 +26,8 @@
         "name": "next"
       }
     ],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",

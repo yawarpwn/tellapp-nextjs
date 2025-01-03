@@ -6,7 +6,7 @@ import { cookies } from 'next/headers'
 import { createServerClient } from '../supabase/server'
 
 export async function fetchSignals() {
-  const cookiesStore = cookies()
+  const cookiesStore = await cookies()
   const supabase = createServerClient(cookiesStore)
 
   const { data: signals, error } = await supabase.from(TABLES.Signals).select()
@@ -20,7 +20,7 @@ export async function fetchSignals() {
 
 export async function fetchSignalsPages(query = '') {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   const { count, error } = await supabase
@@ -39,7 +39,7 @@ export async function fetchSignalsPages(query = '') {
 
 export async function fetchFilteredSignals(query: string, currentPage: number) {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
@@ -61,7 +61,7 @@ export async function fetchFilteredSignals(query: string, currentPage: number) {
 
 export async function fetchSignalById(id: string) {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   const { data: signals, error } = await supabase

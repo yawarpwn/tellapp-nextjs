@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 
 export async function fetchAgencies() {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   // fetch all agencieso
@@ -19,7 +19,7 @@ export async function fetchAgencies() {
 }
 export async function fetchFilteredAgencies({ query = '', currentPage = 1 }) {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   // fetch filtered agencies
@@ -40,7 +40,7 @@ export async function fetchFilteredAgencies({ query = '', currentPage = 1 }) {
 
 export async function fetchAgenciesPages(query = '') {
   // crete supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   // fetch total pages
   const supabase = createServerClient(cookieStore)

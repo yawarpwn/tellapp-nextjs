@@ -20,7 +20,7 @@ export async function fetchQuotationById(id: string) {
 
 export async function fetchLastQuotation() {
   // create supabase Client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   const lastQuotation = await QuotationsModel.getLastQuotation()

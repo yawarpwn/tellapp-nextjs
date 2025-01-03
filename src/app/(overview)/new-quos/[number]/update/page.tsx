@@ -20,7 +20,8 @@ export async function QuotationUpdateServer({ quoNumber }: { quoNumber: number }
   )
 }
 
-export default async function Page({ params }: { params?: { number?: string } }) {
+export default async function Page(props: { params?: Promise<{ number?: string }> }) {
+  const params = await props.params;
   const number = Number(params?.number)
   return (
     <>

@@ -1,8 +1,7 @@
 'use client'
 import ConfirmModalAction from '@/components/confirm-action-modal'
 import { DeleteIcon } from '@/icons'
-import { useState } from 'react'
-import { useFormState } from 'react-dom'
+import { useState, useActionState } from 'react';
 
 const initialState = {
   message: null,
@@ -19,7 +18,7 @@ function DeleteActionForm({ id, publicId, deleteAction }: Props) {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const openModal = () => setIsOpenModal(true)
   const closeModal = () => setIsOpenModal(false)
-  const [state, dispatch] = useFormState(deleteAction, initialState)
+  const [state, dispatch] = useActionState(deleteAction, initialState)
   return (
     <>
       <ConfirmModalAction onAction={dispatch} isOpen={isOpenModal} onClose={closeModal}>

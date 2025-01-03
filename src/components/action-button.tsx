@@ -8,8 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import React from 'react'
-import { useFormState } from 'react-dom'
+import React, { useActionState } from 'react';
 import { SubmitButton } from './submit-button'
 
 interface Props {
@@ -29,7 +28,7 @@ export function ActionForm(props: Props) {
     dialogTitle = 'dialog Title',
     dialogDescription = 'Dialog Description',
   } = props
-  const [state, dispatch] = useFormState(action, null)
+  const [state, dispatch] = useActionState(action, null)
   return (
     <>
       <Dialog>

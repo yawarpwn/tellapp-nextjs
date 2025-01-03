@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 
 async function LayoutDashboar({ children }: { children: React.ReactNode }) {
-  const authToken = cookies().get('auth-token')
+  const authToken = (await cookies()).get('auth-token')
   if (!authToken) redirect('/')
   return (
     <>

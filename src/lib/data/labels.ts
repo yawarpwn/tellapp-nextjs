@@ -6,7 +6,7 @@ import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 export async function fetchLabels() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   const { data, error } = await supabase
@@ -25,7 +25,7 @@ export async function fetchLabels() {
 
 export async function fetchFilteredLabels({ query = '', currentPage = 1 }) {
   // create supbase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   // fetch filtered labels
@@ -46,7 +46,7 @@ export async function fetchFilteredLabels({ query = '', currentPage = 1 }) {
 
 export async function fetchLabelsPages(query = '') {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   // fetch total pages
@@ -70,7 +70,7 @@ export async function fetchLabelsPages(query = '') {
 
 export async function fetchLabelsById({ id }) {
   // create supabase client
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(cookieStore)
 
   // fetch label by id

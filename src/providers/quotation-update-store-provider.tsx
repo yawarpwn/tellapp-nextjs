@@ -25,7 +25,7 @@ type QuotationCreateStoreProviderProps = {
 
 export function QuotationUpdateStoreProvider(props: QuotationCreateStoreProviderProps) {
   const { children, customers, products, quo } = props
-  const storeRef = React.useRef<QuotationCreateStoreApi>()
+  const storeRef = React.useRef<QuotationCreateStoreApi>(undefined)
   if (!storeRef.current) {
     storeRef.current = createQuotationStore<QuotationClientUpdate>(
       initQuotationStore({

@@ -1,13 +1,13 @@
 'use client'
+import { useActionState } from 'react'
 
 import { SubmitButton } from '@/components/submit-button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { signIn } from '@/lib/actions/auth'
-import { useFormState } from 'react-dom'
 
 export function LoginForm({ message }: { message: string }) {
-  const [state, dispatch] = useFormState(signIn, { message: '', errors: {} })
+  const [state, dispatch] = useActionState(signIn, { message: '', errors: {} })
 
   return (
     <>

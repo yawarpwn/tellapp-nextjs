@@ -3,10 +3,11 @@ import { Logo } from '@/components/logo'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-export default async function Home({ searchParams }: { searchParams?: { message?: string } }) {
+export default async function Home(props: { searchParams?: Promise<{ message?: string }> }) {
+  const searchParams = await props.searchParams;
   const message = searchParams?.message || ''
 
-  const authToken = cookies().get('auth-token')
+  const authToken = (await cookies()).get('auth-token')
 
   if (authToken) redirect('/new-quos')
 

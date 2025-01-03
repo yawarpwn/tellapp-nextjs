@@ -4,7 +4,8 @@ import { QuotationSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
 import { QuotationPageByNumber } from '../_components/quotation-page-by-number'
 
-async function QuotationPage({ params }: { params: { number: string } }) {
+async function QuotationPage(props: { params: Promise<{ number: string }> }) {
+  const params = await props.params;
   const number = Number(params.number)
   return (
     <div className="flex flex-col gap-4">
