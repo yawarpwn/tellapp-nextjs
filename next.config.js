@@ -8,6 +8,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  staticPageGenerationTimeout: 60,
   crossOrigin: 'anonymous',
   async headers() {
     return [
