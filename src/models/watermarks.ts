@@ -21,6 +21,7 @@ export class WatermarkModel {
         })
         .from(watermarksTable)
         .orderBy(desc(watermarksTable.updatedAt))
+        .limit(200)
 
       const mappedRows = rows.map(row => ({
         ...row,

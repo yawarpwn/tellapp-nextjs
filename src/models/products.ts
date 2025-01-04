@@ -6,39 +6,6 @@ import { eq, desc } from 'drizzle-orm'
 import { productsTable } from '@/db/schemas'
 
 export class ProductsModel {
-  static async getById(id: string): Promise<DatabaseResponse<Product>> {
-    try {
-      const result = await db
-        .select({
-          id: productsTable.id,
-          description: productsTable.description,
-          category: productsTable.category,
-          code: productsTable.code,
-          price: productsTable.price,
-          cost: productsTable.cost,
-          link: productsTable.link,
-          rank: productsTable.rank,
-          unitSize: productsTable.unitSize,
-          createdAt: productsTable.createdAt,
-          updatedAt: productsTable.updatedAt,
-        })
-        .from(productsTable)
-        .where(eq(productsTable.id, id))
-        .limit(200)
-
-      return {
-        data: result[0],
-        error: null,
-      }
-    } catch (error) {
-      console.log(error)
-      return {
-        data: null,
-        error: DatabaseError.internalError('Error al obtener producto ' + id),
-      }
-    }
-  }
-
   static async getAll(): Promise<DatabaseResponse<Product[]>> {
     try {
       const result = await db
@@ -57,6 +24,7 @@ export class ProductsModel {
         })
         .from(productsTable)
         .orderBy(desc(productsTable.updatedAt))
+        .limit(500)
 
       return {
         data: result,
@@ -67,6 +35,37 @@ export class ProductsModel {
       return {
         data: null,
         error: DatabaseError.internalError('Error al obtener los productos'),
+      }
+    }
+  }
+  static async getById(id: string): Promise<DatabaseResponse<Product>> {
+    try {
+      const result = await db
+        .select({
+          id: productsTable.id,
+          description: productsTable.description,
+          category: productsTable.category,
+          code: productsTable.code,
+          price: productsTable.price,
+          cost: productsTable.cost,
+          link: productsTable.link,
+          rank: productsTable.rank,
+          unitSize: productsTable.unitSize,
+          createdAt: productsTable.createdAt,
+          updatedAt: productsTable.updatedAt,
+        })
+        .from(productsTable)
+        .where(eq(productsTable.id, id))
+
+      return {
+        data: result[0],
+        error: null,
+      }
+    } catch (error) {
+      console.log(error)
+      return {
+        data: null,
+        error: DatabaseError.internalError('Error al obtener producto ' + id),
       }
     }
   }

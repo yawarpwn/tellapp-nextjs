@@ -23,6 +23,7 @@ export class GalleryModel {
         })
         .from(galleryTable)
         .orderBy(desc(galleryTable.updatedAt))
+        .limit(200)
 
       const mappedRows = rows.map(row => ({
         ...row,

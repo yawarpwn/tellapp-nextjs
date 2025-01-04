@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   description: siteConfig.description,
 }
 
+// Since this is the root layout, all fetch requests in the app
+// that don't set their own cache option will be cached.
+export const fetchCache = 'default-cache'
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html data-theme="dark" lang="en">
