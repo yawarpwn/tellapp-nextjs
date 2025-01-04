@@ -4,10 +4,11 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export default async function Home(props: { searchParams?: Promise<{ message?: string }> }) {
-  const searchParams = await props.searchParams;
+  const searchParams = await props.searchParams
   const message = searchParams?.message || ''
 
-  const authToken = (await cookies()).get('auth-token')
+  const cookieStore = await cookies()
+  const authToken = cookieStore.get('auth-token')
 
   if (authToken) redirect('/new-quos')
 

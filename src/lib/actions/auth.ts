@@ -1,6 +1,6 @@
 'use server'
 
-import { cookies, type UnsafeUnwrappedCookies } from 'next/headers'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'

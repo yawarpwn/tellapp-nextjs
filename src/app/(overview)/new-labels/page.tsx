@@ -11,6 +11,9 @@ export default async function Page() {
     { data: agenciesResponse, error: agenciesError },
   ] = await Promise.all([LabelsModel.getAll(), AgenciesModel.getAll()])
 
+  // const { data: labelsResponse, error: labelsError } = await LabelsModel.getAll()
+  // const { data: agenciesResponse, error: agenciesError } = await AgenciesModel.getAll()
+
   if (labelsError || agenciesError) {
     throw new Error('Error al obtener los datos')
   }

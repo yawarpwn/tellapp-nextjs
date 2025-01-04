@@ -5,7 +5,9 @@ import { customerColumns } from './_components/customer-columns'
 
 export default async function Page() {
   const { data: customers, error } = await CustomersModel.getAll()
-  if (error) throw error
+  if (error) {
+    throw error
+  }
   return (
     <DataTable
       createComponent={<CreateCustomerDialog />}

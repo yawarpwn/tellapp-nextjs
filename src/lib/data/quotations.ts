@@ -1,6 +1,3 @@
-import { TABLES } from '@/constants'
-import { createServerClient } from '@/lib/supabase/server'
-import { cookies } from 'next/headers'
 import { QuotationsModel } from '@/models'
 
 export async function fetchQuotations() {
@@ -20,8 +17,6 @@ export async function fetchQuotationById(id: string) {
 
 export async function fetchLastQuotation() {
   // create supabase Client
-  const cookieStore = await cookies()
-  const supabase = createServerClient(cookieStore)
 
   const lastQuotation = await QuotationsModel.getLastQuotation()
   return lastQuotation
