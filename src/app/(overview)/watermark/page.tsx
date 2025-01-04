@@ -1,11 +1,9 @@
 import { WatermarkModel } from '@/models'
 import { MasonryLayout } from './_components/masonry-layout'
+import { fetchWatermarkPhotos } from '@/lib/data/watermark'
 
 export default async function Page() {
-  const { data: items, error } = await WatermarkModel.getAll()
-
-  if (error) {
-    throw error
-  }
-  return <MasonryLayout items={items} />
+  const watermarkPhotos = await fetchWatermarkPhotos()
+  console.log('Total Watermarks: ', watermarkPhotos.length)
+  return <MasonryLayout items={watermarkPhotos} />
 }

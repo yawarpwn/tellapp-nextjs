@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: siteConfig.description,
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html data-theme="dark" lang="en">
       <body

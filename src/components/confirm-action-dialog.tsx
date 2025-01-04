@@ -29,7 +29,6 @@ export function ConfirmActionDialog({
   onOpenChange,
   open,
   action,
-  ...props
 }: Props) {
   const [pending, startTranstion] = React.useTransition()
   return (
@@ -59,7 +58,7 @@ export function ConfirmActionDialog({
               onClick={() => {
                 startTranstion(async () => {
                   toast.promise(action, {
-                    loading: 'Eliminando',
+                    loading: 'Eliminando...',
                     success: data => {
                       onOpenChange?.(false)
                       return 'Eliminado'

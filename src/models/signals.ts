@@ -25,6 +25,7 @@ export class SignalsModel {
         })
         .from(signalsTable)
         .orderBy(desc(signalsTable.updatedAt))
+        .limit(200)
 
       const mappedRows = rows.map(row => ({
         ...row,

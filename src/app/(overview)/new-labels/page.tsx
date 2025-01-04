@@ -1,30 +1,19 @@
 import { DataTable } from '@/components/data-table'
-import { AgenciesModel } from '@/models/agencies'
-import { LabelsModel } from '@/models/labels'
 import { LabelsProvider } from '@/providers/labels-provider'
 import { CreateLabelDialog } from './_components/create-label-dialog'
 import { labelColumns } from './_components/label-columns'
+import { fetchLabels } from '@/lib/data/labels'
+import { fetchAgencies } from '@/lib/data/agencies'
 
 export default async function Page() {
-  const [
-    { data: labelsResponse, error: labelsError },
-    { data: agenciesResponse, error: agenciesError },
-  ] = await Promise.all([LabelsModel.getAll(), AgenciesModel.getAll()])
-
-  // const { data: labelsResponse, error: labelsError } = await LabelsModel.getAll()
-  // const { data: agenciesResponse, error: agenciesError } = await AgenciesModel.getAll()
-
-  if (labelsError || agenciesError) {
-    throw new Error('Error al obtener los datos')
-  }
+  // const labels = await fetchLabels()
+  // const agencies = await fetchAgencies()
+  const [labels, agencies] = await Promise.all([fetchLabels(), fetchAgencies()])
+  console.log('Total Labels: ', labels.length)
 
   return (
-    <LabelsProvider agencies={agenciesResponse}>
-      <DataTable
-        createComponent={<CreateLabelDialog />}
-        columns={labelColumns}
-        data={labelsResponse}
-      />
+    <LabelsProvider agencies={agencies}>
+      <DataTable createComponent={<CreateLabelDialog />} columns={labelColumns} data={labels} />
     </LabelsProvider>
   )
 }

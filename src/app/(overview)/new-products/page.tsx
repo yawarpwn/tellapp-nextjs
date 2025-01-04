@@ -1,12 +1,12 @@
 import { DataTable } from '@/components/data-table'
 import { CreateProductDialog } from './_components/create-product-dialog'
 import { productColumns } from './_components/product-columns'
-import { ProductsModel } from '@/models/products'
 import { PRODUCT_CATEGORIES } from '@/constants'
+import { fetchProducts } from '@/lib/data/products'
 
 export default async function Page() {
-  const { data: products, error } = await ProductsModel.getAll()
-  if (error) throw error
+  const products = await fetchProducts()
+  console.log('Total Products: ', products.length)
   return (
     <DataTable
       showCategory

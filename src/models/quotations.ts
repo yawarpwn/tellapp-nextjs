@@ -7,7 +7,7 @@ export class QuotationsModel {
   /**
    * Obtener todas las cotizaciones
    */
-  static async getAll(): Promise<DatabaseResponse<Quotation[]>> {
+  static async getAll(): Promise<DatabaseResponse<QuotationClient[]>> {
     try {
       const result = await db
         .select({

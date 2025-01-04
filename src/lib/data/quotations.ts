@@ -1,8 +1,10 @@
+import { Quotation, QuotationClient } from '@/types'
 import { QuotationsModel } from '@/models'
 
-export async function fetchQuotations() {
-  const quotations = await QuotationsModel.getAll()
-  return quotations
+export async function fetchQuotations(): Promise<QuotationClient[]> {
+  const { data, error } = await QuotationsModel.getAll()
+  if (error) throw error
+  return data
 }
 
 export async function fetchQuotationByNumber({ number }: { number: number }) {

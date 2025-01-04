@@ -30,7 +30,7 @@ export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
             ¿Deseas borrar la cotización <span className="font-bold text-accent"></span>
           </>
         }
-        onSuccess={closeDeleteModal}
+        // onSuccess={closeDeleteModal}
         open={showDeleteModal}
         onOpenChange={setShowDeleteModal}
         showTrigger={false}

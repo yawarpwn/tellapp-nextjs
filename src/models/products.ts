@@ -24,6 +24,7 @@ export class ProductsModel {
         })
         .from(productsTable)
         .where(eq(productsTable.id, id))
+        .limit(200)
 
       return {
         data: result[0],

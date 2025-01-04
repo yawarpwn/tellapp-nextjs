@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
@@ -8,7 +9,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  staticPageGenerationTimeout: 30,
+  // staticPageGenerationTimeout: 90,
   crossOrigin: 'anonymous',
   // async headers() {
   //   return [

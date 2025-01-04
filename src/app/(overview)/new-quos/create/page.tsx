@@ -2,27 +2,12 @@ import Breadcrumbs from '@/components/breadcrumbs'
 import { QuotationCreateStoreProvider } from '@/providers/quotation-create-store-provider'
 import { CustomersModel, ProductsModel } from '@/models'
 import { QuotationCreate } from './_components/quotation-create'
-import { Suspense } from 'react'
-import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations'
-import { notFound } from 'next/navigation'
-
-async function CreateQuotationPageServer() {
-  const { data: customers, error: customersError } = await CustomersModel.getAll()
-  const { data: products, error: productsError } = await ProductsModel.getAll()
-
-  if (customersError || productsError) {
-    notFound()
-  }
-
-  return (
-    <QuotationCreateStoreProvider products={products} customers={customers}>
-      <QuotationCreate />
-    </QuotationCreateStoreProvider>
-  )
-}
+import { fetchProducts } from '@/lib/data/products'
+import { fetchCustomers } from '@/lib/data/customers'
 
 // export const dynamic = 'force-dynamic'
 export default async function Page() {
+  const [products, customers] = await Promise.all([fetchProducts(), fetchCustomers()])
   return (
     <div className="flex flex-col gap-4">
       <Breadcrumbs
@@ -38,9 +23,10 @@ export default async function Page() {
           },
         ]}
       />
-      <Suspense fallback={<UpdateCreateQuotationSkeleton />}>
-        <CreateQuotationPageServer />
-      </Suspense>
+
+      <QuotationCreateStoreProvider products={products} customers={customers}>
+        <QuotationCreate />
+      </QuotationCreateStoreProvider>
     </div>
   )
 }

@@ -30,6 +30,7 @@ export class LabelsModel {
         .from(labelsTable)
         .leftJoin(agenciesTable, eq(labelsTable.agencyId, agenciesTable.id))
         .orderBy(desc(labelsTable.updatedAt))
+        .limit(200)
 
       return {
         data: result,
