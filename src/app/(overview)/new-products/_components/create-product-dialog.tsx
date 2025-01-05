@@ -46,7 +46,7 @@ import { AddButton } from '@/components/buttons'
 import { SaveIcon } from 'lucide-react'
 
 interface Props {
-  triggerButton: React.ReactNode
+  triggerButton?: React.ReactNode
   product?: Partial<ProductInsert>
 }
 export function CreateProductDialog(props: Props) {
