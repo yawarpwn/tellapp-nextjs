@@ -1,3 +1,4 @@
+import React from 'react'
 import { ConfirmActionDialog } from '@/components/confirm-action-dialog'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -6,7 +7,6 @@ import { DeleteIcon, DocumentDuplicateIcon, EditIcon, EyeIcon, XIcon } from '@/i
 import { deleteQuotationAction, duplicateQuotationAction } from '@/lib/actions/quoatations'
 import { QuotationClient } from '@/types'
 import Link from 'next/link'
-import React from 'react'
 interface Props {
   id: string
   quotation: QuotationClient
@@ -18,8 +18,6 @@ export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
 
   const openDuplicateModal = () => setShowDuplicateModal(true)
   const openDeleteModal = () => setShowDeleteModal(true)
-  const closeDeleteModal = () => setShowDeleteModal(false)
-  const closeDuplicateModal = () => setShowDuplicateModal(false)
 
   return (
     <>

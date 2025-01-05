@@ -41,7 +41,6 @@ export async function updateProductAction(id: string, productToUpdate: ProductUp
   if (error) throw error
 
   revalidatePath('/new-products')
-  redirect('/new-products')
 }
 
 export async function deleteProductAction(id: string): Promise<void> {

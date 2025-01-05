@@ -65,20 +65,10 @@ export function UpdateProductSheet({ product, onOpenChange, open }: UpdateTaskSh
   })
 
   function onSubmit(input: ProductUpdate) {
-    startUpdateTransition(() => {
-      toast.promise(updateProductAction(product.id, input), {
-        loading: 'Actualizando producto..',
-        success: () => {
-          console.log('success')
-          onOpenChange?.(false)
-          return 'Producto actualizado'
-        },
-        error: error => {
-          console.log(error)
-          onOpenChange?.(false)
-          return getErrorMessage(error)
-        },
-      })
+    startUpdateTransition(async () => {
+      await updateProductAction(product.id, input)
+
+      onOpenChange?.(false)
     })
   }
 

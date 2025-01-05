@@ -55,23 +55,6 @@ export function CreateProductDialog(props: Props) {
 
   const { product } = props
 
-  function onSubmit(input: ProductInsert) {
-    console.log('submit')
-    startCreateTransition(() => {
-      toast.promise(createProductAction(input), {
-        loading: 'Creando producto...',
-        success: () => {
-          form.reset()
-          setOpen(false)
-          return 'Producto Creado'
-        },
-        error: error => {
-          return getErrorMessage(error)
-        },
-      })
-    })
-  }
-
   const form = useForm<ProductInsert>({
     resolver: zodResolver(ProductInsertSchema),
     defaultValues: {
@@ -83,6 +66,15 @@ export function CreateProductDialog(props: Props) {
       unitSize: product?.unitSize,
     },
   })
+
+  function onSubmit(input: ProductInsert) {
+    console.log('submit')
+    startCreateTransition(async () => {
+      await createProductAction(input)
+      setOpen(false)
+      form.reset()
+    })
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

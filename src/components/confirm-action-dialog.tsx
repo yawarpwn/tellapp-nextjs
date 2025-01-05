@@ -14,7 +14,6 @@ import {
 import { DeleteIcon } from '@/icons'
 import { Loader2 } from 'lucide-react'
 import React from 'react'
-import { toast } from 'sonner'
 
 interface Props extends React.ComponentPropsWithoutRef<typeof Dialog> {
   showTrigger?: boolean
@@ -35,6 +34,7 @@ export function ConfirmActionDialog({
   const handleClick = () => {
     startTranstion(async () => {
       await action()
+      onOpenChange?.(false)
     })
   }
   return (
