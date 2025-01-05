@@ -20,7 +20,12 @@ import { DeleteIcon } from '@/icons'
 import { Loader2 } from 'lucide-react'
 import React from 'react'
 
-export function DuplicateButton({ id, showTrigger = false }: { id: string; showTrigger: boolean }) {
+interface Props {
+  id: string
+  showTrigger: boolean
+  quotationNumber: number
+}
+export function DuplicateButton({ id, showTrigger = false, quotationNumber }: Props) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const [pending, startTranstion] = React.useTransition()
@@ -54,9 +59,9 @@ export function DuplicateButton({ id, showTrigger = false }: { id: string; showT
                 onClick={() => {
                   startTranstion(async () => {
                     toast.promise(duplicateQuotationAction(id), {
-                      success: ({ number }) => {
-                        router.push(`/new-quos/${number}`)
-                        return `Cotizacion ${number} Creado`
+                      success: () => {
+                        router.push(`/new-quos/${quotationNumber}`)
+                        return `Cotizacion ${quotationNumber} Creado`
                       },
                       loading: 'duplicando...',
                       error: 'No se pudo duplicar',

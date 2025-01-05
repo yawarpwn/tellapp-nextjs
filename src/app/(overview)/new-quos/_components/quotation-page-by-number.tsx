@@ -42,8 +42,8 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
             <span className="ml-2 hidden lg:block">Editar</span>
           </Link>
           <DownloadAndShareButtons quotation={quotation} />
-          <DuplicateButton showTrigger id={quotation.id} />
-          <DeleteButton showTrigger id={quotation.id} />
+          <DuplicateButton quotationNumber={quotation.number} showTrigger id={quotation.id} />
+          <DeleteButton quotationNumber={quotation.number} showTrigger id={quotation.id} />
           {quotation.customerId && (
             <IsRegularButton
               id={quotation.customerId}

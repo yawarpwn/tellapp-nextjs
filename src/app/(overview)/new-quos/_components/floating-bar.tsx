@@ -27,7 +27,8 @@ export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
         action={() => deleteQuotationAction(id)}
         dialogTitle={
           <>
-            ¿Deseas borrar la cotización <span className="font-bold text-accent"></span>
+            ¿Deseas borrar la cotización&nbsp;
+            <strong className="font-bold text-accent">#{quotation.number}</strong>
           </>
         }
         // onSuccess={closeDeleteModal}

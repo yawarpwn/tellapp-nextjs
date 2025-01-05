@@ -88,15 +88,21 @@ export async function createQuotationAction(
   return { number: quoNumber }
 }
 
-export async function deleteQuotationAction(id: string) {
+export async function deleteQuotationAction(id: string): Promise<void> {
   // create supabase client
-  await QuotationsModel.delete(id)
+  const { data, error } = await QuotationsModel.delete(id)
 
-  revalidatePath('/new-quos')
-  redirect(`/new-quos`)
+  if (error) {
+    throw error
+  }
+
+  // console.log('Quotation number: ', data.number, ' deleted')
+  //
+  // revalidatePath('/new-quos')
+  // redirect(`/new-quos`)
 }
 
-export async function duplicateQuotationAction(id: string): Promise<{ number: number }> {
+export async function duplicateQuotationAction(id: string): Promise<void> {
   const { data: quotation, error } = await QuotationsModel.getById(id)
 
   if (error) throw error
@@ -119,7 +125,6 @@ export async function duplicateQuotationAction(id: string): Promise<{ number: nu
   })
 
   revalidatePath('/new-quos')
-  return { number: quoNumber }
   // redirect(`/new-quos/${lastQuotation.number}`)
 }
 

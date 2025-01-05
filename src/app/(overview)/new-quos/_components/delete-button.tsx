@@ -20,8 +20,13 @@ import { DeleteIcon } from '@/icons'
 import { Loader2 } from 'lucide-react'
 import React from 'react'
 
-export function DeleteButton({ id, showTrigger = false }: { id: string; showTrigger: boolean }) {
-  const router = useRouter()
+interface Props {
+  id: string
+  showTrigger: boolean
+  quotationNumber: number
+}
+export function DeleteButton({ id, quotationNumber, showTrigger = false }: Props) {
+  // const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const [pending, startTranstion] = React.useTransition()
   return (
@@ -38,10 +43,10 @@ export function DeleteButton({ id, showTrigger = false }: { id: string; showTrig
 
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Duplicar Cotización</DialogTitle>
+            <DialogTitle>Eliminar Cotización</DialogTitle>
             {DialogDescription && (
               <DialogDescription className="py-4">
-                ¿Deseas duplicar esta cotización?
+                ¿Eliminar Cotización <strong>#{quotationNumber}</strong> ?
               </DialogDescription>
             )}
             <DialogFooter className="gap-y-2">
@@ -55,8 +60,8 @@ export function DeleteButton({ id, showTrigger = false }: { id: string; showTrig
                   startTranstion(async () => {
                     toast.promise(deleteQuotationAction(id), {
                       success: () => {
-                        router.push(`/new-quos/`)
-                        return `Cotizacion Eliminado correctamente`
+                        // router.push(`/new-quos/`)
+                        return `Cotizacion ${quotationNumber} Eliminado`
                       },
                       loading: 'eliminado...',
                       error: 'No se pudo eliminar',
