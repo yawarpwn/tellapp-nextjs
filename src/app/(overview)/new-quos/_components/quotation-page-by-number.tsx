@@ -16,7 +16,6 @@ import { DeleteButton } from './delete-button'
 import { DownloadAndShareButtons } from './download-and-share-buttons'
 import { DuplicateButton } from './duplicate-button'
 import { IsRegularButton } from './is-regular-button'
-import { IsPaymentPendingButton } from './is-payment-pending'
 import { ExternalLinkIcon } from 'lucide-react'
 import { CopyText } from './copy-text'
 import { QuotationClient } from '@/schemas'
@@ -44,11 +43,6 @@ export async function QuotationPageByNumber({ quotation }: { quotation: Quotatio
               quotationNumber={quotation.number}
             />
           )}
-          <IsPaymentPendingButton
-            id={quotation.id}
-            isPaymentPending={!!quotation.isPaymentPending}
-            quotationNumber={quotation.number}
-          />
         </div>
       </header>
 

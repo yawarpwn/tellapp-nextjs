@@ -98,26 +98,6 @@ export function getColumns(): ColumnDef<QuotationClient>[] {
       enableGlobalFilter: false,
     },
     {
-      header: 'Estado',
-      accessorKey: 'isPaymentPending',
-      cell: ({ row }) => (
-        <div className="w-[max-content]">
-          {row.original.isPaymentPending ? (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-foreground/50">Pendiente</span>
-              <span className="flex size-2 rounded-full bg-yellow-400"></span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-foreground/50">Pagado</span>
-              <span className="flex size-2 rounded-full bg-green-400"></span>
-            </div>
-          )}
-        </div>
-      ),
-      enableGlobalFilter: false,
-    },
-    {
       id: 'actions',
       cell: function Cell({ row }) {
         const [showDeleteModal, setShowDeleteModal] = React.useState(false)
