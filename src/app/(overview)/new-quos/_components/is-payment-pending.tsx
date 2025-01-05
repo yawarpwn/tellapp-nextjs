@@ -25,7 +25,7 @@ export function IsPaymentPendingButton({
 
   return (
     <form>
-      <Button disabled={pending} onClick={handleClick} variant="secondary" size={'sm'}>
+      <Button disabled={pending} onClick={handleClick} size={'sm'}>
         {isPaymentPending ? (
           <>
             <span className="size-2 rounded-full bg-yellow-500"></span>

@@ -1,10 +1,7 @@
 'use client'
 
 import { deleteQuotationAction } from '@/lib/actions/quoatations'
-
 import { Button } from '@/components/ui/button'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
 
 import {
   Dialog,
@@ -34,7 +31,7 @@ export function DeleteButton({ id, quotationNumber, showTrigger = false }: Props
       <Dialog open={open} onOpenChange={setOpen}>
         {showTrigger && (
           <DialogTrigger asChild>
-            <Button variant={'secondary'} size={'sm'}>
+            <Button size={'sm'}>
               <DeleteIcon size={20} />
               <span className="ml-2 hidden lg:block">Eliminar</span>
             </Button>
@@ -58,14 +55,7 @@ export function DeleteButton({ id, quotationNumber, showTrigger = false }: Props
                 disabled={pending}
                 onClick={() => {
                   startTranstion(async () => {
-                    toast.promise(deleteQuotationAction(id), {
-                      success: () => {
-                        // router.push(`/new-quos/`)
-                        return `Cotizacion ${quotationNumber} Eliminado`
-                      },
-                      loading: 'eliminado...',
-                      error: 'No se pudo eliminar',
-                    })
+                    await deleteQuotationAction(id)
                   })
                 }}
               >

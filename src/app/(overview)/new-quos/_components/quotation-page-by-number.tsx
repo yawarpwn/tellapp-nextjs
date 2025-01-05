@@ -16,18 +16,11 @@ import { DeleteButton } from './delete-button'
 import { DownloadAndShareButtons } from './download-and-share-buttons'
 import { DuplicateButton } from './duplicate-button'
 import { IsRegularButton } from './is-regular-button'
-import { notFound } from 'next/navigation'
 import { IsPaymentPendingButton } from './is-payment-pending'
-import { QuotationsModel } from '@/models'
 import { ExternalLinkIcon } from 'lucide-react'
 import { CopyText } from './copy-text'
-export async function QuotationPageByNumber({ number }: { number: number }) {
-  const { data: quotation, error } = await QuotationsModel.getByNumber(number)
-
-  if (error) {
-    notFound()
-  }
-
+import { QuotationClient } from '@/schemas'
+export async function QuotationPageByNumber({ quotation }: { quotation: QuotationClient }) {
   const { formatedIgv, formatedTotal, formatedSubTotal } = getIgv(quotation.items)
 
   return (
@@ -35,8 +28,8 @@ export async function QuotationPageByNumber({ number }: { number: number }) {
       <header className="flex justify-end gap-x-2">
         <div className="flex gap-2">
           <Link
-            href={`/new-quos/${number}/update`}
-            className={buttonVariants({ variant: 'secondary', size: 'sm' })}
+            href={`/new-quos/${quotation.number}/update`}
+            className={buttonVariants({ size: 'sm' })}
           >
             <EditIcon size={18} />
             <span className="ml-2 hidden lg:block">Editar</span>

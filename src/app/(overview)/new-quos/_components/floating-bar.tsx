@@ -41,10 +41,10 @@ export function FloatingBar({ id, quotation, clearSelectedRow }: Props) {
         action={() => duplicateQuotationAction(id)}
         dialogTitle={
           <>
-            ¿Deseas Duplicar la cotización <span className="font-bold text-accent"></span>
+            ¿Deseas Duplicar la cotización{' '}
+            <span className="font-bold text-accent">{quotation.number}</span>
           </>
         }
-        onSuccess={closeDuplicateModal}
         open={showDuplicateModal}
         onOpenChange={setShowDuplicateModal}
         showTrigger={false}

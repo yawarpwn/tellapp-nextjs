@@ -7,9 +7,12 @@ export async function fetchQuotations(): Promise<QuotationClient[]> {
   return data
 }
 
-export async function fetchQuotationByNumber({ number }: { number: number }) {
-  const quotation = await QuotationsModel.getByNumber(number)
-  return quotation
+export async function fetchQuotationByNumber(quotationNumber: number) {
+  const { data, error } = await QuotationsModel.getByNumber(quotationNumber)
+  if (error) {
+    throw error
+  }
+  return data
 }
 
 export async function fetchQuotationById(id: string) {

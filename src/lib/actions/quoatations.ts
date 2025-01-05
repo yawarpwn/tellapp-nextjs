@@ -97,9 +97,8 @@ export async function deleteQuotationAction(id: string): Promise<void> {
   }
 
   // console.log('Quotation number: ', data.number, ' deleted')
-  //
-  // revalidatePath('/new-quos')
-  // redirect(`/new-quos`)
+  revalidatePath('/new-quos')
+  redirect(`/new-quos`)
 }
 
 export async function duplicateQuotationAction(id: string): Promise<void> {
@@ -111,21 +110,21 @@ export async function duplicateQuotationAction(id: string): Promise<void> {
     await QuotationsModel.getLastQuotation()
   if (lastQuotationError) throw lastQuotationError
 
-  const quoNumber = lastQuotation.number + 1
+  const quotationDuplicateNumber = lastQuotation.number + 1
   await QuotationsModel.create({
     deadline: quotation.deadline,
     credit: quotation.credit,
     includeIgv: quotation.includeIgv,
     customerId: quotation.customerId,
     id: crypto.randomUUID(),
-    number: quoNumber,
+    number: quotationDuplicateNumber,
     items: quotation.items,
     createdAt: new Date(),
     updatedAt: new Date(),
   })
 
   revalidatePath('/new-quos')
-  // redirect(`/new-quos/${lastQuotation.number}`)
+  redirect(`/new-quos/${quotationDuplicateNumber}`)
 }
 
 export async function searchRucAction(ruc: string) {

@@ -31,6 +31,12 @@ export function ConfirmActionDialog({
   action,
 }: Props) {
   const [pending, startTranstion] = React.useTransition()
+
+  const handleClick = () => {
+    startTranstion(async () => {
+      await action()
+    })
+  }
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {showTrigger && (
@@ -52,22 +58,7 @@ export function ConfirmActionDialog({
             <DialogClose asChild>
               <Button>Cancelar</Button>
             </DialogClose>
-            <Button
-              variant={'primary'}
-              disabled={pending}
-              onClick={() => {
-                startTranstion(async () => {
-                  toast.promise(action, {
-                    loading: 'Eliminando...',
-                    success: data => {
-                      onOpenChange?.(false)
-                      return 'Eliminado'
-                    },
-                    error: 'No se pudo eliminar',
-                  })
-                })
-              }}
-            >
+            <Button variant={'primary'} disabled={pending} onClick={handleClick}>
               {pending && <Loader2 className="mr-2 animate-spin" />}
               Aceptar
             </Button>

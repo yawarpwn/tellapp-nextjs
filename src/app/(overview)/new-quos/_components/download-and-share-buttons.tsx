@@ -74,12 +74,12 @@ export function DownloadAndShareButtons({ quotation }: { quotation: QuotationCli
 
   return (
     <>
-      <Button onClick={downloadPdf} variant="secondary" size={'sm'}>
+      <Button onClick={downloadPdf} size={'sm'}>
         <DownloadIcon size={20} />
         <span className="ml-2 hidden lg:block">Descargar</span>
       </Button>
 
-      <Button onClick={handleShare} variant="secondary" size={'sm'}>
+      <Button onClick={handleShare} size={'sm'}>
         <ShareIcon size={20} />
         <span className="ml-2 hidden lg:block">Compartir</span>
       </Button>
