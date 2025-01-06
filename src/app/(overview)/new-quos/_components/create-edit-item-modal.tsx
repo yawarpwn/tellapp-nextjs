@@ -100,6 +100,7 @@ export function CreateEditItemModal(props: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
+      <DialogTitle>Crear Item</DialogTitle>
       <DialogContent
         showCloseButton={false}
         className={cn(

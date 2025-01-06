@@ -12,7 +12,7 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import { toast } from 'sonner'
 
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
@@ -64,6 +64,7 @@ export function CreateWatermark({ onLayout }: { onLayout?: () => void }) {
           <Button variant="secondary">Crear</Button>
         </DialogTrigger>
         <DialogContent className="max-h-[95dvh] overflow-y-auto">
+          <DialogTitle className="text-center">Agregar marca de agua</DialogTitle>
           <div className="mx-auto w-full max-w-3xl p-8">
             <form onSubmit={handleSubmit}>
               <FilePond

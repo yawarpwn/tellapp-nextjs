@@ -6,7 +6,7 @@ import {
   initQuotationStore,
   type QuotationStore,
 } from '@/store/create-quotation-store'
-import React from 'react'
+import React, { use } from 'react'
 import { useStore } from 'zustand'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
@@ -21,17 +21,21 @@ export const QuotationCreateStoreContext = React.createContext<QuotationCreateSt
 // type QuotationProviderProps =  React.PropsWithChildren<Partial<QuotationStore>>
 type QuotationCreateStoreProviderProps = {
   children: React.ReactNode
-  customers: Customer[]
-  products: Product[]
+  getCustomers: Promise<Customer[]>
+  getProducts: Promise<Product[]>
 }
 
 export function QuotationCreateStoreProvider(props: QuotationCreateStoreProviderProps) {
-  const { children, customers, products } = props
+  const { children, getCustomers, getProducts } = props
+
+  const products = use(getProducts)
+  const customers = use(getCustomers)
+
   const storeRef = React.useRef<QuotationCreateStoreApi>(undefined)
   if (!storeRef.current) {
     storeRef.current = createQuotationStore<QuotationClientCreate>(
       initQuotationStore({
-        customers,
+        customers: customers.filter(c => c.isRegular),
         products,
       }) as QuotationStore<QuotationClientUpdate>,
     )

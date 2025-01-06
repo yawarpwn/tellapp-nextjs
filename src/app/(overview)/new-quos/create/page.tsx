@@ -1,14 +1,13 @@
 import Breadcrumbs from '@/components/breadcrumbs'
 import { QuotationCreateStoreProvider } from '@/providers/quotation-create-store-provider'
-import { CustomersModel, ProductsModel } from '@/models'
+import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations'
 import { QuotationCreate } from './_components/quotation-create'
 import { fetchProducts } from '@/lib/data/products'
 import { fetchCustomers } from '@/lib/data/customers'
+import { Suspense } from 'react'
 
 // export const dynamic = 'force-dynamic'
 export default async function Page() {
-  const [products, customers] = await Promise.all([fetchProducts(), fetchCustomers()])
-  const filteredCustomers = customers.filter(c => c.isRegular)
   return (
     <div className="flex flex-col gap-4">
       <Breadcrumbs
@@ -25,9 +24,11 @@ export default async function Page() {
         ]}
       />
 
-      <QuotationCreateStoreProvider products={products} customers={filteredCustomers}>
-        <QuotationCreate />
-      </QuotationCreateStoreProvider>
+      <Suspense fallback={<UpdateCreateQuotationSkeleton />}>
+        <QuotationCreateStoreProvider getCustomers={fetchCustomers()} getProducts={fetchProducts()}>
+          <QuotationCreate />
+        </QuotationCreateStoreProvider>
+      </Suspense>
     </div>
   )
 }

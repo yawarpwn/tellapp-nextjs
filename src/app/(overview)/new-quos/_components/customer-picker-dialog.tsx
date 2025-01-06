@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useMemo, useState } from 'react'
+import { DialogTitle } from '@radix-ui/react-dialog'
 
 interface Props {
   customers: Customer[]
@@ -26,6 +27,7 @@ export function CustomerPickerDialog({ customers, customerId, onCustomerPick }: 
         <SearchIcon className="ml-2 size-4" />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
+        <DialogTitle className="sr-only">Buscar Clientes frecuentes</DialogTitle>
         <CommandInput placeholder="buscar agencia..." />
         <CommandList className="max-h-[700px]">
           <CommandEmpty>Cliente no encontrada</CommandEmpty>

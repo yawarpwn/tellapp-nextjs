@@ -1,11 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { getIgv } from '@/lib/utils'
 import { NoResult } from './no-result'
-import { ProductsIcon } from '@/icons'
 import { Product, QuotationItem } from '@/types'
 import React, { useState } from 'react'
 import { CreateEditItemModal } from './create-edit-item-modal'
-import { CreateProductDialog } from '../../new-products/_components/create-product-dialog'
 import { ProductCard } from './product-card'
 import { Plus } from 'lucide-react'
 
@@ -87,14 +85,6 @@ export function QuotationItems(props: Props) {
           <span className="font-bold text-primary">{totalItems}</span>
         </div>
         <div className="flex items-center gap-2">
-          <CreateProductDialog
-            triggerButton={
-              <Button variant={'secondary'}>
-                <ProductsIcon size={20} />
-                <span className="ml-2 hidden md:block">Crear Producto</span>
-              </Button>
-            }
-          />
           <Button
             type="button"
             onClick={() => {

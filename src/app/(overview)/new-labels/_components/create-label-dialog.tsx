@@ -103,9 +103,7 @@ export function CreateLabelDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <AddButton />
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Crear Rotulo</DialogTitle>
-        </DialogHeader>
+        <DialogTitle>Crear Rotulo</DialogTitle>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
