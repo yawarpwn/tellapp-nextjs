@@ -8,6 +8,7 @@ import { fetchCustomers } from '@/lib/data/customers'
 // export const dynamic = 'force-dynamic'
 export default async function Page() {
   const [products, customers] = await Promise.all([fetchProducts(), fetchCustomers()])
+  const filteredCustomers = customers.filter(c => c.isRegular)
   return (
     <div className="flex flex-col gap-4">
       <Breadcrumbs
@@ -24,7 +25,7 @@ export default async function Page() {
         ]}
       />
 
-      <QuotationCreateStoreProvider products={products} customers={customers}>
+      <QuotationCreateStoreProvider products={products} customers={filteredCustomers}>
         <QuotationCreate />
       </QuotationCreateStoreProvider>
     </div>

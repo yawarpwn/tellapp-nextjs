@@ -51,9 +51,7 @@ export function QuotationUpdateStoreProvider(props: QuotationCreateStoreProvider
   }
 
   return (
-    <QuotationCreateStoreContext.Provider value={storeRef.current}>
-      {children}
-    </QuotationCreateStoreContext.Provider>
+    <QuotationCreateStoreContext value={storeRef.current}>{children}</QuotationCreateStoreContext>
   )
 }
 

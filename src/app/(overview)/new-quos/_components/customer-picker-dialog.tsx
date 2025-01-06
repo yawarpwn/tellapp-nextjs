@@ -18,7 +18,6 @@ interface Props {
   onCustomerPick: (customer: Customer) => void
 }
 export function CustomerPickerDialog({ customers, customerId, onCustomerPick }: Props) {
-  const filteredCustomers = useMemo(() => customers.filter(c => c.isRegular), [customers])
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -31,7 +30,7 @@ export function CustomerPickerDialog({ customers, customerId, onCustomerPick }: 
         <CommandList className="max-h-[700px]">
           <CommandEmpty>Cliente no encontrada</CommandEmpty>
           <CommandGroup heading="Clientes">
-            {filteredCustomers.map(customer => (
+            {customers.map(customer => (
               <CommandItem
                 className="cursor-pointer"
                 key={customer.id}

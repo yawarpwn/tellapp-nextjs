@@ -23,7 +23,7 @@ export class CustomersModel {
         })
         .from(customersTable)
         .orderBy(desc(customersTable.updatedAt))
-        .limit(200)
+        .limit(2000)
 
       return {
         data: result,

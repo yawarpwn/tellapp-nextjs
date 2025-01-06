@@ -48,7 +48,7 @@ export function QuotationCreateStoreProvider(props: QuotationCreateStoreProvider
   }, [])
 
   return (
-    <QuotationCreateStoreContext.Provider value={storeRef.current}>
+    <QuotationCreateStoreContext value={storeRef.current}>
       {confirmModalOpen && (
         <Dialog open={confirmModalOpen} onOpenChange={setConfirmModalOpen}>
           <DialogContent className="border">
@@ -81,7 +81,7 @@ export function QuotationCreateStoreProvider(props: QuotationCreateStoreProvider
         </Dialog>
       )}
       {children}
-    </QuotationCreateStoreContext.Provider>
+    </QuotationCreateStoreContext>
   )
 }
 

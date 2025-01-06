@@ -1,20 +1,29 @@
 import Breadcrumbs from '@/components/breadcrumbs'
 import { QuotationUpdateStoreProvider } from '@/providers/quotation-update-store-provider'
 import { QuotationUpdate } from './_components/quotation-update'
-import { CustomersModel, ProductsModel, QuotationsModel } from '@/models'
 import { UpdateCreateQuotationSkeleton } from '@/components/skeletons/quotations'
 import { Suspense } from 'react'
+import { fetchCustomers } from '@/lib/data/customers'
+import { fetchProducts } from '@/lib/data/products'
+import { fetchQuotationByNumber } from '@/lib/data/quotations'
 import { notFound } from 'next/navigation'
 export async function QuotationUpdateServer({ quoNumber }: { quoNumber: number }) {
-  const { data: customers, error: customersError } = await CustomersModel.getAll()
-  const { data: products, error: productsError } = await ProductsModel.getAll()
-  const { data: quotation, error: quotationError } = await QuotationsModel.getByNumber(quoNumber)
+  const [customers, products, quotation] = await Promise.all([
+    fetchCustomers(),
+    fetchProducts(),
+    fetchQuotationByNumber(quoNumber),
+  ])
 
-  if (customersError || productsError || quotationError) {
+  if (!quotation) {
     notFound()
   }
+  // const { data: customers, error: customersError } = await CustomersModel.getAll()
+  // const { data: products, error: productsError } = await ProductsModel.getAll()
+  // const { data: quotation, error: quotationError } = await QuotationsModel.getByNumber(quoNumber)
+
+  const filteredCustomers = customers.filter(c => c.isRegular)
   return (
-    <QuotationUpdateStoreProvider customers={customers} quo={quotation} products={products}>
+    <QuotationUpdateStoreProvider customers={filteredCustomers} quo={quotation} products={products}>
       <QuotationUpdate />
     </QuotationUpdateStoreProvider>
   )
@@ -32,8 +41,8 @@ export default async function Page(props: { params?: Promise<{ number?: string }
             href: '/new-quos',
           },
           {
-            label: 'Editar',
-            href: '/new-quos/crear',
+            label: ` #${number}`,
+            href: `/new-quos/${number}/update`,
             active: true,
           },
         ]}
