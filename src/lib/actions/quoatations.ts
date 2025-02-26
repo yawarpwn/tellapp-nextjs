@@ -1,42 +1,43 @@
 'use server'
 import { QuotationsModel, CustomersModel } from '@/models'
-import type { QuotationClientCreate, QuotationClientUpdate, QuotationItem } from '@/types'
+import type {
+  QuotationClientCreate,
+  QuotationClientUpdate,
+  QuotationItem,
+  RawQuotation,
+} from '@/types'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getRuc } from '../sunat'
+import { BASE_URL } from '@/constants'
+import { fetchData } from '@/lib/utils'
+import { fetchQuotationByNumber } from '../data/quotations'
 
 export async function updateQuotationAction(
   quotation: QuotationClientUpdate,
   items: QuotationItem[],
 ): Promise<{ number: number }> {
-  let customerId = quotation.customerId
-
-  if (quotation.ruc && quotation.company && !customerId) {
-    const { error, data } = await CustomersModel.create({
-      name: quotation.company,
-      ruc: quotation.ruc,
-      address: quotation.address,
-    })
-
-    if (error) {
-      throw error
-    }
-
-    customerId = data.id
-  }
-
-  const { data, error } = await QuotationsModel.update(quotation.id, {
-    deadline: quotation.deadline,
-    includeIgv: quotation.includeIgv,
-    credit: quotation.credit,
-    customerId,
-    items,
-    updatedAt: new Date(),
+  const data = await fetchData(`${BASE_URL}/api/quotations/${quotation.id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      deadline: quotation.deadline,
+      credit: quotation.credit,
+      includeIgv: quotation.includeIgv,
+      customerId: quotation.customerId,
+      isPaymentPending: quotation.isPaymentPending,
+      customer: quotation.ruc
+        ? {
+            name: quotation.company,
+            address: quotation.address,
+            ruc: quotation.ruc,
+          }
+        : undefined,
+      items: items.map(i => ({
+        ...i,
+        unitSize: i.unit_size,
+      })),
+    }),
   })
-
-  if (error) {
-    throw error
-  }
 
   revalidatePath(`/new-quos/${data.number}`)
   return { number: data.number }
@@ -46,85 +47,51 @@ export async function createQuotationAction(
   quotation: QuotationClientCreate,
   items: QuotationItem[],
 ): Promise<{ number: number }> {
-  let customerId = quotation.customerId
-
-  if (quotation.ruc && quotation.company && !customerId) {
-    const { data, error } = await CustomersModel.create({
-      name: quotation.company,
-      ruc: quotation.ruc,
-      address: quotation.address,
-    })
-
-    if (error) {
-      throw error
-    }
-
-    customerId = data.id
-  }
-
-  const { data: lastQuotation, error: lastQuotationError } =
-    await QuotationsModel.getLastQuotation()
-
-  if (lastQuotationError) {
-    throw lastQuotationError
-  }
-
-  const quoNumber = lastQuotation.number + 1
-
-  const { error } = await QuotationsModel.create({
-    number: quoNumber,
-    deadline: quotation.deadline,
-    includeIgv: quotation.includeIgv,
-    credit: quotation.credit,
-    customerId,
-    items,
+  const result = await fetchData(`${BASE_URL}/api/quotations`, {
+    method: 'POST',
+    body: JSON.stringify({
+      deadline: quotation.deadline,
+      credit: quotation.credit,
+      includeIgv: quotation.includeIgv,
+      customerId: quotation.customerId,
+      isPaymentPending: quotation.isPaymentPending,
+      customer: quotation.ruc
+        ? {
+            name: quotation.company,
+            address: quotation.address,
+            ruc: quotation.ruc,
+          }
+        : undefined,
+      items: items.map(i => ({
+        ...i,
+        unitSize: i.unit_size,
+      })),
+    }),
   })
 
-  if (error) {
-    throw error
-  }
-
-  revalidatePath('/new-quos')
-  return { number: quoNumber }
+  revalidatePath(`/new-quos/${result.insertedNumber}`)
+  return { number: result.insertedNumber }
 }
 
-export async function deleteQuotationAction(id: string): Promise<void> {
-  // create supabase client
-  const { data, error } = await QuotationsModel.delete(id)
-
-  if (error) {
-    throw error
-  }
-
-  // console.log('Quotation number: ', data.number, ' deleted')
-  revalidatePath('/new-quos')
+export async function deleteQuotationAction(quotationNumber: number): Promise<void> {
+  await fetchData(`${BASE_URL}/api/quotations/${quotationNumber}`, {
+    method: 'DELETE',
+  })
   redirect(`/new-quos`)
 }
 
-export async function duplicateQuotationAction(id: string): Promise<void> {
-  const { data: quotation, error } = await QuotationsModel.getById(id)
+export async function duplicateQuotationAction(quotationNumber: number): Promise<void> {
+  const quo = await fetchData<RawQuotation>(`${BASE_URL}/api/quotations/${quotationNumber}`)
 
-  if (error) throw error
-
-  const { data: lastQuotation, error: lastQuotationError } =
-    await QuotationsModel.getLastQuotation()
-  if (lastQuotationError) throw lastQuotationError
-
-  const quotationDuplicateNumber = lastQuotation.number + 1
-  await QuotationsModel.create({
-    deadline: quotation.deadline,
-    credit: quotation.credit,
-    includeIgv: quotation.includeIgv,
-    customerId: quotation.customerId,
-    id: crypto.randomUUID(),
-    number: quotationDuplicateNumber,
-    items: quotation.items,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+  const { insertedNumber } = await fetchData(`${BASE_URL}/api/quotations`, {
+    method: 'POST',
+    body: JSON.stringify({
+      ...quo,
+    }),
   })
 
   revalidatePath('/new-quos')
-  redirect(`/new-quos/${quotationDuplicateNumber}`)
+  redirect(`/new-quos/${insertedNumber}`)
 }
 
 export async function searchRucAction(ruc: string) {

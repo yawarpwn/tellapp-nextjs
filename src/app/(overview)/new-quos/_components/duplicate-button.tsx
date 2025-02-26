@@ -56,7 +56,7 @@ export function DuplicateButton({ id, showTrigger = false, quotationNumber }: Pr
                 disabled={pending}
                 onClick={() => {
                   startTranstion(async () => {
-                    duplicateQuotationAction(id)
+                    duplicateQuotationAction(quotationNumber)
                   })
                 }}
               >

@@ -55,7 +55,7 @@ export function DataTable(props: Props) {
   const [globalFilter, setGlobalFilter] = React.useState(query || '')
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 14,
+    pageSize: 15,
   })
 
   const columns = React.useMemo(() => getColumns(), [])

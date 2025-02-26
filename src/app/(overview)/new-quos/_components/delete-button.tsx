@@ -55,7 +55,7 @@ export function DeleteButton({ id, quotationNumber, showTrigger = false }: Props
                 disabled={pending}
                 onClick={() => {
                   startTranstion(async () => {
-                    await deleteQuotationAction(id)
+                    await deleteQuotationAction(quotationNumber)
                   })
                 }}
               >

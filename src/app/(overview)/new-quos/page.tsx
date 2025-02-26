@@ -12,6 +12,5 @@ import { fetchQuotations } from '@/lib/data/quotations'
 
 export default async function Page() {
   const quotations = await fetchQuotations()
-  console.log('total Quotations ', quotations.length)
   return <DataTable data={quotations} />
 }

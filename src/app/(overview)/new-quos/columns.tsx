@@ -106,7 +106,7 @@ export function getColumns(): ColumnDef<QuotationClient>[] {
         return (
           <DropdownMenu>
             <ConfirmActionDialog
-              action={() => deleteQuotationAction(row.original.id)}
+              action={() => deleteQuotationAction(row.original.number)}
               dialogTitle={
                 <>
                   ¿Deseas borrar la cotización{' '}

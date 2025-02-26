@@ -9,4 +9,5 @@ export const envs = {
   JWT_SECRET: env.get('JWT_SECRET').default('SUPER_SECRET').asString(),
   DB_CONNECTION_STRING: env.get('DB_CONNECTION_STRING').required().asString(),
   RESEND_API_KEY: env.get('RESEND_API_KEY').required().asString(),
+  TELL_API_KEY: env.get('TELL_API_KEY').required().asString(),
 }

@@ -1,8 +1,16 @@
 import { ProductsModel } from '@/models'
-import type { Product } from '@/types'
+import type { Product, RawProduct } from '@/types'
+import { fetchData } from '@/lib/utils'
+import { BASE_URL } from '@/constants'
+import { PRODUCT_CATEGORIES_BY_ID } from '@/constants'
 
 export async function fetchProducts(): Promise<Product[]> {
-  const { data, error } = await ProductsModel.getAll()
-  if (error) throw error
-  return data
+  const { items } = await fetchData<{ items: RawProduct[] }>(`${BASE_URL}/api/products`)
+  const mappedProducts: Product[] = items.map(prod => ({
+    ...prod,
+    createdAt: new Date(prod.createdAt),
+    updatedAt: new Date(prod.updatedAt),
+  }))
+
+  return mappedProducts
 }

@@ -2,6 +2,7 @@ import { SIGNALS_CATEGORIES } from '@/constants'
 import { GALLERY_CATEGORIES } from '@/constants'
 import { GalleryImageSchema } from '@/schemas/gallery'
 export type * from './database.d.ts'
+export type * from './temporal.d.ts'
 import { z } from 'zod'
 //Quotations
 export type * from '@/schemas'

@@ -1,3 +1,4 @@
+import { envs } from '@/config'
 import { clsx } from 'clsx'
 import { type ClassNameValue, twMerge } from 'tailwind-merge'
 export * from './pagination'
@@ -60,4 +61,18 @@ export function resizeImageFile(
     img.onerror = error => reject(error)
     img.src = url
   })
+}
+
+type FetchOptions = RequestInit
+
+export async function fetchData<T>(url: string, options?: FetchOptions): Promise<T> {
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      ...options?.headers,
+      'TELL-API-KEY': process.env.TELL_API_KEY!,
+    },
+  })
+
+  return res.json() as T
 }
