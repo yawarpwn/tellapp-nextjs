@@ -1,25 +1,33 @@
 'use server'
 
+import { fetchData } from '@/lib/utils'
+import { BASE_URL } from '@/constants'
 import { LabelInsert, LabelUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
-import { LabelsModel } from '@/models/labels'
 import { getDni, getRuc } from '../sunat'
 
 export async function createLabelAction(input: LabelInsert) {
   const cleanedPhone = input.phone
     ? input.phone.replace(/ /g, '').replace(' ', '').replace('+51', '')
     : null
-  const { error } = await LabelsModel.create({
-    ...input,
-    phone: cleanedPhone,
+
+  fetchData(`${BASE_URL}/api/labels`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...input,
+      phone: cleanedPhone,
+    }),
   })
-  if (error) throw error
   revalidatePath('/new-labels')
 }
 
 export async function deleteLabelAction(id: string) {
-  const { error } = await LabelsModel.delete(id)
-  if (error) throw error
+  await fetchData(`${BASE_URL}/api/labels/${id}`, {
+    method: 'DELETE',
+  })
   revalidatePath('/new-labels')
 }
 
@@ -28,22 +36,39 @@ export async function updateLabelAction(id: string, input: LabelUpdate) {
     ? input.phone.replace(/ /g, '').replace(' ', '').replace('+51', '')
     : null
 
-  const { error } = await LabelsModel.update(id, {
-    ...input,
-    phone: cleanedPhone,
+  fetchData(`${BASE_URL}/api/labels/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...input,
+      phone: cleanedPhone,
+    }),
   })
-  if (error) throw error
 
   revalidatePath('/new-labels')
 }
 
-export async function searchByDniOrRuc(dniRuc: string) {
+type Company = {
+  ruc: string
+  company: string
+  address: string
+}
+export async function searchByDniOrRuc(dniRuc: string): Promise<Company> {
   try {
-    if (dniRuc.length === 8) {
-      return getDni(dniRuc)
-    }
+    const result = await fetchData<{
+      id: string | undefined
+      name: string
+      address: string | undefined
+      ruc: string
+    }>(`${BASE_URL}/api/customers/search/${dniRuc}`)
 
-    return getRuc(dniRuc)
+    return {
+      company: result.name,
+      address: result.address || '',
+      ruc: result.ruc,
+    }
   } catch (error) {
     throw new Error('Error no se puede identificar  la razon social')
   }

@@ -1,23 +1,35 @@
 'use server'
 
+import { BASE_URL } from '@/constants'
+import { fetchData } from '@/lib/utils'
 import { AgencyInsert, AgencyUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
-import { AgenciesModel } from '@/models/agencies'
 
 export async function createAgencyAction(input: AgencyInsert) {
-  const { error } = await AgenciesModel.create(input)
-  if (error) throw error
+  await fetchData(`${BASE_URL}/api/agencies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  })
   revalidatePath('/new-agencies')
 }
 
 export async function deleteAgencyAction(id: string) {
-  const { error } = await AgenciesModel.delete(id)
-  if (error) throw error
+  await fetchData(`${BASE_URL}/api/agencies/${id}`, {
+    method: 'DELETE',
+  })
   revalidatePath('/new-agencies')
 }
 
 export async function updateAgencyAction(id: string, input: AgencyUpdate) {
-  const { error } = await AgenciesModel.update(id, input)
-  if (error) throw error
+  await fetchData(`${BASE_URL}/api/agencies/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  })
   revalidatePath('/new-agencies')
 }

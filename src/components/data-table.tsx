@@ -88,7 +88,7 @@ export function DataTable<T>({
   const [globalFilter, setGlobalFilter] = React.useState('')
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [pagination, setPagination] = React.useState<PaginationState>({
-    pageSize: 14,
+    pageSize: 15,
     pageIndex: 0,
   })
 

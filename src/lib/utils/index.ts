@@ -73,6 +73,5 @@ export async function fetchData<T>(url: string, options?: FetchOptions): Promise
       'TELL-API-KEY': process.env.TELL_API_KEY!,
     },
   })
-
   return res.json() as T
 }

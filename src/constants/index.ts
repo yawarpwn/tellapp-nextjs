@@ -45,20 +45,20 @@ export const PRODUCT_CATEGORIES = {
 } as const
 
 export const PRODUCT_CATEGORIES_BY_ID = {
-  1: 'cintas seguridad',
-  2: 'obras',
-  3: 'proteccion vial',
-  4: 'fotoluminiscente',
-  5: 'seguridad',
-  6: 'viales',
-  7: 'viniles',
-  8: 'lucha contra incendio',
-  9: 'articulos seguridad',
-  10: 'epp',
-  11: 'servicio',
-  12: 'ropa seguridad',
-  13: 'convencionales',
-  14: 'acrilicos',
+  'cintas seguridad': 1,
+  obras: 2,
+  'proteccion vial': 3,
+  fotoluminiscente: 4,
+  seguridad: 5,
+  viales: 6,
+  viniles: 7,
+  'lucha contra incendio': 8,
+  'articulos seguridad': 9,
+  epp: 10,
+  servicio: 11,
+  'ropa seguridad': 12,
+  convencionales: 13,
+  acrilicos: 14,
 } as const
 
 export const ITEMS_PER_PAGE = 12
@@ -74,11 +74,11 @@ export const NAVIGATION = [
     href: '/new-products',
     icon: ProductsIcon,
   },
-  {
-    title: 'Clientes',
-    href: '/new-customers',
-    icon: CustomersIcon,
-  },
+  // {
+  //   title: 'Clientes',
+  //   href: '/new-customers',
+  //   icon: CustomersIcon,
+  // },
   {
     title: 'Rotulos',
     href: '/new-labels',

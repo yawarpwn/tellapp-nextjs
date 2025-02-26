@@ -1,13 +1,10 @@
 import { QuotationClient } from '@/types'
-import { QuotationsModel } from '@/models'
-import { fetchData } from '../utils'
+import { fetchData } from '@/lib/utils'
 import { BASE_URL } from '@/constants'
 import { RawQuotation } from '@/types'
+
 export async function fetchQuotations(): Promise<QuotationClient[]> {
-  const json = await fetchData<{ items: RawQuotation[] }>(
-    `${BASE_URL}/api/quotations?limit=2000`,
-    {},
-  )
+  const json = await fetchData<{ items: RawQuotation[] }>(`${BASE_URL}/api/quotations?limit=2000`)
 
   const quotationsMapped: QuotationClient[] = json.items.map(quo => {
     return {
