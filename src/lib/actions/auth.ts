@@ -2,12 +2,7 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import { envs } from '@/config'
 import { UserInsertSchema } from '@/schemas/users'
-import { UsersModel } from '@/models/users'
-import { fetchData } from '../utils'
 import { BASE_URL } from '@/constants'
 
 type FormState = {

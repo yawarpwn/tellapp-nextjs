@@ -36,13 +36,14 @@ export function getColumns(): ColumnDef<QuotationClient>[] {
         const [optimisticState, updateOptimistic] = React.useState(row.original.isRegularCustomer)
 
         if (!row.original.customerId) return null
+
         return (
           <form
             action={async (formData: FormData) => {
               const id = formData.get('id') as string
               updateOptimistic(!optimisticState)
               await setIsRegularCustomerAction({
-                id,
+                customerId: id,
                 value: !optimisticState,
               })
             }}

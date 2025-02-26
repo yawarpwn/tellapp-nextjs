@@ -5,11 +5,11 @@ import { setIsRegularCustomerAction } from '@/lib/actions/customers'
 import { useTransition } from 'react'
 export function IsRegularButton({
   isRegular,
-  id,
+  customerId,
   quotationNumber,
 }: {
   isRegular: boolean
-  id: string
+  customerId: string
   quotationNumber: number
 }) {
   const [pending, startTransition] = useTransition()
@@ -17,9 +17,9 @@ export function IsRegularButton({
   const handleClick = () => {
     startTransition(async () => {
       setIsRegularCustomerAction({
-        id,
+        customerId,
         value: !isRegular,
-        quoationNumber: quotationNumber,
+        quotationNumber,
       })
     })
   }

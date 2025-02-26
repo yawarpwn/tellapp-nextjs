@@ -38,7 +38,7 @@ export async function QuotationPageByNumber({ quotation }: { quotation: Quotatio
           <DeleteButton quotationNumber={quotation.number} showTrigger id={quotation.id} />
           {quotation.customerId && (
             <IsRegularButton
-              id={quotation.customerId}
+              customerId={quotation.customerId}
               isRegular={Boolean(quotation.isRegularCustomer)}
               quotationNumber={quotation.number}
             />

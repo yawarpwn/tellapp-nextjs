@@ -1,8 +1,9 @@
 'use server'
-
+import { BASE_URL } from '@/constants'
 import { CustomerInsert, CustomerUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { CustomersModel } from '@/models'
+import { fetchData } from '@/lib/utils'
 
 export async function createCustomerAction(input: CustomerInsert): Promise<void> {
   const { error } = await CustomersModel.create(input)
@@ -27,18 +28,24 @@ export async function updateCustomerAction(id: string, input: CustomerUpdate) {
 }
 
 export async function setIsRegularCustomerAction({
-  id,
+  customerId,
   value,
-  quoationNumber,
+  quotationNumber,
 }: {
-  id: string
+  customerId: string
   value: boolean
-  quoationNumber?: number
+  quotationNumber?: number
 }) {
-  const { error } = await CustomersModel.toggleIsRegular(id, value)
-  if (error) throw error
-  if (quoationNumber) {
-    revalidatePath(`/new-quos/${quoationNumber}`)
+  const result = await fetchData(`${BASE_URL}/api/customers/${customerId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      isRegular: value,
+    }),
+  })
+
+  if (quotationNumber) {
+    revalidatePath(`/new-quos/${quotationNumber}`)
   }
+
   console.log('customer updated')
 }
