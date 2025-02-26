@@ -7,6 +7,8 @@ import jwt from 'jsonwebtoken'
 import { envs } from '@/config'
 import { UserInsertSchema } from '@/schemas/users'
 import { UsersModel } from '@/models/users'
+import { fetchData } from '../utils'
+import { BASE_URL } from '@/constants'
 
 type FormState = {
   message?: string
@@ -34,34 +36,22 @@ export async function signIn(_prevState: FormState, formData: FormData) {
   const { email, password } = validateFields.data
 
   //Validate is user by email exists in Db
-  const { data } = await UsersModel.getUserByEmail(email)
+  const res = await fetch(`${BASE_URL}/auth/login`, {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  })
+
+  const data = (await res.json()) as { token: string }
 
   if (!data) {
-    redirect('/?message=Email invalido')
+    redirect('/?message=Email o Pasword invalido')
   }
-
-  //validate password
-  const isValidPassword = bcrypt.compareSync(password, data.password)
-
-  if (!isValidPassword) {
-    redirect('/?message=Password invalido')
-  }
-
-  const authToken = jwt.sign(
-    {
-      email,
-    },
-    envs.JWT_SECRET,
-    {
-      expiresIn: '1d',
-    },
-  )
 
   const oneDay = 24 * 60 * 60 * 1000
 
   const cookieStore = await cookies()
 
-  cookieStore.set('auth-token', authToken, {
+  cookieStore.set('auth-token', data.token, {
     expires: oneDay, // 1 day
     maxAge: oneDay, // 1 day
     httpOnly: false,
