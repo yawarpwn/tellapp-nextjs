@@ -1,3 +1,14 @@
+export interface RawWatermark {
+  id: string
+  width: number
+  height: number
+  url: string
+  publicId: string
+  format: string
+  createdAt: string
+  updatedAt: string
+  thumbUrl: string
+}
 export interface RawQuotation {
   id: string
   number: number
